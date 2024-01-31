@@ -47,18 +47,20 @@ int main() {
     UtenteCompratore utente1("mario_1", "mario", "rossi", "3333333333", "Vaffsdns12?", 
                             "mario.rossi1@gmail.com", "15/09/2000", "via delle mani", 
                             34, "01035", "terni", 0.0, 0);
-    utente1.effettuaRegistrazione(utente1, "Vaffsdns12?");
+    //utente1.effettuaRegistrazione(utente1, "Vaffsdns12?");
     
-
+    
     sprintf(sqlcmd, "SELECT * FROM UtenteCompratore");
     res = db1.ExecSQLtuples(sqlcmd);
     rows = PQntuples(res);
 
-    fprintf(stdout, "main(): inserted in UtenteCompratore %s\n", PQgetvalue(res, 0, PQfnumber(res, "numeroTelefono")));
+    //fprintf(stdout, "main(): inserted in UtenteCompratore %s\n", PQgetvalue(res, 0, PQfnumber(res, "numeroTelefono")));
 
 
-    utente1.effettua_login("mario_1", "Vaffsdns12");
-    
+    utente1.effettua_login("fede14", "Vaffsdns12?");
+    utente1.effettua_logout("fede14");
+    utente1.effettua_logout("fede14");
+
     
     
     /*

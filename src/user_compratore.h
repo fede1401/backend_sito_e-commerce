@@ -9,10 +9,10 @@
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
 
-PGresult *res;
-char sqlcmd[1000];
+//PGresult *res;
+//char sqlcmd[1000];
 
-int rows, k;
+//int rows, k;
 
 
 bool isSpecialCharacter(char c) {
