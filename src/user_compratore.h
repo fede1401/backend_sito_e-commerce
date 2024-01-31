@@ -6,7 +6,7 @@
 #include <cctype> // Per isupper() e isdigit()
 #include <sstream>
 #include "user.h"
-#include "/home/federico/sito_ecommerce/con2db/pgsql.h"
+#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
 
 PGresult *res;

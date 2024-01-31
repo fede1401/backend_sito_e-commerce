@@ -18,7 +18,7 @@ DEPS = $(wildcard $(IDIR)/*.h)
 SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp, $(ODIR)/%.o, $(SRC))
 
-con2db_OBJ=$(wildcard /home/federico/sito_ecommerce/con2db/*.o)
+con2db_OBJ=$(wildcard /home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/*.o)
 
 
 
