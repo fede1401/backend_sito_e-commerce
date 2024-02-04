@@ -80,6 +80,7 @@ class UtenteCompratore : public Utente {
                     numero_telefono = utente.numero_telefono;
                     email = utente.email;
                     data_compleanno = utente.data_compleanno;
+                    password = utente.password;
                     via_residenza = utente.via_residenza;
                     numero_civico = utente.numero_civico;
                     CAP = utente.CAP;
