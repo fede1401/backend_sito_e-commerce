@@ -17,10 +17,10 @@ public:
     bool stato;
 
     // Costruttore di UtenteTrasportatore
-    UtenteTrasportatore(std::string nome_utente, std::string nome, std::string cognome, 
+    UtenteTrasportatore(std::string nome_utente,std::string categoria, std::string nome, std::string cognome, 
                         std::string numero_telefono, std::string password, std::string email,
                         std::string ditta_spedizione, bool stato)
-        : Utente( nome_utente, nome, cognome, numero_telefono, password, email), ditta_spedizione(ditta_spedizione), stato(stato) {}
+        : Utente( nome_utente, categoria, nome, cognome, numero_telefono, password, email), ditta_spedizione(ditta_spedizione), stato(stato) {}
 
     // Metodo specifico per UtenteTrasportatore
     void mostraInformazioniTrasportatore() {

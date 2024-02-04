@@ -10,6 +10,7 @@ CREATE TYPE votoStelle AS ENUM ('1', '2', '3', '4', '5');
 
 CREATE TYPE statoConsegna AS ENUM ('in elaborazione', 'spedito', 'in transito', 'consegnato');
 
+/*CREATE TYPE categoriaUtente AS ENUM ('UtenteCompratore', 'UtenteFornitore', 'UtenteTrasportatore');*/
 
 
 
@@ -155,6 +156,7 @@ CREATE TABLE IF NOT EXISTS Ordine (
 
 CREATE TABLE IF NOT EXISTS UtenteCompratore (
     idUtComp SERIAL,
+    categoriaUtente VARCHAR(50) NOT NULL UNIQUE,
     nome_utente VARCHAR(50) NOT NULL UNIQUE,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
@@ -187,6 +189,7 @@ CREATE TABLE IF NOT EXISTS DittaSp (
 
 CREATE TABLE IF NOT EXISTS UtenteFornitore (
     idUtForn SERIAL,
+    categoriaUtente VARCHAR(50) NOT NULL UNIQUE,
     nome_utente VARCHAR(50) NOT NULL UNIQUE,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
@@ -204,6 +207,7 @@ CREATE TABLE IF NOT EXISTS UtenteFornitore (
 
 CREATE TABLE IF NOT EXISTS UtenteTrasportatore (
     idUtTrasp SERIAL,
+    categoriaUtente VARCHAR(50) NOT NULL UNIQUE,
     nome_utente VARCHAR(50) NOT NULL UNIQUE,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,

@@ -18,6 +18,7 @@ public:
 
     // Costruttore di UtenteFornitore
     UtenteFornitore(std::string nome_utente, 
+                    std::string categoria,
                     std::string nome, 
                     std::string cognome,
                     std::string numero_telefono, 
@@ -26,7 +27,7 @@ public:
                     std::string azienda_produzione, 
                     bool stato)
 
-        : Utente(nome_utente, nome, cognome, numero_telefono, password, email), azienda_produzione(azienda_produzione), stato(stato) {}
+        : Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), azienda_produzione(azienda_produzione), stato(stato) {}
 
 
     // Metodo specifico per UtenteFornitore

@@ -16,6 +16,7 @@ int rows, k;
 class Utente {
 public:
     std::string id;
+    std::string categoria;
     std::string nome_utente;
     std::string nome;
     std::string cognome;
@@ -23,8 +24,8 @@ public:
     std::string password;
     std::string email;
 
-    Utente(std::string nome_utente, std::string nome, std::string cognome, std::string numero_telefono, std::string password, std::string email) 
-            : nome_utente(nome_utente), nome(nome), cognome(cognome), numero_telefono(numero_telefono), password(password), email(email) {}
+    Utente(std::string nome_utente, std::string categoria, std::string nome, std::string cognome, std::string numero_telefono, std::string password, std::string email) 
+            : categoria(categoria), nome_utente(nome_utente), nome(nome), cognome(cognome), numero_telefono(numero_telefono), password(password), email(email) {}
 
 
     void mostraInformazioni() {
@@ -38,19 +39,19 @@ public:
     }
 
 
-    void effettua_login(std::string input_nome_utente, std::string input_passw ){
+    void effettua_login(std::string categoria, std::string input_nome_utente, std::string input_passw ){
 
         //nome_utente = utente.nome_utente;
         //password = utente.password;
 
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce");
 
-        
         /////////////////////////////////////////////
         // Controlla se l'utente è già loggato:
         int stato_utente;
 
-        sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
+        //sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
+        sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente = '%s'", categoria.c_str(), input_nome_utente.c_str());
 
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
@@ -77,8 +78,9 @@ public:
         std::string password_utente;
         char *password_u;
 
-        sprintf(sqlcmd, "SELECT password FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());   // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
-        
+        //sprintf(sqlcmd, "SELECT password FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());   // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
+        sprintf(sqlcmd, "SELECT password FROM %s WHERE nome_utente = '%s'", categoria.c_str(), input_nome_utente.c_str());   // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
+
         PGresult *res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         
@@ -119,8 +121,9 @@ public:
         /////////////////////////////////////////////
         // Aggiorno stato:
     
-        sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
-        
+        //sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
+        sprintf(sqlcmd, "UPDATE %s set stato = 1 WHERE nome_utente = '%s'",categoria.c_str() ,input_nome_utente.c_str());
+
         res = db1.ExecSQLcmd(sqlcmd);
         
         PQclear(res); 
@@ -130,7 +133,8 @@ public:
         /////////////////////////////////////////////
         // Controlla se lo stto dell'utente è stato aggiornato:
 
-        sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
+        //sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
+        sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente = '%s'", categoria.c_str(), input_nome_utente.c_str());
 
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
@@ -158,7 +162,7 @@ public:
     }
 
 
-    void effettua_logout(std::string input_nome_utente){
+    void effettua_logout(std::string categoria, std::string input_nome_utente){
         
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce");
 
@@ -167,7 +171,8 @@ public:
         // Controlla se l'utente è già loggato:
         int stato_utente;
 
-        sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
+        //sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
+        sprintf(sqlcmd, "SELECT stato FROM %S WHERE nome_utente = '%s'", categoria.c_str(), input_nome_utente.c_str());
 
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
@@ -193,7 +198,8 @@ public:
             /////////////////////////////////////////////
             // Aggiorno stato:
     
-            sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 0 WHERE nome_utente = '%s'", input_nome_utente.c_str());
+            //sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 0 WHERE nome_utente = '%s'", input_nome_utente.c_str());
+            sprintf(sqlcmd, "UPDATE %s set stato = 0 WHERE nome_utente = '%s'", categoria.c_str(), input_nome_utente.c_str());
         
             res = db1.ExecSQLcmd(sqlcmd);
         
@@ -208,7 +214,8 @@ public:
         /////////////////////////////////////////////
         // Controlla se lo stto dell'utente è stato aggiornato:
 
-        sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
+        // sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
+        sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente = '%s'", categoria.c_str(), input_nome_utente.c_str());
 
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);

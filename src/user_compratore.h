@@ -35,6 +35,7 @@ class UtenteCompratore : public Utente {
     // Costruttore di UtenteCompratore
 
     UtenteCompratore(std::string nome_utente, 
+                    std::string categoria,
                      std::string nome, 
                      std::string cognome, 
                      std::string numero_telefono, 
@@ -47,7 +48,7 @@ class UtenteCompratore : public Utente {
                      float saldo, 
                      int stato): 
                     
-                    Utente(nome_utente, nome, cognome, numero_telefono, password, email), 
+                    Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), 
                     data_compleanno(data_compleanno), via_residenza(via_residenza), numero_civico(numero_civico),
                     CAP(CAP), città_residenza(città_residenza), saldo(saldo), stato(stato) {}
 
@@ -73,6 +74,7 @@ class UtenteCompratore : public Utente {
         void effettuaRegistrazione(UtenteCompratore utente, std::string conferma_password){
 
                     nome_utente = utente.nome_utente;
+                    categoria = utente.categoria;
                     nome = utente.nome;
                     cognome = utente.cognome;
                     numero_telefono = utente.numero_telefono;
@@ -162,12 +164,14 @@ class UtenteCompratore : public Utente {
 
                     // Trasforma 02/03/2023 in 02-03-2023.
 
-                    UtenteCompratore(nome_utente, nome, cognome, numero_telefono, password, email, formatted_date, via_residenza, numero_civico, CAP, città_residenza, saldo, stato);
+                    UtenteCompratore(categoria, nome_utente, nome, cognome, numero_telefono, password, email, formatted_date, via_residenza, numero_civico, CAP, città_residenza, saldo, stato);
 
                     std::cout << "Fino a riga 167 tutto ok." << std::endl;
 
-                    sprintf(sqlcmd, "INSERT INTO UtenteCompratore (idUtComp, nome_utente, nome, cognome, indirizzo_mail, numero_di_telefono, password, data_compleanno, via_di_residenza, numero_civico, CAP, citta_di_residenza, saldo, stato ) VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', %f, %d)",
-           nome_utente.c_str(), nome.c_str(), cognome.c_str(), email.c_str(), numero_telefono.c_str(), password.c_str(), formatted_date.c_str(), via_residenza.c_str(), numero_civico, CAP.c_str(), città_residenza.c_str(), saldo, stato);
+                    std::cout << "Categoria utente:" << utente.categoria << std::endl;
+
+                    sprintf(sqlcmd, "INSERT INTO UtenteCompratore (idUtComp, categoriaUtente, nome_utente, nome, cognome, indirizzo_mail, numero_di_telefono, password, data_compleanno, via_di_residenza, numero_civico, CAP, citta_di_residenza, saldo, stato ) VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', %f, %d)",
+           categoria.c_str(), nome_utente.c_str(), nome.c_str(), cognome.c_str(), email.c_str(), numero_telefono.c_str(), password.c_str(), formatted_date.c_str(), via_residenza.c_str(), numero_civico, CAP.c_str(), città_residenza.c_str(), saldo, stato);
                     
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res);        

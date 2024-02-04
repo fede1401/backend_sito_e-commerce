@@ -71,3 +71,5 @@ PQclear(res);
 ```
 
         
+Per effettuare una qualsiasi operazione postgreSQL con l'utilizzo di variabili all'interno utilizzare il campo %s, ad esempio:
+``` sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente = '%s'", categoria.c_str(), input_nome_utente.c_str()); ```
