@@ -64,6 +64,10 @@ class Product {
             if (rows == 1) { 
                 idAziendaProd = atoi(PQgetvalue(res, 0, PQfnumber(res, "idAziendaProd"))); 
             }
+            else{
+                std::cout << "L'azienda non esiste." << std::endl;
+                return;
+            }
             PQclear(res);  
             /////////////////////////////////////
 

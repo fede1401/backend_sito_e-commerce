@@ -70,7 +70,7 @@ public:
             stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
 
         } else {
-            std::cout << "Errore: Lo stato non è stato trovato." << std::endl;
+            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
             return;
         }
 
