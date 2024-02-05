@@ -13,6 +13,23 @@ CREATE TYPE statoConsegna AS ENUM ('in elaborazione', 'spedito', 'in transito', 
 /*CREATE TYPE categoriaUtente AS ENUM ('UtenteCompratore', 'UtenteFornitore', 'UtenteTrasportatore');*/
 
 
+/*
+Eliminazione tabelle:
+DROP TABLE UtenteCompratore CASCADE;
+DROP TABLE AziendaProd CASCADE;
+DROP TABLE DittaSp CASCADE;
+DROP TABLE UtenteFornitore CASCADE;
+DROP TABLE UtenteTrasportatore CASCADE;
+DROP TABLE Carta CASCADE;
+DROP TABLE Prodotto CASCADE;
+DROP TABLE Carrello CASCADE;
+DROP TABLE ListaDesideri CASCADE;
+DROP TABLE Reso CASCADE;
+DROP TABLE Recensione CASCADE;
+DROP TABLE AssistenzaClienti CASCADE;
+DROP TABLE Ordine CASCADE;
+*/
+
 
 /*
 CREATE TABLE IF NOT EXISTS UtenteCompratore (
@@ -156,7 +173,7 @@ CREATE TABLE IF NOT EXISTS Ordine (
 
 CREATE TABLE IF NOT EXISTS UtenteCompratore (
     idUtComp SERIAL,
-    categoriaUtente VARCHAR(50) NOT NULL UNIQUE,
+    categoriaUtente VARCHAR(50) NOT NULL,
     nome_utente VARCHAR(50) NOT NULL UNIQUE,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
@@ -189,7 +206,7 @@ CREATE TABLE IF NOT EXISTS DittaSp (
 
 CREATE TABLE IF NOT EXISTS UtenteFornitore (
     idUtForn SERIAL,
-    categoriaUtente VARCHAR(50) NOT NULL UNIQUE,
+    categoriaUtente VARCHAR(50) NOT NULL,
     nome_utente VARCHAR(50) NOT NULL UNIQUE,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
@@ -207,7 +224,7 @@ CREATE TABLE IF NOT EXISTS UtenteFornitore (
 
 CREATE TABLE IF NOT EXISTS UtenteTrasportatore (
     idUtTrasp SERIAL,
-    categoriaUtente VARCHAR(50) NOT NULL UNIQUE,
+    categoriaUtente VARCHAR(50) NOT NULL,
     nome_utente VARCHAR(50) NOT NULL UNIQUE,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
@@ -305,10 +322,13 @@ CREATE TABLE IF NOT EXISTS Recensione (
 );
 
 
-\d
-
 CREATE TABLE IF NOT EXISTS AssistenzaClienti (
-	numeroTelefono VARCHAR(20) NOT NULL
+	idChiamata SERIAL,
+  idUtComp SERIAL,
+  idUtForn SERIAL,
+  idUtTrasp SERIAL,
+  motivazioneChiamata VARCHAR(50) NOT NULL,
+  numeroTelefonoAssistenza VARCHAR(20) NOT NULL
 );
 
 

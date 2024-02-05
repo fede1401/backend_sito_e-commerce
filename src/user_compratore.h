@@ -40,8 +40,9 @@ class UtenteCompratore : public Utente {
         stato(0) {}
         
 
-    UtenteCompratore(std::string nome_utente, 
-                     std::string categoria,
+    UtenteCompratore(
+                    std::string categoria,
+                    std::string nome_utente, 
                      std::string nome, 
                      std::string cognome, 
                      std::string numero_telefono, 
@@ -55,7 +56,7 @@ class UtenteCompratore : public Utente {
                      float saldo, 
                      int stato): 
                     
-                    Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), 
+                    Utente(categoria, nome_utente, nome, cognome, numero_telefono, password, email), 
                     data_compleanno(data_compleanno), 
                     via_residenza(via_residenza), 
                     numero_civico(numero_civico),

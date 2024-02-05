@@ -17,6 +17,7 @@
 
 void print_select(std::string nome_tabella){
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+    std::cout << "Tabella: " << nome_tabella << std::endl;
     sprintf(sqlcmd, "SELECT * FROM %s", nome_tabella.c_str());
     res = db1.ExecSQLtuples(sqlcmd);
     rows = PQntuples(res);
@@ -76,7 +77,7 @@ int main() {
     res = db1.ExecSQLcmd(sqlcmd);
     PQclear(res); 
 
-
+    
     sprintf(sqlcmd, "SELECT * FROM AziendaProd");
     res = db1.ExecSQLtuples(sqlcmd);
     rows = PQntuples(res);
@@ -108,38 +109,62 @@ int main() {
     }
     PQclear(res); 
     */
+    
 
     //UtenteCompratore utente1("mario_1", "UtenteCompratore", "mario", "rossi", "3333333333", "Vaffsdns12?", "mario.rossi1@gmail.com", "15/09/2000", "via delle manine", 34, "01035", "terni", 0.0, 0);
 
-    UtenteCompratore utente;
+    //UtenteCompratore utente;
     //utente.effettuaRegistrazione("marco15", "UtenteCompratore", "Marco", "Verdi", "339995551", "marco.verdi@gmail.com", "Via delle castile", 59, "01044", "Roma", "Mouse1234", "Mouse1234", "25/01/1999");
-
 
     UtenteCompratore utente2;
     utente2.effettuaRegistrazione("Gabriele15", "UtenteCompratore", "Gabriele", "ROssi", "339995551", "gabriele.rossi@gmail.com", "Via delle tirali", 59, "01056", "Roma", "Computer1234", "Computer1234", "25/01/1999"); 
+    utente2.effettua_login("UtenteCompratore", "Gabriele15", "Computer1234");
+    utente2.effettua_logout("UtenteCompratore","Gabriele15");
 
     //utente1.effettuaRegistrazione(utente1, "Vaffsdns12?");
     
     //std::cout << "Campi dell'utente: " << utente2.nome << ",  " << utente2.cognome << ",  " << utente2.categoria << ",  " << utente2.nome_utente << ",  " << utente2.email <<  std::endl;
     
-    UtenteTrasportatore utentetrasport;
-    utentetrasport.effettuaRegistrazione("Mario24", "UtenteTrasportatore", "Mario", "Verdi", "3334445559", "mario.verdi@gmail.com", "TestieraLatt!23", "TestieraLatt!23", "FedEx");
-    utentetrasport.effettua_login("UtenteTrasportatore", "Mario24", "TestieraLatt!23");
+    //UtenteTrasportatore utentetrasport;
+    //utentetrasport.effettuaRegistrazione("Mario24", "UtenteTrasportatore", "Mario", "Verdi", "3334445559", "mario.verdi@gmail.com", "TestieraLatt!23", "TestieraLatt!23", "FedEx");
+    //utentetrasport.effettua_login("UtenteTrasportatore", "Mario24", "TestieraLatt!23");
 
     //fprintf(stdout, "maiqn(): inserted in UtenteCompratore %s\n", PQgetvalue(res, 0, PQfnumber(res, "numeroTelefono")));
 
-    utente2.effettua_login("UtenteCompratore", "Gabriele15", "Computer1234");
-    utente2.effettua_logout("UtenteCompratore","Gabriele15");
-
 
     //sprintf(sqlcmd, "SELECT * FROM UtenteCompratore");
+
+    UtenteFornitore utenteforn;
+    utenteforn.effettuaRegistrazione("Laura99", "UtenteFornitore", "Laura", "Mangialucchi", "333445567", "laura.mangialucchi@gmail.com", "Candela111?", "Candela111?", "Apple");
+    std::cout << "\n Fornitore categoria: " << utenteforn.categoria << "\n" << std::endl;
+    utenteforn.effettua_login("UtenteFornitore", "Laura99", "Candela111?");
+
+    UtenteFornitore utenteforn2;
+    utenteforn.effettuaRegistrazione("Biagio10", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
+    std::cout << "\n Fornitore categoria: " << utenteforn.categoria << "\n" << std::endl;
+    utenteforn.effettua_login("UtenteFornitore", "Biagio10", "Candela111?");
+    
+    utenteforn.effettuaRegistrazione("Andrea12", "UtenteFornitore", "Andrea", "Sacchini", "333445567", "andrea.sacchini@gmail.com", "Candelabro111?", "Candelabro111?", "Xiaomi");
+    utenteforn.effettua_login("UtenteFornitore", "Andrea12", "Candelabro111?");
+
     print_select("UtenteCompratore");
     print_select("utenteTrasportatore");
-    print_select("DittaSp");   
+    print_select("utenteFornitore");
 
+    print_select("DittaSp");  
+    print_select("AziendaProd");  
+
+    Product prodotto1;
+    prodotto1.add_new_product("Xiaomi lite9", "Telefonia", 540.00, "Xiaomi lite9, 8GB RAM, 1 TB archiviazione", "Xiaomi", 10);
+    Product prodotto2;
+    prodotto2.add_new_product("Iphone 15", "Telefonia", 990.00, "Iphone 15 nuovo, 16GB RAM, 1TB archiviazione", "Apple", 15);
+    //print_select("Prodotto");   
 
     Carrello carrello1;
-    //carrello1.add_prodotto("Gabriele15", ) 
+    carrello1.add_prodotto("Gabriele15", 2);
+
+    print_select("Prodotto");
+    print_select("Carrello"); 
 
     /*if (rows >= 1) {
 
@@ -156,7 +181,6 @@ int main() {
 
     return 0;
 }
-
 
 
 

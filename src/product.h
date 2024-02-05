@@ -5,6 +5,12 @@
 
 #include <iostream>
 #include <string>
+#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
+
+//PGresult *res;
+//char sqlcmd[1000];
+
+//int rows, k;
 
 class Product {
     public:
@@ -15,6 +21,15 @@ class Product {
     std::string descrizione;
     std::string azienda_produzione;
     int numero_copie_disponibili;
+
+    Product(): 
+        nome(""),
+        categoria(""),
+        prezzo_euro(-1.0),
+        descrizione(""),
+        azienda_produzione(""),
+        numero_copie_disponibili(-1){}
+
 
     Product(std::string nome, std::string categoria, 
            float prezzo_euro, std::string descrizione, std::string azienda_produzione, int numero_copie_disponibili)

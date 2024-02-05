@@ -3,6 +3,8 @@
 #define LISTA_DESIDERI_H
 
 #include <string>
+#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
+
 
 class ListaDesideri {
 public:

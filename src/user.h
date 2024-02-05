@@ -14,10 +14,10 @@ bool isSpecialCharacter(char c) {
 }
 
 
-PGresult *res;
-char sqlcmd[1000];
+//PGresult *res;
+//char sqlcmd[1000];
 
-int rows, k;
+//int rows, k;
 
 class Utente {
 public:
@@ -30,9 +30,8 @@ public:
     std::string password;
     std::string email;
 
-    Utente(std::string nome_utente, std::string categoria, std::string nome, std::string cognome, std::string numero_telefono, std::string password, std::string email) 
+    Utente(std::string categoria, std::string nome_utente, std::string nome, std::string cognome, std::string numero_telefono, std::string password, std::string email) 
             : categoria(categoria), nome_utente(nome_utente), nome(nome), cognome(cognome), numero_telefono(numero_telefono), password(password), email(email) {}
-
 
     void mostraInformazioni() {
         std::cout << "ID: " << id << std::endl;
@@ -154,6 +153,9 @@ public:
 
         std::cout << "Lo stato dell'utente dopo l'update è: " << stato_utente << std::endl;
         /////////////////////////////////////////////
+
+
+        // Assegna tutti i valori 
 
         
 
