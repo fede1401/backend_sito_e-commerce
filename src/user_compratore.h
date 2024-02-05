@@ -15,11 +15,6 @@
 //int rows, k;
 
 
-bool isSpecialCharacter(char c) {
-    // Puoi aggiungere altri caratteri speciali se necessario
-    return !std::isalnum(c);
-}
-
 
 class UtenteCompratore : public Utente {
     public:
@@ -32,10 +27,21 @@ class UtenteCompratore : public Utente {
     float saldo;
     int stato;
 
-    // Costruttore di UtenteCompratore
+    // Costruttori di UtenteCompratore
+
+    UtenteCompratore():
+        Utente("", "", "", "", "", "", ""),
+        data_compleanno(""), 
+        via_residenza(""), 
+        numero_civico(0), 
+        CAP(""), 
+        città_residenza(""), 
+        saldo(0.0), 
+        stato(0) {}
+        
 
     UtenteCompratore(std::string nome_utente, 
-                    std::string categoria,
+                     std::string categoria,
                      std::string nome, 
                      std::string cognome, 
                      std::string numero_telefono, 
@@ -43,14 +49,21 @@ class UtenteCompratore : public Utente {
                      std::string email,
                      std::string data_compleanno, 
                      std::string via_residenza, 
-                     int numero_civico, std::string CAP, 
+                     int numero_civico, 
+                     std::string CAP, 
                      std::string città_residenza, 
                      float saldo, 
                      int stato): 
                     
                     Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), 
-                    data_compleanno(data_compleanno), via_residenza(via_residenza), numero_civico(numero_civico),
-                    CAP(CAP), città_residenza(città_residenza), saldo(saldo), stato(stato) {}
+                    data_compleanno(data_compleanno), 
+                    via_residenza(via_residenza), 
+                    numero_civico(numero_civico),
+                    CAP(CAP), 
+                    città_residenza(città_residenza), 
+                    saldo(saldo), 
+                    stato(stato) {}
+
 
     // Metodo specifico per UtenteCompratore
     void mostraInformazioniCompratore() {
@@ -71,15 +84,16 @@ class UtenteCompratore : public Utente {
                                 std:: string password, std:: string conferma_password, 
                                 std::string data_compleanno  ){
                                     */
-        void effettuaRegistrazione(UtenteCompratore utente, std::string conferma_password){
+    /*                               
+    void effettuaRegistrazione(UtenteCompratore utente, std::string conferma_password){
 
-                    nome_utente = utente.nome_utente;
-                    categoria = utente.categoria;
-                    nome = utente.nome;
-                    cognome = utente.cognome;
-                    numero_telefono = utente.numero_telefono;
-                    email = utente.email;
-                    data_compleanno = utente.data_compleanno;
+        nome_utente = utente.nome_utente;
+        categoria = utente.categoria;
+        nome = utente.nome;
+        cognome = utente.cognome;
+        numero_telefono = utente.numero_telefono;
+        email = utente.email;
+        data_compleanno = utente.data_compleanno;
                     password = utente.password;
                     via_residenza = utente.via_residenza;
                     numero_civico = utente.numero_civico;
@@ -179,6 +193,137 @@ class UtenteCompratore : public Utente {
 
                     std::cout << "Utente inserito." << std::endl;
         }
+    */
+
+    void effettuaRegistrazione( std::string in_nome_utente, 
+                                std::string in_categoria,
+                                std::string in_nome, std::string in_cognome, 
+                                std::string in_numero_telefono, 
+                                std::string in_email, 
+                                std::string in_via_residenza, int in_numero_civico, std::string in_CAP, std::string in_città_residenza,
+                                std:: string in_password, std:: string in_conferma_password, 
+                                std::string in_data_compleanno) {
+
+        int stato = 0;
+        float saldo = 0.0;
+
+
+        ///////////////////////////////////// 
+        // Controllo se la mail contiene il carattere "@".
+        if (in_email.find("@") == std::string::npos) {
+            std::cout << "Errore: La mail deve contenere il carattere '@'." << std::endl;
+            return;
+            }
+        ///////////////////////////////////// 
+             
+
+        ///////////////////////////////////// 
+        // Controllo se la password rispetta i criteri: lunghezza di almeno 8, almeno una lettere maiuscola, un numero e un carattere speciale.
+        if (in_password.length() < 8){
+            std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
+            return;
+        }
+
+        if (in_conferma_password.length() < 8){
+            std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
+            return;
+                    }
+                                
+        bool hasUpperCase = false;
+        bool hasDigit = false;
+        bool hasSpecialChar = false;
+        for (size_t i = 0; i < in_password.length(); i++)
+        {
+            if (std::isupper(in_password[i])) {  hasUpperCase = true; } 
+                                    
+            else if (std::isdigit(in_password[i])) { hasDigit = true;} 
+                        
+            else if (isSpecialCharacter(in_password[i])) {  hasSpecialChar = true; }
+            
+        }
+
+        if (!hasUpperCase) { std::cout << "La password deve contenere almeno un carattere maiuscolo." << std::endl;  }
+        if (!hasDigit) { std::cout << "La password deve contenere almeno un numero." << std::endl; }
+        if (!hasSpecialChar) {  std::cout << "La password deve contenere almeno un carattere speciale." << std::endl; }
+        ///////////////////////////////////// 
+                   
+
+        ///////////////////////////////////// 
+        // Controllo se la password è uguale al campo conferma_password
+        if (in_password != in_conferma_password){
+            std::cout << "Errore: Le password non corrispondono." << std::endl;
+            return;
+        }
+        ///////////////////////////////////// 
+
+
+        ///////////////////////////////////// 
+        // Connessione al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        std::cout << "Connessione al database avvenuta con successo." << std::endl;
+        ///////////////////////////////////// 
+
+
+        /////////////////////////////////////                         
+        // Controllo se il nome utente è univoco
+        sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente = '%s'", in_nome_utente.c_str());
+        PGresult *res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        PQclear(res);
+        if (rows > 0) {
+                std::cout << "Errore: Il nome utente è già in uso." << std::endl;
+                return;
+        }
+        ///////////////////////////////////// 
+
+
+        ///////////////////////////////////// 
+        // Controllo se l'email è univoca
+        sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE indirizzo_mail = '%s'", in_email.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        PQclear(res);
+        if (rows > 0) {
+            std::cout << "Errore: L'indirizzo mail è già in uso." << std::endl;
+            return;
+        }
+        ///////////////////////////////////// 
+
+
+        ///////////////////////////////////// 
+        // Trasformo la data di compleanno nel formato da inserire nel db:
+        // 02/03/2023 in 02-03-2023.
+        std::string formatted_date;
+        std::stringstream ss(in_data_compleanno); // Utilizza un stringstream per manipolare la stringa
+        std::string token;
+        while (std::getline(ss, token, '/')) { // Assumendo che la data sia nel formato "GG/MM/AAAA"
+            formatted_date += token + "-";
+        }
+        formatted_date.pop_back(); // Rimuove il carattere '-' in eccesso alla fine
+        ///////////////////////////////////// 
+        
+
+        /////////////////////////////////////
+        // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
+        *this = UtenteCompratore(in_categoria, in_nome_utente, in_nome, in_cognome, in_numero_telefono, in_password, in_email, formatted_date, in_via_residenza, in_numero_civico, in_CAP, in_città_residenza, saldo, stato);
+        /////////////////////////////////////
+
+        std::cout << "Categoria utente:" << in_categoria << std::endl;
+
+        /////////////////////////////////////
+        // Inserisco nel database il nuovo utente:
+        sprintf(sqlcmd, "INSERT INTO UtenteCompratore (idUtComp, categoriaUtente, nome_utente, nome, cognome, indirizzo_mail, numero_di_telefono, password, data_compleanno, via_di_residenza, numero_civico, CAP, citta_di_residenza, saldo, stato ) VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', %f, %d)",
+        in_categoria.c_str(), in_nome_utente.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), formatted_date.c_str(), in_via_residenza.c_str(), in_numero_civico, in_CAP.c_str(), in_città_residenza.c_str(), saldo, stato);
+                    
+        res = db1.ExecSQLcmd(sqlcmd);
+        PQclear(res);  
+        /////////////////////////////////////      
+
+        // Conferma di inserimento nel db
+        std::cout << "Utente inserito." << std::endl;
+    }
 
 
 

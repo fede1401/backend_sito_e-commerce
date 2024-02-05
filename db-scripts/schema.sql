@@ -175,14 +175,14 @@ CREATE TABLE IF NOT EXISTS UtenteCompratore (
 
 CREATE TABLE IF NOT EXISTS AziendaProd (
     idAziendaProd SERIAL,
-    nome VARCHAR(50) NOT NULL,
+    nome VARCHAR(50) NOT NULL UNIQUE,
     PRIMARY KEY(idAziendaProd)
 );
 
 
 CREATE TABLE IF NOT EXISTS DittaSp (
     idDittaSp SERIAL,
-    nome VARCHAR(50) NOT NULL,
+    nome VARCHAR(50) NOT NULL UNIQUE,
     PRIMARY KEY(idDittaSp)
 );
 
@@ -246,13 +246,6 @@ CREATE TABLE IF NOT EXISTS Prodotto (
     CONSTRAINT fk_idAziendaProd
       FOREIGN KEY(idAziendaProd)
       REFERENCES AziendaProd(idAziendaProd)
-);
-
-
-CREATE TABLE IF NOT EXISTS AziendaProd (
-    idAziendaProd SERIAL,
-    nome VARCHAR(50) NOT NULL,
-    PRIMARY KEY(idAziendaProd)
 );
 
 

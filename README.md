@@ -73,3 +73,22 @@ PQclear(res);
         
 Per effettuare una qualsiasi operazione postgreSQL con l'utilizzo di variabili all'interno utilizzare il campo %s, ad esempio:
 ``` sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente = '%s'", categoria.c_str(), input_nome_utente.c_str()); ```
+
+
+Per stampare su terminale i risultati delle query che prendono tutte le colonne utilizzare questo codice di esempio:
+```
+sprintf(sqlcmd, "SELECT * FROM UtenteCompratore");
+    res = db1.ExecSQLtuples(sqlcmd);
+    rows = PQntuples(res);
+    int numCols = PQnfields(res);
+
+    std::cout << "Rows: " << rows << std::endl;
+    for (int i = 0; i < rows; ++i) {
+        std::cout << "Row " << i << ": ";
+        for (int j = 0; j < numCols; ++j) {
+            std::cout << PQgetvalue(res, i, j) << "\t";
+        }
+        std::cout << std::endl;
+    }
+    PQclear(res); 
+```

@@ -8,6 +8,12 @@
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
 
+bool isSpecialCharacter(char c) {
+    // Puoi aggiungere altri caratteri speciali se necessario
+    return !std::isalnum(c);
+}
+
+
 PGresult *res;
 char sqlcmd[1000];
 
@@ -44,7 +50,7 @@ public:
         //nome_utente = utente.nome_utente;
         //password = utente.password;
 
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce");
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         /////////////////////////////////////////////
         // Controlla se l'utente è già loggato:
@@ -88,8 +94,6 @@ public:
 
         password_u = PQgetvalue(res, 0, PQfnumber(res, "password"));
         password_utente.assign(password_u);
-
-        std::cout << "Fino a riga 90 tutto ok." << std::endl;
         
         // Ora password_string contiene la password come stringa
         } 
@@ -112,8 +116,6 @@ public:
         else{
             std::cout << "La passowrd " << password_utente << "è corretta." << std::endl;
         }
-
-        std::cout << "Fino a riga 114 tutto ok." << std::endl;
         /////////////////////////////////////////////
 
 
@@ -139,8 +141,6 @@ public:
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
 
-        std::cout << "Rows: " << rows << std::endl;
-
         if (rows == 1) {
             //std::cout << "Fino a riga 58 tutto ok." << std::endl;
 
@@ -164,7 +164,7 @@ public:
 
     void effettua_logout(std::string categoria, std::string input_nome_utente){
         
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce");
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         
         /////////////////////////////////////////////
@@ -172,7 +172,7 @@ public:
         int stato_utente;
 
         //sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
-        sprintf(sqlcmd, "SELECT stato FROM %S WHERE nome_utente = '%s'", categoria.c_str(), input_nome_utente.c_str());
+        sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente = '%s'", categoria.c_str(), input_nome_utente.c_str());
 
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
