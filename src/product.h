@@ -8,7 +8,7 @@
 
 class Product {
     public:
-    std::string cod_product;
+    int cod_product;
     std::string nome;
     std::string categoria;
     float prezzo_euro;
@@ -16,9 +16,9 @@ class Product {
     std::string azienda_produzione;
     int numero_copie_disponibili;
 
-    Product(std::string cod_product, std::string nome, std::string categoria, 
+    Product(std::string nome, std::string categoria, 
            float prezzo_euro, std::string descrizione, std::string azienda_produzione, int numero_copie_disponibili)
-        : cod_product(cod_product), nome(nome), categoria(categoria),
+        : nome(nome), categoria(categoria),
           prezzo_euro(prezzo_euro), descrizione(descrizione), azienda_produzione(azienda_produzione), numero_copie_disponibili(numero_copie_disponibili) {}
 
     void mostraInformazioni() {
@@ -30,20 +30,58 @@ class Product {
         std::cout << "Azienda produzione: " << azienda_produzione << std::endl;
         std::cout << "Numero copie disponibili: " << numero_copie_disponibili << std::endl;
     }
+
+
+    void add_new_product(std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili){
+
+            ///////////////////////////////////// 
+            // Troviamo l'id dell'azienda di produzione che sarà inserita nel database
+
+            // Connessione al database:
+            Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+            std::cout << "Connessione al database avvenuta con successo." << std::endl;
+
+            // SELECT:
+            int idAziendaProd;
+            sprintf(sqlcmd, "SELECT idAziendaProd FROM AziendaProd WHERE nome = '%s'", in_azienda_produzione.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            if (rows == 1) { 
+                idAziendaProd = atoi(PQgetvalue(res, 0, PQfnumber(res, "idAziendaProd"))); 
+            }
+            PQclear(res);  
+            /////////////////////////////////////
+
+
+            /////////////////////////////////////
+            // Assicuriamoci che l'utente che inserirà il prodotto nel sito è un Utente Fornitore
+            sprintf(sqlcmd, "SELECT idUtForn FROM UtenteFornitore WHERE idAziendaProd = '%d'", idAziendaProd);
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            if (rows == 1) { 
+                std::cout << "L'utente che inserisce il prodotto nel sito è un utente fornitore" << std::endl;
+            }
+            else{
+                std::cout << "L'utente che inserisce il prodotto nel sito NON è un utente fornitore" << std::endl;
+                return;
+            }
+            PQclear(res);  
+            /////////////////////////////////////
+
+
+            *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
+
+            /////////////////////////////////////
+            // Aggiungo il prodotto nel database nella tabella Prodotto
+            sprintf(sqlcmd, "INSERT INTO Prodotto(codProdotto, nome, categoria, prezzoEuro, idAziendaProd, num_copie_dispo) VALUES (DEFAULT, '%s', '%s', '%f', '%d', '%d')", 
+                                                               in_nome.c_str(), in_categoria.c_str(), in_prezzo_euro, idAziendaProd, in_numero_copie_disponibili);
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res); 
+            /////////////////////////////////////
+    }
+
 };
 
 
-/*
-int main() {
-    // Esempi di utilizzo delle classi derivate
-
-    Product prodotto1("A-01", "Iphone 15", "Telefonia", 859.99, "Iphone color nero, 8 GB Ram, 512 GB archiviazione", "Apple", 150);
-
-    // Visualizzazione delle informazioni specifiche per ciascun tipo di utente
-    prodotto1.mostraInformazioni();
-
-    return 0;
-}
-*/
 
 #endif // PRODUCT_H

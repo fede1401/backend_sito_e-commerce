@@ -21,7 +21,7 @@ int rows, k;
 
 class Utente {
 public:
-    std::string id;
+    int id;
     std::string categoria;
     std::string nome_utente;
     std::string nome;
