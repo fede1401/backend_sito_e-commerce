@@ -73,7 +73,6 @@ class Product {
             */
             
 
-        /////////////////////////////////////
         // Assicuriamoci che l'utente che inserirà il prodotto nel sito è un Utente Fornitore
         sprintf(sqlcmd, "SELECT nome_utente_fornitore FROM UtenteFornitore WHERE nome_AziendaProduttrice = '%s'", in_azienda_produzione.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
@@ -86,22 +85,51 @@ class Product {
             return;
         }
         PQclear(res);  
-        /////////////////////////////////////
 
         *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
 
 
         // Se il prodotto inserito è già presente nella tabella Prodotto, allora dobbiamo solamente incrementare la quantità di copie, altrimenti dovremo inserirlo:
-        sprintf(sqlcmd, "SELECT nome_utente_fornitore FROM UtenteFornitore WHERE nome_AziendaProduttrice = '%s'", in_azienda_produzione.c_str());
+        sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND prezzoEuro='%f' AND nome_AziendaProduttrice='%s'" , 
+        in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        ////////////////////////////////////
-        // Aggiungo il prodotto nel database nella tabella Prodotto
-        sprintf(sqlcmd, "INSERT INTO Prodotto(codProdotto, nome, categoria,descrizione, prezzoEuro, nome_AziendaProduttrice, num_copie_dispo) VALUES (DEFAULT, '%s', '%s', '%s', '%f', '%s', '%d')", 
-                                                               in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str(), in_numero_copie_disponibili);
-        res = db1.ExecSQLcmd(sqlcmd);
-        PQclear(res); 
-            /////////////////////////////////////
+
+        if (rows >= 1){
+            // Il prodotto è già all'interno del backend, perciò dobbiamo solamente aumentarne la quantità di 1
+                // 1. Caricihiamo il numero di copie disponibili;
+                // 2. Le incrementiamo di 1;
+                // 3. Eseguiamo un UPDATE per modificare il valore delle copie disponibili;
+
+                int numCopieDisponibili;
+
+                // 1.
+                sprintf(sqlcmd, "SELECT num_copie_dispo FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND prezzoEuro='%f' AND nome_AziendaProduttrice='%s'" , 
+                in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str());
+                res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+                if (rows == 1){
+                    numCopieDisponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
+
+                    // 2.
+                    numCopieDisponibili = numCopieDisponibili + 1;
+
+                    // 3.
+                    sprintf(sqlcmd, "UPDATE Prodotto set num_copie_dispo = '%d' WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND prezzoEuro='%f' AND nome_AziendaProduttrice='%s'" , 
+                    numCopieDisponibili , in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res); 
+                }
+        }
+        else{
+            // Il prodotto non è all'interno del backend, inseriamolo:
+            sprintf(sqlcmd, "INSERT INTO Prodotto(codProdotto, nome, categoria,descrizione, prezzoEuro, nome_AziendaProduttrice, num_copie_dispo) VALUES (DEFAULT, '%s', '%s', '%s', '%f', '%s', '%d')", 
+                                                            in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str(), in_numero_copie_disponibili);
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res); 
+        }
+        
+            
     return;
     }
 
