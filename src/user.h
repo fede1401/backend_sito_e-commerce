@@ -46,110 +46,161 @@ public:
     }
 
 
-    void effettua_login(std::string categoria, std::string input_nome_utente, std::string input_passw)
+    void effettua_login(std::string input_nome_utente, std::string input_passw)
     {
-
         // nome_utente = utente.nome_utente;
         // password = utente.password;
 
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
+        std::string categoriaUtenteLogin = categoria;
+
+        // Controlla se l'utente è già loggato:
+        int stato_utente;
 
         // UTENTE COMPRATORE
-        if (categoria == "UtenteCompratore")
+        if (categoriaUtenteLogin == "UtenteCompratore"){
+            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+        }
+
+        // UTENTE FORNITORE
+        if (categoriaUtenteLogin == "UtenteFornitore"){
+            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+        }
+
+        // UTENTE TRASPORTATORE
+        if (categoriaUtenteLogin == "UtenteTrasportatore"){
+            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+        }
+
+
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        // Riga contenente lo stato dell'utente con nome utente : std::string input_nome_utente
+        if (rows == 1)
         {
 
-            // Controlla se l'utente è già loggato:
-            int stato_utente;
+            // Importante che come parametri PQgetvalues al secondo campo indica il numero di riga, dato che c'è solo uno stato di un'utente, si troverà all'indice 0 della riga
+            stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
 
-            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_compratore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-            res = db1.ExecSQLtuples(sqlcmd);
-            rows = PQntuples(res);
-
-            // Riga contenente lo stato dell'utente con nome utente : std::string input_nome_utente
-            if (rows == 1)
+            if (stato_utente == 1)
             {
+                std::cout << "L'utente è già connesso." << std::endl;
+                return;
+            }
+            else
+            {
+                // Aggiorniamo lo stato dell'utente: da disconnesso a connesso:
 
-                // Importante che come parametri PQgetvalues al secondo campo indica il numero di riga, dato che c'è solo uno stato di un'utente, si troverà all'indice 0 della riga
-                stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+                // Verifica della password:
+                std::string password_utente;
+                char *password_u;
 
-                if (stato_utente == 1)
+                // UTENTE COMPRATORE
+                if (categoriaUtenteLogin == "UtenteCompratore"){
+                    // sprintf(sqlcmd, "SELECT password FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());   // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
+                    sprintf(sqlcmd, "SELECT password FROM %s WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str()); 
+                }
+
+                if (categoriaUtenteLogin == "UtenteFornitore"){
+                    // sprintf(sqlcmd, "SELECT password FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());   // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
+                    sprintf(sqlcmd, "SELECT password FROM %s WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str()); 
+                }
+
+                if (categoriaUtenteLogin == "UtenteTrasportatore"){
+                    // sprintf(sqlcmd, "SELECT password FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());   // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
+                    sprintf(sqlcmd, "SELECT password FROM %s WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str()); 
+                }
+
+                
+                PGresult *res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+
+                if (rows == 1)
                 {
-                    std::cout << "L'utente è già connesso." << std::endl;
+                    password_u = PQgetvalue(res, 0, PQfnumber(res, "password"));
+                    password_utente.assign(password_u);
+                }
+                else
+                {
+                    // Altrimenti, il nome utente non è stato trovato o ci sono più utenti con lo stesso nome utente
+                    // Gestisci questa situazione di conseguenza
+                    std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+                    return;
+                }
+
+                // Ricorda di liberare la memoria del risultato della query
+                PQclear(res);
+
+                // Controllo della password data in input e quella segnata nel database:
+                if (input_passw != password_utente)
+                {
+                    std::cout << "Errore: La passowrd non è corretta, riprovare." << std::endl;
                     return;
                 }
                 else
                 {
-                    // Aggiorniamo lo stato dell'utente: da disconnesso a connesso:
+                    std::cout << "La passowrd " << password_utente << "è corretta." << std::endl;
 
-                    // Verifica della password:
-                    std::string password_utente;
-                    char *password_u;
+                    // Aggiorno stato:
 
-                    // sprintf(sqlcmd, "SELECT password FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());   // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
-                    sprintf(sqlcmd, "SELECT password FROM %s WHERE nome_utente_compratore = '%s'", categoria.c_str(), input_nome_utente.c_str()); // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
+                    if (categoriaUtenteLogin == "UtenteCompratore"){
+                        // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
+                        sprintf(sqlcmd, "UPDATE %s set stato = 1 WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    }
 
-                    PGresult *res = db1.ExecSQLtuples(sqlcmd);
+                    if (categoriaUtenteLogin == "UtenteFornitore"){
+                        // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
+                        sprintf(sqlcmd, "UPDATE %s set stato = 1 WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    }
+
+                    if (categoriaUtenteLogin == "UtenteTrasportatore"){
+                        // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
+                        sprintf(sqlcmd, "UPDATE %s set stato = 1 WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    }
+                    
+                    res = db1.ExecSQLcmd(sqlcmd);
+
+                    PQclear(res);
+
+                    std::cout << "Lo stato dell'utente prima di averlo aggiornato è: " << stato_utente << std::endl;
+
+                    // Controlla se lo stto dell'utente è stato aggiornato:
+
+                    // UTENTE COMPRATORE
+                    if (categoriaUtenteLogin == "UtenteCompratore"){
+                        sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    }
+
+
+                    // UTENTE FORNITORE
+                    if (categoriaUtenteLogin == "UtenteFornitore"){
+                        sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    }
+
+
+                    // UTENTE TRASPORTATORE
+                    if (categoriaUtenteLogin == "UtenteTrasportatore"){
+                        sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    }
+
+
+                    res = db1.ExecSQLtuples(sqlcmd);
                     rows = PQntuples(res);
 
                     if (rows == 1)
                     {
-
-                        password_u = PQgetvalue(res, 0, PQfnumber(res, "password"));
-                        password_utente.assign(password_u);
+                        stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+                        std::cout << "Lo stato dell'utente dopo averlo aggiornato con l'update è: " << stato_utente << std::endl;
                     }
+
                     else
                     {
-                        // Altrimenti, il nome utente non è stato trovato o ci sono più utenti con lo stesso nome utente
-                        // Gestisci questa situazione di conseguenza
                         std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                         return;
                     }
-
-                    // Ricorda di liberare la memoria del risultato della query
-                    PQclear(res);
-
-                    // Controllo della password data in input e quella segnata nel database:
-                    if (input_passw != password_utente)
-                    {
-                        std::cout << "Errore: La passowrd non è corretta, riprovare." << std::endl;
-                        return;
-                    }
-                    else
-                    {
-                        std::cout << "La passowrd " << password_utente << "è corretta." << std::endl;
-
-                        // Aggiorno stato:
-
-                        // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                        sprintf(sqlcmd, "UPDATE %s set stato = 1 WHERE nome_utente_compratore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                        res = db1.ExecSQLcmd(sqlcmd);
-
-                        PQclear(res);
-
-                        std::cout << "Lo stato dell'utente prima di averlo aggiornato è: " << stato_utente << std::endl;
-
-                        // Controlla se lo stto dell'utente è stato aggiornato:
-
-                        sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_compratore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                        res = db1.ExecSQLtuples(sqlcmd);
-                        rows = PQntuples(res);
-
-                        if (rows == 1)
-                        {
-                            stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-                            std::cout << "Lo stato dell'utente dopo averlo aggiornato con l'update è: " << stato_utente << std::endl;
-                        }
-
-                        else
-                        {
-                            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                            return;
-                        }
 
                         /*
                         // Creo il costruttore della classe utente compratore dopo il login:
@@ -189,271 +240,8 @@ public:
                 std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                 return;
             }
-        }
 
-
-        // UTENTE FORNITORE
-        if (categoria == "UtenteFornitore")
-        {
-            // Controlla se l'utente è già loggato:
-            int stato_utente;
-
-            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_fornitore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-            res = db1.ExecSQLtuples(sqlcmd);
-            rows = PQntuples(res);
-
-            if (rows == 1)
-            {
-
-                // Importante che come parametri PQgetvalues al secondo campo indica il numero di riga, dato che c'è solo uno stato di un'utente, si troverà all'indice 0 della riga
-                stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-
-                if (stato_utente == 1)
-                {
-                    std::cout << "L'utente è già connesso." << std::endl;
-                    return;
-                }
-                else
-                {
-                    // Aggiorniamo lo stato dell'utente: da disconnesso a connesso:
-
-                    // Verifica della password:
-                    std::string password_utente;
-                    char *password_u;
-
-                    // sprintf(sqlcmd, "SELECT password FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());   // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
-                    sprintf(sqlcmd, "SELECT password FROM %s WHERE nome_utente_fornitore = '%s'", categoria.c_str(), input_nome_utente.c_str()); // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
-
-                    PGresult *res = db1.ExecSQLtuples(sqlcmd);
-                    rows = PQntuples(res);
-
-                    if (rows == 1)
-                    {
-
-                        password_u = PQgetvalue(res, 0, PQfnumber(res, "password"));
-                        password_utente.assign(password_u);
-                    }
-                    else
-                    {
-                        // Altrimenti, il nome utente non è stato trovato o ci sono più utenti con lo stesso nome utente
-                        // Gestisci questa situazione di conseguenza
-                        std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                        return;
-                    }
-
-                    // Ricorda di liberare la memoria del risultato della query
-                    PQclear(res);
-
-                    // Controllo della password data in input e quella segnata nel database:
-                    if (input_passw != password_utente)
-                    {
-                        std::cout << "Errore: La passowrd non è corretta, riprovare." << std::endl;
-                        return;
-                    }
-                    else
-                    {
-                        std::cout << "La passowrd " << password_utente << "è corretta." << std::endl;
-
-                        // Aggiorno stato:
-
-                        // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                        sprintf(sqlcmd, "UPDATE %s set stato = 1 WHERE nome_utente_fornitore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                        res = db1.ExecSQLcmd(sqlcmd);
-
-                        PQclear(res);
-
-                        std::cout << "Lo stato dell'utente prima di averlo aggiornato è: " << stato_utente << std::endl;
-
-                        // Controlla se lo stto dell'utente è stato aggiornato:
-
-                        sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_fornitore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                        res = db1.ExecSQLtuples(sqlcmd);
-                        rows = PQntuples(res);
-
-                        if (rows == 1)
-                        {
-                            stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-                            std::cout << "Lo stato dell'utente dopo averlo aggiornato con l'update è: " << stato_utente << std::endl;
-                        }
-
-                        else
-                        {
-                            std::cout << "Errore: Lo stato non è stato trovato." << std::endl;
-                            return;
-                        }
-
-                        /*
-                        // Creo il costruttore della classe utente fornitore dopo il login:
-                        UtenteFornitore fornitore;
-                        sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_fornitore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                        res = db1.ExecSQLtuples(sqlcmd);
-                        rows = PQntuples(res);
-
-                        if (rows == 1){
-                            fornitore.nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_fornitore"));
-                            fornitore.categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
-                            fornitore.nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
-                            fornitore.cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
-                            fornitore.email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
-                            fornitore.numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
-                            fornitore.azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
-                            fornitore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
-                            fornitore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-                        }
-                        else{
-                            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                            return;
-                        }
-                        */
-                        
-
-                    }
-                }
-            }
-            else
-            {
-                std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                return;
-            }
-
-
-        }
-
-
-        // UTENTE TRASPORTATORE
-        if (categoria == "UtenteTrasportatore")
-        {
-            // Controlla se l'utente è già loggato:
-            int stato_utente;
-
-            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_trasportatore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-            res = db1.ExecSQLtuples(sqlcmd);
-            rows = PQntuples(res);
-
-            if (rows == 1)
-            {
-
-                // Importante che come parametri PQgetvalues al secondo campo indica il numero di riga, dato che c'è solo uno stato di un'utente, si troverà all'indice 0 della riga
-                stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-
-                if (stato_utente == 1)
-                {
-                    std::cout << "L'utente è già connesso." << std::endl;
-                    return;
-                }
-                else
-                {
-                    // Aggiorniamo lo stato dell'utente: da disconnesso a connesso:
-
-                    // Verifica della password:
-                    std::string password_utente;
-                    char *password_u;
-
-                    // sprintf(sqlcmd, "SELECT password FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());   // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
-                    sprintf(sqlcmd, "SELECT password FROM %s WHERE nome_utente_trasportatore = '%s'", categoria.c_str(), input_nome_utente.c_str()); // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';
-
-                    PGresult *res = db1.ExecSQLtuples(sqlcmd);
-                    rows = PQntuples(res);
-
-                    if (rows == 1)
-                    {
-
-                        password_u = PQgetvalue(res, 0, PQfnumber(res, "password"));
-                        password_utente.assign(password_u);
-                    }
-                    else
-                    {
-                        // Altrimenti, il nome utente non è stato trovato o ci sono più utenti con lo stesso nome utente
-                        // Gestisci questa situazione di conseguenza
-                        std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                        return;
-                    }
-
-                    // Ricorda di liberare la memoria del risultato della query
-                    PQclear(res);
-
-                    // Controllo della password data in input e quella segnata nel database:
-                    if (input_passw != password_utente)
-                    {
-                        std::cout << "Errore: La passowrd non è corretta, riprovare." << std::endl;
-                        return;
-                    }
-                    else
-                    {
-                        std::cout << "La passowrd " << password_utente << "è corretta." << std::endl;
-
-                        // Aggiorno stato:
-
-                        // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                        sprintf(sqlcmd, "UPDATE %s set stato = 1 WHERE nome_utente_trasportatore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                        res = db1.ExecSQLcmd(sqlcmd);
-
-                        PQclear(res);
-
-                        std::cout << "Lo stato dell'utente prima di averlo aggiornato è: " << stato_utente << std::endl;
-
-                        // Controlla se lo stto dell'utente è stato aggiornato:
-
-                        sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_trasportatore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                        res = db1.ExecSQLtuples(sqlcmd);
-                        rows = PQntuples(res);
-
-                        if (rows == 1)
-                        {
-                            stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-                            std::cout << "Lo stato dell'utente dopo averlo aggiornato con l'update è: " << stato_utente << std::endl;
-                        }
-
-                        else
-                        {
-                            std::cout << "Errore: Lo stato non è stato trovato." << std::endl;
-                            return;
-                        }
-
-                        /*
-                        // Creo il costruttore della classe utente trasportatore dopo il login:
-                        UtenteTrasportatore trasportatore;
-                        sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_trasportatore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                        res = db1.ExecSQLtuples(sqlcmd);
-                        rows = PQntuples(res);
-
-                        if (rows == 1){
-                            trasportatore.nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_trasportatore"));
-                            trasportatore.categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
-                            trasportatore.nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
-                            trasportatore.cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
-                            trasportatore.email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
-                            trasportatore.numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
-                            trasportatore.ditta_spedizione = PQgetvalue(res, 0, PQfnumber(res, "nome_DittaSpedizione"));
-                            trasportatore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
-                            trasportatore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-                        }
-                        else{
-                            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                            return;
-                        }
-                        */
-
-                        
-                    }
-                }
-            }
-            else
-            {
-                std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                return;
-            }
-        }
-
-        return;
+    return;
     }
 
 
@@ -466,230 +254,155 @@ public:
 
 
 
-
-    void effettua_logout(std::string categoria, std::string input_nome_utente)
+    void effettua_logout(std::string input_nome_utente)
     {
 
+        // Connessione al database
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
-        
-        // UTENTE COMPRATORE    
-        if (categoria == "UtenteCompratore")
-        {
-            // Controlla se l'utente è già loggato:
-            int stato_utente;
-                
-            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_compratore = '%s'", categoria.c_str(), input_nome_utente.c_str());
 
-            res = db1.ExecSQLtuples(sqlcmd);
-            rows = PQntuples(res);
+        // Controlla se l'utente è già loggato:
+        int stato_utente;
+        std::string categoriaUtenteLogin = categoria;
 
 
-            if (rows == 1)
-            {
-                // std::cout << "Fino a riga 58 tutto ok." << std::endl;
+        if (categoriaUtenteLogin == "UtenteCompratore"){
+            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+        }
 
-                // Importante che come parametri PQgetvalues al secondo campo indica il numero di riga, dato che c'è solo uno stato di un'utente, si troverà all'indice 0 della riga
-                stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+        if (categoriaUtenteLogin == "UtenteFornitore"){
+            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+        }
 
-                if (stato_utente == 0){
-                    
-                    std::cout << "Errore: L'utente è già disconnesso" << std::endl;
-                    return;
-                }
-                
-                else{
-                    // Aggiorniamo lo stato dell'utente, da connesso a disconnesso:
-                    
-                    // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 0 WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                    sprintf(sqlcmd, "UPDATE %s set stato = 0 WHERE nome_utente_compratore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                    res = db1.ExecSQLcmd(sqlcmd);
-
-                    PQclear(res);
-
-
-                    // Controlla se lo stato dell'utente è stato aggiornato:
-
-                    // sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                    sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_compratore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                    res = db1.ExecSQLtuples(sqlcmd);
-                    rows = PQntuples(res);
-
-                    if (rows == 1) {
-                        stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-                        std::cout << "Lo stato dell'utente dopo l'update logout è: " << stato_utente << std::endl;
-                    }
-                    else {
-                        std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                        return;
-                    }
-
-                }
-
-            }
-            else
-            {
-                std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                return;
-            }            
+        if (categoriaUtenteLogin == "UtenteTrasportatore"){
+            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
         }
 
 
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
 
 
-        // UTENTE FORNITORE    
-        if (categoria == "UtenteFornitore")
+        if (rows == 1)
         {
-            // Controlla se l'utente è già loggato:
-            int stato_utente;
-                
-            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_fornitore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-            res = db1.ExecSQLtuples(sqlcmd);
-            rows = PQntuples(res);
-
-
-            if (rows == 1)
-            {
                 // std::cout << "Fino a riga 58 tutto ok." << std::endl;
 
-                // Importante che come parametri PQgetvalues al secondo campo indica il numero di riga, dato che c'è solo uno stato di un'utente, si troverà all'indice 0 della riga
-                stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+            // Importante che come parametri PQgetvalues al secondo campo indica il numero di riga, dato che c'è solo uno stato di un'utente, si troverà all'indice 0 della riga
+            stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
 
-                if (stato_utente == 0){
+            if (stato_utente == 0){
                     
-                    std::cout << "Errore: L'utente è già disconnesso" << std::endl;
-                    return;
-                }
+                std::cout << "Errore: L'utente è già disconnesso" << std::endl;
+                return;
+            }
                 
-                else{
-                    // Aggiorniamo lo stato dell'utente, da connesso a disconnesso:
-                    
+            else{
+                // Aggiorniamo lo stato dell'utente, da connesso a disconnesso:
+
+                if (categoriaUtenteLogin == "UtenteCompratore"){
                     // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 0 WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                    sprintf(sqlcmd, "UPDATE %s set stato = 0 WHERE nome_utente_fornitore = '%s'", categoria.c_str(), input_nome_utente.c_str());
+                    sprintf(sqlcmd, "UPDATE %s set stato = 0 WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                }
 
-                    res = db1.ExecSQLcmd(sqlcmd);
+                if (categoriaUtenteLogin == "UtenteFornitore"){
+                    // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 0 WHERE nome_utente = '%s'", input_nome_utente.c_str());
+                    sprintf(sqlcmd, "UPDATE %s set stato = 0 WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                }
 
-                    PQclear(res);
+                if (categoriaUtenteLogin == "UtenteTrasportatore"){
+                    // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 0 WHERE nome_utente = '%s'", input_nome_utente.c_str());
+                    sprintf(sqlcmd, "UPDATE %s set stato = 0 WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                }  
+
+                
+                res = db1.ExecSQLcmd(sqlcmd);
+
+                PQclear(res);
 
 
-                    // Controlla se lo stato dell'utente è stato aggiornato:
+                // Controlla se lo stato dell'utente è stato aggiornato:
 
-                    // sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                    sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_fornitore = '%s'", categoria.c_str(), input_nome_utente.c_str());
+                if (categoriaUtenteLogin == "UtenteCompratore"){
+                    sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                }
 
-                    res = db1.ExecSQLtuples(sqlcmd);
-                    rows = PQntuples(res);
+                if (categoriaUtenteLogin == "UtenteFornitore"){
+                    sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                }
 
-                    if (rows == 1) {
-                        stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-                        std::cout << "Lo stato dell'utente dopo l'update logout è: " << stato_utente << std::endl;
-                    }
-                    else {
-                        std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                        return;
-                    }
+                if (categoriaUtenteLogin == "UtenteTrasportatore"){
+                    sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                }
 
+
+                res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+
+                if (rows == 1) {
+                    stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+                    std::cout << "Lo stato dell'utente dopo l'update logout è: " << stato_utente << std::endl;
+                }
+                else {
+                    std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+                    return;
                 }
 
             }
-            else
-            {
-                std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                return;
-            }            
+
         }
-
-
-
-
-        // UTENTE TRASPORTATORE    
-        if (categoria == "UtenteTrasportatore")
+        else
         {
-            // Controlla se l'utente è già loggato:
-            int stato_utente;
-                
-            sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_trasportatore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-            res = db1.ExecSQLtuples(sqlcmd);
-            rows = PQntuples(res);
-
-
-            if (rows == 1)
-            {
-                // std::cout << "Fino a riga 58 tutto ok." << std::endl;
-
-                // Importante che come parametri PQgetvalues al secondo campo indica il numero di riga, dato che c'è solo uno stato di un'utente, si troverà all'indice 0 della riga
-                stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-
-                if (stato_utente == 0){
-                    
-                    std::cout << "Errore: L'utente è già disconnesso" << std::endl;
-                    return;
-                }
-                
-                else{
-                    // Aggiorniamo lo stato dell'utente, da connesso a disconnesso:
-                    
-                    // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 0 WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                    sprintf(sqlcmd, "UPDATE %s set stato = 0 WHERE nome_utente_trasportatore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                    res = db1.ExecSQLcmd(sqlcmd);
-
-                    PQclear(res);
-
-
-                    // Controlla se lo stato dell'utente è stato aggiornato:
-
-                    // sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                    sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_trasportatore = '%s'", categoria.c_str(), input_nome_utente.c_str());
-
-                    res = db1.ExecSQLtuples(sqlcmd);
-                    rows = PQntuples(res);
-
-                    if (rows == 1) {
-                        stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-                        std::cout << "Lo stato dell'utente dopo l'update logout è: " << stato_utente << std::endl;
-                    }
-                    else {
-                        std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                        return;
-                    }
-
-                }
-
-            }
-            else
-            {
-                std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                return;
-            }            
-        }
-
-    
-    
-    
-    
-    return;
-    
+            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+            return;
+        } 
+    return;           
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    void elimina_profilo(){
+        // Per seguire i paradigmi di OOP:
+
+        // Utilizza i membri dell'istanza corrente per ottenere il nome utente e la categoria dell'utente
+        std::string nomeUtenteDaEliminare = nome_utente;
+
+        std::string categoriaUtenteDaEliminare = categoria;
+
+        // Eliminiamo in cascata l'utente dal database:
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        // In base alla categoria dell'utente eliminiamo l'utente
+        if (categoria == "UtenteCompratore"){
+            sprintf(sqlcmd, "DELETE FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtenteDaEliminare.c_str());
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res);
+        }
+        if (categoria == "UtenteFornitore"){
+            sprintf(sqlcmd, "DELETE FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nomeUtenteDaEliminare.c_str());
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res);
+        }
+        if (categoria == "UtenteTrasportatore"){
+            sprintf(sqlcmd, "DELETE FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nomeUtenteDaEliminare.c_str());
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res);
+        }
+
+    return;
+    }
+
     
     
     

@@ -23,7 +23,7 @@ void print_select(std::string nome_tabella){
     rows = PQntuples(res);
     int numCols = PQnfields(res);
 
-    std::cout << "Rows: " << rows << std::endl;
+    //std::cout << "Rows: " << rows << std::endl;
     for (int i = 0; i < rows; ++i) {
         std::cout << "Row " << i << ": ";
         for (int j = 0; j < numCols; ++j) {
@@ -47,24 +47,23 @@ int main(){
     
     UtenteCompratore compratore;
     compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", 123, "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
-    compratore.effettua_login("UtenteCompratore", "test_user1", "P@ssw0rd!");
-    compratore.effettua_logout("UtenteCompratore", "test_user1");
+    compratore.effettua_login("test_user1", "P@ssw0rd!");
+    compratore.effettua_logout("test_user1");
     std::cout << compratore.email << std::endl;
 
     UtenteFornitore fornitore;
     fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
-    fornitore.effettua_login("UtenteFornitore", "test_user2", "Candela111?");
+    fornitore.effettua_login("test_user2", "Candela111?");
     std::cout << fornitore.email << std::endl;
 
     UtenteTrasportatore trasportatore;
     trasportatore.effettuaRegistrazione("test_user3", "UtenteTrasportatore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com", "Test1234.", "Test1234.", "FedEx");
-    trasportatore.effettua_login("UtenteTrasportatore", "test_user3", "Test1234.");
+    trasportatore.effettua_login("test_user3", "Test1234.");
     std::cout << trasportatore.email << std::endl;
     
     UtenteCompratore compratore2;
     compratore2.effettuaRegistrazione("test_user3", "UtenteCompratore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com","Via torino", 1, "00100", "Torino", "Test1234.", "Test1234.", "1999/09/18");
-    compratore2.effettua_login("UtenteCompratore", "test_user3", "Test1234.");
-
+    compratore2.effettua_login( "test_user3", "Test1234.");
 
     Product prodotto1;
     prodotto1.add_new_product("Air Force 1", "Abbigliamento e scarpe", 100.00, "Air force 1, colore bianco, taglia 40", "Nike", 100);
@@ -77,6 +76,18 @@ int main(){
 
     Carta carta;
     carta.aggiungi_carta("test_user1", "55598747283434", "333");
+    
+    print_select("UtenteCompratore");
+    print_select("utenteTrasportatore");
+    print_select("utenteFornitore");
+
+    print_select("Prodotto");  
+    print_select("Carrello");  
+    print_select("Carta");  
+
+    compratore.elimina_profilo();
+
+    std::cout << "Post eliminazione." << std::endl;
 
     print_select("UtenteCompratore");
     print_select("utenteTrasportatore");

@@ -227,6 +227,7 @@ CREATE TABLE IF NOT EXISTS Carta (
     CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
       REFERENCES UtenteCompratore(nome_utente_compratore)
+      ON DELETE CASCADE
 );
 
 
@@ -249,10 +250,12 @@ CREATE TABLE IF NOT EXISTS Carrello (
   quantitàProd INTEGER,
 	CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
-      REFERENCES UtenteCompratore(nome_utente_compratore),
+      REFERENCES UtenteCompratore(nome_utente_compratore)
+      ON DELETE CASCADE,
     CONSTRAINT fk_codProdotto
       FOREIGN KEY(codProdotto)
       REFERENCES Prodotto(codProdotto)
+      ON DELETE CASCADE
 );
 
 
@@ -262,10 +265,12 @@ CREATE TABLE IF NOT EXISTS ListaDesideri (
   quantitàProd INTEGER,
 	CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
-      REFERENCES UtenteCompratore(nome_utente_compratore),
+      REFERENCES UtenteCompratore(nome_utente_compratore)
+      ON DELETE CASCADE,
     CONSTRAINT fk_codProdotto
       FOREIGN KEY(codProdotto)
       REFERENCES Prodotto(codProdotto)
+      ON DELETE CASCADE
 );
 
 
@@ -277,10 +282,12 @@ CREATE TABLE IF NOT EXISTS Reso (
         PRIMARY KEY(idReso),
         CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
-      REFERENCES UtenteCompratore(nome_utente_compratore),
+      REFERENCES UtenteCompratore(nome_utente_compratore)
+      ON DELETE CASCADE,
     CONSTRAINT fk_codProdotto
       FOREIGN KEY(codProdotto)
       REFERENCES Prodotto(codProdotto)
+      ON DELETE CASCADE
 );
 
 
@@ -294,10 +301,12 @@ CREATE TABLE IF NOT EXISTS Recensione (
         PRIMARY KEY(idRec),
         CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
-      REFERENCES UtenteCompratore(nome_utente_compratore),
+      REFERENCES UtenteCompratore(nome_utente_compratore)
+      ON DELETE CASCADE,
     CONSTRAINT fk_codProdotto
       FOREIGN KEY(codProdotto)
       REFERENCES Prodotto(codProdotto)
+      ON DELETE CASCADE
 );
 
 
@@ -311,14 +320,16 @@ CREATE TABLE IF NOT EXISTS AssistenzaClienti (
   PRIMARY KEY(idChiamata),
   CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
-      REFERENCES UtenteCompratore(nome_utente_compratore),
+      REFERENCES UtenteCompratore(nome_utente_compratore)
+      ON DELETE CASCADE,
   CONSTRAINT fk_nome_utente_trasportatore
       FOREIGN KEY(nome_utente_trasportatore)
-      REFERENCES UtenteTrasportatore(nome_utente_trasportatore),
+      REFERENCES UtenteTrasportatore(nome_utente_trasportatore)
+      ON DELETE CASCADE,
   CONSTRAINT fk_nome_utente_fornitore
       FOREIGN KEY(nome_utente_fornitore)
       REFERENCES UtenteFornitore(nome_utente_fornitore)
-  
+      ON DELETE CASCADE
 );
 
 
@@ -337,13 +348,16 @@ CREATE TABLE IF NOT EXISTS Ordine (
     PRIMARY KEY(idOrdine),
     CONSTRAINT fk_codProdotto
       FOREIGN KEY(codProdotto)
-      REFERENCES Prodotto(codProdotto),
+      REFERENCES Prodotto(codProdotto)
+      ON DELETE CASCADE,
     CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
-      REFERENCES UtenteCompratore(nome_utente_compratore),
+      REFERENCES UtenteCompratore(nome_utente_compratore)
+      ON DELETE CASCADE,
     CONSTRAINT fk_nome_utente_trasportatore
       FOREIGN KEY(nome_utente_trasportatore)
       REFERENCES UtenteTrasportatore(nome_utente_trasportatore)
+      ON DELETE CASCADE
 );
 
 /*CREATE TABLE IF NOT EXISTS UtenteCompratore (
