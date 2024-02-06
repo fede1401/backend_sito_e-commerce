@@ -246,6 +246,7 @@ CREATE TABLE IF NOT EXISTS Prodotto (
 CREATE TABLE IF NOT EXISTS Carrello (
 	nome_utente_compratore VARCHAR(50) NOT NULL,
 	codProdotto SERIAL,
+  quantitàProd INTEGER,
 	CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
       REFERENCES UtenteCompratore(nome_utente_compratore),
@@ -258,6 +259,7 @@ CREATE TABLE IF NOT EXISTS Carrello (
 CREATE TABLE IF NOT EXISTS ListaDesideri (
 	nome_utente_compratore VARCHAR(50) NOT NULL,
 	codProdotto SERIAL,
+  quantitàProd INTEGER,
 	CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
       REFERENCES UtenteCompratore(nome_utente_compratore),

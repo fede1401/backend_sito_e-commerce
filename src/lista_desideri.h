@@ -17,6 +17,7 @@ public:
 
     ListaDesideri() : nome_utente_compratore(""), codice_prodotto(-1){}
 
+
     void add_prodotto(std::string in_nome_utente_compratore, int in_cod_prodotto){
         
         // Connessione al database:
@@ -52,16 +53,43 @@ public:
             std::cout << "Il prodotto non esiste!" << std::endl;
             return;
         }
-        else{
-            ///////////////////////////////////// 
-            // Inseriamo il prodotto nel carrello:
-            sprintf(sqlcmd, "INSERT INTO ListaDesideri (nome_utente_compratore, codProdotto) VALUES ('%s', '%d')", in_nome_utente_compratore.c_str(), in_cod_prodotto);
+
+        // Controllo se il prodotto è stato già inserito dall'utente nel carrello:
+        int codProdotto; 
+        bool trovato=false;
+        
+        sprintf(sqlcmd, "SELECT codProdotto FROM ListaDesideri WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        for (int i = 0; i < rows; i++)
+        {
+            codProdotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
+            if (codProdotto == in_cod_prodotto){
+                // Il prodotto è già stato inserito, perciò ne aumentiamo la quantità:
+                // Prima carichiamo la quantità precedente:
+                trovato = true;
+                int quantitàPrecedente;
+                sprintf(sqlcmd, "SELECT quantitàProd FROM ListaDesideri WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", in_nome_utente_compratore.c_str(),in_cod_prodotto);
+                res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+                quantitàPrecedente = atoi(PQgetvalue(res, 0, PQfnumber(res, "quantitàProd"))); 
+
+                quantitàPrecedente = quantitàPrecedente + 1;
+                //Update
+                sprintf(sqlcmd, "UPDATE ListaDesideri set quantitàProd = '%d' WHERE nome_utente_trasportatore = '%s' AND codProdotto = '%d'", quantitàPrecedente, in_nome_utente_compratore.c_str(),in_cod_prodotto);
+                res = db1.ExecSQLcmd(sqlcmd);
+                PQclear(res);
+            }
+        }
+         
+        if (trovato == false){
+             // Inseriamo il prodotto per la prima volta nel carrello:
+            sprintf(sqlcmd, "INSERT INTO ListaDesideri (nome_utente_compratore, codProdotto, quantitàProd) VALUES ('%s', '%d', '%d)", in_nome_utente_compratore.c_str(), in_cod_prodotto, 0);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);   
-            /////////////////////////////////////    
-        }
-        /////////////////////////////////////
 
+        }
+           
 
              
     }

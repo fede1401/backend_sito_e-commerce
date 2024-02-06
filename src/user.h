@@ -5,9 +5,6 @@
 #include <string>
 #include <cctype> // Per isupper() e isdigit()
 #include <sstream>
-#include "user_compratore.h"
-#include "user_trasportatore.h"
-#include "user_fornitore.h"
 
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
@@ -154,6 +151,7 @@ public:
                             return;
                         }
 
+                        /*
                         // Creo il costruttore della classe utente compratore dopo il login:
                         UtenteCompratore compratore;
                         sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_compratore = '%s'", categoria.c_str(), input_nome_utente.c_str());
@@ -181,6 +179,8 @@ public:
                             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                             return;
                         }
+                        */
+                        
                     }
                 }
             }
@@ -285,6 +285,7 @@ public:
                             return;
                         }
 
+                        /*
                         // Creo il costruttore della classe utente fornitore dopo il login:
                         UtenteFornitore fornitore;
                         sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_fornitore = '%s'", categoria.c_str(), input_nome_utente.c_str());
@@ -307,6 +308,8 @@ public:
                             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                             return;
                         }
+                        */
+                        
 
                     }
                 }
@@ -414,6 +417,7 @@ public:
                             return;
                         }
 
+                        /*
                         // Creo il costruttore della classe utente trasportatore dopo il login:
                         UtenteTrasportatore trasportatore;
                         sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_trasportatore = '%s'", categoria.c_str(), input_nome_utente.c_str());
@@ -436,6 +440,9 @@ public:
                             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                             return;
                         }
+                        */
+
+                        
                     }
                 }
             }

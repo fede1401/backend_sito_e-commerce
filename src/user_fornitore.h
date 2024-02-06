@@ -166,7 +166,7 @@ public:
         /////////////////////////////////////
         // Inserisco nel database il nuovo utente:
         sprintf(sqlcmd, "INSERT INTO UtenteFornitore (nome_utente_fornitore, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, nome_AziendaProduttrice, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d')",
-        in_categoria.c_str(), in_nome_utente.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_aziendaProd.c_str(), stato);
+        in_nome_utente.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_aziendaProd.c_str(), stato);
                     
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);  
