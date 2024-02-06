@@ -5,6 +5,10 @@
 #include <string>
 #include <cctype> // Per isupper() e isdigit()
 #include <sstream>
+#include "user_compratore.h"
+#include "user_trasportatore.h"
+#include "user_fornitore.h"
+
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
 bool isSpecialCharacter(char c)
@@ -67,6 +71,7 @@ public:
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
 
+            // Riga contenente lo stato dell'utente con nome utente : std::string input_nome_utente
             if (rows == 1)
             {
 
@@ -145,7 +150,35 @@ public:
 
                         else
                         {
-                            std::cout << "Errore: Lo stato non è stato trovato." << std::endl;
+                            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+                            return;
+                        }
+
+                        // Creo il costruttore della classe utente compratore dopo il login:
+                        UtenteCompratore compratore;
+                        sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_compratore = '%s'", categoria.c_str(), input_nome_utente.c_str());
+
+                        res = db1.ExecSQLtuples(sqlcmd);
+                        rows = PQntuples(res);
+
+                        if (rows == 1){
+                            compratore.nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
+                            compratore.categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+                            compratore.nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+                            compratore.cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
+                            compratore.email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
+                            compratore.numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
+                            compratore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
+                            compratore.data_compleanno = PQgetvalue(res, 0, PQfnumber(res, "data_compleanno"));
+                            compratore.via_residenza = PQgetvalue(res, 0, PQfnumber(res, "via_di_residenza"));
+                            compratore.numero_civico = atoi(PQgetvalue(res, 0, PQfnumber(res, "numero_civico")));
+                            compratore.CAP = PQgetvalue(res, 0, PQfnumber(res, "CAP"));
+                            compratore.città_residenza = PQgetvalue(res, 0, PQfnumber(res, "citta_di_residenza"));
+                            compratore.saldo = atof(PQgetvalue(res, 0, PQfnumber(res, "saldo")));
+                            compratore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+                        }
+                        else{
+                            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                             return;
                         }
                     }
@@ -251,6 +284,30 @@ public:
                             std::cout << "Errore: Lo stato non è stato trovato." << std::endl;
                             return;
                         }
+
+                        // Creo il costruttore della classe utente fornitore dopo il login:
+                        UtenteFornitore fornitore;
+                        sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_fornitore = '%s'", categoria.c_str(), input_nome_utente.c_str());
+
+                        res = db1.ExecSQLtuples(sqlcmd);
+                        rows = PQntuples(res);
+
+                        if (rows == 1){
+                            fornitore.nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_fornitore"));
+                            fornitore.categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+                            fornitore.nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+                            fornitore.cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
+                            fornitore.email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
+                            fornitore.numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
+                            fornitore.azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
+                            fornitore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
+                            fornitore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+                        }
+                        else{
+                            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+                            return;
+                        }
+
                     }
                 }
             }
@@ -354,6 +411,29 @@ public:
                         else
                         {
                             std::cout << "Errore: Lo stato non è stato trovato." << std::endl;
+                            return;
+                        }
+
+                        // Creo il costruttore della classe utente trasportatore dopo il login:
+                        UtenteTrasportatore trasportatore;
+                        sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_trasportatore = '%s'", categoria.c_str(), input_nome_utente.c_str());
+
+                        res = db1.ExecSQLtuples(sqlcmd);
+                        rows = PQntuples(res);
+
+                        if (rows == 1){
+                            trasportatore.nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_trasportatore"));
+                            trasportatore.categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+                            trasportatore.nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+                            trasportatore.cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
+                            trasportatore.email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
+                            trasportatore.numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
+                            trasportatore.ditta_spedizione = PQgetvalue(res, 0, PQfnumber(res, "nome_DittaSpedizione"));
+                            trasportatore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
+                            trasportatore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+                        }
+                        else{
+                            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                             return;
                         }
                     }
