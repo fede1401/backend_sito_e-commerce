@@ -76,7 +76,7 @@ public:
 
                 quantitàPrecedente = quantitàPrecedente + 1;
                 //Update
-                sprintf(sqlcmd, "UPDATE ListaDesideri set quantitàProd = '%d' WHERE nome_utente_trasportatore = '%s' AND codProdotto = '%d'", quantitàPrecedente, in_nome_utente_compratore.c_str(),in_cod_prodotto);
+                sprintf(sqlcmd, "UPDATE ListaDesideri set quantitàProd = '%d' WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", quantitàPrecedente, in_nome_utente_compratore.c_str(),in_cod_prodotto);
                 res = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res);
             }
@@ -84,7 +84,7 @@ public:
          
         if (trovato == false){
              // Inseriamo il prodotto per la prima volta nel carrello:
-            sprintf(sqlcmd, "INSERT INTO ListaDesideri (nome_utente_compratore, codProdotto, quantitàProd) VALUES ('%s', '%d', '%d)", in_nome_utente_compratore.c_str(), in_cod_prodotto, 0);
+            sprintf(sqlcmd, "INSERT INTO ListaDesideri (nome_utente_compratore, codProdotto, quantitàProd) VALUES ('%s', '%d', '%d')", in_nome_utente_compratore.c_str(), in_cod_prodotto, 1);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);   
 

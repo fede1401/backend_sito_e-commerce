@@ -92,3 +92,19 @@ sprintf(sqlcmd, "SELECT * FROM UtenteCompratore");
     }
     PQclear(res); 
 ```
+
+
+
+Per eliminare in PostgreSQL :
+1. Eliminare una riga in base alla chiave primaria o in base a una condizione:
+```
+DELETE FROM table_name WHERE id = '1';
+
+DELETE FROM table_name WHERE nome_colonna = 'valore';
+```
+
+2. Eliminare tutte le righe di una tabella:
+``` TRUNCATE table_name CASCADE;```
+
+3. Elimnare una tabella:
+``` DROP TABLE table_name CASCADE; ```

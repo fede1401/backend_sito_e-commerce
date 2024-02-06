@@ -49,9 +49,9 @@ class Product {
 
     void add_new_product(std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili){
 
-            // Connessione al database:
-            Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-            std::cout << "Connessione al database avvenuta con successo." << std::endl;
+        // Connessione al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        std::cout << "Connessione al database avvenuta con successo." << std::endl;
             
             /*
             ///////////////////////////////////// 
@@ -73,30 +73,34 @@ class Product {
             */
             
 
-            /////////////////////////////////////
-            // Assicuriamoci che l'utente che inserirà il prodotto nel sito è un Utente Fornitore
-            sprintf(sqlcmd, "SELECT nome_utente_fornitore FROM UtenteFornitore WHERE nome_AziendaProduttrice = '%s'", in_azienda_produzione.c_str());
-            res = db1.ExecSQLtuples(sqlcmd);
-            rows = PQntuples(res);
-            if (rows == 1) { 
-                std::cout << "L'utente che inserisce il prodotto nel sito è un utente fornitore" << std::endl;
-            }
-            else{
-                std::cout << "L'utente che inserisce il prodotto nel sito NON è un utente fornitore" << std::endl;
-                return;
-            }
-            PQclear(res);  
-            /////////////////////////////////////
+        /////////////////////////////////////
+        // Assicuriamoci che l'utente che inserirà il prodotto nel sito è un Utente Fornitore
+        sprintf(sqlcmd, "SELECT nome_utente_fornitore FROM UtenteFornitore WHERE nome_AziendaProduttrice = '%s'", in_azienda_produzione.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        if (rows == 1) { 
+            std::cout << "L'utente che inserisce il prodotto nel sito è un utente fornitore" << std::endl;
+        }
+        else{
+            std::cout << "L'utente che inserisce il prodotto nel sito NON è un utente fornitore" << std::endl;
+            return;
+        }
+        PQclear(res);  
+        /////////////////////////////////////
+
+        *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
 
 
-            *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
-
-            /////////////////////////////////////
-            // Aggiungo il prodotto nel database nella tabella Prodotto
-            sprintf(sqlcmd, "INSERT INTO Prodotto(codProdotto, nome, categoria,descrizione, prezzoEuro, nome_AziendaProduttrice, num_copie_dispo) VALUES (DEFAULT, '%s', '%s', '%s', '%f', '%s', '%d')", 
+        // Se il prodotto inserito è già presente nella tabella Prodotto, allora dobbiamo solamente incrementare la quantità di copie, altrimenti dovremo inserirlo:
+        sprintf(sqlcmd, "SELECT nome_utente_fornitore FROM UtenteFornitore WHERE nome_AziendaProduttrice = '%s'", in_azienda_produzione.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        ////////////////////////////////////
+        // Aggiungo il prodotto nel database nella tabella Prodotto
+        sprintf(sqlcmd, "INSERT INTO Prodotto(codProdotto, nome, categoria,descrizione, prezzoEuro, nome_AziendaProduttrice, num_copie_dispo) VALUES (DEFAULT, '%s', '%s', '%s', '%f', '%s', '%d')", 
                                                                in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str(), in_numero_copie_disponibili);
-            res = db1.ExecSQLcmd(sqlcmd);
-            PQclear(res); 
+        res = db1.ExecSQLcmd(sqlcmd);
+        PQclear(res); 
             /////////////////////////////////////
     return;
     }
