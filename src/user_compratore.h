@@ -328,6 +328,42 @@ class UtenteCompratore : public Utente {
 
 
 
+    void effettua_login(std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw) override{
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        // Creo il costruttore della classe utente compratore dopo il login:
+        UtenteCompratore compratore;
+        sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows == 1){
+                compratore.nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
+                compratore.categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+                compratore.nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+                compratore.cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
+                compratore.email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
+                compratore.numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
+                compratore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
+                compratore.data_compleanno = PQgetvalue(res, 0, PQfnumber(res, "data_compleanno"));
+                compratore.via_residenza = PQgetvalue(res, 0, PQfnumber(res, "via_di_residenza"));
+                compratore.numero_civico = atoi(PQgetvalue(res, 0, PQfnumber(res, "numero_civico")));
+                compratore.CAP = PQgetvalue(res, 0, PQfnumber(res, "CAP"));
+                compratore.città_residenza = PQgetvalue(res, 0, PQfnumber(res, "citta_di_residenza"));
+                compratore.saldo = atof(PQgetvalue(res, 0, PQfnumber(res, "saldo")));
+                compratore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+        }
+        else{
+            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+            return;
+        }
+    return;
+    }
+
+
+
 };
 
 

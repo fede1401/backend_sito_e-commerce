@@ -176,6 +176,35 @@ public:
         std::cout << "Utente inserito." << std::endl;
     }
 
+
+    void effettua_login(std::string categoriaUtenteLogin,std::string input_nome_utente, std::string input_passw) override{
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        UtenteFornitore fornitore;
+        sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows == 1){
+            fornitore.nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_fornitore"));
+            fornitore.categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+            fornitore.nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+            fornitore.cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
+            fornitore.email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
+            fornitore.numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
+            fornitore.azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
+            fornitore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
+            fornitore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+        }
+        else{
+            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+            return;
+        }
+    return;
+    }
+
 };
 
 

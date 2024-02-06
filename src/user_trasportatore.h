@@ -170,6 +170,37 @@ public:
         std::cout << "Utente inserito." << std::endl;
     }
 
+
+
+    void effettua_login(std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw) override{
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        // Creo il costruttore della classe utente trasportatore dopo il login:
+        UtenteTrasportatore trasportatore;
+        sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows == 1){
+            trasportatore.nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_trasportatore"));
+            trasportatore.categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+            trasportatore.nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+            trasportatore.cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
+            trasportatore.email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
+            trasportatore.numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
+            trasportatore.ditta_spedizione = PQgetvalue(res, 0, PQfnumber(res, "nome_DittaSpedizione"));
+            trasportatore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
+            trasportatore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+        }
+        else{
+            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+            return;
+        }
+    return;
+    }
+
 };
 
 

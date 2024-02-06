@@ -46,7 +46,7 @@ public:
     }
 
 
-    void effettua_login(std::string input_nome_utente, std::string input_passw)
+    virtual void effettua_login(std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw)
     {
         // nome_utente = utente.nome_utente;
         // password = utente.password;
@@ -54,7 +54,7 @@ public:
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
-        std::string categoriaUtenteLogin = categoria;
+        //std::string categoriaUtenteLogin = categoria;
 
         // Controlla se l'utente è già loggato:
         int stato_utente;
@@ -254,7 +254,7 @@ public:
 
 
 
-    void effettua_logout(std::string input_nome_utente)
+    void effettua_logout(std::string categoriaUtenteLogin, std::string input_nome_utente)
     {
 
         // Connessione al database
@@ -263,7 +263,7 @@ public:
 
         // Controlla se l'utente è già loggato:
         int stato_utente;
-        std::string categoriaUtenteLogin = categoria;
+        //std::string categoriaUtenteLogin = categoria;
 
 
         if (categoriaUtenteLogin == "UtenteCompratore"){
