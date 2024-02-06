@@ -36,7 +36,49 @@ void print_select(std::string nome_tabella){
     
 }
 
+int main(){
+    Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+    std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
+    PGresult *res;
+
+    char sqlcmd[1000];
+
+    UtenteCompratore compratore;
+    compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", 123, "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
+    compratore.effettua_login("UtenteCompratore", "test_user1", "P@ssw0rd!");
+    compratore.effettua_logout("UtenteCompratore", "test_user1");
+
+    UtenteFornitore fornitore;
+    fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
+    fornitore.effettua_login("UtenteFornitore", "test_user2", "Candela111?");
+
+    UtenteTrasportatore trasportatore;
+    trasportatore.effettuaRegistrazione("test_user3", "UtenteTrasportatore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com", "Test1234.", "Test1234.", "FedEx");
+    trasportatore.effettua_login("UtenteTrasportatore", "test_user3", "Test1234.");
+
+    Product prodotto1;
+    prodotto1.add_new_product("Iphone 15", "Telefonia", 990.00, "Iphone 15 nuovo, 16GB RAM, 1TB archiviazione", "Apple", 100);
+
+    Product prodotto2;
+    prodotto2.add_new_product("Xiaomi lite9", "Telefonia", 540.00, "Xiaomi lite9, 8GB RAM, 1 TB archiviazione", "Xiaomi", 10);
+
+    Carrello carrello1;
+    carrello1.add_prodotto("test_user1", 1);
+
+    print_select("UtenteCompratore");
+    print_select("utenteTrasportatore");
+    print_select("utenteFornitore");
+
+    print_select("Prodotto");  
+    print_select("Carrello");  
+
+}
+
+
+
+
+/*
 int main() {
 
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
@@ -46,7 +88,7 @@ int main() {
 
     char sqlcmd[1000];
 
-    /*
+    
     sprintf(sqlcmd, "INSERT INTO AziendaProd (idAziendaProd, nome) VALUES (DEFAULT, 'Apple')");
     res = db1.ExecSQLcmd(sqlcmd);
     PQclear(res); 
@@ -108,7 +150,7 @@ int main() {
         std::cout << std::endl;
     }
     PQclear(res); 
-    */
+
     
 
     //UtenteCompratore utente1("mario_1", "UtenteCompratore", "mario", "rossi", "3333333333", "Vaffsdns12?", "mario.rossi1@gmail.com", "15/09/2000", "via delle manine", 34, "01035", "terni", 0.0, 0);
@@ -166,7 +208,7 @@ int main() {
     print_select("Prodotto");
     print_select("Carrello"); 
 
-    /*if (rows >= 1) {
+    if (rows >= 1) {
 
         nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente"));
         stato = PQgetvalue(res, 0, PQfnumber(res, "stato"));
@@ -177,7 +219,7 @@ int main() {
         std::cout << "Errore: Lo stato non è stato trovato." << std::endl;
         return;
     }
-    */
+    
 
     return 0;
 }
@@ -193,7 +235,7 @@ int main() {
     //res = db1.ExecSQLcmd(sqlcmd);
     //PQclear(res);
 
-        /*
+        
     sprintf(sqlcmd, "COMMIT"); 
     res = db1.ExecSQLcmd(sqlcmd);
     PQclear(res);
@@ -218,10 +260,12 @@ int main() {
 
     std::cout << res << std::endl;
     fprintf(stdout, "\n");
-    */
+    
     // Utilizzato per stampare su standard output (terminale) i risultati delle select.
     //fprintf(stdout, "main(): inserted in AssistenzaClienti %s\n", PQgetvalue(res,0, PQfnumber(res, "numeroTelefono")));
 
     //fprintf(stdout, "main(): inserted in AssistenzaClienti %s\n", PQgetvalue(res,10, PQfnumber(res, "numeroTelefono")));
 
     //fprintf(stdout, "main(): inserted in AssistenzaClienti %s\n", PQgetvalue(res,11, PQfnumber(res, "numeroTelefono")));
+
+*/

@@ -13,27 +13,28 @@
 class UtenteFornitore : public Utente {
 public:
     // Attributi specifici per UtenteFornitore
-    int azienda_produzione;
+    std::string azienda_produzione;
     int stato;
 
     // Costruttore di UtenteFornitore
 
     UtenteFornitore():
         Utente("", "", "", "", "", "", ""),
-        azienda_produzione(-1),
+        azienda_produzione(""),
         stato(0) {}
 
-    UtenteFornitore( std::string categoria,
+    UtenteFornitore( 
                     std::string nome_utente, 
+                    std::string categoria,
                     std::string nome, 
                     std::string cognome,
                     std::string numero_telefono, 
                     std::string password, 
                     std::string email,
-                    int azienda_produzione, 
+                    std::string azienda_produzione, 
                     int stato)
 
-        : Utente(categoria, nome_utente, nome, cognome, numero_telefono, password, email), azienda_produzione(azienda_produzione), stato(stato) {}
+        : Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), azienda_produzione(azienda_produzione), stato(stato) {}
 
 
     // Metodo specifico per UtenteFornitore
@@ -114,7 +115,7 @@ public:
 
         /////////////////////////////////////                         
         // Controllo se il nome utente è univoco
-        sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE nome_utente = '%s'", in_nome_utente.c_str());
+        sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente.c_str());
         PGresult *res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
 
@@ -142,7 +143,7 @@ public:
 
         /////////////////////////////////////
         // Seleziono l'id della stringa AziendaProduzione
-        int idAziendaProd;
+        /*int idAziendaProd;
         sprintf(sqlcmd, "SELECT idAziendaProd FROM AziendaProd WHERE nome = '%s'", in_aziendaProd.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
@@ -150,12 +151,13 @@ public:
             idAziendaProd = atoi(PQgetvalue(res, 0, PQfnumber(res, "idAziendaProd")));
         }
         PQclear(res);
+        */
         /////////////////////////////////////
         
 
         /////////////////////////////////////
         // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
-        *this = UtenteFornitore(in_categoria, in_nome_utente, in_nome, in_cognome, in_numero_telefono, in_password, in_email, idAziendaProd, stato);
+        *this = UtenteFornitore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, in_aziendaProd, stato);
         /////////////////////////////////////
 
 
@@ -163,8 +165,8 @@ public:
 
         /////////////////////////////////////
         // Inserisco nel database il nuovo utente:
-        sprintf(sqlcmd, "INSERT INTO UtenteFornitore (idUtForn, categoriaUtente, nome_utente, nome, cognome, indirizzo_mail, numero_di_telefono, password, idAziendaProd, stato ) VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d')",
-        in_categoria.c_str(), in_nome_utente.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), idAziendaProd, stato);
+        sprintf(sqlcmd, "INSERT INTO UtenteFornitore (nome_utente_fornitore, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, nome_AziendaProduttrice, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d')",
+        in_categoria.c_str(), in_nome_utente.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_aziendaProd.c_str(), stato);
                     
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);  

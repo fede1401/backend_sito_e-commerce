@@ -49,13 +49,13 @@ class Product {
 
     void add_new_product(std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili){
 
-            ///////////////////////////////////// 
-            // Troviamo l'id dell'azienda di produzione che sarà inserita nel database
-
             // Connessione al database:
             Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
             std::cout << "Connessione al database avvenuta con successo." << std::endl;
-
+            
+            /*
+            ///////////////////////////////////// 
+            // Troviamo l'id dell'azienda di produzione che sarà inserita nel database
             // SELECT:
             int idAziendaProd;
             sprintf(sqlcmd, "SELECT idAziendaProd FROM AziendaProd WHERE nome = '%s'", in_azienda_produzione.c_str());
@@ -70,11 +70,12 @@ class Product {
             }
             PQclear(res);  
             /////////////////////////////////////
-
+            */
+            
 
             /////////////////////////////////////
             // Assicuriamoci che l'utente che inserirà il prodotto nel sito è un Utente Fornitore
-            sprintf(sqlcmd, "SELECT idUtForn FROM UtenteFornitore WHERE idAziendaProd = '%d'", idAziendaProd);
+            sprintf(sqlcmd, "SELECT nome_utente_fornitore FROM UtenteFornitore WHERE nome_AziendaProduttrice = '%s'", in_azienda_produzione.c_str());
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
             if (rows == 1) { 
@@ -92,12 +93,14 @@ class Product {
 
             /////////////////////////////////////
             // Aggiungo il prodotto nel database nella tabella Prodotto
-            sprintf(sqlcmd, "INSERT INTO Prodotto(codProdotto, nome, categoria, prezzoEuro, idAziendaProd, num_copie_dispo) VALUES (DEFAULT, '%s', '%s', '%f', '%d', '%d')", 
-                                                               in_nome.c_str(), in_categoria.c_str(), in_prezzo_euro, idAziendaProd, in_numero_copie_disponibili);
+            sprintf(sqlcmd, "INSERT INTO Prodotto(codProdotto, nome, categoria,descrizione, prezzoEuro, nome_AziendaProduttrice, num_copie_dispo) VALUES (DEFAULT, '%s', '%s', '%s', '%f', '%s', '%d')", 
+                                                               in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str(), in_numero_copie_disponibili);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res); 
             /////////////////////////////////////
+    return;
     }
+
 
 };
 

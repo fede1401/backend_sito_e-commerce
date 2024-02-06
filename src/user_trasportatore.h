@@ -12,7 +12,7 @@
 class UtenteTrasportatore : public Utente {
 public:
     // Attributi specifici per UtenteTrasportatore
-    int ditta_spedizione;
+    std::string ditta_spedizione;
     int stato;
 
 
@@ -20,13 +20,13 @@ public:
 
     UtenteTrasportatore():
         Utente("", "", "", "", "", "", ""),
-        ditta_spedizione(-1),
+        ditta_spedizione(""),
         stato(0) {}
 
-    UtenteTrasportatore(std::string categoria, std::string nome_utente, std::string nome, std::string cognome, 
+    UtenteTrasportatore(std::string nome_utente, std::string categoria, std::string nome, std::string cognome, 
                         std::string numero_telefono, std::string password, std::string email,
-                        int ditta_spedizione, int stato)
-        : Utente(categoria, nome_utente, nome, cognome, numero_telefono, password, email), ditta_spedizione(ditta_spedizione), stato(stato) {}
+                        std::string ditta_spedizione, int stato)
+        : Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), ditta_spedizione(ditta_spedizione), stato(stato) {}
 
     
     // Metodo specifico per UtenteTrasportatore
@@ -107,7 +107,7 @@ public:
 
         /////////////////////////////////////                         
         // Controllo se il nome utente è univoco
-        sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE nome_utente = '%s'", in_nome_utente.c_str());
+        sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", in_nome_utente.c_str());
         PGresult *res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
 
@@ -133,6 +133,7 @@ public:
         /////////////////////////////////////
 
 
+        /*
         /////////////////////////////////////
         // Seleziono l'id della stringa AziendaProduzione
         int idDittaSpe;
@@ -144,11 +145,13 @@ public:
         }
         PQclear(res);
         /////////////////////////////////////
+        */
+        
         
 
         /////////////////////////////////////
         // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
-        *this = UtenteTrasportatore(in_categoria, in_nome_utente, in_nome, in_cognome, in_numero_telefono, in_password, in_email, idDittaSpe, stato);
+        *this = UtenteTrasportatore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, in_dittaSped, stato);
         /////////////////////////////////////
 
 
@@ -156,8 +159,8 @@ public:
 
         /////////////////////////////////////
         // Inserisco nel database il nuovo utente:
-        sprintf(sqlcmd, "INSERT INTO UtenteTrasportatore (idUtTrasp, categoriaUtente, nome_utente, nome, cognome, indirizzo_mail, numero_di_telefono, password, idDittaSp, stato ) VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d')",
-        in_categoria.c_str(), in_nome_utente.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), idDittaSpe, stato);
+        sprintf(sqlcmd, "INSERT INTO UtenteTrasportatore (nome_utente_trasportatore, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, nome_DittaSpedizione, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d')",
+        in_nome_utente.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_dittaSped.c_str(), stato);
                     
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);  

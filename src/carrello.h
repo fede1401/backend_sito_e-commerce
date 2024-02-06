@@ -24,13 +24,9 @@ public:
 
     void add_prodotto(std::string in_nome_utente_compratore, int in_cod_prodotto){
         
+        /*
         ///////////////////////////////////// 
         // Controllo se esiste l'id dell'utente preso in input:
-        
-        // Connessione al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
-        std::cout << "Connessione al database avvenuta con successo." << std::endl;
-
         // SELECT:
         int idUtenCompr;
         sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
@@ -44,6 +40,11 @@ public:
             idUtenCompr = atoi(PQgetvalue(res, 0, PQfnumber(res, "idUtComp")));
         }
         /////////////////////////////////////
+        */
+        
+        // Connessione al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
+        std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
 
         ///////////////////////////////////// 
@@ -61,7 +62,7 @@ public:
 
         ///////////////////////////////////// 
         // Inseriamo il prodotto nel carrello:
-        sprintf(sqlcmd, "INSERT INTO Carrello (idUtComp, codProdotto) VALUES ('%d', '%d')", idUtenCompr, in_cod_prodotto);
+        sprintf(sqlcmd, "INSERT INTO Carrello (nome_utente_compratore, codProdotto) VALUES ('%s', '%d')", in_nome_utente_compratore.c_str(), in_cod_prodotto);
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);   
         /////////////////////////////////////         
@@ -71,14 +72,10 @@ public:
 
     void remove_prodotto(std::string in_nome_utente_compratore, int in_cod_prodotto){
         
+
+        /*
         ///////////////////////////////////// 
         // Controlliamo se esiste la riga del prodotto da eliminare:
-
-        // Connessione al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
-        std::cout << "Connessione al database avvenuta con successo." << std::endl;
-
-
         // SELECT dell'id utente dato il suo nome utente:
         int idUtenCompr;
         sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
@@ -91,9 +88,16 @@ public:
         else{
             idUtenCompr = atoi(PQgetvalue(res, 0, PQfnumber(res, "idUtComp")));
         }
+        */
+        
+
+        // Connessione al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
+        std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
 
-        sprintf(sqlcmd, "SELECT * FROM Carrello WHERE idUtComp = '%d' AND codProdotto ='%d'", idUtenCompr, in_cod_prodotto);
+        
+        sprintf(sqlcmd, "SELECT * FROM Carrello WHERE nome_utente_compratore = '%d' AND codProdotto ='%d'", in_nome_utente_compratore.c_str(), in_cod_prodotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows < 1){
