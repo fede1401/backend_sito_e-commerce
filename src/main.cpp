@@ -61,6 +61,10 @@ int main(){
     trasportatore.effettua_login("UtenteTrasportatore", "test_user3", "Test1234.");
     std::cout << trasportatore.email << std::endl;
     
+    UtenteCompratore compratore2;
+    compratore2.effettuaRegistrazione("test_user3", "UtenteCompratore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com","Via torino", 1, "00100", "Torino", "Test1234.", "Test1234.", "1999/09/18");
+    compratore2.effettua_login("UtenteCompratore", "test_user3", "Test1234.");
+
 
     Product prodotto1;
     prodotto1.add_new_product("Air Force 1", "Abbigliamento e scarpe", 100.00, "Air force 1, colore bianco, taglia 40", "Nike", 100);
@@ -71,12 +75,16 @@ int main(){
     Carrello carrello1;
     carrello1.add_prodotto("test_user1", 1);
 
+    Carta carta;
+    carta.aggiungi_carta("test_user1", "55598747283434", "333");
+
     print_select("UtenteCompratore");
     print_select("utenteTrasportatore");
     print_select("utenteFornitore");
 
     print_select("Prodotto");  
     print_select("Carrello");  
+    print_select("Carta");  
 
 }
 

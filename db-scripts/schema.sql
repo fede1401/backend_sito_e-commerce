@@ -220,8 +220,8 @@ CREATE TABLE IF NOT EXISTS UtenteTrasportatore (
 
 CREATE TABLE IF NOT EXISTS Carta (
     idCarta SERIAL ,
-    nome_utente_compratore VARCHAR(50) NOT NULL UNIQUE,
-    numeroCarta VARCHAR(20) NOT NULL,
+    nome_utente_compratore VARCHAR(50) NOT NULL,
+    numeroCarta VARCHAR(20) NOT NULL UNIQUE,
     cvv VARCHAR(3) NOT NULL,
     PRIMARY KEY(idCarta),
     CONSTRAINT fk_nome_utente_compratore
