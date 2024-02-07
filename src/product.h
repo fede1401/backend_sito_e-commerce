@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
+#include "ordine.h"
 
 //PGresult *res;
 //char sqlcmd[1000];
@@ -183,6 +184,33 @@ class Product {
 
     return;
     }
+
+
+    Ordine acquistaProdotto(){
+
+        Ordine ordine;
+        
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        // Selezioniamo il codice del prodotto
+        sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND prezzoEuro='%f' AND nome_AziendaProduttrice='%s' AND num_copie_dispo='%d'", 
+                                                            nome.c_str(), categoria.c_str(), descrizione.c_str(), prezzo_euro, azienda_produzione.c_str(), numero_copie_disponibili);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        if (rows == 1){
+            cod_product = atoi(PQgetvalue(res, 0, PQfnumber(res, "codProdotto")));
+
+        }
+        else{
+            std::cout << "Errore: il prodotto non è stato trovato!" << std::endl;
+            return ordine;
+        }
+    }
+
+
+
+
 
 
 };

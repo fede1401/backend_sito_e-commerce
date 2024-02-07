@@ -6,23 +6,36 @@
 
 class Ordine {
 public:
-    std::string identificatore_utente;
-    std::string identificatore_ordine;
-    std::string codice_prodotto;
-    std::string identificatore_trasportatore;
+    std::string nome_uteCompratore;
+    int identificatore_ordine;
+    int codice_prodotto;
+    std::string nome_uteTrasportatore;
     std::string data_ordine_effettuato;
     std::string stato_consegna;
     std::string ditta_spedizione;
     std::string via_spedizione;
     std::string città_spedizione;
-    int numero_civico_spedizione;
+    std::string numero_civico_spedizione;
+
+    Ordine():
+      nome_uteCompratore(""),
+      identificatore_ordine(-1),
+      codice_prodotto(-1),
+      nome_uteTrasportatore(""),
+      data_ordine_effettuato(""),
+      stato_consegna(""),
+      ditta_spedizione(""),
+      via_spedizione(""),
+      città_spedizione(""),
+      numero_civico_spedizione(""){}
+
 
     // Costruttore
-    Ordine(std::string id_utente, std::string id_ordine, std::string codice_prod, std::string id_trasportatore,
+    Ordine(std::string nome_uteCompratore, int identificatore_ordine, int codice_prodotto, std::string id_trasportatore,
            std::string data_ordine, std::string stato, std::string ditta, std::string via, std::string città, int numero_civico)
-        : identificatore_utente(id_utente), identificatore_ordine(id_ordine), codice_prodotto(codice_prod),
-          identificatore_trasportatore(id_trasportatore), data_ordine_effettuato(data_ordine), stato_consegna(stato),
-          ditta_spedizione(ditta), via_spedizione(via), città_spedizione(città), numero_civico_spedizione(numero_civico) {}
+        : nome_uteCompratore(nome_uteCompratore), identificatore_ordine(identificatore_ordine), codice_prodotto(codice_prodotto),
+          nome_uteTrasportatore(nome_uteTrasportatore), data_ordine_effettuato(data_ordine_effettuato), stato_consegna(stato_consegna),
+          ditta_spedizione(ditta_spedizione), via_spedizione(via_spedizione), città_spedizione(città_spedizione), numero_civico_spedizione(numero_civico_spedizione) {}  
 };
 
 #endif // ORDINE_H
