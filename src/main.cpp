@@ -32,7 +32,7 @@ void print_select(std::string nome_tabella){
         std::cout << std::endl;
     }
     PQclear(res); 
-    std::cout << "\n" << rows << std::endl;
+    std::cout << "\n" << std::endl;
     
 }
 
@@ -42,15 +42,7 @@ int main(){
 
     PGresult *res;
 
-    char sqlcmd[1000];
-
-    print_select("UtenteCompratore");
-    print_select("utenteTrasportatore");
-    print_select("utenteFornitore");
-
-    print_select("Prodotto");  
-    print_select("Carrello");  
-    print_select("Carta");  
+    char sqlcmd[1000];    
 
     
     UtenteCompratore compratore;
@@ -61,9 +53,11 @@ int main(){
 
     UtenteFornitore fornitore;
     std::cout << "Prima del login" << std::endl;
-    //fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
-    fornitore.effettua_login("UtenteFornitore", "test_user2", "Candela111?");
-
+    fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
+    
+    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user2", "Candela111?");
+    fornitore.effettua_logout("test_user2");
+    fornitore.effettua_login("test_user2", "Candela111?");
 
     std::cout << fornitore.nome << std::endl;
     std::cout << fornitore.cognome << std::endl;
@@ -72,20 +66,30 @@ int main(){
 
 
     UtenteTrasportatore trasportatore;
-    //trasportatore.effettuaRegistrazione("test_user3", "UtenteTrasportatore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com", "Test1234.", "Test1234.", "FedEx");
-    trasportatore.effettua_login("UtenteTrasportatore", "test_user3", "Test1234.");
+    trasportatore.effettuaRegistrazione("test_user3", "UtenteTrasportatore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com", "Test1234.", "Test1234.", "FedEx");
+    trasportatore = trasportatore.anima_oggetto("UtenteTrasportatore", "test_user3", "Test1234.");
+    trasportatore.effettua_logout("test_user3");
+    trasportatore.effettua_login("test_user3", "Test1234.");
     std::cout << trasportatore.nome << std::endl;
     std::cout << trasportatore.cognome << std::endl;
     std::cout << trasportatore.nome_utente << std::endl;
     std::cout << trasportatore.email << std::endl;
     
     UtenteCompratore compratore2;
-    //compratore2.effettuaRegistrazione("test_user3", "UtenteCompratore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com","Via torino", 1, "00100", "Torino", "Test1234.", "Test1234.", "1999/09/18");
-    compratore2.effettua_login("UtenteCompratore", "test_user3", "Test1234.");
+    compratore2.effettuaRegistrazione("test_user3", "UtenteCompratore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com","Via torino", 1, "00100", "Torino", "Test1234.", "Test1234.", "1999/09/18");
+    compratore2.effettua_login("test_user3", "Test1234.");
     std::cout << compratore2.nome << std::endl;
     std::cout << compratore2.cognome << std::endl;
     std::cout << compratore2.nome_utente << std::endl;
     std::cout << compratore2.email << std::endl;
+
+    print_select("UtenteCompratore");
+    print_select("utenteTrasportatore");
+    print_select("utenteFornitore");
+
+    //print_select("Prodotto");  
+    //print_select("Carrello");  
+    //print_select("Carta");  
 
     
     /*

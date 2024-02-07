@@ -46,7 +46,7 @@ public:
     }
 
 
-    virtual void effettua_login(std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw)
+    void effettua_login(std::string input_nome_utente, std::string input_passw)
     {
         // nome_utente = utente.nome_utente;
         // password = utente.password;
@@ -54,7 +54,7 @@ public:
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
-        //std::string categoriaUtenteLogin = categoria;
+        std::string categoriaUtenteLogin = categoria;
 
         // Controlla se l'utente è già loggato:
         int stato_utente;
@@ -142,7 +142,7 @@ public:
                 }
                 else
                 {
-                    std::cout << "La passowrd " << password_utente << "è corretta." << std::endl;
+                    std::cout << "La passowrd inserita: " << password_utente << "è corretta." << std::endl;
 
                     // Aggiorno stato:
 
@@ -165,7 +165,7 @@ public:
 
                     PQclear(res);
 
-                    std::cout << "Lo stato dell'utente prima di averlo aggiornato è: " << stato_utente << std::endl;
+                    std::cout << "Lo stato dell'utente "  << input_nome_utente << " prima del login è: " << stato_utente << std::endl;
 
                     // Controlla se lo stto dell'utente è stato aggiornato:
 
@@ -193,7 +193,8 @@ public:
                     if (rows == 1)
                     {
                         stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-                        std::cout << "Lo stato dell'utente dopo averlo aggiornato con l'update è: " << stato_utente << std::endl;
+                        std::cout << "Lo stato dell'utente " << input_nome_utente <<  " dopo il login è: " << stato_utente << std::endl;
+                        std::cout << "\n\n" << std::endl;
                     }
 
                     else
@@ -254,7 +255,7 @@ public:
 
 
 
-    void effettua_logout(std::string categoriaUtenteLogin, std::string input_nome_utente)
+    void effettua_logout(std::string input_nome_utente)
     {
 
         // Connessione al database
@@ -263,7 +264,7 @@ public:
 
         // Controlla se l'utente è già loggato:
         int stato_utente;
-        //std::string categoriaUtenteLogin = categoria;
+        std::string categoriaUtenteLogin = categoria;
 
 
         if (categoriaUtenteLogin == "UtenteCompratore"){
@@ -340,7 +341,8 @@ public:
 
                 if (rows == 1) {
                     stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-                    std::cout << "Lo stato dell'utente dopo l'update logout è: " << stato_utente << std::endl;
+                    std::cout << "Lo stato dell'utente " << input_nome_utente << " dopo il logout è: " << stato_utente << std::endl;
+                    std::cout << "\n\n" << std::endl;
                 }
                 else {
                     std::cout << "Errore: L'utente non è stato trovato." << std::endl;

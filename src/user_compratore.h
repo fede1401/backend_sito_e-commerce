@@ -328,7 +328,7 @@ class UtenteCompratore : public Utente {
 
 
 
-    void effettua_login(std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw) override{
+    UtenteCompratore anima_oggetto(std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw) {
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
@@ -357,9 +357,9 @@ class UtenteCompratore : public Utente {
         }
         else{
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-            return;
+            return compratore;
         }
-    return;
+    return compratore;
     }
 
 

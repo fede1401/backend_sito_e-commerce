@@ -177,7 +177,7 @@ public:
     }
 
 
-    void effettua_login(std::string categoriaUtenteLogin,std::string input_nome_utente, std::string input_passw) override{
+    UtenteFornitore anima_oggetto(std::string categoriaUtenteLogin,std::string input_nome_utente, std::string input_passw){
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
@@ -188,6 +188,7 @@ public:
         rows = PQntuples(res);
 
         if (rows == 1){
+            std::cout << "Utente trovato!!!!" << std::endl;
             fornitore.nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_fornitore"));
             fornitore.categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
             fornitore.nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
@@ -197,12 +198,13 @@ public:
             fornitore.azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
             fornitore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
             fornitore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+            std::cout << "Fornitore riempito!" << std::endl;
         }
         else{
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-            return;
+            return fornitore;
         }
-    return;
+    return fornitore;
     }
 
 };
