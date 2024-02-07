@@ -116,6 +116,7 @@ void test_aggiornaResidenza(){
 }
 
 
+
 void test_aggiornaAziendaProduttrice(){
     UtenteFornitore fornitore;
     fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
@@ -166,6 +167,33 @@ void test_aggiornaDittaSpedizione(){
 
 }
 
+
+// Mi viene un dubbio: supponiamo un impiegato lavora nell'azienda Nike e inserisce nel backend un prodotto Nike. 
+// Se cambia azienda e ad esempio comincia a lavorare per l'Adidas, non ci sarà nessun utente associato all'inserimento del prodotto Nike
+// Testiamolo:
+void test2_aggiornaAziendaProduttrice(){
+    UtenteFornitore fornitore;
+    fornitore.effettuaRegistrazione("test_user4", "UtenteFornitore", "Maria", "Leta", "333445567", "maria.leta@gmail.com", "Candela111?", "Candela111?", "Nike");
+    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user4", "Candela111?");
+    fornitore.effettua_login("test_user4", "Candela111?");
+    fornitore.effettua_logout("test_user4");
+
+    print_select("utenteFornitore");
+
+    Product prodottoNike;
+    prodottoNike.add_new_product("Air Force 1", "Abbigliamento e scarpe", 100.00, "Air force 1, colore bianco, taglia 40", "Nike", 100);
+
+    print_select("Prodotto");
+
+    fornitore.aggiornaNomeAziendaProduttrice("Adidas");
+
+    print_select("utenteFornitore");
+    print_select("Prodotto");
+}
+
+
+
+
 int main(){
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
     std::cout << "Connessione al database avvenuta con successo." << std::endl;
@@ -183,7 +211,9 @@ int main(){
 
     //test_aggiornaAziendaProduttrice();
 
-    test_aggiornaDittaSpedizione();
+    //test_aggiornaDittaSpedizione();
+
+    test2_aggiornaAziendaProduttrice();
 
     
 
