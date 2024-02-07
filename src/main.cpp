@@ -46,11 +46,36 @@ int main(){
 
     
     UtenteCompratore compratore;
-    //compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", 123, "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
-    //compratore.effettua_login("UtenteCompratore", "test_user1", "P@ssw0rd!");
-    //compratore.effettua_logout("test_user1");
+    compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", 123, "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
+    compratore = compratore.anima_oggetto("UtenteCompratore", "test_user1", "P@ssw0rd!");
+    compratore.effettua_login("test_user1", "P@ssw0rd!");
+    compratore.effettua_logout("test_user1");
+
+    UtenteFornitore fornitore;
+    fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
+    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user2", "Candela111?");
+    fornitore.effettua_login("test_user2", "Candela111?");
+    fornitore.effettua_logout("test_user2");
+
+    UtenteTrasportatore trasportatore;
+    trasportatore.effettuaRegistrazione("test_user3", "UtenteTrasportatore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com", "Test1234.", "Test1234.", "FedEx");
+    trasportatore = trasportatore.anima_oggetto("UtenteTrasportatore", "test_user3", "Test1234.");
+    trasportatore.effettua_login("test_user3", "Test1234.");
+    trasportatore.effettua_logout("test_user3");
+
+    UtenteFornitore fornitore2;
+    fornitore.effettuaRegistrazione("test_user3", "UtenteFornitore", "Mirto", "Bacci", "333445567", "mirto.bacci@gmail.com", "Candela123?", "Candela123?", "Nike");
+    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user3", "Candela111?");
+    fornitore.effettua_login("test_user3", "Candela111?");
+    fornitore.effettua_logout("test_user3");
+
+    print_select("UtenteCompratore");
+    print_select("utenteTrasportatore");
+    print_select("utenteFornitore");
+
     
 
+    /*
     UtenteFornitore fornitore;
     std::cout << "Prima del login" << std::endl;
     fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
@@ -90,6 +115,7 @@ int main(){
     //print_select("Prodotto");  
     //print_select("Carrello");  
     //print_select("Carta");  
+    */
 
     
     /*

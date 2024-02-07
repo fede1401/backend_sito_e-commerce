@@ -276,7 +276,29 @@ class UtenteCompratore : public Utente {
                 std::cout << "Errore: Il nome utente è già in uso." << std::endl;
                 return;
         }
+        
+
+        // Controlliamo anche se il nome sia univoco con le due altre tabelle degli utenti: UtenteFornitore e UtenteTrasportatore:
+        sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows >= 1){
+            std::cout << "Errore: Il nome utente è già in uso da utenti fornitori." << std::endl;
+            return;
+        }
+
+
+        sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", in_nome_utente.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows >= 1){
+            std::cout << "Errore: Il nome utente è già in uso da utenti trasportatori." << std::endl;
+            return;
+        }
         ///////////////////////////////////// 
+
 
 
         ///////////////////////////////////// 
@@ -335,7 +357,7 @@ class UtenteCompratore : public Utente {
         // Creo il costruttore della classe utente compratore dopo il login:
         UtenteCompratore compratore;
         sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
-
+        
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
 
@@ -359,6 +381,7 @@ class UtenteCompratore : public Utente {
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
             return compratore;
         }
+    std::cout << "Nessun errore in anima oggetto!" << std::endl;
     return compratore;
     }
 

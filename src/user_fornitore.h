@@ -124,7 +124,27 @@ public:
                 std::cout << "Errore: Il nome utente è già in uso." << std::endl;
                 return;
         }
-        ///////////////////////////////////// 
+
+         // Controlliamo anche se il nome sia univoco con le due altre tabelle degli utenti: UtenteCompratore e UtenteTrasportatore:
+        sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows >= 1){
+            std::cout << "Errore: Il nome utente è già in uso da utenti compratori." << std::endl;
+            return;
+        }
+
+
+        sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", in_nome_utente.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows >= 1){
+            std::cout << "Errore: Il nome utente è già in uso da utenti trasportatori." << std::endl;
+            return;
+        }
+        /////////////////////////////////////  
 
 
         ///////////////////////////////////// 
