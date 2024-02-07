@@ -439,6 +439,71 @@ public:
         }
     return;
     }
+
+
+
+    void aggiornaPassword(std::string vecchiaPassw, std::string nuovaPassw){
+        // Utilizza i membri dell'istanza corrente per ottenere il nome utente e la categoria dell'utente
+        std::string nomeUtente = nome_utente;
+        std::string passwUtente = password;
+        //std::string categoriaUtente = categoria;
+
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+
+        // Controlliamo innanzitutto se la vecchiaPassword inserita dall'utente è uguale a quella nel database:
+        // Verifica della password:
+        if (passwUtente != vecchiaPassw){
+            std::cout << "Errore: La password inserita per aggiornarla non è corretta." << std::endl;
+            return;
+        }
+        else{
+            // La password inserita dall'utente è uguale a quella nel database:
+            // Controllo se la nuova password rispetta i criteri: lunghezza di almeno 8, almeno una lettere maiuscola, un numero e un carattere speciale.
+            if (nuovaPassw.length() < 8){
+                std::cout << "Errore: La nuova passowrd deve contenere almeno 8 caratteri." << std::endl;
+                return;
+            }
+                                    
+            bool hasUpperCase = false;
+            bool hasDigit = false;
+            bool hasSpecialChar = false;
+            for (size_t i = 0; i < nuovaPassw.length(); i++)
+            {
+                if (std::isupper(nuovaPassw[i])) {  hasUpperCase = true; } 
+                                        
+                else if (std::isdigit(nuovaPassw[i])) { hasDigit = true;} 
+                            
+                else if (isSpecialCharacter(nuovaPassw[i])) {  hasSpecialChar = true; }
+                
+            }
+
+            if (!hasUpperCase) { std::cout << "La nuova password deve contenere almeno un carattere maiuscolo." << std::endl;  }
+            if (!hasDigit) { std::cout << "La nuova password deve contenere almeno un numero." << std::endl; }
+            if (!hasSpecialChar) {  std::cout << "La nuova password deve contenere almeno un carattere speciale." << std::endl; }
+
+
+            // In base alla categoria dell'utente aggiorniamo la password
+            if (categoria == "UtenteCompratore"){
+                sprintf(sqlcmd, "UPDATE UtenteCompratore set password = '%s' WHERE nome_utente_compratore = '%s'", nuovaPassw.c_str(), nomeUtente.c_str());
+                res = db1.ExecSQLcmd(sqlcmd);
+                PQclear(res); 
+            }
+            if (categoria == "UtenteFornitore"){
+                sprintf(sqlcmd, "UPDATE UtenteFornitore set password = '%s' WHERE nome_utente_fornitore = '%s'", nuovaPassw.c_str(), nomeUtente.c_str());
+                res = db1.ExecSQLcmd(sqlcmd);
+                PQclear(res); 
+            }
+            if (categoria == "UtenteTrasportatore"){
+                sprintf(sqlcmd, "UPDATE UtenteTrasportatore set password = '%s' WHERE nome_utente_trasportatore = '%s'", nuovaPassw.c_str(), nomeUtente.c_str());
+                res = db1.ExecSQLcmd(sqlcmd);
+                PQclear(res); 
+            }
+        }
+        
+    return;
+    }
     
     
     
