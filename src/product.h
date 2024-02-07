@@ -134,6 +134,57 @@ class Product {
     }
 
 
+    void ricerca_mostra_Prodotto(std::string nomeProdotto){
+
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+
+        // Cerchiamo il prodotto nel database:
+        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE nome = '%s'", nomeProdotto.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        // Il prodotto non è stato trovato
+        if (rows < 1){
+            std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
+            return;
+        }
+        else{
+            // Animo l'oggetto Product:
+            nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+            categoria = PQgetvalue(res, 0, PQfnumber(res, "categoria"));
+            descrizione = PQgetvalue(res, 0, PQfnumber(res, "descrizione"));
+            prezzo_euro = atof(PQgetvalue(res, 0, PQfnumber(res, "prezzoEuro")));
+            azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
+            numero_copie_disponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
+
+            // Mostro le informazioni del Prodotto;
+            std::cout << "Nome prodotto:" << nome << std::endl;
+            std::cout << "Categoria prodotto: " << categoria << std::endl;
+            std::cout << "Descrizione: " << descrizione << std::endl;
+            std::cout << "Prezzo in euro: " << prezzo_euro << std::endl;
+            std::cout << "Azienda di produzione: " << azienda_produzione << std::endl;
+            std::cout << "Numero delle copie disponibili: " << numero_copie_disponibili << std::endl;
+
+
+            /*int numCols = PQnfields(res);
+            for (int i = 0; i < rows; ++i) {
+                std::cout << "Row " << i << ": ";
+                for (int j = 0; j < numCols; ++j) {
+                    std::cout << PQgetvalue(res, i, j) << ",   ";
+                }
+                std::cout << std::endl;
+            }
+            */
+            
+        }
+        PQclear(res); 
+
+    return;
+    }
+
+
 };
 
 

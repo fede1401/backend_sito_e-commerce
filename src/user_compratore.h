@@ -404,42 +404,6 @@ class UtenteCompratore : public Utente {
     }
 
 
-
-    void ricerca_mostra_Prodotto(std::string nomeProdotto){
-        // Utilizza i membri dell'istanza corrente per ottenere il nome utente di chi sta ricercando un prodotto. 
-        //std::string nomeUtente = nome_utente;
-
-        // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-
-
-        // Cerchiamo il prodotto nel database:
-        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE nome_prodotto = '%s'", nomeProdotto.c_str());
-        res = db1.ExecSQLtuples(sqlcmd);
-        rows = PQntuples(res);
-
-        // Il prodotto non è stato trovato
-        if (rows < 1){
-            std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
-            return;
-        }
-        else{
-            int numCols = PQnfields(res);
-            for (int i = 0; i < rows; ++i) {
-                std::cout << "Row " << i << ": ";
-                for (int j = 0; j < numCols; ++j) {
-                    std::cout << PQgetvalue(res, i, j) << ",   ";
-                }
-                std::cout << std::endl;
-            }
-        }
-        PQclear(res); 
-
-    return;
-    }
-
-
-
 };
 
 

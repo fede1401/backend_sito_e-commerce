@@ -192,15 +192,9 @@ void test2_aggiornaAziendaProduttrice(){
 
 
 void test_ricercaProdotto(){
-    UtenteCompratore compratore;
-    compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", "123", "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
-    compratore = compratore.anima_oggetto("UtenteCompratore", "test_user1", "P@ssw0rd!");
-    compratore.effettua_login("test_user1", "P@ssw0rd!");
-    compratore.effettua_logout("test_user1");
-
-    print_select("UtenteCompratore");
-
-    compratore.ricerca_mostra_Prodotto("Air Force1");
+    Product prodotto;
+    prodotto.ricerca_mostra_Prodotto("Air Force 1");
+    return;
 }
 
 
@@ -224,6 +218,10 @@ int main(){
     //test_aggiornaDittaSpedizione();
 
     //test2_aggiornaAziendaProduttrice();
+
+    print_select("Prodotto");
+
+    test_ricercaProdotto();
 
     
 
