@@ -116,7 +116,55 @@ void test_aggiornaResidenza(){
 }
 
 
+void test_aggiornaAziendaProduttrice(){
+    UtenteFornitore fornitore;
+    fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
+    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user2", "Candela111?");
+    fornitore.effettua_login("test_user2", "Candela111?");
+    fornitore.effettua_logout("test_user2");
 
+    print_select("utenteFornitore");
+
+    fornitore.aggiornaNomeAziendaProduttrice("Adidas");
+
+    print_select("utenteFornitore");
+
+    /*
+    Risultati ottenuti:
+    Tabella: utenteFornitore
+    Row 0: test_user2,   UtenteFornitore,   Biagio,   Anocacci,   biagio.anocacci@gmail.com,   333445567,   Candela111?,   Nike,   0,   
+
+
+    Tabella: utenteFornitore
+    Row 0: test_user2,   UtenteFornitore,   Biagio,   Anocacci,   biagio.anocacci@gmail.com,   333445567,   Candela111?,   Adidas,   0, 
+    */
+
+}
+
+
+void test_aggiornaDittaSpedizione(){
+    UtenteTrasportatore trasportatore;
+    trasportatore.effettuaRegistrazione("test_user3", "UtenteTrasportatore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com", "Test1234.", "Test1234.", "FedEx");
+    trasportatore = trasportatore.anima_oggetto("UtenteTrasportatore", "test_user3", "Test1234.");
+    trasportatore.effettua_login("test_user3", "Test1234.");
+    trasportatore.effettua_logout("test_user3");
+
+    print_select("UtenteTrasportatore");
+
+    trasportatore.aggiornaNomeDittaSpedizione("Bartolini");
+
+    print_select("UtenteTrasportatore");
+
+    /* Risultati ottenuti:
+    Tabella: UtenteTrasportatore
+    Row 0: test_user3,   UtenteTrasportatore,   Marco,   Verdi,   marco.verdi@gmail.com,   345678900,   Test1234.,   FedEx,   0,   
+
+
+    Tabella: UtenteTrasportatore
+    Row 0: test_user3,   UtenteTrasportatore,   Marco,   Verdi,   marco.verdi@gmail.com,   345678900,   Test1234.,   Bartolini,   0,   
+    */
+
+}
 
 int main(){
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
@@ -132,6 +180,12 @@ int main(){
     //test_aggiornamento_numeroDiTelefono();
 
     //test_aggiornaResidenza();
+
+    //test_aggiornaAziendaProduttrice();
+
+    test_aggiornaDittaSpedizione();
+
+    
 
 
 

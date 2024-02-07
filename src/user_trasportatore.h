@@ -221,6 +221,23 @@ public:
     return trasportatore;
     }
 
+
+
+    void aggiornaNomeDittaSpedizione(std::string nuovaDittaSpedizione){
+        // Utilizza i membri dell'istanza corrente per ottenere il nome utente.
+        std::string nomeUtente = nome_utente;
+
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        sprintf(sqlcmd, "UPDATE UtenteTrasportatore set nome_DittaSpedizione='%s' WHERE nome_utente_trasportatore = '%s'",
+                                                                            nuovaDittaSpedizione.c_str(), nomeUtente.c_str());
+        res = db1.ExecSQLcmd(sqlcmd);
+        PQclear(res); 
+
+    return;
+    }
+
 };
 
 

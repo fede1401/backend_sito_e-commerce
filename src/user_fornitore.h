@@ -227,6 +227,22 @@ public:
     return fornitore;
     }
 
+
+
+    void aggiornaNomeAziendaProduttrice(std::string nuovaAziendaProduttrice){
+        // Utilizza i membri dell'istanza corrente per ottenere il nome utente.
+        std::string nomeUtente = nome_utente;
+
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        sprintf(sqlcmd, "UPDATE UtenteFornitore set nome_AziendaProduttrice='%s' WHERE nome_utente_fornitore = '%s'",
+                                                                            nuovaAziendaProduttrice.c_str(), nomeUtente.c_str());
+        res = db1.ExecSQLcmd(sqlcmd);
+        PQclear(res); 
+
+    return;
+    }
 };
 
 
