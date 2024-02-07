@@ -21,7 +21,7 @@ class UtenteCompratore : public Utente {
     // Attributi specifici per UtenteCompratore
     std::string data_compleanno;
     std::string via_residenza;
-    int numero_civico;
+    std::string numero_civico;
     std::string CAP;
     std::string città_residenza;
     float saldo;
@@ -33,7 +33,7 @@ class UtenteCompratore : public Utente {
         Utente("", "", "", "", "", "", ""),
         data_compleanno(""), 
         via_residenza(""), 
-        numero_civico(0), 
+        numero_civico(""), 
         CAP(""), 
         città_residenza(""), 
         saldo(0.0), 
@@ -50,7 +50,7 @@ class UtenteCompratore : public Utente {
                      std::string email,
                      std::string data_compleanno, 
                      std::string via_residenza, 
-                     int numero_civico, 
+                     std::string numero_civico, 
                      std::string CAP, 
                      std::string città_residenza, 
                      float saldo, 
@@ -201,7 +201,7 @@ class UtenteCompratore : public Utente {
                                 std::string in_nome, std::string in_cognome, 
                                 std::string in_numero_telefono, 
                                 std::string in_email, 
-                                std::string in_via_residenza, int in_numero_civico, std::string in_CAP, std::string in_città_residenza,
+                                std::string in_via_residenza, std::string in_numero_civico, std::string in_CAP, std::string in_città_residenza,
                                 std:: string in_password, std:: string in_conferma_password, 
                                 std::string in_data_compleanno) {
 
@@ -337,8 +337,8 @@ class UtenteCompratore : public Utente {
 
         /////////////////////////////////////
         // Inserisco nel database il nuovo utente:
-        sprintf(sqlcmd, "INSERT INTO UtenteCompratore (nome_utente_compratore, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, data_compleanno, via_di_residenza, numero_civico, CAP, citta_di_residenza, saldo, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', %f, %d)",
-        in_nome_utente.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), formatted_date.c_str(), in_via_residenza.c_str(), in_numero_civico, in_CAP.c_str(), in_città_residenza.c_str(), saldo, stato);
+        sprintf(sqlcmd, "INSERT INTO UtenteCompratore (nome_utente_compratore, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, data_compleanno, via_di_residenza, numero_civico, CAP, citta_di_residenza, saldo, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, %d)",
+        in_nome_utente.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), formatted_date.c_str(), in_via_residenza.c_str(), in_numero_civico.c_str(), in_CAP.c_str(), in_città_residenza.c_str(), saldo, stato);
                     
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);  
@@ -371,7 +371,7 @@ class UtenteCompratore : public Utente {
                 compratore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
                 compratore.data_compleanno = PQgetvalue(res, 0, PQfnumber(res, "data_compleanno"));
                 compratore.via_residenza = PQgetvalue(res, 0, PQfnumber(res, "via_di_residenza"));
-                compratore.numero_civico = atoi(PQgetvalue(res, 0, PQfnumber(res, "numero_civico")));
+                compratore.numero_civico = PQgetvalue(res, 0, PQfnumber(res, "numero_civico"));
                 compratore.CAP = PQgetvalue(res, 0, PQfnumber(res, "CAP"));
                 compratore.città_residenza = PQgetvalue(res, 0, PQfnumber(res, "citta_di_residenza"));
                 compratore.saldo = atof(PQgetvalue(res, 0, PQfnumber(res, "saldo")));
@@ -383,6 +383,24 @@ class UtenteCompratore : public Utente {
         }
     std::cout << "Nessun errore in anima oggetto!" << std::endl;
     return compratore;
+    }
+
+
+
+
+    void aggiornaResidenza(std::string nuovaViaResidenza, std::string nuovoNumCiv, std::string nuovoCAP, std::string nuovaCittaResidenza){
+        // Utilizza i membri dell'istanza corrente per ottenere il nome utente.
+        std::string nomeUtente = nome_utente;
+
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        sprintf(sqlcmd, "UPDATE UtenteCompratore set via_di_residenza='%s', numero_civico ='%s', CAP='%s', citta_di_residenza='%s' WHERE nome_utente_compratore = '%s'",
+         nuovaViaResidenza.c_str(), nuovoNumCiv.c_str(), nuovoCAP.c_str(), nuovaCittaResidenza.c_str(), nomeUtente.c_str());
+        res = db1.ExecSQLcmd(sqlcmd);
+        PQclear(res); 
+
+    return;
     }
 
 
