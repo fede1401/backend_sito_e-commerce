@@ -116,7 +116,6 @@ void test_aggiornaResidenza(){
 }
 
 
-
 void test_aggiornaAziendaProduttrice(){
     UtenteFornitore fornitore;
     fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
@@ -192,6 +191,17 @@ void test2_aggiornaAziendaProduttrice(){
 }
 
 
+void test_ricercaProdotto(){
+    UtenteCompratore compratore;
+    compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", "123", "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
+    compratore = compratore.anima_oggetto("UtenteCompratore", "test_user1", "P@ssw0rd!");
+    compratore.effettua_login("test_user1", "P@ssw0rd!");
+    compratore.effettua_logout("test_user1");
+
+    print_select("UtenteCompratore");
+
+    compratore.ricerca_mostra_Prodotto("Air Force1");
+}
 
 
 int main(){
@@ -213,7 +223,7 @@ int main(){
 
     //test_aggiornaDittaSpedizione();
 
-    test2_aggiornaAziendaProduttrice();
+    //test2_aggiornaAziendaProduttrice();
 
     
 
