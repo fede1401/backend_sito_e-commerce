@@ -405,8 +405,40 @@ public:
     return;
     }
 
-    
-    
+
+
+
+
+
+    void aggiornaNumeroDiTelefono(std::string nuovoNumeroTelefono){
+        
+        // Utilizza i membri dell'istanza corrente per ottenere il nome utente e la categoria dell'utente
+        std::string nomeUtente = nome_utente;
+
+        //std::string categoriaUtente = categoria;
+
+         // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+
+        // In base alla categoria dell'utente aggiorniamo il numero di telefono
+        if (categoria == "UtenteCompratore"){
+            sprintf(sqlcmd, "UPDATE UtenteCompratore set numero_di_telefono = '%s' WHERE nome_utente_compratore = '%s'", nuovoNumeroTelefono.c_str(), nomeUtente.c_str());
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res); 
+        }
+        if (categoria == "UtenteFornitore"){
+            sprintf(sqlcmd, "UPDATE UtenteFornitore set numero_di_telefono = '%s' WHERE nome_utente_fornitore = '%s'", nuovoNumeroTelefono.c_str(), nomeUtente.c_str());
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res); 
+        }
+        if (categoria == "UtenteTrasportatore"){
+            sprintf(sqlcmd, "UPDATE UtenteTrasportatore set numero_di_telefono = '%s' WHERE nome_utente_trasportatore = '%s'", nuovoNumeroTelefono.c_str(), nomeUtente.c_str());
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res); 
+        }
+    return;
+    }
     
     
     

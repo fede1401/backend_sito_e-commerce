@@ -36,6 +36,34 @@ void print_select(std::string nome_tabella){
     
 }
 
+
+
+void test_aggiornamento_numeroDiTelefono(){
+
+    UtenteCompratore compratore;
+    compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", 123, "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
+    compratore = compratore.anima_oggetto("UtenteCompratore", "test_user1", "P@ssw0rd!");
+    compratore.effettua_login("test_user1", "P@ssw0rd!");
+    compratore.effettua_logout("test_user1");
+
+    print_select("UtenteCompratore");
+
+    compratore.aggiornaNumeroDiTelefono("555555555");
+
+    print_select("UtenteCompratore");
+
+    /*
+    Risultati ottenuti;
+    Tabella: UtenteCompratore
+    Row 0: test_user1,   UtenteCompratore,   Alice,   Rossi,   alice.rossi@example.com,   1234567890,   P@ssw0rd!,   1990-05-15,   Via Roma,   123,   00100,   Roma,   0.00,   0,   
+
+
+    Tabella: UtenteCompratore
+    Row 0: test_user1,   UtenteCompratore,   Alice,   Rossi,   alice.rossi@example.com,   1111111111,   P@ssw0rd!,   1990-05-15,   Via Roma,   123,   00100,   Roma,   0.00,   0,  
+    */
+}
+
+
 int main(){
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
     std::cout << "Connessione al database avvenuta con successo." << std::endl;
@@ -44,8 +72,13 @@ int main(){
 
     char sqlcmd[1000];    
 
+
+    //test_aggiornamento_numeroDiTelefono();
+
+
+
     
-    UtenteCompratore compratore;
+    /*UtenteCompratore compratore;
     compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", 123, "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
     compratore = compratore.anima_oggetto("UtenteCompratore", "test_user1", "P@ssw0rd!");
     compratore.effettua_login("test_user1", "P@ssw0rd!");
@@ -74,8 +107,6 @@ int main(){
     print_select("utenteFornitore");
 
     
-
-    /*
     UtenteFornitore fornitore;
     std::cout << "Prima del login" << std::endl;
     fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
