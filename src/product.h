@@ -7,6 +7,7 @@
 #include <string>
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 #include "ordine.h"
+#include <ctime>
 
 //PGresult *res;
 //char sqlcmd[1000];
@@ -186,9 +187,17 @@ class Product {
     }
 
 
-    Ordine acquistaProdotto(){
+
+    Ordine acquistaProdotto(std::string nomeUtenteCompratore, std::string nomeUtenteTrasportatore, std::string inViaSpedizione, 
+                            std::string incittaSpedizione, std::string innumCivicoSpedizione){
 
         Ordine ordine;
+        std::string dataOrdineEffettuato;
+
+        StatoConsegna stato_consegna;
+
+        std::string nomeDittaSpedizione;
+
         
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
@@ -199,21 +208,78 @@ class Product {
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows == 1){
+            
+            //Ottengo i vari dati per costruire l'ordine:
+
             cod_product = atoi(PQgetvalue(res, 0, PQfnumber(res, "codProdotto")));
 
+            dataOrdineEffettuato = getCurrentDateAsString();
+
+
+            // Inizialmente assegnamo lo stato della consegna a "InElaborazione":
+            stato_consegna = StatoConsegna::InElaborazione;
+
+
+            // Otteniamo il nome della ditta di spedizione:
+            sprintf(sqlcmd, "SELECT nome_DittaSpedizione FROM UtenteTrasportatore WHERE nome_utente_trasportatore='%s'", nomeUtenteTrasportatore.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+
+            if (rows==1)  {   nomeDittaSpedizione = PQgetvalue(res, 0, PQfnumber(res, "nome_DittaSpedizione"));     }
+            else{
+                std::cout << "Errore: Non è stato trovato l'utente che trasporterà il prodotto." << std::endl;
+                return ordine;
+            }
+
+            // Inseriamo i valori nel database:
+            sprintf(sqlcmd, "INSERT INTO Ordine (idOrdine, codProdotto, nome_utente_compratore, nome_utente_trasportatore, dataOrdineEffettuato, statoConsegna, nome_DittaSpedizione, viaSpedizione, cittaSpedizione, numCivSpedizione) VALUES (DEFAULT, '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
+            cod_product, nomeUtenteCompratore.c_str(), nomeUtenteTrasportatore.c_str(), dataOrdineEffettuato.c_str(), stato_consegna, nomeDittaSpedizione.c_str(), inViaSpedizione.c_str(), incittaSpedizione.c_str(), innumCivicoSpedizione.c_str());
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res); 
+
+
+            ordine.codice_prodotto = cod_product;
+            ordine.nome_uteCompratore = nomeUtenteCompratore;
+            ordine.nome_uteTrasportatore = nomeUtenteTrasportatore;
+            ordine.data_ordine_effettuato = dataOrdineEffettuato;
+            ordine.impostaStato(StatoConsegna::InElaborazione);
+            ordine.ditta_spedizione = nomeDittaSpedizione;
+            ordine.via_spedizione = inViaSpedizione;
+            ordine.città_spedizione = incittaSpedizione;
+            ordine.numero_civico_spedizione = innumCivicoSpedizione;
         }
         else{
             std::cout << "Errore: il prodotto non è stato trovato!" << std::endl;
             return ordine;
         }
+    return ordine;
+    }
+
+
+
+    std::string getCurrentDateAsString() {
+    // Ottieni il tempo corrente
+    std::time_t now = std::time(nullptr);
+
+    // Converti il tempo corrente in una struct tm
+    std::tm* timeinfo = std::localtime(&now);
+
+    // Costruisci una stringa dalla data nel formato GG-MM-AAAA
+    std::stringstream ss;
+    ss << timeinfo->tm_mday << '-'
+       << (timeinfo->tm_mon + 1) << '-'
+       << (timeinfo->tm_year + 1900);
+
+    return ss.str();
     }
 
 
 
 
 
-
 };
+
+
 
 
 

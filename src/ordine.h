@@ -11,7 +11,7 @@ public:
     int codice_prodotto;
     std::string nome_uteTrasportatore;
     std::string data_ordine_effettuato;
-    std::string stato_consegna;
+    StatoConsegna stato_consegna;
     std::string ditta_spedizione;
     std::string via_spedizione;
     std::string città_spedizione;
@@ -23,7 +23,7 @@ public:
       codice_prodotto(-1),
       nome_uteTrasportatore(""),
       data_ordine_effettuato(""),
-      stato_consegna(""),
+      stato_consegna(),
       ditta_spedizione(""),
       via_spedizione(""),
       città_spedizione(""),
@@ -32,10 +32,28 @@ public:
 
     // Costruttore
     Ordine(std::string nome_uteCompratore, int identificatore_ordine, int codice_prodotto, std::string id_trasportatore,
-           std::string data_ordine, std::string stato, std::string ditta, std::string via, std::string città, int numero_civico)
+           std::string data_ordine, StatoConsegna stato_consegna, std::string ditta, std::string via, std::string città, int numero_civico)
         : nome_uteCompratore(nome_uteCompratore), identificatore_ordine(identificatore_ordine), codice_prodotto(codice_prodotto),
           nome_uteTrasportatore(nome_uteTrasportatore), data_ordine_effettuato(data_ordine_effettuato), stato_consegna(stato_consegna),
           ditta_spedizione(ditta_spedizione), via_spedizione(via_spedizione), città_spedizione(città_spedizione), numero_civico_spedizione(numero_civico_spedizione) {}  
+
+
+    void impostaStato(StatoConsegna nuovoStato) {
+        stato_consegna = nuovoStato;
+    }
+
+    
+
 };
+
+enum class StatoConsegna {
+    InElaborazione,
+    Spedito,
+    InTransito,
+    Consegnato
+    };
+
+
+
 
 #endif // ORDINE_H

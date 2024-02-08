@@ -198,6 +198,27 @@ void test_ricercaProdotto(){
 }
 
 
+void test_acquistoProdotto(){
+    UtenteFornitore fornitore;
+    fornitore.effettuaRegistrazione("test_user9", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio9.anocacci@gmail.com", "Candela111?", "Candela111?", "Xiaomi");
+    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user9", "Candela111?");
+    fornitore.effettua_login("test_user9", "Candela111?");
+
+    Product prodotto;
+    prodotto.add_new_product("Xiaomi lite9", "Telefonia", 540.00, "Xiaomi lite9, 8GB RAM, 1 TB archiviazione", "Xiaomi", 10);
+
+    print_select("Prodotto");
+    
+    Ordine ordine;
+    ordine = prodotto.acquistaProdotto("test_user1", "test_user3", "Via garbini", "Viterbo", "55");
+
+    print_select("Ordine");
+
+    return;
+}
+
+
+
 int main(){
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
     std::cout << "Connessione al database avvenuta con successo." << std::endl;
@@ -219,11 +240,9 @@ int main(){
 
     //test2_aggiornaAziendaProduttrice();
 
-    print_select("Prodotto");
+    //test_ricercaProdotto();
 
-    test_ricercaProdotto();
-
-    
+    test_acquistoProdotto();
 
 
 
