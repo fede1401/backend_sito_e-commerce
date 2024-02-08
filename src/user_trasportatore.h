@@ -14,6 +14,7 @@ public:
     // Attributi specifici per UtenteTrasportatore
     std::string ditta_spedizione;
     int stato;
+    int disponibilità;
 
 
     // Costruttore di UtenteTrasportatore
@@ -21,12 +22,13 @@ public:
     UtenteTrasportatore():
         Utente("", "", "", "", "", "", ""),
         ditta_spedizione(""),
-        stato(0) {}
+        stato(0),
+        disponibilità(-1) {}
 
     UtenteTrasportatore(std::string nome_utente, std::string categoria, std::string nome, std::string cognome, 
                         std::string numero_telefono, std::string password, std::string email,
-                        std::string ditta_spedizione, int stato)
-        : Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), ditta_spedizione(ditta_spedizione), stato(stato) {}
+                        std::string ditta_spedizione, int stato, int disponibilità)
+        : Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), ditta_spedizione(ditta_spedizione), stato(stato), disponibilità(disponibilità) {}
 
     
     // Metodo specifico per UtenteTrasportatore
@@ -47,6 +49,7 @@ public:
                                 ) {
 
         int stato = 0;
+        int disponibilità = 0;
 
 
         ///////////////////////////////////// 
@@ -171,7 +174,7 @@ public:
 
         /////////////////////////////////////
         // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
-        *this = UtenteTrasportatore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, in_dittaSped, stato);
+        *this = UtenteTrasportatore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, in_dittaSped, stato, disponibilità);
         /////////////////////////////////////
 
 
@@ -179,8 +182,8 @@ public:
 
         /////////////////////////////////////
         // Inserisco nel database il nuovo utente:
-        sprintf(sqlcmd, "INSERT INTO UtenteTrasportatore (nome_utente_trasportatore, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, nome_DittaSpedizione, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d')",
-        in_nome_utente.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_dittaSped.c_str(), stato);
+        sprintf(sqlcmd, "INSERT INTO UtenteTrasportatore (nome_utente_trasportatore, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, nome_DittaSpedizione, stato, dispo ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d')",
+        in_nome_utente.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_dittaSped.c_str(), stato, disponibilità);
                     
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);  
@@ -213,6 +216,7 @@ public:
             trasportatore.ditta_spedizione = PQgetvalue(res, 0, PQfnumber(res, "nome_DittaSpedizione"));
             trasportatore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
             trasportatore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+            trasportatore.disponibilità = atoi(PQgetvalue(res, 0, PQfnumber(res, "dispo")));
         }
         else{
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
