@@ -15,13 +15,17 @@ class Carrello {
 public:
     std::string nome_utente_compratore;
     int codice_prodotto;
+    int quantitàProdotti;
 
     // Costruttore
-    Carrello(std::string nome_utente_compratore, int codice_prod) : nome_utente_compratore(nome_utente_compratore), codice_prodotto(codice_prod) {}
+    Carrello(std::string nome_utente_compratore, int codice_prod, int quantitàProdotti) : 
+            nome_utente_compratore(nome_utente_compratore), codice_prodotto(codice_prod), quantitàProdotti(quantitàProdotti) {}
 
-    Carrello(): nome_utente_compratore(""), codice_prodotto(-1){}
+    // Costruttore predefinito
+    Carrello(): nome_utente_compratore(""), codice_prodotto(-1), quantitàProdotti(-1){}
 
 
+    // Funzione per aggiungere un prodotto al carrello
     void add_prodotto(std::string in_nome_utente_compratore, int in_cod_prodotto){
         
         /*
@@ -41,7 +45,8 @@ public:
         }
         /////////////////////////////////////
         */
-        
+        Carrello carrello;
+
         // Connessione al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
         std::cout << "Connessione al database avvenuta con successo." << std::endl;
@@ -85,6 +90,11 @@ public:
                 sprintf(sqlcmd, "UPDATE Carrello set quantitàProd = '%d' WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", quantitàPrecedente, in_nome_utente_compratore.c_str(),in_cod_prodotto);
                 res = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res);
+
+                // Anima l'oggetto
+                carrello.codice_prodotto = codProdotto;
+                carrello.nome_utente_compratore = in_nome_utente_compratore;
+                carrello.quantitàProdotti = quantitàPrecedente;
             }
         }
          
@@ -93,6 +103,9 @@ public:
             sprintf(sqlcmd, "INSERT INTO Carrello (nome_utente_compratore, codProdotto, quantitàProd) VALUES ('%s', '%d', '%d')", in_nome_utente_compratore.c_str(), in_cod_prodotto, 1);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);   
+            carrello.codice_prodotto = in_cod_prodotto;
+            carrello.nome_utente_compratore = in_nome_utente_compratore;
+            carrello.quantitàProdotti = 1;
 
         }
            
