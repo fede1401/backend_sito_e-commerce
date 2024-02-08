@@ -8,7 +8,9 @@ CREATE TYPE motivazioneReso AS ENUM ('difettoso', 'misura errata', 'non conforme
 
 CREATE TYPE votoStelle AS ENUM ('1', '2', '3', '4', '5');
 
-CREATE TYPE statoConsegna AS ENUM ('in elaborazione', 'spedito', 'in transito', 'consegnato');
+CREATE TYPE statoConsegna AS ENUM ('in elaborazione', 'spedito');
+
+CREATE TYPE statoSpedizione AS ENUM ('in transito', 'consegnato');
 
 /*CREATE TYPE categoriaUtente AS ENUM ('UtenteCompratore', 'UtenteFornitore', 'UtenteTrasportatore');*/
 
@@ -214,6 +216,7 @@ CREATE TABLE IF NOT EXISTS UtenteTrasportatore (
     password VARCHAR(100) NOT NULL,
     nome_DittaSpedizione VARCHAR(50) NOT NULL,
     stato INTEGER,
+    dispo INTEGER,
     PRIMARY KEY(nome_utente_trasportatore)
 );
 
@@ -338,13 +341,8 @@ CREATE TABLE IF NOT EXISTS Ordine (
     idOrdine SERIAL,
     codProdotto SERIAL,
     nome_utente_compratore VARCHAR(50) NOT NULL,
-    nome_utente_trasportatore VARCHAR(50) NOT NULL,
     dataOrdineEffettuato DATE,
     statoConsegna statoConsegna,
-    nome_DittaSpedizione VARCHAR(50) NOT NULL,
-    viaSpedizione VARCHAR(50) NOT NULL,
-    cittaSpedizione VARCHAR(50) NOT NULL,
-    numCivSpedizione VARCHAR(10) NOT NULL,    
     PRIMARY KEY(idOrdine),
     CONSTRAINT fk_codProdotto
       FOREIGN KEY(codProdotto)
@@ -353,12 +351,33 @@ CREATE TABLE IF NOT EXISTS Ordine (
     CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
       REFERENCES UtenteCompratore(nome_utente_compratore)
+      ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE IF NOT EXISTS Spedizione {
+    idSpedizione SERIAL,
+    idOrdine SERIAL,
+    nome_utente_trasportatore VARCHAR(50) NOT NULL,
+    statoSpedizione statoSpedizione,
+    nome_DittaSpedizione VARCHAR(50) NOT NULL,
+    viaSpedizione VARCHAR(50) NOT NULL,
+    cittaSpedizione VARCHAR(50) NOT NULL,
+    numCivSpedizione VARCHAR(10) NOT NULL, 
+    PRIMARY KEY(idSpedizione),
+    CONSTRAINT fk_idOrdine
+      FOREIGN KEY(idOrdine)
+      REFERENCES Ordine(idOrdine)
       ON DELETE CASCADE,
     CONSTRAINT fk_nome_utente_trasportatore
       FOREIGN KEY(nome_utente_trasportatore)
       REFERENCES UtenteTrasportatore(nome_utente_trasportatore)
       ON DELETE CASCADE
-);
+}
+
+
+
 
 /*CREATE TABLE IF NOT EXISTS UtenteCompratore (
     idUtComp SERIAL,
