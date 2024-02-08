@@ -8,7 +8,7 @@ CREATE TYPE motivazioneReso AS ENUM ('difettoso', 'misura errata', 'non conforme
 
 CREATE TYPE votoStelle AS ENUM ('1', '2', '3', '4', '5');
 
-CREATE TYPE statoConsegna AS ENUM ('in elaborazione', 'spedito');
+CREATE TYPE statoOrdine AS ENUM ('in elaborazione', 'spedito');
 
 CREATE TYPE statoSpedizione AS ENUM ('in transito', 'consegnato');
 
@@ -342,7 +342,7 @@ CREATE TABLE IF NOT EXISTS Ordine (
     codProdotto SERIAL,
     nome_utente_compratore VARCHAR(50) NOT NULL,
     dataOrdineEffettuato DATE,
-    statoConsegna statoConsegna,
+    statoOrdine statoOrdine,
     PRIMARY KEY(idOrdine),
     CONSTRAINT fk_codProdotto
       FOREIGN KEY(codProdotto)

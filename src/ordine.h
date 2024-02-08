@@ -4,55 +4,43 @@
 
 #include <string>
 
-class Ordine {
-public:
-    std::string nome_uteCompratore;
-    int identificatore_ordine;
-    int codice_prodotto;
-    std::string nome_uteTrasportatore;
-    std::string data_ordine_effettuato;
-    StatoConsegna stato_consegna;
-    std::string ditta_spedizione;
-    std::string via_spedizione;
-    std::string città_spedizione;
-    std::string numero_civico_spedizione;
-
-    Ordine():
-      nome_uteCompratore(""),
-      identificatore_ordine(-1),
-      codice_prodotto(-1),
-      nome_uteTrasportatore(""),
-      data_ordine_effettuato(""),
-      stato_consegna(),
-      ditta_spedizione(""),
-      via_spedizione(""),
-      città_spedizione(""),
-      numero_civico_spedizione(""){}
-
-
-    // Costruttore
-    Ordine(std::string nome_uteCompratore, int identificatore_ordine, int codice_prodotto, std::string id_trasportatore,
-           std::string data_ordine, StatoConsegna stato_consegna, std::string ditta, std::string via, std::string città, int numero_civico)
-        : nome_uteCompratore(nome_uteCompratore), identificatore_ordine(identificatore_ordine), codice_prodotto(codice_prodotto),
-          nome_uteTrasportatore(nome_uteTrasportatore), data_ordine_effettuato(data_ordine_effettuato), stato_consegna(stato_consegna),
-          ditta_spedizione(ditta_spedizione), via_spedizione(via_spedizione), città_spedizione(città_spedizione), numero_civico_spedizione(numero_civico_spedizione) {}  
-
-
-    void impostaStato(StatoConsegna nuovoStato) {
-        stato_consegna = nuovoStato;
-    }
-
-    
-
-};
-
-enum class StatoConsegna {
+enum class StatoOrdine {
     InElaborazione,
-    Spedito,
-    InTransito,
-    Consegnato
+    Spedito
     };
 
+
+class Ordine {
+public:
+    int identificatore_ordine;
+    int codice_prodotto;
+    std::string nome_uteCompratore;
+    std::string data_ordine_effettuato;
+    StatoOrdine stato_ordine;
+
+
+    // Definizione costruttori:  
+    Ordine():
+      identificatore_ordine(-1),
+      codice_prodotto(-1),
+      nome_uteCompratore(""),
+      data_ordine_effettuato(""),
+      stato_ordine(){}
+          
+    Ordine( int identificatore_ordine,  int codice_prodotto, std::string nome_uteCompratore, std::string data_ordine, StatoOrdine stato_ordine ): 
+          
+          identificatore_ordine(identificatore_ordine),
+          codice_prodotto(codice_prodotto), 
+          nome_uteCompratore(nome_uteCompratore),           
+          data_ordine_effettuato(data_ordine), 
+          stato_ordine(stato_ordine) {}  
+
+
+    void impostaStato(StatoOrdine nuovoStato) {   
+      stato_ordine = nuovoStato;    
+    }
+
+};
 
 
 
