@@ -204,7 +204,7 @@ class Product {
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         // Selezioniamo il codice del prodotto
-        sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND prezzoEuro='%f' AND nome_AziendaProduttrice='%s'", 
+        sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND FLOAT8EQ(prezzoEuro, '%f') AND nome_AziendaProduttrice='%s'", 
                                                             nome.c_str(), categoria.c_str(), descrizione.c_str(), prezzo_euro, azienda_produzione.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);

@@ -257,7 +257,7 @@ int main(){
     Product prodotto;
     //prodotto.ricerca_mostra_Prodotto("Iphone 15");
 
-    prodotto.add_new_product("Dunk", "Abbigliamento", 80.00, "Scarpe Nike Dunk, modello: Panda", "Nike", 5);
+    prodotto.add_new_product("Maglietta Nike", "Abbigliamento", 29.99, "Maglietta Nike color nero per sport", "Nike", 5);
 
     print_select("Prodotto");
 
