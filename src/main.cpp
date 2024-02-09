@@ -37,6 +37,26 @@ void print_select(std::string nome_tabella){
 }
 
 
+void test_effettuaRegistrazioneCompratori(){
+    UtenteCompratore compratore;
+    compratore.effettuaRegistrazione("marco1", "UtenteCompratore", "Marco", "Giggio", "3339993339", "marco.giggio@gmail.com", "Via della Roma", "36", "01010", "Roma", "Compleanno1.2", "Compleanno1.2", "11/11/2001");
+}
+
+void test_effettuaRegistrazioneFornitore(){
+    UtenteFornitore fornitore;
+    fornitore.effettuaRegistrazione("luigi2", "UtenteFornitore", "Luigi", "Faffo", "3333333333", "luigi.faffo@gmail.com", "Merdaaaa.1", "Merdaaaa.1", "Nike");
+
+    UtenteFornitore fornitore2;
+    fornitore.effettuaRegistrazione("mario1", "UtenteFornitore", "Mario", "Cocco", "3333333333", "mario.cocco@gmail.com", "Merdaaaa.1", "Merdaaaa.1", "Apple");
+}
+
+void test_add_newProdotti(){
+    Product prodotto1;
+    prodotto1.add_new_product("Air Force 1", "Abbigliamento e scarpe", 100.00, "Air force 1, colore bianco, taglia 40", "Nike", 100);
+
+    Product prodotto2;
+    prodotto2.add_new_product("Iphone 15", "Telefonia", 990.99, "Iphone 15, 16GB RAM, 1 TB archiviazione", "Apple", 10);
+}
 
 void test_aggiornamento_numeroDiTelefono(){
 
@@ -199,18 +219,13 @@ void test_ricercaProdotto(){
 
 
 void test_acquistoProdotto(){
-    UtenteFornitore fornitore;
-    fornitore.effettuaRegistrazione("test_user9", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio9.anocacci@gmail.com", "Candela111?", "Candela111?", "Xiaomi");
-    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user9", "Candela111?");
-    fornitore.effettua_login("test_user9", "Candela111?");
-
-    Product prodotto;
-    prodotto.add_new_product("Xiaomi lite9", "Telefonia", 540.00, "Xiaomi lite9, 8GB RAM, 1 TB archiviazione", "Xiaomi", 10);
-
+    Product prodotto1;
+    prodotto1.ricerca_mostra_Prodotto("Air Force 1");
     print_select("Prodotto");
+    print_select("Ordine");
     
     Ordine ordine;
-    ordine = prodotto.acquistaProdotto("test_user1", "test_user3", "Via garbini", "Viterbo", "55");
+    ordine = prodotto1.acquistaProdotto("marco1");
 
     print_select("Ordine");
 
@@ -225,7 +240,29 @@ int main(){
 
     PGresult *res;
 
-    char sqlcmd[1000];    
+    char sqlcmd[1000]; 
+    
+    //test_effettuaRegistrazioneCompratori();
+
+    UtenteCompratore compratore;
+    compratore = compratore.anima_oggetto("UtenteCompratore", "marco1", "Compleanno1.2");
+    compratore.effettua_login("marco1", "Compleanno1.2");
+    //sprint_select("UtenteCompratore");
+
+    //test_effettuaRegistrazioneFornitore();
+    //print_select("UtenteFornitore");
+
+    //test_add_newProdotti();
+
+    Product prodotto;
+    //prodotto.ricerca_mostra_Prodotto("Iphone 15");
+
+    prodotto.add_new_product("Dunk", "Abbigliamento", 80.00, "Scarpe Nike Dunk, modello: Panda", "Nike", 5);
+
+    print_select("Prodotto");
+
+    //test_acquistoProdotto();
+    
 
     //test_aggiornamento_Password();
 
@@ -242,7 +279,7 @@ int main(){
 
     //test_ricercaProdotto();
 
-    test_acquistoProdotto();
+    //test_acquistoProdotto();
 
 
 
@@ -319,11 +356,7 @@ int main(){
 
     
     /*
-    Product prodotto1;
-    prodotto1.add_new_product("Air Force 1", "Abbigliamento e scarpe", 100.00, "Air force 1, colore bianco, taglia 40", "Nike", 100);
-
-    Product prodotto2;
-    prodotto2.add_new_product("Xiaomi lite9", "Telefonia", 540.00, "Xiaomi lite9, 8GB RAM, 1 TB archiviazione", "Xiaomi", 10);
+    
 
     Carrello carrello1;
     carrello1.add_prodotto("test_user1", 1);

@@ -97,6 +97,8 @@ class Product {
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
 
+        std::cout << "Le righe dopo la query di codProdotto è: " << rows << std::endl; 
+
         if (rows >= 1){
             // Il prodotto è già all'interno del backend, perciò dobbiamo solamente aumentarne la quantità di 1
                 // 1. Caricihiamo il numero di copie disponibili;
@@ -188,23 +190,22 @@ class Product {
 
 
 
-    Ordine acquistaProdotto(std::string nomeUtenteCompratore, std::string nomeUtenteTrasportatore, std::string inViaSpedizione, 
-                            std::string incittaSpedizione, std::string innumCivicoSpedizione){
+    Ordine acquistaProdotto(std::string nomeUtenteCompratore){
 
         Ordine ordine;
         std::string dataOrdineEffettuato;
 
-        StatoConsegna stato_consegna;
+        StatoOrdine stato_ordine;
 
-        std::string nomeDittaSpedizione;
+        //std::string nomeDittaSpedizione;
 
         
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         // Selezioniamo il codice del prodotto
-        sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND prezzoEuro='%f' AND nome_AziendaProduttrice='%s' AND num_copie_dispo='%d'", 
-                                                            nome.c_str(), categoria.c_str(), descrizione.c_str(), prezzo_euro, azienda_produzione.c_str(), numero_copie_disponibili);
+        sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND prezzoEuro='%f' AND nome_AziendaProduttrice='%s'", 
+                                                            nome.c_str(), categoria.c_str(), descrizione.c_str(), prezzo_euro, azienda_produzione.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows == 1){
@@ -217,36 +218,31 @@ class Product {
 
 
             // Inizialmente assegnamo lo stato della consegna a "InElaborazione":
-            stato_consegna = StatoConsegna::InElaborazione;
+            stato_ordine = StatoOrdine::InElaborazione;
+            std::string statoOrdineStr = statoOrdineToString(stato_ordine);
 
+            // // Otteniamo il nome della ditta di spedizione:
+            // sprintf(sqlcmd, "SELECT nome_DittaSpedizione FROM UtenteTrasportatore WHERE nome_utente_trasportatore='%s'", nomeUtenteTrasportatore.c_str());
+            // res = db1.ExecSQLtuples(sqlcmd);
+            // rows = PQntuples(res);
 
-            // Otteniamo il nome della ditta di spedizione:
-            sprintf(sqlcmd, "SELECT nome_DittaSpedizione FROM UtenteTrasportatore WHERE nome_utente_trasportatore='%s'", nomeUtenteTrasportatore.c_str());
-            res = db1.ExecSQLtuples(sqlcmd);
-            rows = PQntuples(res);
-
-            if (rows==1)  {   nomeDittaSpedizione = PQgetvalue(res, 0, PQfnumber(res, "nome_DittaSpedizione"));     }
-            else{
-                std::cout << "Errore: Non è stato trovato l'utente che trasporterà il prodotto." << std::endl;
-                return ordine;
-            }
+            // if (rows==1)  {   nomeDittaSpedizione = PQgetvalue(res, 0, PQfnumber(res, "nome_DittaSpedizione"));     }
+            // else{
+            //     std::cout << "Errore: Non è stato trovato l'utente che trasporterà il prodotto." << std::endl;
+            //     return ordine;
+            // }
 
             // Inseriamo i valori nel database:
-            sprintf(sqlcmd, "INSERT INTO Ordine (idOrdine, codProdotto, nome_utente_compratore, nome_utente_trasportatore, dataOrdineEffettuato, statoConsegna, nome_DittaSpedizione, viaSpedizione, cittaSpedizione, numCivSpedizione) VALUES (DEFAULT, '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
-            cod_product, nomeUtenteCompratore.c_str(), nomeUtenteTrasportatore.c_str(), dataOrdineEffettuato.c_str(), stato_consegna, nomeDittaSpedizione.c_str(), inViaSpedizione.c_str(), incittaSpedizione.c_str(), innumCivicoSpedizione.c_str());
+            sprintf(sqlcmd, "INSERT INTO Ordine (idOrdine, codProdotto, nome_utente_compratore, dataOrdineEffettuato, statoOrdine) VALUES (DEFAULT, '%d', '%s', '%s', '%s')", 
+            cod_product, nomeUtenteCompratore.c_str(), dataOrdineEffettuato.c_str(), statoOrdineStr.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res); 
 
 
             ordine.codice_prodotto = cod_product;
             ordine.nome_uteCompratore = nomeUtenteCompratore;
-            ordine.nome_uteTrasportatore = nomeUtenteTrasportatore;
             ordine.data_ordine_effettuato = dataOrdineEffettuato;
-            ordine.impostaStato(StatoConsegna::InElaborazione);
-            ordine.ditta_spedizione = nomeDittaSpedizione;
-            ordine.via_spedizione = inViaSpedizione;
-            ordine.città_spedizione = incittaSpedizione;
-            ordine.numero_civico_spedizione = innumCivicoSpedizione;
+            ordine.impostaStato(StatoOrdine::InElaborazione);
         }
         else{
             std::cout << "Errore: il prodotto non è stato trovato!" << std::endl;
@@ -254,6 +250,18 @@ class Product {
         }
     return ordine;
     }
+
+
+    std::string statoOrdineToString(StatoOrdine stato) {
+    switch (stato) {
+        case StatoOrdine::InElaborazione:
+            return "in elaborazione";
+        case StatoOrdine::Spedito:
+            return "spedito";
+        default:
+            return ""; // gestione degli errori o valori non validi
+    }
+}
 
 
 

@@ -356,7 +356,7 @@ CREATE TABLE IF NOT EXISTS Ordine (
 
 
 
-CREATE TABLE IF NOT EXISTS Spedizione {
+CREATE TABLE IF NOT EXISTS Spedizione (
     idSpedizione SERIAL,
     idOrdine SERIAL,
     nome_utente_trasportatore VARCHAR(50) NOT NULL,
@@ -374,7 +374,7 @@ CREATE TABLE IF NOT EXISTS Spedizione {
       FOREIGN KEY(nome_utente_trasportatore)
       REFERENCES UtenteTrasportatore(nome_utente_trasportatore)
       ON DELETE CASCADE
-}
+);
 
 
 
