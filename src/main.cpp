@@ -12,6 +12,7 @@
 #include "user_fornitore.h"
 #include "user_trasportatore.h"
 #include "product.h"
+#include "spedizione.h"
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
 
@@ -225,7 +226,7 @@ void test_acquistoProdotto(){
     print_select("Ordine");
     
     Ordine ordine;
-    ordine = prodotto1.acquistaProdotto("marco1");
+    ordine = prodotto1.acquistaProdotto("marco1", "Via della testa", "Roma", "45");
 
     print_select("Ordine");
 
@@ -242,7 +243,7 @@ int main(){
 
     char sqlcmd[1000]; 
     
-    //test_effettuaRegistrazioneCompratori();
+    test_effettuaRegistrazioneCompratori();
 
     UtenteCompratore compratore;
     compratore = compratore.anima_oggetto("UtenteCompratore", "marco1", "Compleanno1.2");
@@ -254,14 +255,41 @@ int main(){
 
     //test_add_newProdotti();
 
+    UtenteTrasportatore trasportatore;
+    trasportatore.effettuaRegistrazione("_marco_", "UtenteTrasportatore", "Marco", "Marco", "3333333333", "marco.marco@gmail.com", "Marcoooo1.", "Marcoooo1.", "FedEx");
+    trasportatore = trasportatore.anima_oggetto("UtenteTrasportatore", "_marco_", "Marcoooo1.");
+    trasportatore.effettua_login("_marco_", "Marcoooo1.");
+
+
+    UtenteFornitore fornitore;
+    fornitore.effettuaRegistrazione("luigi2", "UtenteFornitore", "Luigi", "Faffo", "3333333333", "luigi.faffo@gmail.com", "Merdaaaa.1", "Merdaaaa.1", "Nike");
+    fornitore = fornitore.anima_oggetto("UtenteFornitore", "luigi2", "Merdaaaa.1");
+    fornitore.effettua_login("luigi2", "Merdaaaa.1");
+    
+
     Product prodotto;
     //prodotto.ricerca_mostra_Prodotto("Iphone 15");
-
     prodotto.add_new_product("Maglietta Nike", "Abbigliamento", 29.99, "Maglietta Nike color nero per sport", "Nike", 5);
 
     print_select("Prodotto");
+    print_select("Ordine");
+    print_select("Spedizione");
+
+    Ordine ordine;
+    ordine = prodotto.acquistaProdotto("marco1", "Via della testa", "Roma", "45");
+
+    print_select("Ordine");
+    print_select("Spedizione");
+
+    Spedizione spedizione;
+    spedizione = ordine.presaInCaricoTrasportatore(ordine.identificatore_ordine);
+
+    print_select("Ordine");
+    print_select("Spedizione");
 
     //test_acquistoProdotto();
+
+
     
 
     //test_aggiornamento_Password();

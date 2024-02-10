@@ -190,7 +190,7 @@ class Product {
 
 
 
-    Ordine acquistaProdotto(std::string nomeUtenteCompratore){
+    Ordine acquistaProdotto(std::string nomeUtenteCompratore, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione){
 
         Ordine ordine;
         std::string dataOrdineEffettuato;
@@ -233,16 +233,28 @@ class Product {
             // }
 
             // Inseriamo i valori nel database:
-            sprintf(sqlcmd, "INSERT INTO Ordine (idOrdine, codProdotto, nome_utente_compratore, dataOrdineEffettuato, statoOrdine) VALUES (DEFAULT, '%d', '%s', '%s', '%s')", 
-            cod_product, nomeUtenteCompratore.c_str(), dataOrdineEffettuato.c_str(), statoOrdineStr.c_str());
+            sprintf(sqlcmd, "INSERT INTO Ordine (idOrdine, codProdotto, nome_utente_compratore, dataOrdineEffettuato, statoOrdine, viaSpedizione, cittaSpedizione, numCivSpedizione) VALUES (DEFAULT, '%d', '%s', '%s', '%s','%s','%s','%s' )", 
+            cod_product, nomeUtenteCompratore.c_str(), dataOrdineEffettuato.c_str(), statoOrdineStr.c_str(), via_spedizione.c_str(),città_spedizione.c_str(), numero_civico_spedizione.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
-            PQclear(res); 
+            PQclear(res);     
 
 
+            // Esegui una query SELECT per ottenere l'ultimo ID inserito nella tabella Ordine:
+            // 1. Selezioniamo tutti gli idOrdine dalla tabella Ordine:
+            sprintf(sqlcmd, "SELECT idOrdine FROM Ordine");
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            // 2. Prendiamo l'ultimo id
+            ordine.identificatore_ordine = atoi(PQgetvalue(res, rows-1, 0));
+            std::cout << "Id ordine: " << ordine.identificatore_ordine << std::endl; 
+            
             ordine.codice_prodotto = cod_product;
             ordine.nome_uteCompratore = nomeUtenteCompratore;
             ordine.data_ordine_effettuato = dataOrdineEffettuato;
             ordine.impostaStato(StatoOrdine::InElaborazione);
+            ordine.via_spedizione = via_spedizione;
+            ordine.città_spedizione = città_spedizione;
+            ordine.numero_civico_spedizione = numero_civico_spedizione;
         }
         else{
             std::cout << "Errore: il prodotto non è stato trovato!" << std::endl;
@@ -253,15 +265,15 @@ class Product {
 
 
     std::string statoOrdineToString(StatoOrdine stato) {
-    switch (stato) {
-        case StatoOrdine::InElaborazione:
-            return "in elaborazione";
-        case StatoOrdine::Spedito:
-            return "spedito";
-        default:
-            return ""; // gestione degli errori o valori non validi
+        switch (stato) {
+            case StatoOrdine::InElaborazione:
+                return "in elaborazione";
+            case StatoOrdine::Spedito:
+                return "spedito";
+            default:
+                return ""; // gestione degli errori o valori non validi
+        }
     }
-}
 
 
 
@@ -280,9 +292,6 @@ class Product {
 
     return ss.str();
     }
-
-
-
 
 
 };

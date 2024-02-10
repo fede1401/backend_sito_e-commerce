@@ -343,6 +343,9 @@ CREATE TABLE IF NOT EXISTS Ordine (
     nome_utente_compratore VARCHAR(50) NOT NULL,
     dataOrdineEffettuato DATE,
     statoOrdine statoOrdine,
+    viaSpedizione VARCHAR(50) NOT NULL,
+    cittaSpedizione VARCHAR(50) NOT NULL,
+    numCivSpedizione VARCHAR(10) NOT NULL, 
     PRIMARY KEY(idOrdine),
     CONSTRAINT fk_codProdotto
       FOREIGN KEY(codProdotto)
@@ -362,9 +365,6 @@ CREATE TABLE IF NOT EXISTS Spedizione (
     nome_utente_trasportatore VARCHAR(50) NOT NULL,
     statoSpedizione statoSpedizione,
     nome_DittaSpedizione VARCHAR(50) NOT NULL,
-    viaSpedizione VARCHAR(50) NOT NULL,
-    cittaSpedizione VARCHAR(50) NOT NULL,
-    numCivSpedizione VARCHAR(10) NOT NULL, 
     PRIMARY KEY(idSpedizione),
     CONSTRAINT fk_idOrdine
       FOREIGN KEY(idOrdine)
