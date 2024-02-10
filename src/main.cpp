@@ -298,6 +298,18 @@ int main(){
 
     print_select("Ordine");
     print_select("Spedizione");
+    //print_select("Reso");
+
+    Reso reso;
+    motivazioneReso motivazione_reso;
+    motivazione_reso = motivazioneReso::Difettoso;
+    reso.effettuaReso(1, motivazione_reso);
+
+    print_select("Ordine");
+    print_select("Spedizione");
+    print_select("Reso");
+
+
 
     /*
     Tabella: Spedizione

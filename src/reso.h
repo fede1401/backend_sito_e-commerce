@@ -4,15 +4,111 @@
 
 #include <string>
 
+enum class motivazioneReso {
+    Difettoso,
+    MisuraErrata,
+    NonConformeAlleAspettative,
+    CambioOpinione
+    };
+
+
 class Reso {
 public:
-    std::string identificatore_utente;
-    std::string codice_prodotto;
-    std::string motivazione_reso;
+    int idReso;
+    std::string nome_utente_compratore;
+    int idOrdine;
+    motivazioneReso motivazione_reso;
 
-    // Costruttore
-    Reso(std::string id_utente, std::string codice_prod, std::string motivazione)
-        : identificatore_utente(id_utente), codice_prodotto(codice_prod), motivazione_reso(motivazione) {}
+    // Costruttori:
+    Reso():
+        idReso(-1),
+        nome_utente_compratore(""),
+        idOrdine(-1), 
+        motivazione_reso() {}
+
+
+    Reso(int idReso, std::string nome_utente_compratore, int idOrdine, motivazioneReso motivazione_reso): 
+        idReso(idReso), 
+        nome_utente_compratore(nome_utente_compratore),
+        idOrdine(idOrdine), 
+        motivazione_reso(motivazione_reso) {}
+
+
+    void impostaStato(motivazioneReso nuovoStato) {   
+      motivazione_reso = nuovoStato;    
+    }
+
+
+    void effettuaReso(int idOrdine, motivazioneReso motivazione_reso){
+
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        std::string stato_spedizione;
+
+        // Innanzitutto controllo se l'ordine è stato spedito e arrivato correttamente
+        sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", idOrdine);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows==1){
+            stato_spedizione = PQgetvalue(res, 0, PQfnumber(res, "statoSpedizione"));
+
+            if (stato_spedizione == "consegnato"){
+                
+                // Selezioniamo il nome del'utente compratore:
+                std::string nome_utente_compratore;
+                sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", idOrdine);
+                res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+                if (rows == 1){
+                    nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
+                    
+                    std::string motivazione_resoStr = statoMotivazioneResoToString(motivazione_reso);
+                    
+                    sprintf(sqlcmd, "INSERT INTO Reso (idReso, nome_utente_compratore, idOrdine, motivazioneReso) VALUES (DEFAULT, '%s', '%d', '%s')", 
+                    nome_utente_compratore.c_str(), idOrdine, motivazione_resoStr.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res); 
+                }
+                else{
+                    std::cout << "L'ordine non è stato trovato!" << std::endl;
+                    return;
+                }
+            }
+            else{
+                std::cout << "L'ordine è stato spedito, ma non è ancora arrivato, perciò non può essere effettuato il reso!" << std::endl;
+                return;
+            }
+        }
+        else{
+            std::cout << "L'ordine non è stato ancora spedito, perciò non può essere effettuato il reso!" << std::endl;
+            return;
+        }
+    
+    std::cout << "Reso effettuato" << std::endl;
+    return;
+    }
+
+
+
+    std::string statoMotivazioneResoToString(motivazioneReso stato) {
+        switch (stato) {
+            case motivazioneReso::Difettoso :
+                return "difettoso";
+            case motivazioneReso::MisuraErrata :
+                return "misura errata";
+            case motivazioneReso::NonConformeAlleAspettative :
+                return "non conforme alle aspettative";
+            case motivazioneReso::CambioOpinione :
+                return "cambio opinione";
+            default:
+                return ""; // gestione degli errori o valori non validi
+        }
+    }
+
+
+
 };
 
 #endif // RESO_H
