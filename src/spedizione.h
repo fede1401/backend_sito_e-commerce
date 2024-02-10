@@ -162,6 +162,41 @@ public:
     }
 
 
+    // Nell'implementazione di questo metodo l'utente trasportatore associato alla spedizione avvisa il sistema che ha completato la spedizione e consegnato il prodotto dell'ordine 
+    void spedizioneConsegnata(int idSpedizione){
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+
+        // Aggiorno lo stato della spedizione nella tabella Spedizione:
+        sprintf(sqlcmd, "UPDATE Spedizione set statoSpedizione='consegnato' WHERE idSpedizione = '%d'", idSpedizione);
+        res = db1.ExecSQLcmd(sqlcmd);
+        PQclear(res); 
+
+
+        // Aggiorno la disponibilità dell'utente Trasportatore che può effettuare una nuova consegna:
+        // Prima selezioniamo il nome dell'utente Trasportatore:
+        std::string nome_utente_trasportatore;
+        sprintf(sqlcmd, "SELECT nome_utente_trasportatore FROM Spedizione WHERE idSpedizione = '%d'", idSpedizione);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        if (rows==1){
+            nome_utente_trasportatore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_trasportatore"));
+
+            // Ora aggiorniamo la disponibilità dell'utente Trasportatore:
+            sprintf(sqlcmd, "UPDATE UtenteTrasportatore set dispo='0' WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res); 
+        }
+        else{
+            std::cout << "Nessun utente trasportatore associato alla spedizione! " << std::endl;
+            return;
+        }
+    std::cout << "Spedizione " << idSpedizione <<  " consegnata! " << std::endl;
+    return;
+    }
+
+
 };
 
 

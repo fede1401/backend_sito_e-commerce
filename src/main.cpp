@@ -294,10 +294,47 @@ int main(){
 
     ordine.visione_ordini_effettuati("marco1");
 
+    spedizione = spedizione.assegnaOrdineTrasportatore();
+
+    print_select("Ordine");
+    print_select("Spedizione");
+
+    /*
+    Tabella: Spedizione
+    Row 0: 2,   2,   _trasportatore2_,   in transito,   Bartolini,   
+    Row 1: 1,   1,   _marco_,   consegnato,   FedEx
+
+    Tabella: Ordine
+    Row 0: 1,   1,   marco1,   2024-02-10,   spedito,   Via della testa,   Roma,   45,   
+    Row 1: 4,   1,   marco1,   2024-02-10,   in elaborazione,   Via della testa,   Roma,   45,   
+    Row 2: 2,   1,   marco1,   2024-02-10,   spedito,   Via della testa,   Roma,   45,   
+    Row 3: 5,   1,   marco1,   2024-02-10,   in elaborazione,   Via della testa,   Roma,   45,   
+    Row 4: 6,   1,   marco1,   2024-02-10,   in elaborazione,   Via della testa,   Roma,   45,   
+    Row 5: 7,   1,   marco1,   2024-02-10,   in elaborazione,   Via della testa,   Roma,   45,   
+    Row 6: 3,   1,   marco1,   2024-02-10,   spedito,   Via della testa,   Roma,   45,   
+
+
+    Tabella: Spedizione
+    Row 0: 2,   2,   _trasportatore2_,   in transito,   Bartolini,   
+    Row 1: 1,   1,   _marco_,   consegnato,   FedEx,   
+    Row 2: 3,   3,   _marco_,   in transito,   FedEx,
+    */
+
     //test_acquistoProdotto();
 
+    //print_select("UtenteTrasportatore");
 
-    
+
+    //spedizione.spedizioneConsegnata(1);
+
+    //print_select("Spedizione");
+    //print_select("UtenteTrasportatore");
+
+
+
+
+
+
 
     //test_aggiornamento_Password();
 
