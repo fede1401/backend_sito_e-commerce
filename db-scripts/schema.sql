@@ -280,16 +280,16 @@ CREATE TABLE IF NOT EXISTS ListaDesideri (
 CREATE TABLE IF NOT EXISTS Reso (
         idReso SERIAL,
         nome_utente_compratore VARCHAR(50) NOT NULL,
-        codProdotto SERIAL,
+        idOrdine SERIAL,
         motivazioneReso motivazioneReso,
         PRIMARY KEY(idReso),
         CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
       REFERENCES UtenteCompratore(nome_utente_compratore)
       ON DELETE CASCADE,
-    CONSTRAINT fk_codProdotto
-      FOREIGN KEY(codProdotto)
-      REFERENCES Prodotto(codProdotto)
+    CONSTRAINT fk_idOrdine
+      FOREIGN KEY(idOrdine)
+      REFERENCES Ordine(idOrdine)
       ON DELETE CASCADE
 );
 
@@ -298,7 +298,7 @@ CREATE TABLE IF NOT EXISTS Reso (
 CREATE TABLE IF NOT EXISTS Recensione (
         idRec SERIAL,
         nome_utente_compratore VARCHAR(50) NOT NULL,
-        codProdotto SERIAL,
+        idOrdine SERIAL,
         descrizione TEXT,
         votoStelle votoStelle, 
         PRIMARY KEY(idRec),
@@ -306,9 +306,9 @@ CREATE TABLE IF NOT EXISTS Recensione (
       FOREIGN KEY(nome_utente_compratore)
       REFERENCES UtenteCompratore(nome_utente_compratore)
       ON DELETE CASCADE,
-    CONSTRAINT fk_codProdotto
-      FOREIGN KEY(codProdotto)
-      REFERENCES Prodotto(codProdotto)
+    CONSTRAINT fk_idOrdine
+      FOREIGN KEY(idOrdine)
+      REFERENCES Ordine(idOrdine)
       ON DELETE CASCADE
 );
 
