@@ -281,11 +281,18 @@ int main(){
     print_select("Ordine");
     print_select("Spedizione");
 
+    UtenteTrasportatore trasportatore2;
+    trasportatore2.effettuaRegistrazione("_trasportatore2_", "UtenteTrasportatore", "Lollo", "Lollo", "3333333333", "lollo.lollo@gmail.com", "Loooll00o.", "Loooll00o.", "Bartolini");
+    trasportatore2 = trasportatore2.anima_oggetto("UtenteTrasportatore", "_trasportatore2_", "Loooll00o.");
+    trasportatore2.effettua_login("_trasportatore2_", "Loooll00o.");
+
     Spedizione spedizione;
-    spedizione = ordine.presaInCaricoTrasportatore(ordine.identificatore_ordine);
+    spedizione = spedizione.assegnaOrdineTrasportatore();
 
     print_select("Ordine");
     print_select("Spedizione");
+
+    ordine.visione_ordini_effettuati("marco1");
 
     //test_acquistoProdotto();
 
