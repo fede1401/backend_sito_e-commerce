@@ -310,6 +310,14 @@ int main(){
     print_select("Ordine");
     print_select("Spedizione");
     print_select("Reso");
+    print_select("Recensione");
+
+    Recensione recensione;
+    votoStelle voto_stelle;
+    voto_stelle = votoStelle::Quattro;
+    recensione.effettuaRecensione(1, "Prodotto ottimo!", voto_stelle);
+
+     print_select("Recensione");
 
 
 
