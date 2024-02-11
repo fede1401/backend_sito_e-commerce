@@ -277,41 +277,6 @@ CREATE TABLE IF NOT EXISTS ListaDesideri (
 );
 
 
-CREATE TABLE IF NOT EXISTS Reso (
-        idReso SERIAL,
-        nome_utente_compratore VARCHAR(50) NOT NULL,
-        idOrdine SERIAL,
-        motivazioneReso motivazioneReso,
-        PRIMARY KEY(idReso),
-        CONSTRAINT fk_nome_utente_compratore
-      FOREIGN KEY(nome_utente_compratore)
-      REFERENCES UtenteCompratore(nome_utente_compratore)
-      ON DELETE CASCADE,
-    CONSTRAINT fk_idOrdine
-      FOREIGN KEY(idOrdine)
-      REFERENCES Ordine(idOrdine)
-      ON DELETE CASCADE
-);
-
-
-
-CREATE TABLE IF NOT EXISTS Recensione (
-        idRec SERIAL,
-        nome_utente_compratore VARCHAR(50) NOT NULL,
-        idOrdine SERIAL,
-        descrizione TEXT,
-        votoStelle votoStelle, 
-        PRIMARY KEY(idRec),
-        CONSTRAINT fk_nome_utente_compratore
-      FOREIGN KEY(nome_utente_compratore)
-      REFERENCES UtenteCompratore(nome_utente_compratore)
-      ON DELETE CASCADE,
-    CONSTRAINT fk_idOrdine
-      FOREIGN KEY(idOrdine)
-      REFERENCES Ordine(idOrdine)
-      ON DELETE CASCADE
-);
-
 
 CREATE TABLE IF NOT EXISTS AssistenzaClienti (
 	idChiamata SERIAL,
@@ -376,6 +341,41 @@ CREATE TABLE IF NOT EXISTS Spedizione (
       ON DELETE CASCADE
 );
 
+
+CREATE TABLE IF NOT EXISTS Reso (
+        idReso SERIAL,
+        nome_utente_compratore VARCHAR(50) NOT NULL,
+        idOrdine SERIAL,
+        motivazioneReso motivazioneReso,
+        PRIMARY KEY(idReso),
+        CONSTRAINT fk_nome_utente_compratore
+      FOREIGN KEY(nome_utente_compratore)
+      REFERENCES UtenteCompratore(nome_utente_compratore)
+      ON DELETE CASCADE,
+    CONSTRAINT fk_idOrdine
+      FOREIGN KEY(idOrdine)
+      REFERENCES Ordine(idOrdine)
+      ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE IF NOT EXISTS Recensione (
+        idRec SERIAL,
+        nome_utente_compratore VARCHAR(50) NOT NULL,
+        idOrdine SERIAL,
+        descrizione TEXT,
+        votoStelle votoStelle, 
+        PRIMARY KEY(idRec),
+        CONSTRAINT fk_nome_utente_compratore
+      FOREIGN KEY(nome_utente_compratore)
+      REFERENCES UtenteCompratore(nome_utente_compratore)
+      ON DELETE CASCADE,
+    CONSTRAINT fk_idOrdine
+      FOREIGN KEY(idOrdine)
+      REFERENCES Ordine(idOrdine)
+      ON DELETE CASCADE
+);
 
 
 

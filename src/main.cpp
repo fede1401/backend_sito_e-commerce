@@ -300,6 +300,8 @@ int main(){
     print_select("Spedizione");
     //print_select("Reso");
 
+    spedizione.spedizioneConsegnata(1);
+
     Reso reso;
     motivazioneReso motivazione_reso;
     motivazione_reso = motivazioneReso::Difettoso;
