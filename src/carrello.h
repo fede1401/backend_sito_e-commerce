@@ -146,7 +146,10 @@ public:
             return;
         }
         else{
-            // eliminare
+            // Eliminazione del prodotto dal carrello dell'utente compratore.
+            sprintf(sqlcmd, "DELETE FROM Carrello WHERE nome_utente_compratore='%s' AND codProdotto='%s", in_nome_utente_compratore.c_str(), in_cod_prodotto);
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res);
         }
 
     }

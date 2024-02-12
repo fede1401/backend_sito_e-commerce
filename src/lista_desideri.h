@@ -129,7 +129,10 @@ public:
             return;
         }
         else{
-            // eliminare
+            // Eliminazione del prodotto dalla lsta desideri dell'utente compratore.
+            sprintf(sqlcmd, "DELETE FROM ListaDesideri WHERE nome_utente_compratore='%s' AND codProdotto='%s", in_nome_utente_compratore.c_str(), in_cod_prodotto);
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res);
         }
     }
 };

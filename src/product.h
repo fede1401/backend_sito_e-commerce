@@ -138,6 +138,31 @@ class Product {
     }
 
 
+    void remove_prodotto(int codProdotto){
+
+        // Connessione al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
+        std::cout << "Connessione al database avvenuta con successo." << std::endl;
+
+        
+        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        if (rows < 1){
+            std::cout << "La riga da eliminare non esiste!" << std::endl;
+            return;
+        }
+        else{
+            // Eliminazione del prodotto dal carrello dell'utente compratore.
+            sprintf(sqlcmd, "DELETE FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res);
+        }
+
+
+    }
+
+
     void ricerca_mostra_Prodotto(std::string nomeProdotto){
 
         // Connession al database:

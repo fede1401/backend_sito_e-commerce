@@ -91,6 +91,34 @@ public:
     }
 
 
+    void remove_recensione(int idRecensione){
+        
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+
+        sprintf(sqlcmd, "SELECT * FROM Recensione WHERE idRec = '%d'", idRecensione);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        if (rows < 1){
+            std::cout << "La riga da eliminare non esiste!" << std::endl;
+            return;
+        }
+        else{
+            // Eliminazione della recensione tramite l'id.
+            sprintf(sqlcmd, "DELETE FROM Recensione WHERE idRec = '%d'", idRecensione);
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res);
+        }
+
+
+
+        
+
+        return;
+    }
+
+
     std::string statoVotoStelleToString(votoStelle stato) {
         switch (stato) {
             case votoStelle::Uno :

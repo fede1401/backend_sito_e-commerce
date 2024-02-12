@@ -53,6 +53,27 @@ public:
     }
 
 
+    void remove_carta(int idCarta){
+
+        // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        sprintf(sqlcmd, "SELECT * FROM Carta WHERE idCarta = '%d'", idCarta);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        if (rows < 1){
+            std::cout << "La riga da eliminare non esiste!" << std::endl;
+            return;
+        }
+        else{
+            // Eliminazione del prodotto dal carrello dell'utente compratore.
+            sprintf(sqlcmd, "DELETE FROM Carta WHERE idCarta = '%d'", idCarta);
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res);
+        }
+    }
+
+
 
 };
 
