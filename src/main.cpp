@@ -278,13 +278,13 @@ int main(){
 
     ordine.visione_ordini_effettuati("marco1");
 
-    //spedizione = spedizione.assegnaOrdineTrasportatore();
+    spedizione = spedizione.assegnaOrdineTrasportatore();
 
     //print_select("Reso");
 
-    //spedizione.spedizioneConsegnata(1);
+    spedizione.spedizioneConsegnata(1);
 
-    ordine.annulla_ordine(2);
+    //ordine.annulla_ordine(2);
 
 
     Reso reso;

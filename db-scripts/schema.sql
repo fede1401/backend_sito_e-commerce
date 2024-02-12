@@ -348,6 +348,7 @@ CREATE TABLE IF NOT EXISTS Reso (
         idOrdine SERIAL,
         motivazioneReso motivazioneReso,
         PRIMARY KEY(idReso),
+        UNIQUE(nome_utente_compratore, idOrdine),
         CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
       REFERENCES UtenteCompratore(nome_utente_compratore)
@@ -367,6 +368,7 @@ CREATE TABLE IF NOT EXISTS Recensione (
         descrizione TEXT,
         votoStelle votoStelle, 
         PRIMARY KEY(idRec),
+        UNIQUE(nome_utente_compratore, idOrdine),
         CONSTRAINT fk_nome_utente_compratore
       FOREIGN KEY(nome_utente_compratore)
       REFERENCES UtenteCompratore(nome_utente_compratore)
