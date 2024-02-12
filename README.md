@@ -108,3 +108,19 @@ DELETE FROM table_name WHERE nome_colonna = 'valore';
 
 3. Elimnare una tabella:
 ``` DROP TABLE table_name CASCADE; ```
+
+4. Eliminare un tipo enumerativo:
+``` DROP TYPE nome_del_tipo_enum; ```
+
+
+
+
+Per selezionare i tipi enumerativi in postgreSQL:
+``` SELECT enumlabel FROM pg_enum WHERE enumtypid = 'nome_del_tipo_enum'::regtype;  ```
+
+
+Per assegnare i privilegi per un tipo o tabella nel database postgreSQL:
+```  
+ALTER TABLE Spedizione OWNER TO :username ;
+ALTER TYPE statoOrdine OWNER TO :username;
+```

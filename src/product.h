@@ -270,6 +270,8 @@ class Product {
                 return "in elaborazione";
             case StatoOrdine::Spedito:
                 return "spedito";
+            case StatoOrdine::Annullato:
+                return "annullato";
             default:
                 return ""; // gestione degli errori o valori non validi
         }

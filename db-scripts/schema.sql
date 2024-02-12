@@ -8,7 +8,7 @@ CREATE TYPE motivazioneReso AS ENUM ('difettoso', 'misura errata', 'non conforme
 
 CREATE TYPE votoStelle AS ENUM ('1', '2', '3', '4', '5');
 
-CREATE TYPE statoOrdine AS ENUM ('in elaborazione', 'spedito');
+CREATE TYPE statoOrdine AS ENUM ('in elaborazione', 'spedito', 'annullato');
 
 CREATE TYPE statoSpedizione AS ENUM ('in transito', 'consegnato');
 

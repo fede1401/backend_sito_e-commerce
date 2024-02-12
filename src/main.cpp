@@ -248,12 +248,6 @@ int main(){
     UtenteCompratore compratore;
     compratore = compratore.anima_oggetto("UtenteCompratore", "marco1", "Compleanno1.2");
     compratore.effettua_login("marco1", "Compleanno1.2");
-    //sprint_select("UtenteCompratore");
-
-    //test_effettuaRegistrazioneFornitore();
-    //print_select("UtenteFornitore");
-
-    //test_add_newProdotti();
 
     UtenteTrasportatore trasportatore;
     trasportatore.effettuaRegistrazione("_marco_", "UtenteTrasportatore", "Marco", "Marco", "3333333333", "marco.marco@gmail.com", "Marcoooo1.", "Marcoooo1.", "FedEx");
@@ -271,15 +265,8 @@ int main(){
     //prodotto.ricerca_mostra_Prodotto("Iphone 15");
     prodotto.add_new_product("Maglietta Nike", "Abbigliamento", 29.99, "Maglietta Nike color nero per sport", "Nike", 5);
 
-    print_select("Prodotto");
-    print_select("Ordine");
-    print_select("Spedizione");
-
     Ordine ordine;
     ordine = prodotto.acquistaProdotto("marco1", "Via della testa", "Roma", "45");
-
-    print_select("Ordine");
-    print_select("Spedizione");
 
     UtenteTrasportatore trasportatore2;
     trasportatore2.effettuaRegistrazione("_trasportatore2_", "UtenteTrasportatore", "Lollo", "Lollo", "3333333333", "lollo.lollo@gmail.com", "Loooll00o.", "Loooll00o.", "Bartolini");
@@ -287,20 +274,18 @@ int main(){
     trasportatore2.effettua_login("_trasportatore2_", "Loooll00o.");
 
     Spedizione spedizione;
-    spedizione = spedizione.assegnaOrdineTrasportatore();
-
-    print_select("Ordine");
-    print_select("Spedizione");
+    //spedizione = spedizione.assegnaOrdineTrasportatore();
 
     ordine.visione_ordini_effettuati("marco1");
 
-    spedizione = spedizione.assegnaOrdineTrasportatore();
+    //spedizione = spedizione.assegnaOrdineTrasportatore();
 
-    print_select("Ordine");
-    print_select("Spedizione");
     //print_select("Reso");
 
-    spedizione.spedizioneConsegnata(1);
+    //spedizione.spedizioneConsegnata(1);
+
+    ordine.annulla_ordine(2);
+
 
     Reso reso;
     motivazioneReso motivazione_reso;
@@ -317,7 +302,7 @@ int main(){
     voto_stelle = votoStelle::Quattro;
     recensione.effettuaRecensione(1, "Prodotto ottimo!", voto_stelle);
 
-     print_select("Recensione");
+    print_select("Recensione");
 
 
 

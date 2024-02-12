@@ -9,7 +9,8 @@
 
 enum class StatoOrdine {
     InElaborazione,
-    Spedito
+    Spedito,
+    Annullato
     };
 
 
@@ -77,6 +78,67 @@ public:
         std::cout << ordine.identificatore_ordine << std::endl;
       }
       return;
+    }
+
+
+
+    void annulla_ordine(int idOrdine){
+      // Connession al database:
+        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        std::string stato_ordine;
+        StatoOrdine stato_ordine_annullato;
+
+        // Devo controllare se l'ordine è stato spedito o meno:
+          // Se l'ordine non è stato spedito, allora può essere annullato;
+          // Se, invece, l'ordine è stato spedito, allora NON può essere annullato;
+          sprintf(sqlcmd, "SELECT statoOrdine FROM Ordine WHERE idOrdine = '%d'", idOrdine);
+          res = db1.ExecSQLtuples(sqlcmd);
+          rows = PQntuples(res);
+
+          if (rows==1){
+              stato_ordine = PQgetvalue(res, 0, PQfnumber(res, "statoOrdine"));
+
+
+              if (stato_ordine == "in elaborazione"){
+                  // Allora l'ordine può essere annullato.
+                  
+                  stato_ordine_annullato = StatoOrdine::Annullato;
+                  std::string stato_ordine_annullato_str = statoOrdineToString(stato_ordine_annullato);
+
+                  // Modifichiamo lo stato dell'ordine con id = idOrdine:
+                  sprintf(sqlcmd, "UPDATE Ordine set statoOrdine='%s' WHERE idOrdine='%d'", stato_ordine_annullato_str.c_str(), idOrdine);
+                  res = db1.ExecSQLcmd(sqlcmd);
+                  PQclear(res); 
+
+              }
+              else{
+                  std::cout << "L'ordine è stato spedito, perciò l'ordine non può essere annullato! All'arrivo del pacco potrai effettuare il reso" << std::endl;
+                  return;
+              }
+              
+            }
+            else{
+                std::cout << "L'ordine non è stato trovato" << std::endl;
+                return;
+            }  
+    return;
+    }
+        
+    
+
+
+    std::string statoOrdineToString(StatoOrdine stato) {
+        switch (stato) {
+            case StatoOrdine::InElaborazione:
+                return "in elaborazione";
+            case StatoOrdine::Spedito:
+                return "spedito";
+            case StatoOrdine::Annullato:
+                return "annullato";
+            default:
+                return ""; // gestione degli errori o valori non validi
+        }
     }
 
 

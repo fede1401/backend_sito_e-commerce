@@ -115,7 +115,7 @@ public:
                     PQclear(res); 
 
                     // A questo punto dobbiamo modificare la disponibilità dell'utente trasportatore:
-                    sprintf(sqlcmd, "UPDATE UtenteTrasportatore set dispo = 1 WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
+                    sprintf(sqlcmd, "UPDATE UtenteTrasportatore set dispo='1' WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res); 
 
