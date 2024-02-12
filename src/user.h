@@ -5,6 +5,8 @@
 #include <string>
 #include <cctype> // Per isupper() e isdigit()
 #include <sstream>
+#include <random>
+
 
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
@@ -94,6 +96,57 @@ public:
             {
                 // Aggiorniamo lo stato dell'utente: da disconnesso a connesso:
 
+                // SESSION ID
+                // Generiamo il session id:
+                std::string sessionID = generateSessionID();
+
+                // Controllo se il sessionID sia univoco con i session ID di tutte le tipologie d'utente:
+                sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE session_id_c = '%s'", sessionID.c_str());
+                res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+
+                if (rows > 0){
+                    std::cout << "Errore: Il session ID è già in uso da utenti compratori." << std::endl;
+                    return;
+                }
+
+                sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE session_id_f = '%s'", sessionID.c_str());
+                res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+
+                if (rows > 0){
+                    std::cout << "Errore: Il session ID è già in uso da utenti fornitori." << std::endl;
+                    return;
+                }
+
+                sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE session_id_t = '%s'", sessionID.c_str());
+                res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+
+                if (rows > 0){
+                    std::cout << "Errore: Il session ID è già in uso da utenti trasportatori." << std::endl;
+                    return;
+                }
+
+                // Se è univoco aggiorniamo il sessionID nella tabella corrette:
+                if (categoriaUtenteLogin == "UtenteCompratore"){
+                    sprintf(sqlcmd, "UPDATE %s set session_id_c='%s' WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), sessionID.c_str(), input_nome_utente.c_str());
+                }
+
+                if (categoriaUtenteLogin == "UtenteFornitore"){
+                    sprintf(sqlcmd, "UPDATE %s set session_id_f='%s' WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), sessionID.c_str(), input_nome_utente.c_str());
+                }
+
+                if (categoriaUtenteLogin == "UtenteTrasportatore"){
+                    sprintf(sqlcmd, "UPDATE %s set session_id_t='%s' WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), sessionID.c_str(), input_nome_utente.c_str());
+                }
+
+                res = db1.ExecSQLcmd(sqlcmd);
+
+                PQclear(res);
+
+
+
                 // Verifica della password:
                 std::string password_utente;
                 char *password_u;
@@ -115,7 +168,7 @@ public:
                 }
 
                 
-                PGresult *res = db1.ExecSQLtuples(sqlcmd);
+                res = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res);
 
                 if (rows == 1)
@@ -246,6 +299,25 @@ public:
     }
 
 
+    std::string generateSessionID() {
+    // Caratteri validi per il Session ID
+    const std::string valid_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    // Inizializzazione del generatore di numeri casuali
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dis(0, valid_characters.size() - 1);
+
+    // Generazione del Session ID casuale
+    std::string session_id;
+    for (int i = 0; i < 10; ++i) {
+        session_id += valid_characters[dis(gen)];
+    }
+
+    return session_id;
+    }
+
+
 
 
 
@@ -315,7 +387,23 @@ public:
                     sprintf(sqlcmd, "UPDATE %s set stato = 0 WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
                 }  
 
-                
+                res = db1.ExecSQLcmd(sqlcmd);
+                PQclear(res);
+
+
+                // A questo punto possiamo resettare il session id associato all'utente:
+                if (categoriaUtenteLogin == "UtenteCompratore"){
+                    sprintf(sqlcmd, "UPDATE %s set session_id_c='' WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                }
+
+                if (categoriaUtenteLogin == "UtenteFornitore"){
+                    sprintf(sqlcmd, "UPDATE %s set session_id_f='' WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                }
+
+                if (categoriaUtenteLogin == "UtenteTrasportatore"){
+                    sprintf(sqlcmd, "UPDATE %s set session_id_t='' WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                }
+
                 res = db1.ExecSQLcmd(sqlcmd);
 
                 PQclear(res);

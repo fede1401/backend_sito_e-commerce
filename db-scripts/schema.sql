@@ -174,6 +174,7 @@ CREATE TABLE IF NOT EXISTS Ordine (
 
 CREATE TABLE IF NOT EXISTS UtenteCompratore (
     nome_utente_compratore VARCHAR(50) NOT NULL UNIQUE,
+    session_id_c VARCHAR(50) UNIQUE,
     categoriaUtente VARCHAR(50) NOT NULL,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
@@ -194,6 +195,7 @@ CREATE TABLE IF NOT EXISTS UtenteCompratore (
 
 CREATE TABLE IF NOT EXISTS UtenteFornitore (
     nome_utente_fornitore VARCHAR(50) NOT NULL UNIQUE,
+    session_id_f VARCHAR(50) UNIQUE,
     categoriaUtente VARCHAR(50) NOT NULL,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
@@ -208,6 +210,7 @@ CREATE TABLE IF NOT EXISTS UtenteFornitore (
 
 CREATE TABLE IF NOT EXISTS UtenteTrasportatore (
     nome_utente_trasportatore VARCHAR(50) NOT NULL UNIQUE,
+    session_id_t VARCHAR(50) UNIQUE,
     categoriaUtente VARCHAR(50) NOT NULL,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,

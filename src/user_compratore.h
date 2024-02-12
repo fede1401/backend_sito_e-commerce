@@ -19,6 +19,7 @@
 class UtenteCompratore : public Utente {
     public:
     // Attributi specifici per UtenteCompratore
+    std::string session_id;
     std::string data_compleanno;
     std::string via_residenza;
     std::string numero_civico;
@@ -31,6 +32,7 @@ class UtenteCompratore : public Utente {
 
     UtenteCompratore():
         Utente("", "", "", "", "", "", ""),
+        session_id(""),
         data_compleanno(""), 
         via_residenza(""), 
         numero_civico(""), 
@@ -41,13 +43,14 @@ class UtenteCompratore : public Utente {
         
 
     UtenteCompratore(
-                     std::string nome_utente, 
+                     std::string nome_utente,
                      std::string categoria,
                      std::string nome, 
                      std::string cognome, 
                      std::string numero_telefono, 
                      std::string password, 
                      std::string email,
+                     std::string session_id,
                      std::string data_compleanno, 
                      std::string via_residenza, 
                      std::string numero_civico, 
@@ -57,6 +60,7 @@ class UtenteCompratore : public Utente {
                      int stato): 
                     
                     Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), 
+                    session_id(session_id),
                     data_compleanno(data_compleanno), 
                     via_residenza(via_residenza), 
                     numero_civico(numero_civico),
@@ -207,6 +211,7 @@ class UtenteCompratore : public Utente {
 
         int stato = 0;
         float saldo = 0.0;
+        std::string session_id = "";
 
 
         ///////////////////////////////////// 
@@ -330,15 +335,15 @@ class UtenteCompratore : public Utente {
 
         /////////////////////////////////////
         // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
-        *this = UtenteCompratore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, formatted_date, in_via_residenza, in_numero_civico, in_CAP, in_città_residenza, saldo, stato);
+        *this = UtenteCompratore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, session_id, formatted_date, in_via_residenza, in_numero_civico, in_CAP, in_città_residenza, saldo, stato);
         /////////////////////////////////////
 
         std::cout << "Categoria utente:" << in_categoria << std::endl;
 
         /////////////////////////////////////
         // Inserisco nel database il nuovo utente:
-        sprintf(sqlcmd, "INSERT INTO UtenteCompratore (nome_utente_compratore, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, data_compleanno, via_di_residenza, numero_civico, CAP, citta_di_residenza, saldo, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, %d)",
-        in_nome_utente.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), formatted_date.c_str(), in_via_residenza.c_str(), in_numero_civico.c_str(), in_CAP.c_str(), in_città_residenza.c_str(), saldo, stato);
+        sprintf(sqlcmd, "INSERT INTO UtenteCompratore (nome_utente_compratore, session_id_c, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, data_compleanno, via_di_residenza, numero_civico, CAP, citta_di_residenza, saldo, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, %d)",
+        in_nome_utente.c_str(), session_id.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), formatted_date.c_str(), in_via_residenza.c_str(), in_numero_civico.c_str(), in_CAP.c_str(), in_città_residenza.c_str(), saldo, stato);
                     
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);  

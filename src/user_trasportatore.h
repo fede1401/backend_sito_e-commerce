@@ -12,6 +12,7 @@
 class UtenteTrasportatore : public Utente {
 public:
     // Attributi specifici per UtenteTrasportatore
+    std::string session_id;
     std::string ditta_spedizione;
     int stato;
     int disponibilità;
@@ -21,14 +22,15 @@ public:
 
     UtenteTrasportatore():
         Utente("", "", "", "", "", "", ""),
+        session_id(""),
         ditta_spedizione(""),
         stato(0),
         disponibilità(-1) {}
 
     UtenteTrasportatore(std::string nome_utente, std::string categoria, std::string nome, std::string cognome, 
-                        std::string numero_telefono, std::string password, std::string email,
+                        std::string numero_telefono, std::string password, std::string email, std::string session_id,
                         std::string ditta_spedizione, int stato, int disponibilità)
-        : Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), ditta_spedizione(ditta_spedizione), stato(stato), disponibilità(disponibilità) {}
+        : Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), session_id(session_id), ditta_spedizione(ditta_spedizione), stato(stato), disponibilità(disponibilità) {}
 
     
     // Metodo specifico per UtenteTrasportatore
@@ -50,6 +52,8 @@ public:
 
         int stato = 0;
         int disponibilità = 0;
+        std::string session_id = "";
+
 
 
         ///////////////////////////////////// 
@@ -174,7 +178,7 @@ public:
 
         /////////////////////////////////////
         // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
-        *this = UtenteTrasportatore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, in_dittaSped, stato, disponibilità);
+        *this = UtenteTrasportatore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, session_id, in_dittaSped, stato, disponibilità);
         /////////////////////////////////////
 
 
@@ -182,8 +186,8 @@ public:
 
         /////////////////////////////////////
         // Inserisco nel database il nuovo utente:
-        sprintf(sqlcmd, "INSERT INTO UtenteTrasportatore (nome_utente_trasportatore, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, nome_DittaSpedizione, stato, dispo ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d')",
-        in_nome_utente.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_dittaSped.c_str(), stato, disponibilità);
+        sprintf(sqlcmd, "INSERT INTO UtenteTrasportatore (nome_utente_trasportatore, session_id_t, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, nome_DittaSpedizione, stato, dispo ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d')",
+        in_nome_utente.c_str(), session_id.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_dittaSped.c_str(), stato, disponibilità);
                     
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);  

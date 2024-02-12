@@ -254,12 +254,14 @@ int main(){
     trasportatore = trasportatore.anima_oggetto("UtenteTrasportatore", "_marco_", "Marcoooo1.");
     trasportatore.effettua_login("_marco_", "Marcoooo1.");
 
-
     UtenteFornitore fornitore;
     fornitore.effettuaRegistrazione("luigi2", "UtenteFornitore", "Luigi", "Faffo", "3333333333", "luigi.faffo@gmail.com", "Merdaaaa.1", "Merdaaaa.1", "Nike");
     fornitore = fornitore.anima_oggetto("UtenteFornitore", "luigi2", "Merdaaaa.1");
     fornitore.effettua_login("luigi2", "Merdaaaa.1");
-    
+
+    print_select("UtenteCompratore");
+    print_select("UtenteFornitore");
+    print_select("UtenteTrasportatore");
 
     Product prodotto;
     //prodotto.ricerca_mostra_Prodotto("Iphone 15");
@@ -303,6 +305,18 @@ int main(){
     recensione.effettuaRecensione(1, "Prodotto ottimo!", voto_stelle);
 
     print_select("Recensione");
+
+    print_select("UtenteCompratore");
+    print_select("UtenteFornitore");
+    print_select("UtenteTrasportatore");
+
+    compratore.effettua_logout("marco1");
+    fornitore.effettua_logout("luigi2");
+    trasportatore.effettua_logout("_marco_");
+
+    print_select("UtenteCompratore");
+    print_select("UtenteFornitore");
+    print_select("UtenteTrasportatore");
 
 
 

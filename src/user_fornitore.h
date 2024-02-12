@@ -13,6 +13,7 @@
 class UtenteFornitore : public Utente {
 public:
     // Attributi specifici per UtenteFornitore
+    std::string session_id;
     std::string azienda_produzione;
     int stato;
 
@@ -20,6 +21,7 @@ public:
 
     UtenteFornitore():
         Utente("", "", "", "", "", "", ""),
+        session_id(""),
         azienda_produzione(""),
         stato(0) {}
 
@@ -31,10 +33,13 @@ public:
                     std::string numero_telefono, 
                     std::string password, 
                     std::string email,
+                    std::string session_id,
                     std::string azienda_produzione, 
                     int stato)
 
-        : Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), azienda_produzione(azienda_produzione), stato(stato) {}
+        : Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email), 
+        
+        session_id(session_id), azienda_produzione(azienda_produzione), stato(stato) {}
 
 
     // Metodo specifico per UtenteFornitore
@@ -55,6 +60,7 @@ public:
                                 ) {
 
         int stato = 0;
+        std::string session_id = "";
 
 
         ///////////////////////////////////// 
@@ -177,7 +183,7 @@ public:
 
         /////////////////////////////////////
         // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
-        *this = UtenteFornitore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, in_aziendaProd, stato);
+        *this = UtenteFornitore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, session_id, in_aziendaProd, stato);
         /////////////////////////////////////
 
 
@@ -185,8 +191,8 @@ public:
 
         /////////////////////////////////////
         // Inserisco nel database il nuovo utente:
-        sprintf(sqlcmd, "INSERT INTO UtenteFornitore (nome_utente_fornitore, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, nome_AziendaProduttrice, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d')",
-        in_nome_utente.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_aziendaProd.c_str(), stato);
+        sprintf(sqlcmd, "INSERT INTO UtenteFornitore (nome_utente_fornitore, session_id_f, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, nome_AziendaProduttrice, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d')",
+        in_nome_utente.c_str(),session_id.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_aziendaProd.c_str(), stato);
                     
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);  
