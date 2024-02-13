@@ -19,7 +19,10 @@ ALTER TABLE Recensione OWNER TO :username ;
 ALTER TABLE AssistenzaClienti OWNER TO :username ;
 ALTER TABLE Ordine OWNER TO :username ;
 ALTER TABLE Spedizione OWNER TO :username ;
+ALTER TABLE LogTable OWNER TO :username ;
+
 ALTER TYPE statoOrdine OWNER TO :username;
+
 --ALTER TABLE AziendaProd OWNER TO :username;
 --ALTER TABLE DittaSp OWNER TO :username;
 

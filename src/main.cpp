@@ -242,7 +242,32 @@ int main(){
     PGresult *res;
 
     char sqlcmd[1000]; 
+
+    UtenteCompratore compratore;
+    compratore.effettuaRegistrazione("marco1", "UtenteCompratore", "Marco", "Giggio", "3339993339", "marco2.giggio@gmail.com", "Via della Roma", "36", "01010", "Roma", "Compleanno1.2", "Compleanno1.2", "11/11/2001");
+
+    //compratore.effettuaRegistrazione("LUIGI1", "UtenteCompratore", "Luigi", "Giggio", "3339993339", "luigi.giggio@gmail.com", "Via della Roma", "36", "01010", "Roma", "Compleanno1.2", "Compleanno1.2", "11/11/2001");
+
+    print_select("UtenteCompratore");
+
+    print_select("LogTable");
+
+    //compratore.effettua_login("LUIGI1", "Compleanno1.2");
+    compratore = compratore.anima_oggetto("UtenteCompratore", "marco1", "Compleanno1.2");
+
+    std::cout << compratore.categoria << std::endl;
+
+    compratore.effettua_logout("marco1");
+    compratore.effettua_login("marco1", "Compleanno1.24444");
+
+    print_select("UtenteCompratore");
+    print_select("LogTable");
     
+
+
+
+    
+    /*
     test_effettuaRegistrazioneCompratori();
 
     UtenteCompratore compratore;
@@ -317,7 +342,7 @@ int main(){
     print_select("UtenteCompratore");
     print_select("UtenteFornitore");
     print_select("UtenteTrasportatore");
-
+    */
 
 
     /*

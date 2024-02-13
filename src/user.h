@@ -6,9 +6,14 @@
 #include <cctype> // Per isupper() e isdigit()
 #include <sstream>
 #include <random>
+#include <unistd.h>
+#include <chrono>
+#include <iomanip>
+#include "log2db.h"
 
 
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
+
 
 bool isSpecialCharacter(char c)
 {
@@ -50,8 +55,6 @@ public:
 
     void effettua_login(std::string input_nome_utente, std::string input_passw)
     {
-        // nome_utente = utente.nome_utente;
-        // password = utente.password;
 
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
@@ -129,21 +132,31 @@ public:
                 }
 
                 // Se è univoco aggiorniamo il sessionID nella tabella corrette:
-                if (categoriaUtenteLogin == "UtenteCompratore"){
+                if (categoriaUtenteLogin == "UtenteCompratore"){                    
                     sprintf(sqlcmd, "UPDATE %s set session_id_c='%s' WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), sessionID.c_str(), input_nome_utente.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res);
+
+                    InsertToLogDB("INFO", "Aggiornamento sessionID", sessionID);
                 }
 
                 if (categoriaUtenteLogin == "UtenteFornitore"){
                     sprintf(sqlcmd, "UPDATE %s set session_id_f='%s' WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), sessionID.c_str(), input_nome_utente.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res);
+
+                    InsertToLogDB("INFO", "Aggiornamento sessionID", sessionID);
                 }
 
                 if (categoriaUtenteLogin == "UtenteTrasportatore"){
                     sprintf(sqlcmd, "UPDATE %s set session_id_t='%s' WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), sessionID.c_str(), input_nome_utente.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res);
+
+                    InsertToLogDB("INFO", "Aggiornamento sessionID", sessionID);
                 }
 
-                res = db1.ExecSQLcmd(sqlcmd);
-
-                PQclear(res);
+                
 
 
 
@@ -191,6 +204,7 @@ public:
                 if (input_passw != password_utente)
                 {
                     std::cout << "Errore: La passowrd non è corretta, riprovare." << std::endl;
+                    InsertToLogDB("ERROR", "Password non corretta", sessionID);
                     return;
                 }
                 else

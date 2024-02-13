@@ -368,6 +368,7 @@ class UtenteCompratore : public Utente {
 
         if (rows == 1){
                 compratore.nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
+                compratore.session_id = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));
                 compratore.categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
                 compratore.nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
                 compratore.cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
