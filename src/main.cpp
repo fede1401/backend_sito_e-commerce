@@ -13,29 +13,30 @@
 #include "user_trasportatore.h"
 #include "product.h"
 #include "spedizione.h"
+#include "test_generator.h"
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
 
-void print_select(std::string nome_tabella){
-    Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-    std::cout << "Tabella: " << nome_tabella << std::endl;
-    sprintf(sqlcmd, "SELECT * FROM %s", nome_tabella.c_str());
-    res = db1.ExecSQLtuples(sqlcmd);
-    rows = PQntuples(res);
-    int numCols = PQnfields(res);
+// void print_select(std::string nome_tabella){
+//     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+//     std::cout << "Tabella: " << nome_tabella << std::endl;
+//     sprintf(sqlcmd, "SELECT * FROM %s", nome_tabella.c_str());
+//     res = db1.ExecSQLtuples(sqlcmd);
+//     rows = PQntuples(res);
+//     int numCols = PQnfields(res);
 
-    //std::cout << "Rows: " << rows << std::endl;
-    for (int i = 0; i < rows; ++i) {
-        std::cout << "Row " << i << ": ";
-        for (int j = 0; j < numCols; ++j) {
-            std::cout << PQgetvalue(res, i, j) << ",   ";
-        }
-        std::cout << std::endl;
-    }
-    PQclear(res); 
-    std::cout << "\n" << std::endl;
+//     //std::cout << "Rows: " << rows << std::endl;
+//     for (int i = 0; i < rows; ++i) {
+//         std::cout << "Row " << i << ": ";
+//         for (int j = 0; j < numCols; ++j) {
+//             std::cout << PQgetvalue(res, i, j) << ",   ";
+//         }
+//         std::cout << std::endl;
+//     }
+//     PQclear(res); 
+//     std::cout << "\n" << std::endl;
     
-}
+// }
 
 
 void test_effettuaRegistrazioneCompratori(){
@@ -243,26 +244,11 @@ int main(){
 
     char sqlcmd[1000]; 
 
-    UtenteCompratore compratore;
-    compratore.effettuaRegistrazione("marco1", "UtenteCompratore", "Marco", "Giggio", "3339993339", "marco2.giggio@gmail.com", "Via della Roma", "36", "01010", "Roma", "Compleanno1.2", "Compleanno1.2", "11/11/2001");
+    test_generator testUtenti;
 
-    //compratore.effettuaRegistrazione("LUIGI1", "UtenteCompratore", "Luigi", "Giggio", "3339993339", "luigi.giggio@gmail.com", "Via della Roma", "36", "01010", "Roma", "Compleanno1.2", "Compleanno1.2", "11/11/2001");
+    testUtenti.TestAzioniUtenti();
 
-    print_select("UtenteCompratore");
 
-    print_select("LogTable");
-
-    //compratore.effettua_login("LUIGI1", "Compleanno1.2");
-    compratore = compratore.anima_oggetto("UtenteCompratore", "marco1", "Compleanno1.2");
-
-    std::cout << compratore.categoria << std::endl;
-
-    compratore.effettua_logout("marco1");
-    compratore.effettua_login("marco1", "Compleanno1.24444");
-
-    print_select("UtenteCompratore");
-    print_select("LogTable");
-    
 
 
 

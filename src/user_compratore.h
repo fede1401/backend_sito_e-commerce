@@ -217,6 +217,7 @@ class UtenteCompratore : public Utente {
         ///////////////////////////////////// 
         // Controllo se la mail contiene il carattere "@".
         if (in_email.find("@") == std::string::npos) {
+            InsertToLogDB("ERROR", "La mail deve contenere il carattere -@-.", session_id);
             std::cout << "Errore: La mail deve contenere il carattere '@'." << std::endl;
             return;
             }
@@ -226,11 +227,13 @@ class UtenteCompratore : public Utente {
         ///////////////////////////////////// 
         // Controllo se la password rispetta i criteri: lunghezza di almeno 8, almeno una lettere maiuscola, un numero e un carattere speciale.
         if (in_password.length() < 8){
+            InsertToLogDB("ERROR", "La password deve contenere almeno 8 caratteri.", session_id);
             std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
             return;
         }
 
         if (in_conferma_password.length() < 8){
+            InsertToLogDB("ERROR", "La password deve contenere almeno 8 caratteri.", session_id);
             std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
             return;
                     }
@@ -248,15 +251,27 @@ class UtenteCompratore : public Utente {
             
         }
 
-        if (!hasUpperCase) { std::cout << "La password deve contenere almeno un carattere maiuscolo." << std::endl;  }
-        if (!hasDigit) { std::cout << "La password deve contenere almeno un numero." << std::endl; }
-        if (!hasSpecialChar) {  std::cout << "La password deve contenere almeno un carattere speciale." << std::endl; }
+        if (!hasUpperCase) { 
+            std::cout << "La nuova password deve contenere almeno un carattere maiuscolo." << std::endl;  
+            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", session_id);
+        }
+
+        if (!hasDigit) { 
+            std::cout << "La nuova password deve contenere almeno un numero." << std::endl; 
+            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un numero.", session_id);
+        }
+
+        if (!hasSpecialChar) {  
+            std::cout << "La nuova password deve contenere almeno un carattere speciale." << std::endl; 
+            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", session_id);
+        }
         ///////////////////////////////////// 
                    
 
         ///////////////////////////////////// 
         // Controllo se la password è uguale al campo conferma_password
         if (in_password != in_conferma_password){
+            InsertToLogDB("ERROR", "Le password non corrispondono", session_id);
             std::cout << "Errore: Le password non corrispondono." << std::endl;
             return;
         }
@@ -278,6 +293,7 @@ class UtenteCompratore : public Utente {
 
         PQclear(res);
         if (rows > 0) {
+                InsertToLogDB("ERROR", "Il nome utente è già in uso.", session_id);
                 std::cout << "Errore: Il nome utente è già in uso." << std::endl;
                 return;
         }
@@ -289,6 +305,7 @@ class UtenteCompratore : public Utente {
         rows = PQntuples(res);
 
         if (rows >= 1){
+            InsertToLogDB("ERROR", "Il nome utente è già in uso da utenti fornitori.", session_id);
             std::cout << "Errore: Il nome utente è già in uso da utenti fornitori." << std::endl;
             return;
         }
@@ -299,6 +316,7 @@ class UtenteCompratore : public Utente {
         rows = PQntuples(res);
 
         if (rows >= 1){
+            InsertToLogDB("ERROR", "Il nome utente è già in uso da utenti trasportatori.", session_id);
             std::cout << "Errore: Il nome utente è già in uso da utenti trasportatori." << std::endl;
             return;
         }
@@ -314,6 +332,7 @@ class UtenteCompratore : public Utente {
 
         PQclear(res);
         if (rows > 0) {
+            InsertToLogDB("ERROR", "Indirizzo mail è già in uso.", session_id);
             std::cout << "Errore: L'indirizzo mail è già in uso." << std::endl;
             return;
         }
@@ -351,6 +370,9 @@ class UtenteCompratore : public Utente {
 
         // Conferma di inserimento nel db
         std::cout << "Utente inserito." << std::endl;
+        InsertToLogDB("INFO", "Utente compratore inserito.", session_id);
+
+        return;
     }
 
 
@@ -401,10 +423,19 @@ class UtenteCompratore : public Utente {
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
+        std::string sessionID = "";
+        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtente.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+
         sprintf(sqlcmd, "UPDATE UtenteCompratore set via_di_residenza='%s', numero_civico ='%s', CAP='%s', citta_di_residenza='%s' WHERE nome_utente_compratore = '%s'",
          nuovaViaResidenza.c_str(), nuovoNumCiv.c_str(), nuovoCAP.c_str(), nuovaCittaResidenza.c_str(), nomeUtente.c_str());
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res); 
+
+        InsertToLogDB("INFO", "Aggiornata la residenza utente compratore.", sessionID);
 
     return;
     }

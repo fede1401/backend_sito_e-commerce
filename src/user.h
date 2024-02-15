@@ -60,6 +60,7 @@ public:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string categoriaUtenteLogin = categoria;
+        std::string sessionID = "";
 
         // Controlla se l'utente è già loggato:
         int stato_utente;
@@ -93,9 +94,37 @@ public:
             if (stato_utente == 1)
             {
                 std::cout << "L'utente è già connesso." << std::endl;
+                
+                // Carico il session ID:
+                
+                if (categoria == "UtenteCompratore"){ 
+                    sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", input_nome_utente.c_str());
+                    res = db1.ExecSQLtuples(sqlcmd);
+                    rows = PQntuples(res);
+                    if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));} 
+                }
+
+                if (categoria == "UtenteFornitore"){ 
+                    sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", input_nome_utente.c_str());
+                    res = db1.ExecSQLtuples(sqlcmd);
+                    rows = PQntuples(res);
+                    if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));} 
+                }
+
+                
+                if (categoria == "UtenteTrasportatore"){ if (rows==1){ 
+                    sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", input_nome_utente.c_str());
+                    res = db1.ExecSQLtuples(sqlcmd);
+                    rows = PQntuples(res);
+                    sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}  
+                    
+                }
+                
+                InsertToLogDB("WARNING", "Utente già connesso.", sessionID );
                 return;
             }
             else
+
             {
                 // Aggiorniamo lo stato dell'utente: da disconnesso a connesso:
 
@@ -109,6 +138,7 @@ public:
                 rows = PQntuples(res);
 
                 if (rows > 0){
+                    InsertToLogDB("ERROR", "Il session ID è già in uso da utenti compratori.", sessionID);
                     std::cout << "Errore: Il session ID è già in uso da utenti compratori." << std::endl;
                     return;
                 }
@@ -118,6 +148,7 @@ public:
                 rows = PQntuples(res);
 
                 if (rows > 0){
+                    InsertToLogDB("ERROR", "Il session ID è già in uso da utenti fornitori.", sessionID);
                     std::cout << "Errore: Il session ID è già in uso da utenti fornitori." << std::endl;
                     return;
                 }
@@ -127,6 +158,7 @@ public:
                 rows = PQntuples(res);
 
                 if (rows > 0){
+                    InsertToLogDB("ERROR", "Il session ID è già in uso da utenti trasportatori.", sessionID);
                     std::cout << "Errore: Il session ID è già in uso da utenti trasportatori." << std::endl;
                     return;
                 }
@@ -193,6 +225,7 @@ public:
                 {
                     // Altrimenti, il nome utente non è stato trovato o ci sono più utenti con lo stesso nome utente
                     // Gestisci questa situazione di conseguenza
+                    InsertToLogDB("ERROR", "Utente non trovato.", sessionID);
                     std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                     return;
                 }
@@ -216,22 +249,34 @@ public:
                     if (categoriaUtenteLogin == "UtenteCompratore"){
                         // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
                         sprintf(sqlcmd, "UPDATE %s set stato = 1 WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                        res = db1.ExecSQLcmd(sqlcmd);
+
+                        PQclear(res);
+
+                        InsertToLogDB("INFO", "Aggiornamento dello stato utente", sessionID);
                     }
 
                     if (categoriaUtenteLogin == "UtenteFornitore"){
                         // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
                         sprintf(sqlcmd, "UPDATE %s set stato = 1 WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                        res = db1.ExecSQLcmd(sqlcmd);
+
+                        PQclear(res);
+
+                        InsertToLogDB("INFO", "Aggiornamento dello stato utente", sessionID);
                     }
 
                     if (categoriaUtenteLogin == "UtenteTrasportatore"){
                         // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
                         sprintf(sqlcmd, "UPDATE %s set stato = 1 WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                        res = db1.ExecSQLcmd(sqlcmd);
+
+                        PQclear(res);
+
+                        InsertToLogDB("INFO", "Aggiornamento dello stato utente", sessionID);
                     }
                     
-                    res = db1.ExecSQLcmd(sqlcmd);
-
-                    PQclear(res);
-
+                    /*
                     std::cout << "Lo stato dell'utente "  << input_nome_utente << " prima del login è: " << stato_utente << std::endl;
 
                     // Controlla se lo stto dell'utente è stato aggiornato:
@@ -269,6 +314,8 @@ public:
                         std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                         return;
                     }
+                    */
+                    
 
                         /*
                         // Creo il costruttore della classe utente compratore dopo il login:
@@ -305,6 +352,7 @@ public:
             }
             else
             {
+                InsertToLogDB("ERROR", "Utente non trovato", sessionID);
                 std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                 return;
             }
@@ -351,6 +399,7 @@ public:
         // Controlla se l'utente è già loggato:
         int stato_utente;
         std::string categoriaUtenteLogin = categoria;
+        std::string sessionID = "";
 
 
         if (categoriaUtenteLogin == "UtenteCompratore"){
@@ -378,7 +427,7 @@ public:
             stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
 
             if (stato_utente == 0){
-                    
+                InsertToLogDB("ERROR", "Utente è già disconnesso", sessionID);
                 std::cout << "Errore: L'utente è già disconnesso" << std::endl;
                 return;
             }
@@ -386,41 +435,86 @@ public:
             else{
                 // Aggiorniamo lo stato dell'utente, da connesso a disconnesso:
 
+                if (categoria == "UtenteCompratore"){ 
+                    sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", input_nome_utente.c_str());
+                    res = db1.ExecSQLtuples(sqlcmd);
+                    rows = PQntuples(res);
+                    if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));} 
+                }
+
+                if (categoria == "UtenteFornitore"){ 
+                    sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", input_nome_utente.c_str());
+                    res = db1.ExecSQLtuples(sqlcmd);
+                    rows = PQntuples(res);
+                    if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));} 
+                }
+
+                
+                if (categoria == "UtenteTrasportatore"){ if (rows==1){ 
+                    sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", input_nome_utente.c_str());
+                    res = db1.ExecSQLtuples(sqlcmd);
+                    rows = PQntuples(res);
+                    sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}  
+                    
+                }
+
+
                 if (categoriaUtenteLogin == "UtenteCompratore"){
                     // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 0 WHERE nome_utente = '%s'", input_nome_utente.c_str());
                     sprintf(sqlcmd, "UPDATE %s set stato = 0 WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res);
+
+                    InsertToLogDB("INFO", "Disconnessione utente", sessionID);
                 }
 
                 if (categoriaUtenteLogin == "UtenteFornitore"){
                     // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 0 WHERE nome_utente = '%s'", input_nome_utente.c_str());
                     sprintf(sqlcmd, "UPDATE %s set stato = 0 WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res);
+
+                    InsertToLogDB("INFO", "Disconnessione utente", sessionID);
                 }
 
                 if (categoriaUtenteLogin == "UtenteTrasportatore"){
                     // sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 0 WHERE nome_utente = '%s'", input_nome_utente.c_str());
                     sprintf(sqlcmd, "UPDATE %s set stato = 0 WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res);
+
+                    InsertToLogDB("INFO", "Disconnessione utente", sessionID);
                 }  
 
-                res = db1.ExecSQLcmd(sqlcmd);
-                PQclear(res);
+                
 
 
                 // A questo punto possiamo resettare il session id associato all'utente:
                 if (categoriaUtenteLogin == "UtenteCompratore"){
                     sprintf(sqlcmd, "UPDATE %s set session_id_c='' WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res);
+
+                    InsertToLogDB("INFO", "Aggiornamento sessionID", "");
                 }
 
                 if (categoriaUtenteLogin == "UtenteFornitore"){
                     sprintf(sqlcmd, "UPDATE %s set session_id_f='' WHERE nome_utente_fornitore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res);
+
+                    InsertToLogDB("INFO", "Aggiornamento sessionID", "");
                 }
 
                 if (categoriaUtenteLogin == "UtenteTrasportatore"){
                     sprintf(sqlcmd, "UPDATE %s set session_id_t='' WHERE nome_utente_trasportatore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res);
+
+                    InsertToLogDB("INFO", "Aggiornamento sessionID", "");
                 }
 
-                res = db1.ExecSQLcmd(sqlcmd);
-
-                PQclear(res);
+                
 
 
                 // Controlla se lo stato dell'utente è stato aggiornato:
@@ -456,6 +550,7 @@ public:
         }
         else
         {
+            InsertToLogDB("ERROR", "Utente non trovato.", sessionID);
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
             return;
         } 
@@ -487,21 +582,50 @@ public:
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
+        std::string sessionID = "";
+        if (categoria == "UtenteCompratore"){ 
+            sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtenteDaEliminare.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));} 
+        }
+
+        if (categoria == "UtenteFornitore"){ 
+            sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nomeUtenteDaEliminare.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));} 
+        }
+
+                
+        if (categoria == "UtenteTrasportatore"){ if (rows==1){ 
+            sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nomeUtenteDaEliminare.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}          
+        }
+
         // In base alla categoria dell'utente eliminiamo l'utente
         if (categoria == "UtenteCompratore"){
             sprintf(sqlcmd, "DELETE FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtenteDaEliminare.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
+
+            InsertToLogDB("INFO", "Eliminazione profilo.", sessionID);
         }
         if (categoria == "UtenteFornitore"){
             sprintf(sqlcmd, "DELETE FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nomeUtenteDaEliminare.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
+
+            InsertToLogDB("INFO", "Eliminazione profilo.", sessionID);
         }
         if (categoria == "UtenteTrasportatore"){
             sprintf(sqlcmd, "DELETE FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nomeUtenteDaEliminare.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
+
+            InsertToLogDB("INFO", "Eliminazione profilo.", sessionID);
         }
 
     return;
@@ -522,22 +646,55 @@ public:
          // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
+        std::string sessionID = "";
+        if (categoria == "UtenteCompratore"){ 
+            sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtente.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));} 
+        }
+
+        if (categoria == "UtenteFornitore"){ 
+            sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nomeUtente.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));} 
+        }
+
+                
+        if (categoria == "UtenteTrasportatore"){ if (rows==1){ 
+            sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nomeUtente.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}          
+        }
+
+
 
         // In base alla categoria dell'utente aggiorniamo il numero di telefono
         if (categoria == "UtenteCompratore"){
             sprintf(sqlcmd, "UPDATE UtenteCompratore set numero_di_telefono = '%s' WHERE nome_utente_compratore = '%s'", nuovoNumeroTelefono.c_str(), nomeUtente.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res); 
+
+            InsertToLogDB("INFO", "Aggiornamento numero di telefono.", sessionID);
+
         }
         if (categoria == "UtenteFornitore"){
             sprintf(sqlcmd, "UPDATE UtenteFornitore set numero_di_telefono = '%s' WHERE nome_utente_fornitore = '%s'", nuovoNumeroTelefono.c_str(), nomeUtente.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res); 
+
+            InsertToLogDB("INFO", "Aggiornamento numero di telefono.", sessionID);
+
         }
         if (categoria == "UtenteTrasportatore"){
             sprintf(sqlcmd, "UPDATE UtenteTrasportatore set numero_di_telefono = '%s' WHERE nome_utente_trasportatore = '%s'", nuovoNumeroTelefono.c_str(), nomeUtente.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res); 
+
+            InsertToLogDB("INFO", "Aggiornamento numero di telefono.", sessionID);
+
         }
     return;
     }
@@ -553,17 +710,42 @@ public:
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
+        std::string sessionID = "";
+        if (categoria == "UtenteCompratore"){ 
+            sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtente.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));} 
+        }
+
+        if (categoria == "UtenteFornitore"){ 
+            sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nomeUtente.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));} 
+        }
+
+                
+        if (categoria == "UtenteTrasportatore"){ if (rows==1){ 
+            sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nomeUtente.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}          
+        }
+
 
         // Controlliamo innanzitutto se la vecchiaPassword inserita dall'utente è uguale a quella nel database:
         // Verifica della password:
         if (passwUtente != vecchiaPassw){
-            std::cout << "Errore: La password inserita per aggiornarla non è corretta." << std::endl;
+            InsertToLogDB("ERROR", "La password attuale inserita non è corretta.", sessionID);
+            std::cout << "Errore: La password attuale inserita non è corretta" << std::endl;
             return;
         }
         else{
             // La password inserita dall'utente è uguale a quella nel database:
             // Controllo se la nuova password rispetta i criteri: lunghezza di almeno 8, almeno una lettere maiuscola, un numero e un carattere speciale.
             if (nuovaPassw.length() < 8){
+                InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno 8 caratteri.", sessionID);
                 std::cout << "Errore: La nuova passowrd deve contenere almeno 8 caratteri." << std::endl;
                 return;
             }
@@ -581,9 +763,20 @@ public:
                 
             }
 
-            if (!hasUpperCase) { std::cout << "La nuova password deve contenere almeno un carattere maiuscolo." << std::endl;  }
-            if (!hasDigit) { std::cout << "La nuova password deve contenere almeno un numero." << std::endl; }
-            if (!hasSpecialChar) {  std::cout << "La nuova password deve contenere almeno un carattere speciale." << std::endl; }
+            if (!hasUpperCase) { 
+                std::cout << "La nuova password deve contenere almeno un carattere maiuscolo." << std::endl;  
+                InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", sessionID);
+            }
+
+            if (!hasDigit) { 
+                std::cout << "La nuova password deve contenere almeno un numero." << std::endl; 
+                InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un numero.", sessionID);
+            }
+
+            if (!hasSpecialChar) {  
+                std::cout << "La nuova password deve contenere almeno un carattere speciale." << std::endl; 
+                InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", sessionID);
+            }
 
 
             // In base alla categoria dell'utente aggiorniamo la password
@@ -591,16 +784,24 @@ public:
                 sprintf(sqlcmd, "UPDATE UtenteCompratore set password = '%s' WHERE nome_utente_compratore = '%s'", nuovaPassw.c_str(), nomeUtente.c_str());
                 res = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res); 
+
+                InsertToLogDB("INFO", "Aggiornamento password.", sessionID);
+
             }
             if (categoria == "UtenteFornitore"){
                 sprintf(sqlcmd, "UPDATE UtenteFornitore set password = '%s' WHERE nome_utente_fornitore = '%s'", nuovaPassw.c_str(), nomeUtente.c_str());
                 res = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res); 
+
+                InsertToLogDB("INFO", "Aggiornamento password.", sessionID);
+
             }
             if (categoria == "UtenteTrasportatore"){
                 sprintf(sqlcmd, "UPDATE UtenteTrasportatore set password = '%s' WHERE nome_utente_trasportatore = '%s'", nuovaPassw.c_str(), nomeUtente.c_str());
                 res = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res); 
+
+                InsertToLogDB("INFO", "Aggiornamento password.", sessionID);
             }
         }
         
@@ -610,30 +811,6 @@ public:
     
     
     
-    
-    
-    /*int main() {
-        // Esempi di utilizzo delle classi derivate
-
-        UtenteCompratore compratore1("001", "mio_utente", "Mario", "Rossi", 123456789, "password123", "mario@email.com", 30,
-                                     "01/01/1990", "Via Roma", 42, "12345", "Città di Prova", 100.0, "Attivo");
-
-        UtenteFornitore fornitore1("002", "azienda_produzione", "Luigi", "Verdi", 987654321, "password456", "luigi@email.com", 35,
-                                   "AziendaXYZ", "Inattivo");
-
-        UtenteTrasportatore trasportatore1("003", "ditta_spedizione", "Giovanni", "Bianchi", 555555555, "password789", "giovanni@email.com", 25,
-                                           "DittaShip", "Attivo");
-
-        // Visualizzazione delle informazioni specifiche per ciascun tipo di utente
-        compratore1.mostraInformazioniCompratore();
-        std::cout << "\n----------------\n\n";
-        fornitore1.mostraInformazioniFornitore();
-        std::cout << "\n----------------\n\n";
-        trasportatore1.mostraInformazioniTrasportatore();
-
-        return 0;
-    }
-    */
 
 };
 
