@@ -706,6 +706,161 @@ public:
     }
 
 
+    void TestCompletoNoUtenti(){
+        std::string nome_utente_c = "test_user1";
+        std::string categoria_c = "UtenteCompratore";
+        std::string nome_c = "NomeTester1";
+        std::string cognome_c = "CognomeTester1";
+        std::string numeroTelefono_c = "1111111111";
+        std::string email_c = "tester1.@gmail.com";
+        std::string viaResidenza_c = "Via della Roma";
+        std::string numeroCivico_c = "22";
+        std::string CAP_c = "00000";
+        std::string cittaResidenza_c = "Roma";
+        std::string password_c = "Aaaaaaa1.";
+        std::string confermaPassword_c = "Aaaaaaa1.";
+        std::string dataCompleanno_c = "01/01/0001";
+
+        // Registrazione utente Compratore:
+        UtenteCompratore compratore;
+        compratore.effettuaRegistrazione(nome_utente_c, 
+                                        categoria_c, 
+                                        nome_c, 
+                                        cognome_c, 
+                                        numeroTelefono_c, 
+                                        email_c, 
+                                        viaResidenza_c, 
+                                        numeroCivico_c, 
+                                        CAP_c, 
+                                        cittaResidenza_c, 
+                                        password_c, 
+                                        confermaPassword_c, 
+                                        dataCompleanno_c);
+
+
+         // Genera dati di input:
+        std::string nome_utente_f = "test_user2";
+        std::string categoria_f = "UtenteFornitore";
+        std::string nome_f = "NomeTester2";
+        std::string cognome_f = "CognomeTester2";
+        std::string numeroTelefono_f = "1111111111";
+        std::string email_f = "tester2.@gmail.com";
+        std::string password_f = "Bbbbbbb.2";
+        std::string confermaPassword_f = "Bbbbbbb.2";
+        std::string aziendaProduzione_f = "Nike";
+
+        UtenteFornitore fornitore;
+        fornitore.effettuaRegistrazione(nome_utente_f,
+                                        categoria_f,
+                                        nome_f,
+                                        cognome_f,
+                                        numeroTelefono_f,
+                                        email_f,
+                                        password_f,
+                                        confermaPassword_f,
+                                        aziendaProduzione_f);
+
+
+        std::string nome_utente_t = "test_user3";
+        std::string categoria_t = "UtenteTrasportatore";
+        std::string nome_t = "NomeTester3";
+        std::string cognome_t = "CognomeTester3";
+        std::string numeroTelefono_t = "1111111111";
+        std::string email_t = "tester3.@gmail.com";
+        std::string password_t = "Ccccccc.3";
+        std::string confermaPassword_t = "Ccccccc.3";
+        std::string dittaSpedizione_t = "FedEx";
+
+        UtenteTrasportatore trasportatore;
+        trasportatore.effettuaRegistrazione(nome_utente_t,
+                                        categoria_t,
+                                        nome_t,
+                                        cognome_t,
+                                        numeroTelefono_t,
+                                        email_t,
+                                        password_t,
+                                        confermaPassword_t,
+                                        dittaSpedizione_t);
+
+
+        compratore.effettua_login("test_user1", "Aaaaaaa1.");
+
+        fornitore.effettua_login("test_user2", "Bbbbbbb.2");
+
+        trasportatore.effettua_login("test_user3", "Ccccccc.3");
+
+        print_select("UtenteCompratore");
+        print_select("UtenteFornitore");
+        print_select("UtenteTrasportatore");
+
+        Product prodotto;
+        Ordine ordine;
+        prodotto.add_new_product("Dunk Panda", "Abbigliamento, scarpe", 99.00, "Nike Panda, taglia 40", "Nike", 10);
+
+        Carrello carrello;
+        ListaDesideri listadesideri;
+
+        carrello.add_prodotto("test_user1", 1);
+        listadesideri.add_prodotto("test_user1", 1);
+
+        ordine = prodotto.acquistaProdotto("test_user1", "Via delle Mani", "Roma", "44");
+
+        ordine.visione_ordini_effettuati("test_user1");
+
+        Spedizione spedizione;
+        spedizione.assegnaOrdineTrasportatore();
+
+        print_select("Spedizione");
+
+        spedizione.spedizioneConsegnata(1);
+
+        print_select("Spedizione");
+
+        Recensione recensione;
+        Reso reso;
+
+        votoStelle votoStelle;
+        votoStelle = votoStelle::Quattro;
+        recensione.effettuaRecensione(1, "Buonissimo prodotto", votoStelle);
+
+        motivazioneReso motivazioneReso;
+        motivazioneReso = motivazioneReso::Difettoso;
+        reso.effettuaReso(1, motivazioneReso);
+
+        print_select("Ordine");
+        print_select("Prodotto");
+        print_select("Spedizione");
+        print_select("Reso");
+        print_select("Recensione");
+        print_select("LogTable");
+
+        return;
+
+        /*
+        Risultati ottenuti:
+        Row 0: 2024-02-16 22:03:44,   7751,   INFO,   Utente compratore inserito.,   ,   
+        Row 1: 2024-02-16 22:03:44,   7751,   INFO,   Utente fornitore inserito.,   ,   
+        Row 2: 2024-02-16 22:03:44,   7751,   INFO,   Utente trasportatore inserito.,   ,   
+        Row 3: 2024-02-16 22:03:44,   7751,   INFO,   Aggiornamento sessionID,   bkZKmrLJsy,   
+        Row 4: 2024-02-16 22:03:44,   7751,   INFO,   Aggiornamento dello stato utente,   bkZKmrLJsy,   
+        Row 5: 2024-02-16 22:03:44,   7751,   INFO,   Aggiornamento sessionID,   HkZxJbPmXi,   
+        Row 6: 2024-02-16 22:03:44,   7751,   INFO,   Aggiornamento dello stato utente,   HkZxJbPmXi,   
+        Row 7: 2024-02-16 22:03:44,   7751,   INFO,   Aggiornamento sessionID,   OtOVxPzjuv,   
+        Row 8: 2024-02-16 22:03:44,   7751,   INFO,   Aggiornamento dello stato utente,   OtOVxPzjuv,   
+        Row 9: 2024-02-16 22:03:45,   7751,   INFO,   Inserito prodotto,   HkZxJbPmXi,   
+        Row 10: 2024-02-16 22:03:45,   7751,   INFO,   Inserimento del prodotto nel db.,   bkZKmrLJsy,   
+        Row 11: 2024-02-16 22:03:45,   7751,   INFO,   Inserimento del prodotto nel db.,   bkZKmrLJsy,   
+        Row 12: 2024-02-16 22:03:45,   7751,   INFO,   Utente ha acquistato il prodotto, ordine inserito nel db,   bkZKmrLJsy,   
+        Row 13: 2024-02-16 22:03:45,   7751,   INFO,   Visione degli ordini da parte dell utente.,   bkZKmrLJsy,   
+        Row 14: 2024-02-16 22:03:45,   7751,   INFO,   Assegnato ordine al trasportatore,   OtOVxPzjuv,   
+        Row 15: 2024-02-16 22:03:45,   7751,   INFO,   Modificata disponibilità utente trasportatore,   OtOVxPzjuv,   
+        Row 16: 2024-02-16 22:03:45,   7751,   INFO,   Avviata spedizione ordine,   OtOVxPzjuv,   
+        Row 17: 2024-02-16 22:03:45,   7751,   INFO,   Disponibilità utente trasportatore per prendere in consegna un nuovo pacco,   OtOVxPzjuv,   
+        Row 18: 2024-02-16 22:03:45,   7751,   INFO,   Effettuata recensione compratore,   bkZKmrLJsy,   
+        Row 19: 2024-02-16 22:03:45,   7751,   INFO,   Effettuata reso del prodotto,   bkZKmrLJsy,
+        */
+
+    }
 
 };
 

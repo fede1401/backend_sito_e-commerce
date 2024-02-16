@@ -244,9 +244,11 @@ int main(){
 
     char sqlcmd[1000]; 
 
-    test_generator testUtenti;
+    //test_generator testUtenti;
 
-    testUtenti.TestAzioniUtenti();
+    //testUtenti.TestAzioniUtenti();
+    test_generator test2;
+    test2.TestCompletoNoUtenti();
 
 
 

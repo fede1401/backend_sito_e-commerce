@@ -3,6 +3,8 @@
 #define CARTA_H
 
 #include <string>
+#include "log2db.h"
+
 
 class Carta {
 public:
@@ -30,6 +32,14 @@ public:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
         std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
+        // Caricamento del sessionID utile per il log.
+        std::string sessionID = "";
+        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+                
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+
 
         // Check se il nome utente è di un utente compratore:
         sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
@@ -43,9 +53,12 @@ public:
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res); 
 
+            InsertToLogDB("INFO", "Inserimento carta di pagamento utente compratore", sessionID);
+
         } 
         else{
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+            InsertToLogDB("ERROR", "Utente non trovato", sessionID);
             return;
         }
 
@@ -58,10 +71,21 @@ public:
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
+
+        // Caricamento del sessionID utile per il log.
+        std::string sessionID = "";
+        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+                
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+
         sprintf(sqlcmd, "SELECT * FROM Carta WHERE idCarta = '%d'", idCarta);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows < 1){
+
+            InsertToLogDB("ERROR", "Carta non trovata", sessionID);
             std::cout << "La riga da eliminare non esiste!" << std::endl;
             return;
         }
@@ -70,7 +94,10 @@ public:
             sprintf(sqlcmd, "DELETE FROM Carta WHERE idCarta = '%d'", idCarta);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
+
+            InsertToLogDB("INFO", "Eliminazione carta di pagamento", sessionID);
         }
+    return;
     }
 
 

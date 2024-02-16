@@ -3,6 +3,7 @@
 #define LISTA_DESIDERI_H
 
 #include <string>
+#include "log2db.h"
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
 
@@ -42,6 +43,14 @@ public:
         /////////////////////////////////////
         */
         
+        // Caricamento del sessionID utile per il log.
+        std::string sessionID = "";
+        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+
 
         ///////////////////////////////////// 
         // Controllo se esiste il codice del prodotto da inserire:
@@ -50,9 +59,13 @@ public:
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows < 1){
+            InsertToLogDB("ERROR", "Il prodotto non esiste.", sessionID);
             std::cout << "Il prodotto non esiste!" << std::endl;
             return;
         }
+
+
+        
 
         // Controllo se il prodotto è stato già inserito dall'utente nel carrello:
         int codProdotto; 
@@ -79,6 +92,8 @@ public:
                 sprintf(sqlcmd, "UPDATE ListaDesideri set quantitàProd = '%d' WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", quantitàPrecedente, in_nome_utente_compratore.c_str(),in_cod_prodotto);
                 res = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res);
+
+                InsertToLogDB("INFO", "Il prodotto già esiste, ne aggiungiamo la quantità.", sessionID);
             }
         }
          
@@ -88,10 +103,10 @@ public:
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);   
 
+            InsertToLogDB("INFO", "Inserimento del prodotto nel db.", sessionID);
         }
            
-
-             
+    return;      
     }
 
 
@@ -103,6 +118,14 @@ public:
         // Connessione al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
         std::cout << "Connessione al database avvenuta con successo." << std::endl;
+
+        // Caricamento del sessionID utile per il log.
+        std::string sessionID = "";
+        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
 
 
         /*
@@ -126,6 +149,7 @@ public:
         rows = PQntuples(res);
         if (rows < 1){
             std::cout << "La riga da eliminare non esiste!" << std::endl;
+            InsertToLogDB("ERROR", "Il prodotto da eliminare non esiste", sessionID);
             return;
         }
         else{
@@ -133,7 +157,10 @@ public:
             sprintf(sqlcmd, "DELETE FROM ListaDesideri WHERE nome_utente_compratore='%s' AND codProdotto='%s", in_nome_utente_compratore.c_str(), in_cod_prodotto);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
+
+            InsertToLogDB("INFO", "Rimozione del prodotto nel db.", sessionID);
         }
+    return;
     }
 };
 

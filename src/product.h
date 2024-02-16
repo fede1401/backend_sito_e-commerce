@@ -7,6 +7,7 @@
 #include <string>
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 #include "ordine.h"
+#include "log2db.h"
 #include <ctime>
 
 //PGresult *res;
@@ -74,12 +75,13 @@ class Product {
             /////////////////////////////////////
             */
             
-
+        std::string nome_utente_fornitore;
         // Assicuriamoci che l'utente che inserirà il prodotto nel sito è un Utente Fornitore
         sprintf(sqlcmd, "SELECT nome_utente_fornitore FROM UtenteFornitore WHERE nome_AziendaProduttrice = '%s'", in_azienda_produzione.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows == 1) { 
+            nome_utente_fornitore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_fornitore"));
             std::cout << "L'utente che inserisce il prodotto nel sito è un utente fornitore" << std::endl;
         }
         else{
@@ -89,6 +91,15 @@ class Product {
         PQclear(res);  
 
         *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
+
+
+        // Caricamento del sessionID utile per il log.
+        std::string sessionID = "";
+        sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nome_utente_fornitore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+                                
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
 
 
         // Se il prodotto inserito è già presente nella tabella Prodotto, allora dobbiamo solamente incrementare la quantità di copie, altrimenti dovremo inserirlo:
@@ -123,6 +134,8 @@ class Product {
                     numCopieDisponibili , in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str());
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res); 
+
+                    InsertToLogDB("INFO", "Aumentata quantità del prodotto inserito", sessionID);
                 }
         }
         else{
@@ -131,6 +144,8 @@ class Product {
                                                             in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str(), in_numero_copie_disponibili);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res); 
+
+            InsertToLogDB("INFO", "Inserito prodotto", sessionID);
         }
         
             
@@ -139,7 +154,6 @@ class Product {
 
 
     void remove_prodotto(int codProdotto){
-
         // Connessione al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
         std::cout << "Connessione al database avvenuta con successo." << std::endl;
@@ -150,6 +164,8 @@ class Product {
         rows = PQntuples(res);
         if (rows < 1){
             std::cout << "La riga da eliminare non esiste!" << std::endl;
+            InsertToLogDB("ERROR", "Il prodotto da eliminare non esiste", "");
+
             return;
         }
         else{
@@ -157,9 +173,10 @@ class Product {
             sprintf(sqlcmd, "DELETE FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
+            InsertToLogDB("INFO", "Eliminato prodotto", "");
+
         }
-
-
+    return;
     }
 
 
@@ -177,6 +194,7 @@ class Product {
         // Il prodotto non è stato trovato
         if (rows < 1){
             std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
+            InsertToLogDB("ERROR", "Non esiste il prodotto che si sta ricercando", "");
             return;
         }
         else{
@@ -196,6 +214,8 @@ class Product {
             std::cout << "Azienda di produzione: " << azienda_produzione << std::endl;
             std::cout << "Numero delle copie disponibili: " << numero_copie_disponibili << std::endl;
 
+
+            InsertToLogDB("INFO", "Visione del prodotto ricercato", "");
 
             /*int numCols = PQnfields(res);
             for (int i = 0; i < rows; ++i) {
@@ -223,10 +243,17 @@ class Product {
         StatoOrdine stato_ordine;
 
         //std::string nomeDittaSpedizione;
-
         
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        // Caricamento del sessionID utile per il log.
+        std::string sessionID = "";
+        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtenteCompratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+                                
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
 
         // Selezioniamo il codice del prodotto
         sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND FLOAT8EQ(prezzoEuro, '%f') AND nome_AziendaProduttrice='%s'", 
@@ -263,6 +290,7 @@ class Product {
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);     
 
+            InsertToLogDB("INFO", "Utente ha acquistato il prodotto, ordine inserito nel db", sessionID);
 
             // Esegui una query SELECT per ottenere l'ultimo ID inserito nella tabella Ordine:
             // 1. Selezioniamo tutti gli idOrdine dalla tabella Ordine:
@@ -283,6 +311,7 @@ class Product {
         }
         else{
             std::cout << "Errore: il prodotto non è stato trovato!" << std::endl;
+            InsertToLogDB("ERROR", "Il prodotto non è stato trovato!", sessionID);
             return ordine;
         }
     return ordine;

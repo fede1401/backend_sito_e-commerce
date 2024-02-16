@@ -11,9 +11,13 @@
 #include <unistd.h>
 #include <chrono>
 #include <iomanip>
-#include "carrello.h"
-
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
+
+
+PGresult *res;
+char sqlcmd[1000];
+
+int rows, k;
 
 
 void InsertToLogDB(std::string statoLog, std::string message, std::string sessionID){

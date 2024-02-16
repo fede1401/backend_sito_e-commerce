@@ -6,6 +6,8 @@
 #include <string>
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 #include <iostream>
+#include "log2db.h"
+
 
 
 enum class StatoSpedizione {
@@ -57,6 +59,8 @@ public:
 
         StatoSpedizione stato_spedizione;
         int idOrdine;
+        std::string sessionID = "";
+
 
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
@@ -76,6 +80,13 @@ public:
 
         if (rows >= 1){
             nome_utente_trasportatore = PQgetvalue(res, 0, 0);
+
+            // Caricamento del sessionID utile per il log.
+            sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+                                    
+            if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}  
 
             // Selezione il nome della ditta di spedizione dell'utente trasportatore:
             sprintf(sqlcmd, "SELECT nome_DittaSpedizione FROM UtenteTrasportatore WHERE nome_utente_trasportatore='%s'", nome_utente_trasportatore.c_str());
@@ -114,14 +125,22 @@ public:
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res); 
 
+                    InsertToLogDB("INFO", "Assegnato ordine al trasportatore", sessionID);
+
                     // A questo punto dobbiamo modificare la disponibilità dell'utente trasportatore:
                     sprintf(sqlcmd, "UPDATE UtenteTrasportatore set dispo='1' WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res); 
 
+                    InsertToLogDB("INFO", "Modificata disponibilità utente trasportatore", sessionID);
+
+
                     sprintf(sqlcmd, "UPDATE Ordine set statoOrdine ='spedito' WHERE idOrdine = '%d'", idOrdine);
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res); 
+
+                    InsertToLogDB("INFO", "Avviata spedizione ordine", sessionID);
+
 
                     // Animiamo l'oggetto Spedizione:
                     spedizione.idOrdine = idOrdine;
@@ -132,16 +151,19 @@ public:
                 }
                 else{
                     std::cout << "Gli ordini sono tutti spediti." << std::endl;
+                    InsertToLogDB("WARNING", "Ordini tutti spediti", sessionID);
                     return spedizione; 
                 }
             }
             else{
                std::cout << "L'utente non è stato trovato." << std::endl;
+              InsertToLogDB("WARNING", "Utente non trovato", sessionID);
             return spedizione; 
             }
         }
         else{
           std::cout << "Nessun utente ha disponibilità per prendere in carico l'ordine." << std::endl;
+          InsertToLogDB("WARNING", "Nessun utente ha la disponibilità per prendere in carico l ordine", sessionID);
           return spedizione; 
         }
 
@@ -167,6 +189,7 @@ public:
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
+        std::string sessionID = "";
 
         // Aggiorno lo stato della spedizione nella tabella Spedizione:
         sprintf(sqlcmd, "UPDATE Spedizione set statoSpedizione='consegnato' WHERE idSpedizione = '%d'", idSpedizione);
@@ -183,19 +206,28 @@ public:
         if (rows==1){
             nome_utente_trasportatore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_trasportatore"));
 
+            // Caricamento del sessionID utile per il log.
+            sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+                                    
+            if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}  
+
             // Ora aggiorniamo la disponibilità dell'utente Trasportatore:
             sprintf(sqlcmd, "UPDATE UtenteTrasportatore set dispo='0' WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res); 
+
+            InsertToLogDB("INFO", "Disponibilità utente trasportatore per prendere in consegna un nuovo pacco", sessionID);
         }
         else{
             std::cout << "Nessun utente trasportatore associato alla spedizione! " << std::endl;
+            InsertToLogDB("WARNING", "Nessun utente trasportatore associato alla spedizione.", sessionID);
             return;
         }
     std::cout << "Spedizione " << idSpedizione <<  " consegnata! " << std::endl;
     return;
     }
-
 
 };
 

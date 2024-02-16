@@ -3,6 +3,8 @@
 #define RESO_H
 
 #include <string>
+#include "log2db.h"
+
 
 enum class motivazioneReso {
     Difettoso,
@@ -41,6 +43,9 @@ public:
 
     void effettuaReso(int idOrdine, motivazioneReso motivazione_reso){
 
+        std::string sessionID = "";
+
+
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
@@ -55,34 +60,47 @@ public:
             stato_spedizione = PQgetvalue(res, 0, PQfnumber(res, "statoSpedizione"));
 
             if (stato_spedizione == "consegnato"){
-                
+
                 // Selezioniamo il nome del'utente compratore:
-                std::string nome_utente_compratore;
-                sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", idOrdine);
-                res = db1.ExecSQLtuples(sqlcmd);
-                rows = PQntuples(res);
-                if (rows == 1){
-                    nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
+              std::string nome_utente_compratore;
+              sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", idOrdine);
+              res = db1.ExecSQLtuples(sqlcmd);
+              rows = PQntuples(res);
+              if (rows == 1){
+                  nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
+
+                  // Caricamento del sessionID utile per il log.
+                  sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
+                  res = db1.ExecSQLtuples(sqlcmd);
+                  rows = PQntuples(res);
+                                        
+                  if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
                     
-                    std::string motivazione_resoStr = statoMotivazioneResoToString(motivazione_reso);
+                  std::string motivazione_resoStr = statoMotivazioneResoToString(motivazione_reso);
                     
-                    sprintf(sqlcmd, "INSERT INTO Reso (idReso, nome_utente_compratore, idOrdine, motivazioneReso) VALUES (DEFAULT, '%s', '%d', '%s')", 
-                    nome_utente_compratore.c_str(), idOrdine, motivazione_resoStr.c_str());
-                    res = db1.ExecSQLcmd(sqlcmd);
-                    PQclear(res); 
+                  sprintf(sqlcmd, "INSERT INTO Reso (idReso, nome_utente_compratore, idOrdine, motivazioneReso) VALUES (DEFAULT, '%s', '%d', '%s')", 
+                  nome_utente_compratore.c_str(), idOrdine, motivazione_resoStr.c_str());
+                  res = db1.ExecSQLcmd(sqlcmd);
+                  PQclear(res); 
+
+                  InsertToLogDB("INFO", "Effettuata reso del prodotto", sessionID);
+
                 }
                 else{
                     std::cout << "L'ordine non è stato trovato!" << std::endl;
+                    InsertToLogDB("WARNING", "Ordine non trovato", sessionID);
                     return;
                 }
             }
             else{
                 std::cout << "L'ordine è stato spedito, ma non è ancora arrivato, perciò non può essere effettuato il reso!" << std::endl;
+                InsertToLogDB("WARNING", "Ordine spedito, ma non arrivato, perciò non può essere effettuato il reso", sessionID);
                 return;
             }
         }
         else{
             std::cout << "L'ordine non è stato ancora spedito, perciò non può essere effettuato il reso!" << std::endl;
+            InsertToLogDB("WARNING", "Ordine non spedito, non può essere effettuato il reso", sessionID);
             return;
         }
     

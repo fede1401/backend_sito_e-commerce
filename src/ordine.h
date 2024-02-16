@@ -4,6 +4,7 @@
 
 #include <string>
 #include "spedizione.h"
+#include "log2db.h"
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
 
@@ -60,6 +61,15 @@ public:
       // Connession al database:
       Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
+      // Caricamento del sessionID utile per il log.
+      std::string sessionID = "";
+      sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
+      res = db1.ExecSQLtuples(sqlcmd);
+      rows = PQntuples(res);
+                        
+      if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+
+
       // Query per caricare tutti gli ordini effettuati:
       sprintf(sqlcmd, "SELECT * FROM Ordine WHERE nome_utente_compratore='%s'", nome_utente_compratore.c_str());
       res = db1.ExecSQLtuples(sqlcmd);
@@ -77,6 +87,8 @@ public:
 
         std::cout << ordine.identificatore_ordine << std::endl;
       }
+
+      InsertToLogDB("INFO", "Visione degli ordini da parte dell utente.", sessionID);
       return;
     }
 
@@ -88,6 +100,30 @@ public:
 
         std::string stato_ordine;
         StatoOrdine stato_ordine_annullato;
+
+        std::string nome_utente_compratore;
+
+        // Seleziono il nome dell'utente compratore che ha effettuato l'ordine:
+        sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", idOrdine);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        if (rows == 1){
+            nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
+        }
+        else{
+          std::cout << "Nessun utente compratore ha effettuato l'ordine da annullare!" << std::endl;
+          return;
+        }
+
+        // A questo punto possiamo selezionare il sessionId:
+        // Caricamento del sessionID utile per il log.
+        std::string sessionID = "";
+        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+                        
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+
 
         // Devo controllare se l'ordine è stato spedito o meno:
           // Se l'ordine non è stato spedito, allora può essere annullato;
@@ -111,15 +147,19 @@ public:
                   res = db1.ExecSQLcmd(sqlcmd);
                   PQclear(res); 
 
+                  InsertToLogDB("INFO", "Ordine annullato da parte dell utente Compratore.", sessionID);
+
               }
               else{
                   std::cout << "L'ordine è stato spedito, perciò l'ordine non può essere annullato! All'arrivo del pacco potrai effettuare il reso" << std::endl;
+                  InsertToLogDB("WARNING", "Ordine non annullabile perchè già spedito.", sessionID);
                   return;
               }
               
             }
             else{
                 std::cout << "L'ordine non è stato trovato" << std::endl;
+                InsertToLogDB("ERROR", "Ordine trovato.", sessionID);
                 return;
             }  
     return;
