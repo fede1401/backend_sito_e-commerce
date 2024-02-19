@@ -3,11 +3,7 @@
 #define SPEDIZIONE_H
 
 
-#include <string>
-#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
-#include <iostream>
-#include "log2db.h"
-
+#include "main.h"
 
 
 enum class StatoSpedizione {

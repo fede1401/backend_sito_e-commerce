@@ -2,8 +2,7 @@
 #ifndef CARTA_H
 #define CARTA_H
 
-#include <string>
-#include "log2db.h"
+#include "main.h"
 
 
 class Carta {

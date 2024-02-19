@@ -1,19 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
-#include <iostream>
-#include <string>
-#include <cctype> // Per isupper() e isdigit()
-#include <sstream>
-#include <random>
-#include <unistd.h>
-#include <chrono>
-#include <iomanip>
-#include "log2db.h"
-
-
-#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
-
+#include "main.h"
 
 bool isSpecialCharacter(char c)
 {

@@ -2,8 +2,7 @@
 #ifndef RESO_H
 #define RESO_H
 
-#include <string>
-#include "log2db.h"
+#include "main.h"
 
 
 enum class motivazioneReso {

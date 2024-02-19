@@ -1,12 +1,8 @@
 #ifndef USER_TRASPORTATORE_H
 #define USER_TRASPORTATORE_H
 
-#include <iostream>
-#include <string>
-#include <cctype> // Per isupper() e isdigit()
-#include <sstream>
+#include "main.h"
 #include "user.h"
-#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
 
 class UtenteTrasportatore : public Utente {

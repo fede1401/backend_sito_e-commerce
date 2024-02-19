@@ -1,42 +1,6 @@
-#include <iostream>
-#include <string>
-
-#include "carrello.h"
-#include "lista_desideri.h"
-#include "carta.h"
-#include "ordine.h"
-#include "reso.h"
-#include "recensione.h"
-#include "user.h"
-#include "user_compratore.h"
-#include "user_fornitore.h"
-#include "user_trasportatore.h"
-#include "product.h"
-#include "spedizione.h"
+#include "main.h"
 #include "test_generator.h"
-#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
 
-
-// void print_select(std::string nome_tabella){
-//     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-//     std::cout << "Tabella: " << nome_tabella << std::endl;
-//     sprintf(sqlcmd, "SELECT * FROM %s", nome_tabella.c_str());
-//     res = db1.ExecSQLtuples(sqlcmd);
-//     rows = PQntuples(res);
-//     int numCols = PQnfields(res);
-
-//     //std::cout << "Rows: " << rows << std::endl;
-//     for (int i = 0; i < rows; ++i) {
-//         std::cout << "Row " << i << ": ";
-//         for (int j = 0; j < numCols; ++j) {
-//             std::cout << PQgetvalue(res, i, j) << ",   ";
-//         }
-//         std::cout << std::endl;
-//     }
-//     PQclear(res); 
-//     std::cout << "\n" << std::endl;
-    
-// }
 
 
 void test_effettuaRegistrazioneCompratori(){
@@ -235,6 +199,100 @@ void test_acquistoProdotto(){
 }
 
 
+void initUSER(UtenteCompratore compratore, UtenteFornitore fornitore, UtenteTrasportatore trasportatore){
+
+    // Array di nomi utente
+    std::array<std::string, 100> nomi_utente;
+    for (int i = 0; i < 100; ++i) {
+        nomi_utente[i] = "Utente" + std::to_string(i + 1);
+    }
+
+    // Array di nomi
+    std::array<std::string, 10> nomi = {"Mario", "Luigi", "Giovanni", "Alessia", "Chiara", "Francesco", "Elena", "Roberto", "Laura", "Paolo"};
+
+    // Array di cognomi
+    std::array<std::string, 10> cognomi = {"Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Esposito", "Romano", "Gallo", "Conti", "De Luca"};
+
+    // Array di email
+    std::array<std::string, 100> email;
+    for (int i = 0; i < 100; ++i) {
+        email[i] = nomi_utente[i] + "@example.com";
+    }
+
+    // Array di numeri di telefono
+    std::array<std::string, 100> numeri_telefono;
+    for (int i = 0; i < 100; ++i) {
+        numeri_telefono[i] = "123456789" + std::to_string(i);
+    }
+
+    // Array di password
+    std::array<std::string, 100> password;
+    for (int i = 0; i < 100; ++i) {
+        password[i] = "password" + std::to_string(i + 1);
+    }
+
+    // Array di conferma password
+    std::array<std::string, 100> confermaPassword;
+    for (int i = 0; i < 100; ++i) {
+        confermaPassword[i] = "password" + std::to_string(i + 1);
+    }
+
+    // Array di nomi aziende produttrici
+    std::array<std::string, 5> nomi_aziende_produttrici = {"Azienda1", "Azienda2", "Azienda3", "Azienda4", "Azienda5"};
+
+    // Array di nomi ditte di spedizioni
+    std::array<std::string, 5> nomi_ditte_spedizioni = {"Ditta1", "Ditta2", "Ditta3", "Ditta4", "Ditta5"};
+
+    // Array di vie di residenza
+    std::array<std::string, 5> vie_di_residenza = {"Via Roma", "Via Milano", "Via Napoli", "Via Firenze", "Via Venezia"};
+
+    // Array di numeri civici
+    std::array<std::string, 100> numeri_civici;
+    for (int i = 0; i < 100; ++i) {
+        numeri_civici[i] = std::to_string(i + 1);
+    }
+
+    // Array di date di nascita
+    std::array<std::string, 100> date_di_nascita;
+    for (int i = 0; i < 100; ++i) {
+        date_di_nascita[i] = "01/01/2000"; // Esempio di data di nascita fittizia
+    }
+
+    // Array di CAP
+    std::array<std::string, 5> CAP = {"12345", "54321", "67890", "09876", "45678"};
+
+    // Array di città di residenza
+    std::array<std::string, 5> citta_di_residenza = {"Roma", "Milano", "Napoli", "Firenze", "Venezia"};
+
+
+    int i_nomeUtente_numTel_passw_email = rand()%100;
+    int i_CAP_CResi_VieRes = rand()%5;
+
+    compratore.effettuaRegistrazione(nomi_utente[i_nomeUtente_numTel_passw_email], "UtenteCompratore", 
+                                    nomi[i_nomeUtente_numTel_passw_email], cognomi[i_nomeUtente_numTel_passw_email],
+                                    numeri_telefono[i_nomeUtente_numTel_passw_email], email[i_nomeUtente_numTel_passw_email], 
+                                    vie_di_residenza[i_CAP_CResi_VieRes], numeri_civici[i_CAP_CResi_VieRes], CAP[i_CAP_CResi_VieRes], 
+                                    citta_di_residenza[i_CAP_CResi_VieRes], 
+                                    password[i_nomeUtente_numTel_passw_email], confermaPassword[i_nomeUtente_numTel_passw_email], 
+                                    date_di_nascita[i_nomeUtente_numTel_passw_email]);
+
+
+    fornitore.effettuaRegistrazione(nomi_utente[i_nomeUtente_numTel_passw_email], "UtenteFornitore", 
+                                    nomi[i_nomeUtente_numTel_passw_email],  cognomi[i_nomeUtente_numTel_passw_email],
+                                    numeri_telefono[i_nomeUtente_numTel_passw_email], email[i_nomeUtente_numTel_passw_email], 
+                                    password[i_nomeUtente_numTel_passw_email], confermaPassword[i_nomeUtente_numTel_passw_email], 
+                                    nomi_aziende_produttrici[i_CAP_CResi_VieRes]);
+
+
+    trasportatore.effettuaRegistrazione(nomi_utente[i_nomeUtente_numTel_passw_email], "UtenteTrasportatore", 
+                                        nomi[i_nomeUtente_numTel_passw_email], cognomi[i_nomeUtente_numTel_passw_email],
+                                        numeri_telefono[i_nomeUtente_numTel_passw_email], email[i_nomeUtente_numTel_passw_email], 
+                                        password[i_nomeUtente_numTel_passw_email], confermaPassword[i_nomeUtente_numTel_passw_email], 
+                                        nomi_ditte_spedizioni[i_CAP_CResi_VieRes]);
+
+    return;
+}
+
 
 int main(){
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
@@ -247,444 +305,42 @@ int main(){
     //test_generator testUtenti;
 
     //testUtenti.TestAzioniUtenti();
-    test_generator test2;
-    test2.TestCompletoNoUtenti();
+    //test_generator test2;
+    //test2.TestCompletoNoUtenti();
 
+    /* init random number generator  */
+    srand((unsigned)time(NULL));
 
+    //server_types x;
 
-
-
+    // definito per il numero di iterazioni del while:
+    int t = 0;                  
     
-    /*
-    test_effettuaRegistrazioneCompratori();
-
     UtenteCompratore compratore;
-    compratore = compratore.anima_oggetto("UtenteCompratore", "marco1", "Compleanno1.2");
-    compratore.effettua_login("marco1", "Compleanno1.2");
-
-    UtenteTrasportatore trasportatore;
-    trasportatore.effettuaRegistrazione("_marco_", "UtenteTrasportatore", "Marco", "Marco", "3333333333", "marco.marco@gmail.com", "Marcoooo1.", "Marcoooo1.", "FedEx");
-    trasportatore = trasportatore.anima_oggetto("UtenteTrasportatore", "_marco_", "Marcoooo1.");
-    trasportatore.effettua_login("_marco_", "Marcoooo1.");
-
     UtenteFornitore fornitore;
-    fornitore.effettuaRegistrazione("luigi2", "UtenteFornitore", "Luigi", "Faffo", "3333333333", "luigi.faffo@gmail.com", "Merdaaaa.1", "Merdaaaa.1", "Nike");
-    fornitore = fornitore.anima_oggetto("UtenteFornitore", "luigi2", "Merdaaaa.1");
-    fornitore.effettua_login("luigi2", "Merdaaaa.1");
-
-    print_select("UtenteCompratore");
-    print_select("UtenteFornitore");
-    print_select("UtenteTrasportatore");
-
-    Product prodotto;
-    //prodotto.ricerca_mostra_Prodotto("Iphone 15");
-    prodotto.add_new_product("Maglietta Nike", "Abbigliamento", 29.99, "Maglietta Nike color nero per sport", "Nike", 5);
-
-    Ordine ordine;
-    ordine = prodotto.acquistaProdotto("marco1", "Via della testa", "Roma", "45");
-
-    UtenteTrasportatore trasportatore2;
-    trasportatore2.effettuaRegistrazione("_trasportatore2_", "UtenteTrasportatore", "Lollo", "Lollo", "3333333333", "lollo.lollo@gmail.com", "Loooll00o.", "Loooll00o.", "Bartolini");
-    trasportatore2 = trasportatore2.anima_oggetto("UtenteTrasportatore", "_trasportatore2_", "Loooll00o.");
-    trasportatore2.effettua_login("_trasportatore2_", "Loooll00o.");
-
-    Spedizione spedizione;
-    //spedizione = spedizione.assegnaOrdineTrasportatore();
-
-    ordine.visione_ordini_effettuati("marco1");
-
-    spedizione = spedizione.assegnaOrdineTrasportatore();
-
-    //print_select("Reso");
-
-    spedizione.spedizioneConsegnata(1);
-
-    //ordine.annulla_ordine(2);
-
-
-    Reso reso;
-    motivazioneReso motivazione_reso;
-    motivazione_reso = motivazioneReso::Difettoso;
-    reso.effettuaReso(1, motivazione_reso);
-
-    print_select("Ordine");
-    print_select("Spedizione");
-    print_select("Reso");
-    print_select("Recensione");
-
-    Recensione recensione;
-    votoStelle voto_stelle;
-    voto_stelle = votoStelle::Quattro;
-    recensione.effettuaRecensione(1, "Prodotto ottimo!", voto_stelle);
-
-    print_select("Recensione");
-
-    print_select("UtenteCompratore");
-    print_select("UtenteFornitore");
-    print_select("UtenteTrasportatore");
-
-    compratore.effettua_logout("marco1");
-    fornitore.effettua_logout("luigi2");
-    trasportatore.effettua_logout("_marco_");
-
-    print_select("UtenteCompratore");
-    print_select("UtenteFornitore");
-    print_select("UtenteTrasportatore");
-    */
-
-
-    /*
-    Tabella: Spedizione
-    Row 0: 2,   2,   _trasportatore2_,   in transito,   Bartolini,   
-    Row 1: 1,   1,   _marco_,   consegnato,   FedEx
-
-    Tabella: Ordine
-    Row 0: 1,   1,   marco1,   2024-02-10,   spedito,   Via della testa,   Roma,   45,   
-    Row 1: 4,   1,   marco1,   2024-02-10,   in elaborazione,   Via della testa,   Roma,   45,   
-    Row 2: 2,   1,   marco1,   2024-02-10,   spedito,   Via della testa,   Roma,   45,   
-    Row 3: 5,   1,   marco1,   2024-02-10,   in elaborazione,   Via della testa,   Roma,   45,   
-    Row 4: 6,   1,   marco1,   2024-02-10,   in elaborazione,   Via della testa,   Roma,   45,   
-    Row 5: 7,   1,   marco1,   2024-02-10,   in elaborazione,   Via della testa,   Roma,   45,   
-    Row 6: 3,   1,   marco1,   2024-02-10,   spedito,   Via della testa,   Roma,   45,   
-
-
-    Tabella: Spedizione
-    Row 0: 2,   2,   _trasportatore2_,   in transito,   Bartolini,   
-    Row 1: 1,   1,   _marco_,   consegnato,   FedEx,   
-    Row 2: 3,   3,   _marco_,   in transito,   FedEx,
-    */
-
-    //test_acquistoProdotto();
-
-    //print_select("UtenteTrasportatore");
-
-
-    //spedizione.spedizioneConsegnata(1);
-
-    //print_select("Spedizione");
-    //print_select("UtenteTrasportatore");
-
-
-
-
-
-
-
-    //test_aggiornamento_Password();
-
-
-    //test_aggiornamento_numeroDiTelefono();
-
-    //test_aggiornaResidenza();
-
-    //test_aggiornaAziendaProduttrice();
-
-    //test_aggiornaDittaSpedizione();
-
-    //test2_aggiornaAziendaProduttrice();
-
-    //test_ricercaProdotto();
-
-    //test_acquistoProdotto();
-
-
-
-    
-    /*UtenteCompratore compratore;
-    compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", 123, "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
-    compratore = compratore.anima_oggetto("UtenteCompratore", "test_user1", "P@ssw0rd!");
-    compratore.effettua_login("test_user1", "P@ssw0rd!");
-    compratore.effettua_logout("test_user1");
-
-    UtenteFornitore fornitore;
-    fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
-    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user2", "Candela111?");
-    fornitore.effettua_login("test_user2", "Candela111?");
-    fornitore.effettua_logout("test_user2");
-
     UtenteTrasportatore trasportatore;
-    trasportatore.effettuaRegistrazione("test_user3", "UtenteTrasportatore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com", "Test1234.", "Test1234.", "FedEx");
-    trasportatore = trasportatore.anima_oggetto("UtenteTrasportatore", "test_user3", "Test1234.");
-    trasportatore.effettua_login("test_user3", "Test1234.");
-    trasportatore.effettua_logout("test_user3");
 
-    UtenteFornitore fornitore2;
-    fornitore.effettuaRegistrazione("test_user3", "UtenteFornitore", "Mirto", "Bacci", "333445567", "mirto.bacci@gmail.com", "Candela123?", "Candela123?", "Nike");
-    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user3", "Candela111?");
-    fornitore.effettua_login("test_user3", "Candela111?");
-    fornitore.effettua_logout("test_user3");
+    initUSER(compratore, fornitore, trasportatore);
 
-    print_select("UtenteCompratore");
-    print_select("utenteTrasportatore");
-    print_select("utenteFornitore");
+    while (t <= HORIZON){
 
-    
-    UtenteFornitore fornitore;
-    std::cout << "Prima del login" << std::endl;
-    fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
-    
-    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user2", "Candela111?");
-    fornitore.effettua_logout("test_user2");
-    fornitore.effettua_login("test_user2", "Candela111?");
+        int index_azioneDaSvolgere = rand()%32;
 
-    std::cout << fornitore.nome << std::endl;
-    std::cout << fornitore.cognome << std::endl;
-    std::cout << fornitore.nome_utente << std::endl;
-    std::cout << fornitore.email << std::endl;
+        svolgiAzione(compratore, trasportatore, fornitore, index_azioneDaSvolgere);
 
 
-    UtenteTrasportatore trasportatore;
-    trasportatore.effettuaRegistrazione("test_user3", "UtenteTrasportatore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com", "Test1234.", "Test1234.", "FedEx");
-    trasportatore = trasportatore.anima_oggetto("UtenteTrasportatore", "test_user3", "Test1234.");
-    trasportatore.effettua_logout("test_user3");
-    trasportatore.effettua_login("test_user3", "Test1234.");
-    std::cout << trasportatore.nome << std::endl;
-    std::cout << trasportatore.cognome << std::endl;
-    std::cout << trasportatore.nome_utente << std::endl;
-    std::cout << trasportatore.email << std::endl;
-    
-    UtenteCompratore compratore2;
-    compratore2.effettuaRegistrazione("test_user3", "UtenteCompratore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com","Via torino", 1, "00100", "Torino", "Test1234.", "Test1234.", "1999/09/18");
-    compratore2.effettua_login("test_user3", "Test1234.");
-    std::cout << compratore2.nome << std::endl;
-    std::cout << compratore2.cognome << std::endl;
-    std::cout << compratore2.nome_utente << std::endl;
-    std::cout << compratore2.email << std::endl;
 
-    print_select("UtenteCompratore");
-    print_select("utenteTrasportatore");
-    print_select("utenteFornitore");
 
-    //print_select("Prodotto");  
-    //print_select("Carrello");  
-    //print_select("Carta");  
-    */
+    }
 
-    
-    /*
-    
 
-    Carrello carrello1;
-    carrello1.add_prodotto("test_user1", 1);
 
-    Carta carta;
-    carta.aggiungi_carta("test_user1", "55598747283434", "333");
-    
-    print_select("UtenteCompratore");
-    print_select("utenteTrasportatore");
-    print_select("utenteFornitore");
 
-    print_select("Prodotto");  
-    print_select("Carrello");  
-    print_select("Carta");  
 
-    compratore.elimina_profilo();
 
-    std::cout << "Post eliminazione." << std::endl;
 
-    print_select("UtenteCompratore");
-    print_select("utenteTrasportatore");
-    print_select("utenteFornitore");
 
-    print_select("Prodotto");  
-    print_select("Carrello");  
-    print_select("Carta");  
-    */
-    
+
+
 
 }
-
-
-
-
-/*
-int main() {
-
-    Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-    std::cout << "Connessione al database avvenuta con successo." << std::endl;
-
-    PGresult *res;
-
-    char sqlcmd[1000];
-
-    
-    sprintf(sqlcmd, "INSERT INTO AziendaProd (idAziendaProd, nome) VALUES (DEFAULT, 'Apple')");
-    res = db1.ExecSQLcmd(sqlcmd);
-    PQclear(res); 
-
-    sprintf(sqlcmd, "INSERT INTO AziendaProd (idAziendaProd, nome) VALUES (DEFAULT, 'Nike')");
-    res = db1.ExecSQLcmd(sqlcmd);
-    PQclear(res); 
-
-    sprintf(sqlcmd, "INSERT INTO AziendaProd(idAziendaProd, nome) VALUES (DEFAULT, 'Samsung Eletronics')");
-    res = db1.ExecSQLcmd(sqlcmd);
-    PQclear(res); 
-
-    sprintf(sqlcmd, "INSERT INTO AziendaProd(idAziendaProd, nome) VALUES (DEFAULT, 'Xiaomi')");
-    res = db1.ExecSQLcmd(sqlcmd);
-    PQclear(res); 
-    
-
-
-    sprintf(sqlcmd, "INSERT INTO DittaSp(idDittaSp, nome) VALUES (DEFAULT, 'FedEx')");
-    res = db1.ExecSQLcmd(sqlcmd);
-    PQclear(res); 
-
-    sprintf(sqlcmd, "INSERT INTO DittaSp(idDittaSp, nome) VALUES (DEFAULT, 'UPS')");
-    res = db1.ExecSQLcmd(sqlcmd);
-    PQclear(res); 
-
-    sprintf(sqlcmd, "INSERT INTO DittaSp(idDittaSp, nome) VALUES (DEFAULT, 'DHL')");
-    res = db1.ExecSQLcmd(sqlcmd);
-    PQclear(res); 
-
-    
-    sprintf(sqlcmd, "SELECT * FROM AziendaProd");
-    res = db1.ExecSQLtuples(sqlcmd);
-    rows = PQntuples(res);
-    int numCols = PQnfields(res);
-
-    std::cout << "Rows: " << rows << std::endl;
-    for (int i = 0; i < rows; ++i) {
-        std::cout << "Row " << i << ": ";
-        for (int j = 0; j < numCols; ++j) {
-            std::cout << PQgetvalue(res, i, j) << "\t";
-        }
-        std::cout << std::endl;
-    }
-    PQclear(res); 
-
-
-    sprintf(sqlcmd, "SELECT * FROM DittaSp");
-    res = db1.ExecSQLtuples(sqlcmd);
-    rows = PQntuples(res);
-    numCols = PQnfields(res);
-
-    std::cout << "Rows: " << rows << std::endl;
-    for (int i = 0; i < rows; ++i) {
-        std::cout << "Row " << i << ": ";
-        for (int j = 0; j < numCols; ++j) {
-            std::cout << PQgetvalue(res, i, j) << "\t";
-        }
-        std::cout << std::endl;
-    }
-    PQclear(res); 
-
-    
-
-    //UtenteCompratore utente1("mario_1", "UtenteCompratore", "mario", "rossi", "3333333333", "Vaffsdns12?", "mario.rossi1@gmail.com", "15/09/2000", "via delle manine", 34, "01035", "terni", 0.0, 0);
-
-    //UtenteCompratore utente;
-    //utente.effettuaRegistrazione("marco15", "UtenteCompratore", "Marco", "Verdi", "339995551", "marco.verdi@gmail.com", "Via delle castile", 59, "01044", "Roma", "Mouse1234", "Mouse1234", "25/01/1999");
-
-    UtenteCompratore utente2;
-    utente2.effettuaRegistrazione("Gabriele15", "UtenteCompratore", "Gabriele", "ROssi", "339995551", "gabriele.rossi@gmail.com", "Via delle tirali", 59, "01056", "Roma", "Computer1234", "Computer1234", "25/01/1999"); 
-    utente2.effettua_login("UtenteCompratore", "Gabriele15", "Computer1234");
-    utente2.effettua_logout("UtenteCompratore","Gabriele15");
-
-    //utente1.effettuaRegistrazione(utente1, "Vaffsdns12?");
-    
-    //std::cout << "Campi dell'utente: " << utente2.nome << ",  " << utente2.cognome << ",  " << utente2.categoria << ",  " << utente2.nome_utente << ",  " << utente2.email <<  std::endl;
-    
-    //UtenteTrasportatore utentetrasport;
-    //utentetrasport.effettuaRegistrazione("Mario24", "UtenteTrasportatore", "Mario", "Verdi", "3334445559", "mario.verdi@gmail.com", "TestieraLatt!23", "TestieraLatt!23", "FedEx");
-    //utentetrasport.effettua_login("UtenteTrasportatore", "Mario24", "TestieraLatt!23");
-
-    //fprintf(stdout, "maiqn(): inserted in UtenteCompratore %s\n", PQgetvalue(res, 0, PQfnumber(res, "numeroTelefono")));
-
-
-    //sprintf(sqlcmd, "SELECT * FROM UtenteCompratore");
-
-    UtenteFornitore utenteforn;
-    utenteforn.effettuaRegistrazione("Laura99", "UtenteFornitore", "Laura", "Mangialucchi", "333445567", "laura.mangialucchi@gmail.com", "Candela111?", "Candela111?", "Apple");
-    std::cout << "\n Fornitore categoria: " << utenteforn.categoria << "\n" << std::endl;
-    utenteforn.effettua_login("UtenteFornitore", "Laura99", "Candela111?");
-
-    UtenteFornitore utenteforn2;
-    utenteforn.effettuaRegistrazione("Biagio10", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
-    std::cout << "\n Fornitore categoria: " << utenteforn.categoria << "\n" << std::endl;
-    utenteforn.effettua_login("UtenteFornitore", "Biagio10", "Candela111?");
-    
-    utenteforn.effettuaRegistrazione("Andrea12", "UtenteFornitore", "Andrea", "Sacchini", "333445567", "andrea.sacchini@gmail.com", "Candelabro111?", "Candelabro111?", "Xiaomi");
-    utenteforn.effettua_login("UtenteFornitore", "Andrea12", "Candelabro111?");
-
-    print_select("UtenteCompratore");
-    print_select("utenteTrasportatore");
-    print_select("utenteFornitore");
-
-    print_select("DittaSp");  
-    print_select("AziendaProd");  
-
-    Product prodotto1;
-    prodotto1.add_new_product("Xiaomi lite9", "Telefonia", 540.00, "Xiaomi lite9, 8GB RAM, 1 TB archiviazione", "Xiaomi", 10);
-    Product prodotto2;
-    prodotto2.add_new_product("Iphone 15", "Telefonia", 990.00, "Iphone 15 nuovo, 16GB RAM, 1TB archiviazione", "Apple", 15);
-    //print_select("Prodotto");   
-
-    Carrello carrello1;
-    carrello1.add_prodotto("Gabriele15", 2);
-
-    print_select("Prodotto");
-    print_select("Carrello"); 
-
-    if (rows >= 1) {
-
-        nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente"));
-        stato = PQgetvalue(res, 0, PQfnumber(res, "stato"));
-
-        std::cout << "Campi dell'utente: " << nome_utente << ",  " << stato <<  std::endl;
-
-    } else {
-        std::cout << "Errore: Lo stato non è stato trovato." << std::endl;
-        return;
-    }
-    
-
-    return 0;
-}
-
-
-
-    //sprintf(sqlcmd, "BEGIN");
-    //res = db1.ExecSQLcmd(sqlcmd);
-    //PQclear(res);
-
-    //sprintf(sqlcmd, "INSERT INTO AssistenzaClienti VALUES ('%s\')", "33333333331");
-
-    //res = db1.ExecSQLcmd(sqlcmd);
-    //PQclear(res);
-
-        
-    sprintf(sqlcmd, "COMMIT"); 
-    res = db1.ExecSQLcmd(sqlcmd);
-    PQclear(res);
-
-    //std::cout << "Operazioni avvenute." << std::endl;
-
-    int rows;
-
-    sprintf(sqlcmd, "SELECT * FROM AssistenzaClienti");
-    res = db1.ExecSQLtuples(sqlcmd);
-    rows = PQntuples(res);
-    int numCols = PQnfields(res);
-    
-    // Vedere tutti i valori di una tabella 
-    for (int i = 0; i < rows; ++i) {
-        std::cout << "Row " << i << ": ";
-        for (int j = 0; j < numCols; ++j) {
-            std::cout << PQgetvalue(res, i, j) << "\t";
-        }
-        std::cout << std::endl;
-    }
-
-    std::cout << res << std::endl;
-    fprintf(stdout, "\n");
-    
-    // Utilizzato per stampare su standard output (terminale) i risultati delle select.
-    //fprintf(stdout, "main(): inserted in AssistenzaClienti %s\n", PQgetvalue(res,0, PQfnumber(res, "numeroTelefono")));
-
-    //fprintf(stdout, "main(): inserted in AssistenzaClienti %s\n", PQgetvalue(res,10, PQfnumber(res, "numeroTelefono")));
-
-    //fprintf(stdout, "main(): inserted in AssistenzaClienti %s\n", PQgetvalue(res,11, PQfnumber(res, "numeroTelefono")));
-
-*/

@@ -2,22 +2,7 @@
 #ifndef LOG2DB_H
 #define LOG2DB_H
 
-
-#include <iostream>
-#include <string>
-#include <cctype> // Per isupper() e isdigit()
-#include <sstream>
-#include <random>
-#include <unistd.h>
-#include <chrono>
-#include <iomanip>
-#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
-
-
-PGresult *res;
-char sqlcmd[1000];
-
-int rows, k;
+#include "main.h"
 
 
 void InsertToLogDB(std::string statoLog, std::string message, std::string sessionID){

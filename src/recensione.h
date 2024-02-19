@@ -2,8 +2,7 @@
 #ifndef RECENSIONE_H
 #define RECENSIONE_H
 
-#include <string>
-#include "log2db.h"
+#include "main.h"
 
 
 enum class votoStelle {

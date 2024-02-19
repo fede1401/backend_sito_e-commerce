@@ -2,7 +2,7 @@
 #ifndef TESTGENERATOR_H
 #define TESTGENERATOR_H
 
-#include <string>
+#include "main.h"
 #include "carrello.h"
 #include "lista_desideri.h"
 #include "carta.h"
@@ -15,7 +15,7 @@
 #include "user_trasportatore.h"
 #include "product.h"
 #include "spedizione.h"
-#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
+#include "log2db.h"
 
 
 void print_select(std::string nome_tabella){

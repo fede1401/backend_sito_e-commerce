@@ -2,18 +2,8 @@
 #ifndef PRODUCT_H
 #define PRODUCT_H
 
-
-#include <iostream>
-#include <string>
-#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
+#include "main.h"
 #include "ordine.h"
-#include "log2db.h"
-#include <ctime>
-
-//PGresult *res;
-//char sqlcmd[1000];
-
-//int rows, k;
 
 class Product {
     public:

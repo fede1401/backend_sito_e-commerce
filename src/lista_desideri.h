@@ -2,9 +2,7 @@
 #ifndef LISTA_DESIDERI_H
 #define LISTA_DESIDERI_H
 
-#include <string>
-#include "log2db.h"
-#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
+#include "main.h"
 
 
 class ListaDesideri {
