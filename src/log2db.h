@@ -4,8 +4,15 @@
 
 #include "main.h"
 
+enum class statoRequisito {
+    Success, 
+    NotSuccess,
+    Wait
+  };
 
-void InsertToLogDB(std::string statoLog, std::string message, std::string sessionID){
+
+
+void InsertToLogDB(std::string statoLog, std::string message, std::string sessionID, std::string nomeRequisito, statoRequisito statoReq){
 
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
@@ -22,13 +29,32 @@ void InsertToLogDB(std::string statoLog, std::string message, std::string sessio
 
     pid_t pid = getpid();
 
+    std::string statoReqToString = statoRequisitoToString(statoReq);
+
     //std::string statoLog = "INFO";
     //std::string message = "Utente compratore è stato loggato!";
 
-    sprintf(sqlcmd, "INSERT INTO LogTable (timevalue, pid, statoLog , messaggio, sessionId) VALUES ('%s', %ld, '%s', '%s', '%s')", timevalue.c_str(), (long)pid, statoLog.c_str(), message.c_str(), sessionID.c_str());
+    sprintf(sqlcmd, "INSERT INTO LogTable (timevalue, pid, statoLog , messaggio, sessionId, nomeRequisiti, statoRequisito) VALUES ('%s', %ld, '%s', '%s', '%s', '%s', '%s')", 
+    timevalue.c_str(), (long)pid, statoLog.c_str(), message.c_str(), sessionID.c_str(), nomeRequisito.c_str(), statoReqToString.c_str());
+    
     res = db1.ExecSQLcmd(sqlcmd);
     PQclear(res);  
 }
+
+
+std::string statoRequisitoToString(statoRequisito statoReq) {
+        switch (statoReq) {
+            case statoRequisito::Success :
+                return "SUCCESS";
+            case statoRequisito::NotSuccess :
+                return "NOT SUCCESS";
+            case statoRequisito::Wait :
+                return "WAIT";
+            default:
+                return ""; // gestione degli errori o valori non validi
+        }
+    }
+
 
 
 

@@ -14,7 +14,7 @@ CREATE TYPE statoSpedizione AS ENUM ('in transito', 'consegnato');
 
 CREATE TYPE statoLog AS ENUM ('INFO', 'WARNING', 'ERROR');
 
-CREATE TYPE statoRequisito AS ENUM ('SUCCESS', 'NOT SUCCESS');
+CREATE TYPE statoRequisito AS ENUM ('SUCCESS', 'NOT SUCCESS', "WAIT");
 
 
 

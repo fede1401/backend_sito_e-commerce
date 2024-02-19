@@ -316,30 +316,24 @@ int main(){
     // definito per il numero di iterazioni del while:
     int t = 0;                  
     
-    UtenteCompratore compratore;
-    UtenteFornitore fornitore;
-    UtenteTrasportatore trasportatore;
-
-    initUSER(compratore, fornitore, trasportatore);
-
     while (t <= HORIZON){
 
-        int index_azioneDaSvolgere = rand()%32;
+        UtenteCompratore compratore;
+        UtenteFornitore fornitore;
+        UtenteTrasportatore trasportatore;
+
+        initUSER(compratore, fornitore, trasportatore);
+
+        int index_azioneDaSvolgere = rand()%34;
 
         svolgiAzione(compratore, trasportatore, fornitore, index_azioneDaSvolgere);
 
+        // update time 
+        t++;
 
-
-
+        /* sleep   */
+        micro_sleep(500);
     }
-
-
-
-
-
-
-
-
 
 
 
