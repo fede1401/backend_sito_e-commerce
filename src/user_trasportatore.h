@@ -168,6 +168,7 @@ public:
         sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
 
         if (rows >= 1){
 
@@ -182,6 +183,7 @@ public:
         sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
 
         if (rows >= 1){
             
@@ -243,6 +245,7 @@ public:
         sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE session_id_c = '%s'", sessionID.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
 
         if (rows > 0)
         {
@@ -257,6 +260,7 @@ public:
         sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE session_id_f = '%s'", sessionID.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
 
         if (rows > 0)
         {
@@ -271,6 +275,7 @@ public:
         sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE session_id_t = '%s'", sessionID.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
 
         if (rows > 0)
         {

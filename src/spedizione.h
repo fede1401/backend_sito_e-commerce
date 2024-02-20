@@ -69,7 +69,7 @@ public:
         sprintf(sqlcmd, "SELECT nome_utente_trasportatore FROM UtenteTrasportatore WHERE dispo='0'");
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-
+        PQclear(res);
         std::string nome_utente_trasportatore;
         std::string nome_ditta_spedizione;
 
@@ -83,13 +83,14 @@ public:
             sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
-                                    
+            PQclear(res);                        
             if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}  
 
             // Selezione il nome della ditta di spedizione dell'utente trasportatore:
             sprintf(sqlcmd, "SELECT nome_DittaSpedizione FROM UtenteTrasportatore WHERE nome_utente_trasportatore='%s'", nome_utente_trasportatore.c_str());
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
+            PQclear(res);
             if (rows==1){
               nome_ditta_spedizione = PQgetvalue(res, 0, 0);
 
@@ -114,6 +115,7 @@ public:
                 sprintf(sqlcmd, "SELECT idOrdine FROM Ordine WHERE statoOrdine='in elaborazione'");
                 res = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res);
+                PQclear(res);
                 if (rows >= 1){
                     idOrdine = atoi(PQgetvalue(res, 0, 0));
                     // Inseriamo nel database la spedizione dell'utente trasportatore libero all'ordine associato
@@ -223,6 +225,7 @@ public:
         sprintf(sqlcmd, "SELECT nome_utente_trasportatore FROM Spedizione WHERE idSpedizione = '%d'", idSpedizione);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
         if (rows==1){
             nome_utente_trasportatore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_trasportatore"));
 
@@ -230,7 +233,7 @@ public:
             sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
-                                    
+            PQclear(res);                        
             if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}  
 
             // Ora aggiorniamo la disponibilità dell'utente Trasportatore:

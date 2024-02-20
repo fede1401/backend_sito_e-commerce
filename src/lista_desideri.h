@@ -50,7 +50,7 @@ public:
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        
+        PQclear(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
 
 
@@ -60,6 +60,7 @@ public:
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", in_cod_prodotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
         if (rows < 1){
 
             statoReq = statoRequisito::NotSuccess;
@@ -79,6 +80,7 @@ public:
         sprintf(sqlcmd, "SELECT codProdotto FROM ListaDesideri WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
         for (int i = 0; i < rows; i++)
         {
             codProdotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
@@ -90,6 +92,7 @@ public:
                 sprintf(sqlcmd, "SELECT quantitàProd FROM ListaDesideri WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", in_nome_utente_compratore.c_str(),in_cod_prodotto);
                 res = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res);
+                PQclear(res);
                 quantitàPrecedente = atoi(PQgetvalue(res, 0, PQfnumber(res, "quantitàProd"))); 
 
                 quantitàPrecedente = quantitàPrecedente + 1;
@@ -137,7 +140,7 @@ public:
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        
+        PQclear(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
 
 
@@ -160,6 +163,7 @@ public:
         sprintf(sqlcmd, "SELECT * FROM ListaDesideri WHERE nome_utente_compratore = '%s' AND codProdotto ='%d'", in_nome_utente_compratore.c_str(), in_cod_prodotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
         if (rows < 1){
             std::cout << "La riga da eliminare non esiste!" << std::endl;
 

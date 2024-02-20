@@ -76,6 +76,7 @@ class Product {
         sprintf(sqlcmd, "SELECT nome_utente_fornitore FROM UtenteFornitore WHERE nome_AziendaProduttrice = '%s'", in_azienda_produzione.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
         if (rows == 1) { 
             nome_utente_fornitore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_fornitore"));
 
@@ -101,7 +102,7 @@ class Product {
         sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nome_utente_fornitore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-                                
+        PQclear(res);                        
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
 
 
@@ -110,7 +111,7 @@ class Product {
         in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-
+        PQclear(res);
         std::cout << "Le righe dopo la query di codProdotto è: " << rows << std::endl; 
 
         if (rows >= 1){
@@ -126,6 +127,7 @@ class Product {
                 in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str());
                 res = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res);
+                PQclear(res);
                 if (rows == 1){
                     numCopieDisponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
 
@@ -172,6 +174,7 @@ class Product {
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
         if (rows < 1){
             std::cout << "La riga da eliminare non esiste!" << std::endl;
 
@@ -208,7 +211,7 @@ class Product {
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE nome = '%s'", nomeProdotto.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-
+        PQclear(res);
         // Il prodotto non è stato trovato
         if (rows < 1){
             std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
@@ -277,7 +280,7 @@ class Product {
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtenteCompratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-                                
+        PQclear(res);                        
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
 
         // Selezioniamo il codice del prodotto
@@ -285,6 +288,7 @@ class Product {
                                                             nome.c_str(), categoria.c_str(), descrizione.c_str(), prezzo_euro, azienda_produzione.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        PQclear(res);
         if (rows == 1){
             
             //Ottengo i vari dati per costruire l'ordine:
