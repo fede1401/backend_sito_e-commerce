@@ -40,11 +40,11 @@ class Product {
     }
 
 
-    void add_new_product(std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili){
+    void add_new_product(Con2DB db1, std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili){
 
         // Connessione al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-        std::cout << "Connessione al database avvenuta con successo." << std::endl;
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //std::cout << "Connessione al database avvenuta con successo." << std::endl;
             
             /*
             ///////////////////////////////////// 
@@ -80,7 +80,7 @@ class Product {
         if (rows == 1) { 
             nome_utente_fornitore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_fornitore"));
 
-            InsertToLogDB("INFO", "Utente che inserisce il prodotto è un utente fornitore", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Utente che inserisce il prodotto è un utente fornitore", sessionID, nomeRequisito, statoReq);
 
             std::cout << "L'utente che inserisce il prodotto nel sito è un utente fornitore" << std::endl;
         }
@@ -88,7 +88,7 @@ class Product {
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Utente che inserisce il prodotto non è un utente fornitore", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Utente che inserisce il prodotto non è un utente fornitore", sessionID, nomeRequisito, statoReq);
 
             std::cout << "L'utente che inserisce il prodotto nel sito NON è un utente fornitore" << std::endl;
             return;
@@ -142,7 +142,7 @@ class Product {
 
                     statoReq = statoRequisito::Success;
 
-                    InsertToLogDB("INFO", "Aumentata quantità del prodotto inserito", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Aumentata quantità del prodotto inserito", sessionID, nomeRequisito, statoReq);
                 }
         }
         else{
@@ -154,7 +154,7 @@ class Product {
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Prodotto inserito nel sito", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Prodotto inserito nel sito", sessionID, nomeRequisito, statoReq);
         }
         
             
@@ -162,10 +162,10 @@ class Product {
     }
 
 
-    void remove_prodotto(int codProdotto){
+    void remove_prodotto(Con2DB db1, int codProdotto){
         // Connessione al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
-        std::cout << "Connessione al database avvenuta con successo." << std::endl;
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
+        //std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
         std::string nomeRequisito = "Rimozione prodotto dal sito.";
         statoRequisito statoReq = statoRequisito::Wait;
@@ -180,7 +180,7 @@ class Product {
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il prodotto da eliminare non esiste", "", nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Il prodotto da eliminare non esiste", "", nomeRequisito, statoReq);
 
             return;
         }
@@ -191,17 +191,17 @@ class Product {
             PQclear(res);
 
             statoReq = statoRequisito::Success;
-            InsertToLogDB("INFO", "Eliminato prodotto", "", nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Eliminato prodotto", "", nomeRequisito, statoReq);
 
         }
     return;
     }
 
 
-    void ricerca_mostra_Prodotto(std::string nomeProdotto){
+    void ricerca_mostra_Prodotto(Con2DB db1, std::string nomeProdotto){
 
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
 
         std::string nomeRequisito = "Ricerca e mostra informazioni del prodotto.";
@@ -217,7 +217,7 @@ class Product {
             std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
 
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB("ERROR", "Non esiste il prodotto che si sta ricercando", "", nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste il prodotto che si sta ricercando", "", nomeRequisito, statoReq);
             return;
         }
         else{
@@ -239,7 +239,7 @@ class Product {
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Visione del prodotto ricercato", "", nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Visione del prodotto ricercato", "", nomeRequisito, statoReq);
 
             
             /*int numCols = PQnfields(res);
@@ -260,7 +260,7 @@ class Product {
 
 
 
-    Ordine acquistaProdotto(std::string nomeUtenteCompratore, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione){
+    Ordine acquistaProdotto(Con2DB db1, std::string nomeUtenteCompratore, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione){
 
         Ordine ordine;
         std::string dataOrdineEffettuato;
@@ -273,7 +273,7 @@ class Product {
         //std::string nomeDittaSpedizione;
         
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         // Caricamento del sessionID utile per il log.
         std::string sessionID = "";
@@ -321,7 +321,7 @@ class Product {
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Utente ha acquistato il prodotto, ordine inserito nel db", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Utente ha acquistato il prodotto, ordine inserito nel db", sessionID, nomeRequisito, statoReq);
 
             // Esegui una query SELECT per ottenere l'ultimo ID inserito nella tabella Ordine:
             // 1. Selezioniamo tutti gli idOrdine dalla tabella Ordine:
@@ -345,7 +345,7 @@ class Product {
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il prodotto non è stato trovato!", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Il prodotto non è stato trovato!", sessionID, nomeRequisito, statoReq);
             return ordine;
         }
     return ordine;

@@ -49,7 +49,7 @@ public:
 
 
     // Un utente trasportatore con attibuto disponibilità=0 accede al sistema e controlla gli ordini che non sono ancora stati spediti e li prende in carico per la spedizione.
-    Spedizione assegnaOrdineTrasportatore(){
+    Spedizione assegnaOrdineTrasportatore(Con2DB db1){
 
         Spedizione spedizione;
 
@@ -61,7 +61,7 @@ public:
         statoRequisito statoReq = statoRequisito::Wait;
 
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         //int idOrdine = identificatore_ordine;
 
@@ -126,14 +126,14 @@ public:
                     PQclear(res); 
 
 
-                    InsertToLogDB("INFO", "Assegnato ordine al trasportatore", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Assegnato ordine al trasportatore", sessionID, nomeRequisito, statoReq);
 
                     // A questo punto dobbiamo modificare la disponibilità dell'utente trasportatore:
                     sprintf(sqlcmd, "UPDATE UtenteTrasportatore set dispo='1' WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res); 
 
-                    InsertToLogDB("INFO", "Modificata disponibilità utente trasportatore", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Modificata disponibilità utente trasportatore", sessionID, nomeRequisito, statoReq);
 
 
                     sprintf(sqlcmd, "UPDATE Ordine set statoOrdine ='spedito' WHERE idOrdine = '%d'", idOrdine);
@@ -142,7 +142,7 @@ public:
 
                     statoReq = statoRequisito::Success;
 
-                    InsertToLogDB("INFO", "Avviata spedizione ordine", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Avviata spedizione ordine", sessionID, nomeRequisito, statoReq);
 
 
                     // Animiamo l'oggetto Spedizione:
@@ -157,7 +157,7 @@ public:
 
                     statoReq = statoRequisito::NotSuccess;
 
-                    InsertToLogDB("WARNING", "Ordini tutti spediti", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "WARNING", "Ordini tutti spediti", sessionID, nomeRequisito, statoReq);
 
                     return spedizione; 
                 }
@@ -167,7 +167,7 @@ public:
 
                statoReq = statoRequisito::NotSuccess;
 
-              InsertToLogDB("WARNING", "Utente non trovato", sessionID, nomeRequisito, statoReq);
+              InsertToLogDB(db1, "WARNING", "Utente non trovato", sessionID, nomeRequisito, statoReq);
 
             return spedizione; 
             }
@@ -177,7 +177,7 @@ public:
 
           statoReq = statoRequisito::NotSuccess;
 
-          InsertToLogDB("WARNING", "Nessun utente ha la disponibilità per prendere in carico l ordine", sessionID, nomeRequisito, statoReq);
+          InsertToLogDB(db1, "WARNING", "Nessun utente ha la disponibilità per prendere in carico l ordine", sessionID, nomeRequisito, statoReq);
           return spedizione; 
         }
 
@@ -199,9 +199,9 @@ public:
 
 
     // Nell'implementazione di questo metodo l'utente trasportatore associato alla spedizione avvisa il sistema che ha completato la spedizione e consegnato il prodotto dell'ordine 
-    void spedizioneConsegnata(int idSpedizione){
+    void spedizioneConsegnata(Con2DB db1, int idSpedizione){
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string sessionID = "";
 
@@ -216,7 +216,7 @@ public:
 
         statoReq = statoRequisito::Success;
 
-        InsertToLogDB("INFO", "Ordine consegnato", sessionID, nomeRequisito, statoReq);
+        InsertToLogDB(db1, "INFO", "Ordine consegnato", sessionID, nomeRequisito, statoReq);
 
 
         // Aggiorno la disponibilità dell'utente Trasportatore che può effettuare una nuova consegna:
@@ -244,13 +244,13 @@ public:
             nomeRequisito = "Utente Trasportatore liberato.";
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Disponibilità utente trasportatore per prendere in consegna un nuovo pacco", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Disponibilità utente trasportatore per prendere in consegna un nuovo pacco", sessionID, nomeRequisito, statoReq);
         }
         else{
             std::cout << "Nessun utente trasportatore associato alla spedizione! " << std::endl;
             
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB("WARNING", "Nessun utente trasportatore associato alla spedizione.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "WARNING", "Nessun utente trasportatore associato alla spedizione.", sessionID, nomeRequisito, statoReq);
             return;
         }
     std::cout << "Spedizione " << idSpedizione <<  " consegnata! " << std::endl;

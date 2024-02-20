@@ -62,7 +62,7 @@ enum class statoRequisito {
   };
 
 
-void InsertToLogDB(std::string statoLog, std::string message, std::string sessionID, std::string nomeRequisito, statoRequisito statoReq);
+void InsertToLogDB(Con2DB db1,std::string statoLog, std::string message, std::string sessionID, std::string nomeRequisito, statoRequisito statoReq);
 std::string statoRequisitoToString(statoRequisito statoReq);
 
 //void svolgiAzione(UtenteCompratore compratore, UtenteTrasportatore trasportatore, UtenteFornitore fornitore, int index_azioneDaSvolgere);

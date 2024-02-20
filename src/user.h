@@ -37,11 +37,11 @@ public:
     }
 
 
-    void effettua_login(std::string input_nome_utente, std::string input_passw)
+    void effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw)
     {
 
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string nomeRequisito = "Login utente.";
         statoRequisito statoReq = statoRequisito::Wait;
@@ -110,7 +110,7 @@ public:
 
                 statoReq = statoRequisito::NotSuccess;
                                 
-                InsertToLogDB("WARNING", "Utente già connesso.", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "WARNING", "Utente già connesso.", sessionID, nomeRequisito, statoReq);
                 return;
             }
             else
@@ -131,7 +131,7 @@ public:
                     
                     statoReq = statoRequisito::NotSuccess;
 
-                    InsertToLogDB("ERROR", "Il session ID è già in uso da utenti compratori.", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "ERROR", "Il session ID è già in uso da utenti compratori.", sessionID, nomeRequisito, statoReq);
                     std::cout << "Errore: Il session ID è già in uso da utenti compratori." << std::endl;
                     return;
                 }
@@ -144,7 +144,7 @@ public:
 
                     statoReq = statoRequisito::NotSuccess;
 
-                    InsertToLogDB("ERROR", "Il session ID è già in uso da utenti fornitori.", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "ERROR", "Il session ID è già in uso da utenti fornitori.", sessionID, nomeRequisito, statoReq);
                     std::cout << "Errore: Il session ID è già in uso da utenti fornitori." << std::endl;
                     return;
                 }
@@ -157,7 +157,7 @@ public:
 
                     statoReq = statoRequisito::NotSuccess;
 
-                    InsertToLogDB("ERROR", "Il session ID è già in uso da utenti trasportatori.", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "ERROR", "Il session ID è già in uso da utenti trasportatori.", sessionID, nomeRequisito, statoReq);
                     std::cout << "Errore: Il session ID è già in uso da utenti trasportatori." << std::endl;
                     return;
                 }
@@ -170,7 +170,7 @@ public:
 
                     statoReq = statoRequisito::Wait;
 
-                    InsertToLogDB("INFO", "Aggiornamento sessionID", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Aggiornamento sessionID", sessionID, nomeRequisito, statoReq);
                 }
 
                 if (categoriaUtenteLogin == "UtenteFornitore"){
@@ -180,7 +180,7 @@ public:
 
                     statoReq = statoRequisito::Wait;
 
-                    InsertToLogDB("INFO", "Aggiornamento sessionID", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Aggiornamento sessionID", sessionID, nomeRequisito, statoReq);
                 }
 
                 if (categoriaUtenteLogin == "UtenteTrasportatore"){
@@ -190,7 +190,7 @@ public:
 
                     statoReq = statoRequisito::Wait;
 
-                    InsertToLogDB("INFO", "Aggiornamento sessionID", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Aggiornamento sessionID", sessionID, nomeRequisito, statoReq);
                 }
 
                 
@@ -233,7 +233,7 @@ public:
 
                     statoReq = statoRequisito::NotSuccess;
 
-                    InsertToLogDB("ERROR", "Utente non trovato.", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "ERROR", "Utente non trovato.", sessionID, nomeRequisito, statoReq);
                     std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                     return;
                 }
@@ -248,7 +248,7 @@ public:
 
                     statoReq = statoRequisito::NotSuccess;
 
-                    InsertToLogDB("ERROR", "Password non corretta", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "ERROR", "Password non corretta", sessionID, nomeRequisito, statoReq);
                     return;
                 }
                 else
@@ -266,7 +266,7 @@ public:
 
                         statoReq = statoRequisito::Success;
 
-                        InsertToLogDB("INFO", "Aggiornamento dello stato utente", sessionID, nomeRequisito, statoReq);
+                        InsertToLogDB(db1, "INFO", "Aggiornamento dello stato utente", sessionID, nomeRequisito, statoReq);
                     }
 
                     if (categoriaUtenteLogin == "UtenteFornitore"){
@@ -278,7 +278,7 @@ public:
 
                         statoReq = statoRequisito::Success;
 
-                        InsertToLogDB("INFO", "Aggiornamento dello stato utente", sessionID, nomeRequisito, statoReq);
+                        InsertToLogDB(db1, "INFO", "Aggiornamento dello stato utente", sessionID, nomeRequisito, statoReq);
                     }
 
                     if (categoriaUtenteLogin == "UtenteTrasportatore"){
@@ -290,7 +290,7 @@ public:
 
                         statoReq = statoRequisito::Success;
 
-                        InsertToLogDB("INFO", "Aggiornamento dello stato utente", sessionID, nomeRequisito, statoReq);
+                        InsertToLogDB(db1, "INFO", "Aggiornamento dello stato utente", sessionID, nomeRequisito, statoReq);
                     }
                     
                     
@@ -302,7 +302,7 @@ public:
             {
                 statoReq = statoRequisito::NotSuccess;
 
-                InsertToLogDB("ERROR", "Utente non trovato", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "ERROR", "Utente non trovato", sessionID, nomeRequisito, statoReq);
                 std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                 return;
             }
@@ -339,10 +339,10 @@ public:
 
 
 
-    void effettua_logout(std::string input_nome_utente)
+    void effettua_logout(Con2DB db1, std::string input_nome_utente)
     {
         // Connessione al database
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
 
         std::string nomeRequisito = "Logout utente.";
@@ -383,7 +383,7 @@ public:
 
                 statoReq = statoRequisito::NotSuccess;
 
-                InsertToLogDB("ERROR", "Utente è già disconnesso", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "ERROR", "Utente è già disconnesso", sessionID, nomeRequisito, statoReq);
                 std::cout << "Errore: L'utente è già disconnesso" << std::endl;
                 return;
             }
@@ -423,7 +423,7 @@ public:
 
                     statoReq = statoRequisito::Success;
 
-                    InsertToLogDB("INFO", "Disconnessione utente", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Disconnessione utente", sessionID, nomeRequisito, statoReq);
                 }
 
                 if (categoriaUtenteLogin == "UtenteFornitore"){
@@ -434,7 +434,7 @@ public:
 
                     statoReq = statoRequisito::Success;
 
-                    InsertToLogDB("INFO", "Disconnessione utente", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Disconnessione utente", sessionID, nomeRequisito, statoReq);
                 }
 
                 if (categoriaUtenteLogin == "UtenteTrasportatore"){
@@ -445,7 +445,7 @@ public:
 
                     statoReq = statoRequisito::Success;
 
-                    InsertToLogDB("INFO", "Disconnessione utente", sessionID,nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Disconnessione utente", sessionID,nomeRequisito, statoReq);
                 }  
 
                 
@@ -459,7 +459,7 @@ public:
 
                     statoReq = statoRequisito::Success;
 
-                    InsertToLogDB("INFO", "Aggiornamento sessionID", "", nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Aggiornamento sessionID", "", nomeRequisito, statoReq);
                 }
 
                 if (categoriaUtenteLogin == "UtenteFornitore"){
@@ -469,7 +469,7 @@ public:
 
                     statoReq = statoRequisito::Success;
 
-                    InsertToLogDB("INFO", "Aggiornamento sessionID", "", nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Aggiornamento sessionID", "", nomeRequisito, statoReq);
                 }
 
                 if (categoriaUtenteLogin == "UtenteTrasportatore"){
@@ -479,7 +479,7 @@ public:
 
                     statoReq = statoRequisito::Success;
 
-                    InsertToLogDB("INFO", "Aggiornamento sessionID", "", nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "INFO", "Aggiornamento sessionID", "", nomeRequisito, statoReq);
                 }
 
                 
@@ -520,7 +520,7 @@ public:
         {
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Utente non trovato.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Utente non trovato.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
             return;
         } 
@@ -540,7 +540,7 @@ public:
 
 
 
-    void elimina_profilo(){
+    void elimina_profilo(Con2DB db1){
         // Per seguire i paradigmi di OOP:
 
         // Utilizza i membri dell'istanza corrente per ottenere il nome utente e la categoria dell'utente
@@ -554,7 +554,7 @@ public:
 
         // Eliminiamo in cascata l'utente dal database:
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string sessionID = "";
         if (categoria == "UtenteCompratore"){ 
@@ -587,7 +587,7 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Eliminazione profilo.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Eliminazione profilo.", sessionID, nomeRequisito, statoReq);
         }
 
         if (categoria == "UtenteFornitore"){
@@ -597,7 +597,7 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Eliminazione profilo.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Eliminazione profilo.", sessionID, nomeRequisito, statoReq);
         }
 
         if (categoria == "UtenteTrasportatore"){
@@ -607,7 +607,7 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Eliminazione profilo.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Eliminazione profilo.", sessionID, nomeRequisito, statoReq);
         }
 
     return;
@@ -618,7 +618,7 @@ public:
 
 
 
-    void aggiornaNumeroDiTelefono(std::string nuovoNumeroTelefono){
+    void aggiornaNumeroDiTelefono(Con2DB db1, std::string nuovoNumeroTelefono){
         
         // Utilizza i membri dell'istanza corrente per ottenere il nome utente e la categoria dell'utente
         std::string nomeUtente = nome_utente;
@@ -628,8 +628,8 @@ public:
 
         //std::string categoriaUtente = categoria;
 
-         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        // Connession al database:
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string sessionID = "";
         if (categoria == "UtenteCompratore"){ 
@@ -664,7 +664,7 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Aggiornamento numero di telefono.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Aggiornamento numero di telefono.", sessionID, nomeRequisito, statoReq);
 
         }
         if (categoria == "UtenteFornitore"){
@@ -674,7 +674,7 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Aggiornamento numero di telefono.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Aggiornamento numero di telefono.", sessionID, nomeRequisito, statoReq);
 
         }
         if (categoria == "UtenteTrasportatore"){
@@ -684,7 +684,7 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Aggiornamento numero di telefono.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Aggiornamento numero di telefono.", sessionID, nomeRequisito, statoReq);
 
         }
     return;
@@ -692,7 +692,7 @@ public:
 
 
 
-    void aggiornaPassword(std::string vecchiaPassw, std::string nuovaPassw){
+    void aggiornaPassword(Con2DB db1, std::string vecchiaPassw, std::string nuovaPassw){
         // Utilizza i membri dell'istanza corrente per ottenere il nome utente e la categoria dell'utente
         std::string nomeUtente = nome_utente;
         std::string passwUtente = password;
@@ -702,7 +702,7 @@ public:
         statoRequisito statoReq = statoRequisito::Wait;
 
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string sessionID = "";
         if (categoria == "UtenteCompratore"){ 
@@ -734,7 +734,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La password attuale inserita non è corretta.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "La password attuale inserita non è corretta.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: La password attuale inserita non è corretta" << std::endl;
             return;
         }
@@ -745,7 +745,7 @@ public:
 
                 statoReq = statoRequisito::NotSuccess;
 
-                InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno 8 caratteri.", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "ERROR", "La nuova passowrd deve contenere almeno 8 caratteri.", sessionID, nomeRequisito, statoReq);
                 std::cout << "Errore: La nuova passowrd deve contenere almeno 8 caratteri." << std::endl;
                 return;
             }
@@ -767,21 +767,21 @@ public:
                 std::cout << "La nuova password deve contenere almeno un carattere maiuscolo." << std::endl;  
 
                 statoReq = statoRequisito::NotSuccess;
-                InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", sessionID, nomeRequisito, statoReq);
             }
 
             if (!hasDigit) { 
                 std::cout << "La nuova password deve contenere almeno un numero." << std::endl; 
 
                 statoReq = statoRequisito::NotSuccess;
-                InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un numero.", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "ERROR", "La nuova passowrd deve contenere almeno un numero.", sessionID, nomeRequisito, statoReq);
             }
 
             if (!hasSpecialChar) {  
                 std::cout << "La nuova password deve contenere almeno un carattere speciale." << std::endl; 
 
                 statoReq = statoRequisito::NotSuccess;
-                InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", sessionID, nomeRequisito, statoReq);
             }
 
 
@@ -793,7 +793,7 @@ public:
 
                 statoReq = statoRequisito::Success;
                     
-                InsertToLogDB("INFO", "Aggiornamento password.", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "INFO", "Aggiornamento password.", sessionID, nomeRequisito, statoReq);
 
             }
             if (categoria == "UtenteFornitore"){
@@ -803,7 +803,7 @@ public:
 
                 statoReq = statoRequisito::Success;
 
-                InsertToLogDB("INFO", "Aggiornamento password.", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "INFO", "Aggiornamento password.", sessionID, nomeRequisito, statoReq);
 
             }
             if (categoria == "UtenteTrasportatore"){
@@ -813,7 +813,7 @@ public:
 
                 statoReq = statoRequisito::Success;
 
-                InsertToLogDB("INFO", "Aggiornamento password.", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "INFO", "Aggiornamento password.", sessionID, nomeRequisito, statoReq);
             }
         }
         

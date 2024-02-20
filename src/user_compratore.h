@@ -189,7 +189,8 @@ public:
         }
     */
 
-    void effettuaRegistrazione(std::string in_nome_utente,
+    void effettuaRegistrazione( Con2DB db1,
+                               std::string in_nome_utente,
                                std::string in_categoria,
                                std::string in_nome, std::string in_cognome,
                                std::string in_numero_telefono,
@@ -213,7 +214,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La mail deve contenere il carattere -@-.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "La mail deve contenere il carattere -@-.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: La mail deve contenere il carattere '@'." << std::endl;
             return;
         }
@@ -226,7 +227,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
             return;
         }
@@ -236,7 +237,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
             return;
         }
@@ -268,7 +269,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", session_id, nomeRequisito, statoReq);
             return;
         }
 
@@ -278,7 +279,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un numero.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "La nuova passowrd deve contenere almeno un numero.", session_id, nomeRequisito, statoReq);
             return;
         }
 
@@ -288,7 +289,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", session_id, nomeRequisito, statoReq);
             return;
         }
         /////////////////////////////////////
@@ -300,7 +301,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Le password non corrispondono", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Le password non corrispondono", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Le password non corrispondono." << std::endl;
             return;
         }
@@ -308,8 +309,8 @@ public:
 
         /////////////////////////////////////
         // Connessione al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-        std::cout << "Connessione al database avvenuta con successo." << std::endl;
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //std::cout << "Connessione al database avvenuta con successo." << std::endl;
         /////////////////////////////////////
 
         /////////////////////////////////////
@@ -323,7 +324,7 @@ public:
         {
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il nome utente è già in uso.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso." << std::endl;
             return;
         }
@@ -339,7 +340,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il nome utente è già in uso da utenti fornitori.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti fornitori.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti fornitori." << std::endl;
             return;
         }
@@ -353,7 +354,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il nome utente è già in uso da utenti trasportatori.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti trasportatori.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti trasportatori." << std::endl;
             return;
         }
@@ -370,7 +371,7 @@ public:
         {
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Indirizzo mail è già in uso.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Indirizzo mail è già in uso.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: L'indirizzo mail è già in uso." << std::endl;
             return;
         }
@@ -389,10 +390,7 @@ public:
         formatted_date.pop_back(); // Rimuove il carattere '-' in eccesso alla fine
         /////////////////////////////////////
 
-        /////////////////////////////////////
-        // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
-        *this = UtenteCompratore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, session_id, formatted_date, in_via_residenza, in_numero_civico, in_CAP, in_città_residenza, saldo, stato);
-        /////////////////////////////////////
+        
 
         std::cout << "Categoria utente:" << in_categoria << std::endl;
 
@@ -410,7 +408,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il session ID è già in uso da utenti compratori.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Il session ID è già in uso da utenti compratori.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: Il session ID è già in uso da utenti compratori." << std::endl;
             return;
         }
@@ -424,7 +422,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il session ID è già in uso da utenti fornitori.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Il session ID è già in uso da utenti fornitori.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: Il session ID è già in uso da utenti fornitori." << std::endl;
             return;
         }
@@ -438,7 +436,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il session ID è già in uso da utenti trasportatori.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Il session ID è già in uso da utenti trasportatori.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: Il session ID è già in uso da utenti trasportatori." << std::endl;
             return;
         }
@@ -457,15 +455,20 @@ public:
 
         statoReq = statoRequisito::Success;
 
-        InsertToLogDB("INFO", "Utente compratore inserito.", sessionID, nomeRequisito, statoReq);
+        InsertToLogDB(db1,"INFO", "Utente compratore inserito.", sessionID, nomeRequisito, statoReq);
+
+        /////////////////////////////////////
+        // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
+        *this = UtenteCompratore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, session_id, formatted_date, in_via_residenza, in_numero_civico, in_CAP, in_città_residenza, saldo, stato);
+        /////////////////////////////////////
 
         return;
     }
 
-    UtenteCompratore anima_oggetto(std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw)
+    UtenteCompratore anima_oggetto(Con2DB db1, std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw)
     {
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        // Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         // Creo il costruttore della classe utente compratore dopo il login:
         UtenteCompratore compratore;
@@ -501,7 +504,7 @@ public:
         return compratore;
     }
 
-    void aggiornaResidenza(std::string nuovaViaResidenza, std::string nuovoNumCiv, std::string nuovoCAP, std::string nuovaCittaResidenza)
+    void aggiornaResidenza(Con2DB db1, std::string nuovaViaResidenza, std::string nuovoNumCiv, std::string nuovoCAP, std::string nuovaCittaResidenza)
     {
         // Utilizza i membri dell'istanza corrente per ottenere il nome utente.
         std::string nomeUtente = nome_utente;
@@ -510,7 +513,7 @@ public:
         statoRequisito statoReq = statoRequisito::Wait;
 
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        // Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string sessionID = "";
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtente.c_str());
@@ -529,7 +532,7 @@ public:
 
         statoReq = statoRequisito::Success;
 
-        InsertToLogDB("INFO", "Aggiornata la residenza utente compratore.", sessionID, nomeRequisito, statoReq);
+        InsertToLogDB(db1,"INFO", "Aggiornata la residenza utente compratore.", sessionID, nomeRequisito, statoReq);
 
         return;
     }

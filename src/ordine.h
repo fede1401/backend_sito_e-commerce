@@ -53,10 +53,10 @@ public:
     }
 
 
-    void visione_ordini_effettuati(std::string nome_utente_compratore){
+    void visione_ordini_effettuati(Con2DB db1, std::string nome_utente_compratore){
 
       // Connession al database:
-      Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+      //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
       std::string nomeRequisito = "Visione ordini effettuati.";
       statoRequisito statoReq = statoRequisito::Wait;
@@ -91,15 +91,15 @@ public:
 
       statoReq = statoRequisito::Success;
 
-      InsertToLogDB("INFO", "Visione degli ordini da parte dell utente.", sessionID, nomeRequisito, statoReq);
+      InsertToLogDB(db1, "INFO", "Visione degli ordini da parte dell utente.", sessionID, nomeRequisito, statoReq);
       return;
     }
 
 
 
-    void annulla_ordine(int idOrdine){
+    void annulla_ordine(Con2DB db1, int idOrdine){
       // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string nomeRequisito = "Annullamento ordine.";
         statoRequisito statoReq = statoRequisito::Wait;
@@ -123,7 +123,7 @@ public:
         else{
           statoReq = statoRequisito::NotSuccess;
 
-          InsertToLogDB("ERROR", "Nessune utente compratore ha effettuato l ordine da annullare.", sessionID, nomeRequisito, statoReq);
+          InsertToLogDB(db1, "ERROR", "Nessune utente compratore ha effettuato l ordine da annullare.", sessionID, nomeRequisito, statoReq);
 
           std::cout << "Nessun utente compratore ha effettuato l'ordine da annullare!" << std::endl;
           return;
@@ -162,14 +162,14 @@ public:
 
                   statoReq = statoRequisito::Success;
 
-                  InsertToLogDB("INFO", "Ordine annullato da parte dell utente Compratore.", sessionID, nomeRequisito, statoReq);
+                  InsertToLogDB(db1, "INFO", "Ordine annullato da parte dell utente Compratore.", sessionID, nomeRequisito, statoReq);
 
               }
               else{
                   std::cout << "L'ordine è stato spedito, perciò l'ordine non può essere annullato! All'arrivo del pacco potrai effettuare il reso" << std::endl;
 
                   statoReq = statoRequisito::NotSuccess;
-                  InsertToLogDB("WARNING", "Ordine non annullabile perchè già spedito.", sessionID, nomeRequisito, statoReq);
+                  InsertToLogDB(db1, "WARNING", "Ordine non annullabile perchè già spedito.", sessionID, nomeRequisito, statoReq);
                   return;
               }
               
@@ -178,7 +178,7 @@ public:
                 std::cout << "L'ordine non è stato trovato" << std::endl;
 
                 statoReq = statoRequisito::NotSuccess;
-                InsertToLogDB("ERROR", "Ordine trovato.", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "ERROR", "Ordine trovato.", sessionID, nomeRequisito, statoReq);
 
                 return;
             }  

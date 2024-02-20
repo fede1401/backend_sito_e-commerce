@@ -6,9 +6,9 @@
 
 
 
-void InsertToLogDB(std::string statoLog, std::string message, std::string sessionID, std::string nomeRequisito, statoRequisito statoReq){
+void InsertToLogDB(Con2DB db1, std::string statoLog, std::string message, std::string sessionID, std::string nomeRequisito, statoRequisito statoReq){
 
-    Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+    //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
     auto now = std::chrono::system_clock::now();
     auto now_ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();

@@ -40,10 +40,10 @@ void print_select(std::string nome_tabella){
 }
 
 
-
+/*
 class test_generator {
 public:
-
+    
     void TestRegistrazioneUtenteCompratore(){
         
         // Genera dati di input:
@@ -702,7 +702,7 @@ public:
         Row 23: 2024-02-15 17:36:38,   8075,   INFO,   Eliminazione profilo.,   ,   
         Row 24: 2024-02-15 17:36:38,   8075,   INFO,   Eliminazione profilo.,   ,   
         Row 25: 2024-02-15 17:36:38,   8075,   INFO,   Eliminazione profilo.,   ,
-        */
+        
     }
 
 
@@ -836,7 +836,7 @@ public:
 
         return;
 
-        /*
+        
         Risultati ottenuti:
         Row 0: 2024-02-16 22:03:44,   7751,   INFO,   Utente compratore inserito.,   ,   
         Row 1: 2024-02-16 22:03:44,   7751,   INFO,   Utente fornitore inserito.,   ,   
@@ -858,13 +858,208 @@ public:
         Row 17: 2024-02-16 22:03:45,   7751,   INFO,   Disponibilità utente trasportatore per prendere in consegna un nuovo pacco,   OtOVxPzjuv,   
         Row 18: 2024-02-16 22:03:45,   7751,   INFO,   Effettuata recensione compratore,   bkZKmrLJsy,   
         Row 19: 2024-02-16 22:03:45,   7751,   INFO,   Effettuata reso del prodotto,   bkZKmrLJsy,
-        */
+        
 
     }
 
 };
 
+void test_effettuaRegistrazioneCompratori(){
+    UtenteCompratore compratore;
+    compratore.effettuaRegistrazione("marco1", "UtenteCompratore", "Marco", "Giggio", "3339993339", "marco.giggio@gmail.com", "Via della Roma", "36", "01010", "Roma", "Compleanno1.2", "Compleanno1.2", "11/11/2001");
+}
 
+void test_effettuaRegistrazioneFornitore(){
+    UtenteFornitore fornitore;
+    fornitore.effettuaRegistrazione("luigi2", "UtenteFornitore", "Luigi", "Faffo", "3333333333", "luigi.faffo@gmail.com", "Merdaaaa.1", "Merdaaaa.1", "Nike");
+
+    UtenteFornitore fornitore2;
+    fornitore.effettuaRegistrazione("mario1", "UtenteFornitore", "Mario", "Cocco", "3333333333", "mario.cocco@gmail.com", "Merdaaaa.1", "Merdaaaa.1", "Apple");
+}
+
+void test_add_newProdotti(){
+    Product prodotto1;
+    prodotto1.add_new_product("Air Force 1", "Abbigliamento e scarpe", 100.00, "Air force 1, colore bianco, taglia 40", "Nike", 100);
+
+    Product prodotto2;
+    prodotto2.add_new_product("Iphone 15", "Telefonia", 990.99, "Iphone 15, 16GB RAM, 1 TB archiviazione", "Apple", 10);
+}
+
+void test_aggiornamento_numeroDiTelefono(){
+
+    UtenteCompratore compratore;
+    compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", "123", "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
+    compratore = compratore.anima_oggetto("UtenteCompratore", "test_user1", "P@ssw0rd!");
+    compratore.effettua_login("test_user1", "P@ssw0rd!");
+    compratore.effettua_logout("test_user1");
+
+    print_select("UtenteCompratore");
+
+    compratore.aggiornaNumeroDiTelefono("555555555");
+
+    print_select("UtenteCompratore");
+
+    
+    Risultati ottenuti;
+    Tabella: UtenteCompratore
+    Row 0: test_user1,   UtenteCompratore,   Alice,   Rossi,   alice.rossi@example.com,   1234567890,   P@ssw0rd!,   1990-05-15,   Via Roma,   123,   00100,   Roma,   0.00,   0,   
+
+
+    Tabella: UtenteCompratore
+    Row 0: test_user1,   UtenteCompratore,   Alice,   Rossi,   alice.rossi@example.com,   1111111111,   P@ssw0rd!,   1990-05-15,   Via Roma,   123,   00100,   Roma,   0.00,   0,  
+    
+}
+
+
+void test_aggiornamento_Password(){
+    UtenteCompratore compratore;
+    compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", "123", "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
+    compratore = compratore.anima_oggetto("UtenteCompratore", "test_user1", "P@ssw0rd!");
+    compratore.effettua_login("test_user1", "P@ssw0rd!");
+    compratore.effettua_logout("test_user1");
+
+    print_select("UtenteCompratore");
+
+    compratore.aggiornaPassword("P@ssw0rd!", "Mortadella444.");
+
+    print_select("UtenteCompratore");
+    return;
+    
+    Risultati:
+    Tabella: UtenteCompratore
+    Row 0: test_user1,   UtenteCompratore,   Alice,   Rossi,   alice.rossi@example.com,   555555555,   P@ssw0rd!,   1990-05-15,   Via Roma,   123,   00100,   Roma,   0.00,   0,   
+
+
+    Tabella: UtenteCompratore
+    Row 0: test_user1,   UtenteCompratore,   Alice,   Rossi,   alice.rossi@example.com,   555555555,   Mortadella444.,   1990-05-15,   Via Roma,   123,   00100,   Roma,   0.00,   0,  
+    
+}   
+
+
+void test_aggiornaResidenza(){
+    UtenteCompratore compratore;
+    compratore.effettuaRegistrazione("test_user1", "UtenteCompratore", "Alice", "Rossi", "1234567890", "alice.rossi@example.com", "Via Roma", "123", "00100", "Roma", "P@ssw0rd!", "P@ssw0rd!", "1990/05/15");
+    compratore = compratore.anima_oggetto("UtenteCompratore", "test_user1", "P@ssw0rd!");
+    compratore.effettua_login("test_user1", "P@ssw0rd!");
+    compratore.effettua_logout("test_user1");
+
+    print_select("UtenteCompratore");
+
+    compratore.aggiornaResidenza("Via Salerno", "000", "01010", "Salerno");
+
+    print_select("UtenteCompratore");
+
+    
+    Risultati ottenuti:
+    Tabella: UtenteCompratore
+    Row 0: test_user1,   UtenteCompratore,   Alice,   Rossi,   alice.rossi@example.com,   555555555,   Mortadella444.,   
+    1990-05-15,   Via Roma,   123,   00100,   Roma,   0.00,   0,   
+
+
+    Tabella: UtenteCompratore
+    Row 0: test_user1,   UtenteCompratore,   Alice,   Rossi,   alice.rossi@example.com,   555555555,   Mortadella444.,   
+    1990-05-15,   Via Salerno,   000,   01010,   Salerno,   0.00,   0,
+    
+}
+
+
+void test_aggiornaAziendaProduttrice(){
+    UtenteFornitore fornitore;
+    fornitore.effettuaRegistrazione("test_user2", "UtenteFornitore", "Biagio", "Anocacci", "333445567", "biagio.anocacci@gmail.com", "Candela111?", "Candela111?", "Nike");
+    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user2", "Candela111?");
+    fornitore.effettua_login("test_user2", "Candela111?");
+    fornitore.effettua_logout("test_user2");
+
+    print_select("utenteFornitore");
+
+    fornitore.aggiornaNomeAziendaProduttrice("Adidas");
+
+    print_select("utenteFornitore");
+
+    
+    Risultati ottenuti:
+    Tabella: utenteFornitore
+    Row 0: test_user2,   UtenteFornitore,   Biagio,   Anocacci,   biagio.anocacci@gmail.com,   333445567,   Candela111?,   Nike,   0,   
+
+
+    Tabella: utenteFornitore
+    Row 0: test_user2,   UtenteFornitore,   Biagio,   Anocacci,   biagio.anocacci@gmail.com,   333445567,   Candela111?,   Adidas,   0, 
+    
+
+}
+
+
+void test_aggiornaDittaSpedizione(){
+    UtenteTrasportatore trasportatore;
+    trasportatore.effettuaRegistrazione("test_user3", "UtenteTrasportatore", "Marco", "Verdi", "345678900", "marco.verdi@gmail.com", "Test1234.", "Test1234.", "FedEx");
+    trasportatore = trasportatore.anima_oggetto("UtenteTrasportatore", "test_user3", "Test1234.");
+    trasportatore.effettua_login("test_user3", "Test1234.");
+    trasportatore.effettua_logout("test_user3");
+
+    print_select("UtenteTrasportatore");
+
+    trasportatore.aggiornaNomeDittaSpedizione("Bartolini");
+
+    print_select("UtenteTrasportatore");
+
+    Risultati ottenuti:
+    Tabella: UtenteTrasportatore
+    Row 0: test_user3,   UtenteTrasportatore,   Marco,   Verdi,   marco.verdi@gmail.com,   345678900,   Test1234.,   FedEx,   0,   
+
+
+    Tabella: UtenteTrasportatore
+    Row 0: test_user3,   UtenteTrasportatore,   Marco,   Verdi,   marco.verdi@gmail.com,   345678900,   Test1234.,   Bartolini,   0,   
+    
+
+}
+
+
+// Mi viene un dubbio: supponiamo un impiegato lavora nell'azienda Nike e inserisce nel backend un prodotto Nike. 
+// Se cambia azienda e ad esempio comincia a lavorare per l'Adidas, non ci sarà nessun utente associato all'inserimento del prodotto Nike
+// Testiamolo:
+void test2_aggiornaAziendaProduttrice(){
+    UtenteFornitore fornitore;
+    fornitore.effettuaRegistrazione("test_user4", "UtenteFornitore", "Maria", "Leta", "333445567", "maria.leta@gmail.com", "Candela111?", "Candela111?", "Nike");
+    fornitore = fornitore.anima_oggetto("UtenteFornitore", "test_user4", "Candela111?");
+    fornitore.effettua_login("test_user4", "Candela111?");
+    fornitore.effettua_logout("test_user4");
+
+    print_select("utenteFornitore");
+
+    Product prodottoNike;
+    prodottoNike.add_new_product("Air Force 1", "Abbigliamento e scarpe", 100.00, "Air force 1, colore bianco, taglia 40", "Nike", 100);
+
+    print_select("Prodotto");
+
+    fornitore.aggiornaNomeAziendaProduttrice("Adidas");
+
+    print_select("utenteFornitore");
+    print_select("Prodotto");
+}
+
+
+void test_ricercaProdotto(){
+    Product prodotto;
+    prodotto.ricerca_mostra_Prodotto("Air Force 1");
+    return;
+}
+
+
+void test_acquistoProdotto(){
+    Product prodotto1;
+    prodotto1.ricerca_mostra_Prodotto("Air Force 1");
+    print_select("Prodotto");
+    print_select("Ordine");
+    
+    Ordine ordine;
+    ordine = prodotto1.acquistaProdotto("marco1", "Via della testa", "Roma", "45");
+
+    print_select("Ordine");
+
+    return;
+}
+
+*/
 
 
 #endif // TESTGENERATOR_H

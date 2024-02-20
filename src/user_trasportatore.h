@@ -38,7 +38,8 @@ public:
     }
 
 
-    void effettuaRegistrazione( std::string in_nome_utente, 
+    void effettuaRegistrazione( Con2DB db1,
+                                std::string in_nome_utente, 
                                 std::string in_categoria,
                                 std::string in_nome, std::string in_cognome, 
                                 std::string in_numero_telefono, 
@@ -62,7 +63,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La mail deve contenere il carattere -@-.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "La mail deve contenere il carattere -@-.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: La mail deve contenere il carattere '@'." << std::endl;
             return;
             }
@@ -75,7 +76,7 @@ public:
             statoReq = statoRequisito::NotSuccess;
 
 
-            InsertToLogDB("ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
             return;
         }
@@ -83,7 +84,7 @@ public:
         if (in_conferma_password.length() < 8){
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
             return;
         }
@@ -105,7 +106,7 @@ public:
             std::cout << "La nuova password deve contenere almeno un carattere maiuscolo." << std::endl;  
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", session_id, nomeRequisito, statoReq);
             return;
         }
 
@@ -113,7 +114,7 @@ public:
             std::cout << "La nuova password deve contenere almeno un numero." << std::endl; 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un numero.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "La nuova passowrd deve contenere almeno un numero.", session_id, nomeRequisito, statoReq);
             return;
         }
 
@@ -121,7 +122,7 @@ public:
             std::cout << "La nuova password deve contenere almeno un carattere speciale." << std::endl; 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", session_id, nomeRequisito, statoReq);
             return;
         }
 
@@ -134,7 +135,7 @@ public:
         if (in_password != in_conferma_password){
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Le password non corrispondono", session_id, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Le password non corrispondono", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Le password non corrispondono." << std::endl;
             return;
         }
@@ -143,8 +144,8 @@ public:
 
         ///////////////////////////////////// 
         // Connessione al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-        std::cout << "Connessione al database avvenuta con successo." << std::endl;
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //std::cout << "Connessione al database avvenuta con successo." << std::endl;
         ///////////////////////////////////// 
 
 
@@ -159,7 +160,7 @@ public:
                 statoReq = statoRequisito::NotSuccess;
 
 
-                InsertToLogDB("ERROR", "Il nome utente è già in uso.", session_id, nomeRequisito, statoReq);
+                InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso.", session_id, nomeRequisito, statoReq);
                 std::cout << "Errore: Il nome utente è già in uso." << std::endl;
                 return;
         }
@@ -174,7 +175,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il nome utente è già in uso da utenti compratori.", session_id,  nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti compratori.", session_id,  nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti compratori." << std::endl;
             return;
         }
@@ -189,7 +190,7 @@ public:
             
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il nome utente è già in uso da utenti fornitori.", session_id,  nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti fornitori.", session_id,  nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti fornitori." << std::endl;
             return;
         }
@@ -206,7 +207,7 @@ public:
         if (rows > 0) {
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Indirizzo mail è già in uso.", session_id,  nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Indirizzo mail è già in uso.", session_id,  nomeRequisito, statoReq);
             std::cout << "Errore: L'indirizzo mail è già in uso." << std::endl;
             return;
         }
@@ -252,7 +253,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il session ID è già in uso da utenti compratori.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Il session ID è già in uso da utenti compratori.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: Il session ID è già in uso da utenti compratori." << std::endl;
             return;
         }
@@ -267,7 +268,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il session ID è già in uso da utenti fornitori.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Il session ID è già in uso da utenti fornitori.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: Il session ID è già in uso da utenti fornitori." << std::endl;
             return;
         }
@@ -282,7 +283,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il session ID è già in uso da utenti trasportatori.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1,"ERROR", "Il session ID è già in uso da utenti trasportatori.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: Il session ID è già in uso da utenti trasportatori." << std::endl;
             return;
         }
@@ -301,16 +302,16 @@ public:
         std::cout << "Utente inserito." << std::endl;
 
         statoReq = statoRequisito::Success;
-        InsertToLogDB("INFO", "Utente trasportatore inserito.", sessionID, nomeRequisito, statoReq);
+        InsertToLogDB(db1,"INFO", "Utente trasportatore inserito.", sessionID, nomeRequisito, statoReq);
 
         return;
     }
 
 
 
-    UtenteTrasportatore anima_oggetto (std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw){
+    UtenteTrasportatore anima_oggetto (Con2DB db1, std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw){
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         // Creo il costruttore della classe utente trasportatore dopo il login:
         UtenteTrasportatore trasportatore;
@@ -340,7 +341,7 @@ public:
 
 
 
-    void aggiornaNomeDittaSpedizione(std::string nuovaDittaSpedizione){
+    void aggiornaNomeDittaSpedizione(Con2DB db1, std::string nuovaDittaSpedizione){
         // Utilizza i membri dell'istanza corrente per ottenere il nome utente.
         std::string nomeUtente = nome_utente;
 
@@ -348,7 +349,7 @@ public:
         statoRequisito statoReq = statoRequisito::Wait;
 
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string sessionID = "";
         sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nomeUtente.c_str());
@@ -364,7 +365,7 @@ public:
 
         statoReq = statoRequisito::Success;
 
-        InsertToLogDB("INFO", "Aggiornamento ditta spedizione", sessionID, nomeRequisito, statoReq);
+        InsertToLogDB(db1,"INFO", "Aggiornamento ditta spedizione", sessionID, nomeRequisito, statoReq);
 
     return;
     }

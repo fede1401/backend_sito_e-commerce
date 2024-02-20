@@ -17,11 +17,11 @@ public:
     ListaDesideri() : nome_utente_compratore(""), codice_prodotto(-1){}
 
 
-    void add_prodotto(std::string in_nome_utente_compratore, int in_cod_prodotto){
+    void add_prodotto(Con2DB db1, std::string in_nome_utente_compratore, int in_cod_prodotto){
         
         // Connessione al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
-        std::cout << "Connessione al database avvenuta con successo." << std::endl;
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
+        //std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
         /*
         ///////////////////////////////////// 
@@ -65,7 +65,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il prodotto non esiste.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Il prodotto non esiste.", sessionID, nomeRequisito, statoReq);
             std::cout << "Il prodotto non esiste!" << std::endl;
             return;
         }
@@ -103,7 +103,7 @@ public:
 
                 statoReq = statoRequisito::Success;
 
-                InsertToLogDB("INFO", "Il prodotto già esiste, ne aggiungiamo la quantità.", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "INFO", "Il prodotto già esiste, ne aggiungiamo la quantità.", sessionID, nomeRequisito, statoReq);
             }
         }
          
@@ -114,21 +114,21 @@ public:
             PQclear(res);   
 
             statoReq = statoRequisito::Success;
-            InsertToLogDB("INFO", "Inserimento del prodotto nel db.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Inserimento del prodotto nel db.", sessionID, nomeRequisito, statoReq);
         }
            
     return;      
     }
 
 
-    void remove_prodotto(std::string in_nome_utente_compratore, int in_cod_prodotto){
+    void remove_prodotto(Con2DB db1, std::string in_nome_utente_compratore, int in_cod_prodotto){
         
         ///////////////////////////////////// 
         // Controlliamo se esiste la riga del prodotto da eliminare:
 
         // Connessione al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
-        std::cout << "Connessione al database avvenuta con successo." << std::endl;
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
+        //std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
 
         std::string nomeRequisito = "Rimozione prodotto dalla lista dei desideri.";
@@ -169,7 +169,7 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Il prodotto da eliminare non esiste", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Il prodotto da eliminare non esiste", sessionID, nomeRequisito, statoReq);
             return;
         }
         else{
@@ -180,7 +180,7 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Rimozione del prodotto nel db.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Rimozione del prodotto nel db.", sessionID, nomeRequisito, statoReq);
         }
     return;
     }

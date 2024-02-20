@@ -40,7 +40,7 @@ public:
     }
 
 
-    void effettuaReso(int idOrdine, motivazioneReso motivazione_reso){
+    void effettuaReso(Con2DB db1, int idOrdine, motivazioneReso motivazione_reso){
 
         std::string sessionID = "";
 
@@ -48,7 +48,7 @@ public:
         statoRequisito statoReq = statoRequisito::Wait;
 
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string stato_spedizione;
 
@@ -87,7 +87,7 @@ public:
 
                   statoReq = statoRequisito::Success;
 
-                  InsertToLogDB("INFO", "Effettuata reso del prodotto", sessionID, nomeRequisito, statoReq);
+                  InsertToLogDB(db1, "INFO", "Effettuata reso del prodotto", sessionID, nomeRequisito, statoReq);
 
                 }
                 else{
@@ -95,7 +95,7 @@ public:
 
                     statoReq = statoRequisito::NotSuccess;
 
-                    InsertToLogDB("WARNING", "Ordine non trovato", sessionID, nomeRequisito, statoReq);
+                    InsertToLogDB(db1, "WARNING", "Ordine non trovato", sessionID, nomeRequisito, statoReq);
                     return;
                 }
             }
@@ -104,7 +104,7 @@ public:
 
                 statoReq = statoRequisito::NotSuccess;
 
-                InsertToLogDB("WARNING", "Ordine spedito, ma non arrivato, perciò non può essere effettuato il reso", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "WARNING", "Ordine spedito, ma non arrivato, perciò non può essere effettuato il reso", sessionID, nomeRequisito, statoReq);
                 return;
             }
         }
@@ -112,7 +112,7 @@ public:
             std::cout << "L'ordine non è stato ancora spedito, perciò non può essere effettuato il reso!" << std::endl;
 
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB("WARNING", "Ordine non spedito, non può essere effettuato il reso", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "WARNING", "Ordine non spedito, non può essere effettuato il reso", sessionID, nomeRequisito, statoReq);
             return;
         }
     

@@ -25,11 +25,11 @@ public:
         cvv(codice) {}
 
 
-    void aggiungi_carta(std::string in_nome_utente, std::string in_numeroCarta, std::string in_cvv){
+    void aggiungi_carta(Con2DB db1, std::string in_nome_utente, std::string in_numeroCarta, std::string in_cvv){
 
         // Connessione al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-        std::cout << "Connessione al database avvenuta con successo." << std::endl;
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
         std::string nomeRequisito = "Aggiunta carta di pagamento.";
         statoRequisito statoReq = statoRequisito::Wait;
@@ -58,14 +58,14 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Inserimento carta di pagamento utente compratore", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Inserimento carta di pagamento utente compratore", sessionID, nomeRequisito, statoReq);
         } 
         else{
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
 
             statoReq = statoRequisito::NotSuccess;
             
-            InsertToLogDB("ERROR", "Utente non trovato", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Utente non trovato", sessionID, nomeRequisito, statoReq);
             return;
         }
 
@@ -73,10 +73,10 @@ public:
     }
 
 
-    void remove_carta(int idCarta){
+    void remove_carta(Con2DB db1, int idCarta){
 
         // Connession al database:
-        Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string nomeRequisito = "Rimozione carta di pagamento.";
         statoRequisito statoReq = statoRequisito::Wait;
@@ -97,7 +97,7 @@ public:
         if (rows < 1){
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Carta non trovata", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Carta non trovata", sessionID, nomeRequisito, statoReq);
             std::cout << "La riga da eliminare non esiste!" << std::endl;
             return;
         }
@@ -109,7 +109,7 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Eliminazione carta di pagamento", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "INFO", "Eliminazione carta di pagamento", sessionID, nomeRequisito, statoReq);
         }
     return;
     }
