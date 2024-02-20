@@ -1,6 +1,4 @@
-#include "main.h"
-#include "test_generator.h"
-
+#include "svolgiAzione.h"
 
 
 void test_effettuaRegistrazioneCompratori(){
@@ -228,13 +226,13 @@ void initUSER(UtenteCompratore compratore, UtenteFornitore fornitore, UtenteTras
     // Array di password
     std::array<std::string, 100> password;
     for (int i = 0; i < 100; ++i) {
-        password[i] = "password" + std::to_string(i + 1);
+        password[i] = "P.assword" + std::to_string(i + 1);
     }
 
     // Array di conferma password
     std::array<std::string, 100> confermaPassword;
     for (int i = 0; i < 100; ++i) {
-        confermaPassword[i] = "password" + std::to_string(i + 1);
+        confermaPassword[i] = "P.assword" + std::to_string(i + 1);
     }
 
     // Array di nomi aziende produttrici
@@ -265,30 +263,38 @@ void initUSER(UtenteCompratore compratore, UtenteFornitore fornitore, UtenteTras
     std::array<std::string, 5> citta_di_residenza = {"Roma", "Milano", "Napoli", "Firenze", "Venezia"};
 
 
-    int i_nomeUtente_numTel_passw_email = rand()%100;
-    int i_CAP_CResi_VieRes = rand()%5;
+    int i_100C = rand()%100;
+    int i_10C = rand()%10;
+    int i_5C = rand()%5;
 
-    compratore.effettuaRegistrazione(nomi_utente[i_nomeUtente_numTel_passw_email], "UtenteCompratore", 
-                                    nomi[i_nomeUtente_numTel_passw_email], cognomi[i_nomeUtente_numTel_passw_email],
-                                    numeri_telefono[i_nomeUtente_numTel_passw_email], email[i_nomeUtente_numTel_passw_email], 
-                                    vie_di_residenza[i_CAP_CResi_VieRes], numeri_civici[i_CAP_CResi_VieRes], CAP[i_CAP_CResi_VieRes], 
-                                    citta_di_residenza[i_CAP_CResi_VieRes], 
-                                    password[i_nomeUtente_numTel_passw_email], confermaPassword[i_nomeUtente_numTel_passw_email], 
-                                    date_di_nascita[i_nomeUtente_numTel_passw_email]);
-
-
-    fornitore.effettuaRegistrazione(nomi_utente[i_nomeUtente_numTel_passw_email], "UtenteFornitore", 
-                                    nomi[i_nomeUtente_numTel_passw_email],  cognomi[i_nomeUtente_numTel_passw_email],
-                                    numeri_telefono[i_nomeUtente_numTel_passw_email], email[i_nomeUtente_numTel_passw_email], 
-                                    password[i_nomeUtente_numTel_passw_email], confermaPassword[i_nomeUtente_numTel_passw_email], 
-                                    nomi_aziende_produttrici[i_CAP_CResi_VieRes]);
+    compratore.effettuaRegistrazione(nomi_utente[i_100C], "UtenteCompratore", 
+                                    nomi[i_10C], cognomi[i_10C],
+                                    numeri_telefono[i_100C], email[i_100C], 
+                                    vie_di_residenza[i_5C], numeri_civici[i_100C], CAP[i_5C], 
+                                    citta_di_residenza[i_5C], 
+                                    password[i_100C], confermaPassword[i_100C], 
+                                    date_di_nascita[i_100C]);
 
 
-    trasportatore.effettuaRegistrazione(nomi_utente[i_nomeUtente_numTel_passw_email], "UtenteTrasportatore", 
-                                        nomi[i_nomeUtente_numTel_passw_email], cognomi[i_nomeUtente_numTel_passw_email],
-                                        numeri_telefono[i_nomeUtente_numTel_passw_email], email[i_nomeUtente_numTel_passw_email], 
-                                        password[i_nomeUtente_numTel_passw_email], confermaPassword[i_nomeUtente_numTel_passw_email], 
-                                        nomi_ditte_spedizioni[i_CAP_CResi_VieRes]);
+    int i_100F = rand()%100;
+    int i_10F = rand()%10;
+    int i_5F = rand()%5;
+
+    fornitore.effettuaRegistrazione(nomi_utente[i_100F], "UtenteFornitore", 
+                                    nomi[i_10F],  cognomi[i_10F],
+                                    numeri_telefono[i_100F], email[i_100F], 
+                                    password[i_100F], confermaPassword[i_100F], 
+                                    nomi_aziende_produttrici[i_5F]);
+
+    int i_100T = rand()%100;
+    int i_10T = rand()%10;
+    int i_5T = rand()%5;
+
+    trasportatore.effettuaRegistrazione(nomi_utente[i_100T], "UtenteTrasportatore", 
+                                        nomi[i_10T], cognomi[i_10T],
+                                        numeri_telefono[i_100T], email[i_100T], 
+                                        password[i_100T], confermaPassword[i_100T], 
+                                        nomi_ditte_spedizioni[i_5T]);
 
     return;
 }
@@ -298,9 +304,9 @@ int main(){
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
     std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
-    PGresult *res;
+    //PGresult *res;
 
-    char sqlcmd[1000]; 
+    //char sqlcmd[1000]; 
 
     //test_generator testUtenti;
 
@@ -314,9 +320,15 @@ int main(){
     //server_types x;
 
     // definito per il numero di iterazioni del while:
-    int t = 0;                  
-    
-    while (t <= HORIZON){
+    int t = 0;           
+
+    int i = 0;
+
+    std::array<UtenteCompratore, 100> utentiCompratori;
+    std::array<UtenteFornitore, 100> utentiFornitori;
+    std::array<UtenteTrasportatore, 100> utentiTrasportatori;
+
+    while (i<100){
 
         UtenteCompratore compratore;
         UtenteFornitore fornitore;
@@ -324,16 +336,39 @@ int main(){
 
         initUSER(compratore, fornitore, trasportatore);
 
+        utentiCompratori[i] = compratore;
+        utentiFornitori[i] = fornitore;
+        utentiTrasportatori[i] = trasportatore;
+
+        i++;
+
+        /* sleep   */
+        micro_sleep(10000);
+    }       
+
+    print_select("UtenteCompratore");
+    print_select("UtenteFornitore");
+    print_select("UtenteTrasportatore");
+
+    
+    while (t <= HORIZON){
+
+        
+
         int index_azioneDaSvolgere = rand()%34;
 
-        svolgiAzione(compratore, trasportatore, fornitore, index_azioneDaSvolgere);
-
+        //svolgiAzione(compratore, trasportatore, fornitore, index_azioneDaSvolgere);
+        
+        std::cout << "t: " << t << std::endl; 
+        
         // update time 
         t++;
 
         /* sleep   */
         micro_sleep(500);
     }
+
+    print_select("LogTable");
 
 
 

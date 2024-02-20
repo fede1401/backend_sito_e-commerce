@@ -2,7 +2,6 @@
 #ifndef TESTGENERATOR_H
 #define TESTGENERATOR_H
 
-#include "main.h"
 #include "carrello.h"
 #include "lista_desideri.h"
 #include "carta.h"
@@ -16,6 +15,7 @@
 #include "product.h"
 #include "spedizione.h"
 #include "log2db.h"
+#include "msleep.h"
 
 
 void print_select(std::string nome_tabella){

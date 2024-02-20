@@ -4,12 +4,6 @@
 
 #include "main.h"
 
-enum class statoRequisito {
-    Success, 
-    NotSuccess,
-    Wait
-  };
-
 
 
 void InsertToLogDB(std::string statoLog, std::string message, std::string sessionID, std::string nomeRequisito, statoRequisito statoReq){
@@ -29,7 +23,8 @@ void InsertToLogDB(std::string statoLog, std::string message, std::string sessio
 
     pid_t pid = getpid();
 
-    std::string statoReqToString = statoRequisitoToString(statoReq);
+    std::string statoReqToString;
+    statoReqToString = statoRequisitoToString(statoReq);
 
     //std::string statoLog = "INFO";
     //std::string message = "Utente compratore è stato loggato!";
@@ -44,11 +39,11 @@ void InsertToLogDB(std::string statoLog, std::string message, std::string sessio
 
 std::string statoRequisitoToString(statoRequisito statoReq) {
         switch (statoReq) {
-            case statoRequisito::Success :
+            case statoRequisito::Success:
                 return "SUCCESS";
-            case statoRequisito::NotSuccess :
+            case statoRequisito::NotSuccess:
                 return "NOT SUCCESS";
-            case statoRequisito::Wait :
+            case statoRequisito::Wait:
                 return "WAIT";
             default:
                 return ""; // gestione degli errori o valori non validi

@@ -1,8 +1,9 @@
 #ifndef USER_TRASPORTATORE_H
 #define USER_TRASPORTATORE_H
 
-#include "main.h"
+//#include "main.h"
 #include "user.h"
+
 
 
 class UtenteTrasportatore : public Utente {
@@ -48,14 +49,20 @@ public:
 
         int stato = 0;
         int disponibilità = 0;
-        std::string session_id = "";
+        //std::string session_id = "";
+
+        std::string nomeRequisito = "Registrazione utente trasportatore.";
+        statoRequisito statoReq = statoRequisito::Wait;
 
 
 
         ///////////////////////////////////// 
         // Controllo se la mail contiene il carattere "@".
         if (in_email.find("@") == std::string::npos) {
-            InsertToLogDB("ERROR", "La mail deve contenere il carattere -@-.", session_id);
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "La mail deve contenere il carattere -@-.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: La mail deve contenere il carattere '@'." << std::endl;
             return;
             }
@@ -65,16 +72,21 @@ public:
         ///////////////////////////////////// 
         // Controllo se la password rispetta i criteri: lunghezza di almeno 8, almeno una lettere maiuscola, un numero e un carattere speciale.
         if (in_password.length() < 8){
-            InsertToLogDB("ERROR", "La password deve contenere almeno 8 caratteri.", session_id);
+            statoReq = statoRequisito::NotSuccess;
+
+
+            InsertToLogDB("ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
             return;
         }
 
         if (in_conferma_password.length() < 8){
-            InsertToLogDB("ERROR", "La password deve contenere almeno 8 caratteri.", session_id);
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
             return;
-                    }
+        }
                                 
         bool hasUpperCase = false;
         bool hasDigit = false;
@@ -91,17 +103,26 @@ public:
 
         if (!hasUpperCase) { 
             std::cout << "La nuova password deve contenere almeno un carattere maiuscolo." << std::endl;  
-            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", session_id);
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", session_id, nomeRequisito, statoReq);
+            return;
         }
 
         if (!hasDigit) { 
             std::cout << "La nuova password deve contenere almeno un numero." << std::endl; 
-            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un numero.", session_id);
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un numero.", session_id, nomeRequisito, statoReq);
+            return;
         }
 
         if (!hasSpecialChar) {  
             std::cout << "La nuova password deve contenere almeno un carattere speciale." << std::endl; 
-            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", session_id);
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", session_id, nomeRequisito, statoReq);
+            return;
         }
 
         
@@ -111,7 +132,9 @@ public:
         ///////////////////////////////////// 
         // Controllo se la password è uguale al campo conferma_password
         if (in_password != in_conferma_password){
-            InsertToLogDB("ERROR", "Le password non corrispondono", session_id);
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Le password non corrispondono", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Le password non corrispondono." << std::endl;
             return;
         }
@@ -133,7 +156,10 @@ public:
 
         PQclear(res);
         if (rows > 0) {
-                InsertToLogDB("ERROR", "Il nome utente è già in uso.", session_id);
+                statoReq = statoRequisito::NotSuccess;
+
+
+                InsertToLogDB("ERROR", "Il nome utente è già in uso.", session_id, nomeRequisito, statoReq);
                 std::cout << "Errore: Il nome utente è già in uso." << std::endl;
                 return;
         }
@@ -144,7 +170,10 @@ public:
         rows = PQntuples(res);
 
         if (rows >= 1){
-            InsertToLogDB("ERROR", "Il nome utente è già in uso da utenti compratori.", session_id);
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Il nome utente è già in uso da utenti compratori.", session_id,  nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti compratori." << std::endl;
             return;
         }
@@ -155,7 +184,10 @@ public:
         rows = PQntuples(res);
 
         if (rows >= 1){
-            InsertToLogDB("ERROR", "Il nome utente è già in uso da utenti fornitori.", session_id);
+            
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Il nome utente è già in uso da utenti fornitori.", session_id,  nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti fornitori." << std::endl;
             return;
         }
@@ -170,7 +202,9 @@ public:
 
         PQclear(res);
         if (rows > 0) {
-            InsertToLogDB("ERROR", "Indirizzo mail è già in uso.", session_id);
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Indirizzo mail è già in uso.", session_id,  nomeRequisito, statoReq);
             std::cout << "Errore: L'indirizzo mail è già in uso." << std::endl;
             return;
         }
@@ -201,10 +235,58 @@ public:
 
         std::cout << "Categoria utente:" << this->categoria << std::endl;
 
+        // SESSION ID
+        // Generiamo il session id:
+        std::string sessionID = generateSessionID();
+
+        // Controllo se il sessionID sia univoco con i session ID di tutte le tipologie d'utente:
+        sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE session_id_c = '%s'", sessionID.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows > 0)
+        {
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Il session ID è già in uso da utenti compratori.", sessionID, nomeRequisito, statoReq);
+            std::cout << "Errore: Il session ID è già in uso da utenti compratori." << std::endl;
+            return;
+        }
+
+        sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE session_id_f = '%s'", sessionID.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows > 0)
+        {
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Il session ID è già in uso da utenti fornitori.", sessionID, nomeRequisito, statoReq);
+            std::cout << "Errore: Il session ID è già in uso da utenti fornitori." << std::endl;
+            return;
+        }
+
+        sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE session_id_t = '%s'", sessionID.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows > 0)
+        {
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Il session ID è già in uso da utenti trasportatori.", sessionID, nomeRequisito, statoReq);
+            std::cout << "Errore: Il session ID è già in uso da utenti trasportatori." << std::endl;
+            return;
+        }
+
+
         /////////////////////////////////////
         // Inserisco nel database il nuovo utente:
         sprintf(sqlcmd, "INSERT INTO UtenteTrasportatore (nome_utente_trasportatore, session_id_t, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, nome_DittaSpedizione, stato, dispo ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d')",
-        in_nome_utente.c_str(), session_id.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_dittaSped.c_str(), stato, disponibilità);
+        in_nome_utente.c_str(), sessionID.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), in_dittaSped.c_str(), stato, disponibilità);
                     
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);  
@@ -212,7 +294,9 @@ public:
 
         // Conferma di inserimento nel db
         std::cout << "Utente inserito." << std::endl;
-        InsertToLogDB("INFO", "Utente trasportatore inserito.", session_id);
+
+        statoReq = statoRequisito::Success;
+        InsertToLogDB("INFO", "Utente trasportatore inserito.", sessionID, nomeRequisito, statoReq);
 
         return;
     }
@@ -255,6 +339,9 @@ public:
         // Utilizza i membri dell'istanza corrente per ottenere il nome utente.
         std::string nomeUtente = nome_utente;
 
+        std::string nomeRequisito = "Aggiornamento ditta Spedizione.";
+        statoRequisito statoReq = statoRequisito::Wait;
+
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
@@ -270,7 +357,9 @@ public:
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res); 
 
-        InsertToLogDB("INFO", "Aggiornamento ditta spedizione", sessionID);
+        statoReq = statoRequisito::Success;
+
+        InsertToLogDB("INFO", "Aggiornamento ditta spedizione", sessionID, nomeRequisito, statoReq);
 
     return;
     }

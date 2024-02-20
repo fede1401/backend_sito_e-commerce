@@ -64,7 +64,13 @@ class Product {
             PQclear(res);  
             /////////////////////////////////////
             */
-            
+
+        std::string sessionID = "";
+    
+        std::string nomeRequisito = "Aggiunta prodotto al sito.";
+        statoRequisito statoReq = statoRequisito::Wait;
+
+
         std::string nome_utente_fornitore;
         // Assicuriamoci che l'utente che inserirà il prodotto nel sito è un Utente Fornitore
         sprintf(sqlcmd, "SELECT nome_utente_fornitore FROM UtenteFornitore WHERE nome_AziendaProduttrice = '%s'", in_azienda_produzione.c_str());
@@ -72,9 +78,17 @@ class Product {
         rows = PQntuples(res);
         if (rows == 1) { 
             nome_utente_fornitore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_fornitore"));
+
+            InsertToLogDB("INFO", "Utente che inserisce il prodotto è un utente fornitore", sessionID, nomeRequisito, statoReq);
+
             std::cout << "L'utente che inserisce il prodotto nel sito è un utente fornitore" << std::endl;
         }
         else{
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Utente che inserisce il prodotto non è un utente fornitore", sessionID, nomeRequisito, statoReq);
+
             std::cout << "L'utente che inserisce il prodotto nel sito NON è un utente fornitore" << std::endl;
             return;
         }
@@ -84,7 +98,6 @@ class Product {
 
 
         // Caricamento del sessionID utile per il log.
-        std::string sessionID = "";
         sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nome_utente_fornitore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
@@ -125,7 +138,9 @@ class Product {
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res); 
 
-                    InsertToLogDB("INFO", "Aumentata quantità del prodotto inserito", sessionID);
+                    statoReq = statoRequisito::Success;
+
+                    InsertToLogDB("INFO", "Aumentata quantità del prodotto inserito", sessionID, nomeRequisito, statoReq);
                 }
         }
         else{
@@ -135,7 +150,9 @@ class Product {
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res); 
 
-            InsertToLogDB("INFO", "Inserito prodotto", sessionID);
+            statoReq = statoRequisito::Success;
+
+            InsertToLogDB("INFO", "Prodotto inserito nel sito", sessionID, nomeRequisito, statoReq);
         }
         
             
@@ -148,13 +165,19 @@ class Product {
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
         std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
+        std::string nomeRequisito = "Rimozione prodotto dal sito.";
+        statoRequisito statoReq = statoRequisito::Wait;
+
         
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows < 1){
             std::cout << "La riga da eliminare non esiste!" << std::endl;
-            InsertToLogDB("ERROR", "Il prodotto da eliminare non esiste", "");
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Il prodotto da eliminare non esiste", "", nomeRequisito, statoReq);
 
             return;
         }
@@ -163,7 +186,9 @@ class Product {
             sprintf(sqlcmd, "DELETE FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
-            InsertToLogDB("INFO", "Eliminato prodotto", "");
+
+            statoReq = statoRequisito::Success;
+            InsertToLogDB("INFO", "Eliminato prodotto", "", nomeRequisito, statoReq);
 
         }
     return;
@@ -176,6 +201,9 @@ class Product {
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
 
+        std::string nomeRequisito = "Ricerca e mostra informazioni del prodotto.";
+        statoRequisito statoReq = statoRequisito::Wait;
+
         // Cerchiamo il prodotto nel database:
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE nome = '%s'", nomeProdotto.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
@@ -184,7 +212,9 @@ class Product {
         // Il prodotto non è stato trovato
         if (rows < 1){
             std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
-            InsertToLogDB("ERROR", "Non esiste il prodotto che si sta ricercando", "");
+
+            statoReq = statoRequisito::NotSuccess;
+            InsertToLogDB("ERROR", "Non esiste il prodotto che si sta ricercando", "", nomeRequisito, statoReq);
             return;
         }
         else{
@@ -204,9 +234,11 @@ class Product {
             std::cout << "Azienda di produzione: " << azienda_produzione << std::endl;
             std::cout << "Numero delle copie disponibili: " << numero_copie_disponibili << std::endl;
 
+            statoReq = statoRequisito::Success;
 
-            InsertToLogDB("INFO", "Visione del prodotto ricercato", "");
+            InsertToLogDB("INFO", "Visione del prodotto ricercato", "", nomeRequisito, statoReq);
 
+            
             /*int numCols = PQnfields(res);
             for (int i = 0; i < rows; ++i) {
                 std::cout << "Row " << i << ": ";
@@ -231,6 +263,9 @@ class Product {
         std::string dataOrdineEffettuato;
 
         StatoOrdine stato_ordine;
+
+        std::string nomeRequisito = "Acquisto Prodotto.";
+        statoRequisito statoReq = statoRequisito::Wait;
 
         //std::string nomeDittaSpedizione;
         
@@ -280,7 +315,9 @@ class Product {
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);     
 
-            InsertToLogDB("INFO", "Utente ha acquistato il prodotto, ordine inserito nel db", sessionID);
+            statoReq = statoRequisito::Success;
+
+            InsertToLogDB("INFO", "Utente ha acquistato il prodotto, ordine inserito nel db", sessionID, nomeRequisito, statoReq);
 
             // Esegui una query SELECT per ottenere l'ultimo ID inserito nella tabella Ordine:
             // 1. Selezioniamo tutti gli idOrdine dalla tabella Ordine:
@@ -301,7 +338,10 @@ class Product {
         }
         else{
             std::cout << "Errore: il prodotto non è stato trovato!" << std::endl;
-            InsertToLogDB("ERROR", "Il prodotto non è stato trovato!", sessionID);
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Il prodotto non è stato trovato!", sessionID, nomeRequisito, statoReq);
             return ordine;
         }
     return ordine;

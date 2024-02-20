@@ -44,6 +44,8 @@ public:
 
         std::string sessionID = "";
 
+        std::string nomeRequisito = "Effettuazione Reso.";
+        statoRequisito statoReq = statoRequisito::Wait;
 
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
@@ -82,24 +84,34 @@ public:
                   res = db1.ExecSQLcmd(sqlcmd);
                   PQclear(res); 
 
-                  InsertToLogDB("INFO", "Effettuata reso del prodotto", sessionID);
+                  statoReq = statoRequisito::Success;
+
+                  InsertToLogDB("INFO", "Effettuata reso del prodotto", sessionID, nomeRequisito, statoReq);
 
                 }
                 else{
                     std::cout << "L'ordine non è stato trovato!" << std::endl;
-                    InsertToLogDB("WARNING", "Ordine non trovato", sessionID);
+
+                    statoReq = statoRequisito::NotSuccess;
+
+                    InsertToLogDB("WARNING", "Ordine non trovato", sessionID, nomeRequisito, statoReq);
                     return;
                 }
             }
             else{
                 std::cout << "L'ordine è stato spedito, ma non è ancora arrivato, perciò non può essere effettuato il reso!" << std::endl;
-                InsertToLogDB("WARNING", "Ordine spedito, ma non arrivato, perciò non può essere effettuato il reso", sessionID);
+
+                statoReq = statoRequisito::NotSuccess;
+
+                InsertToLogDB("WARNING", "Ordine spedito, ma non arrivato, perciò non può essere effettuato il reso", sessionID, nomeRequisito, statoReq);
                 return;
             }
         }
         else{
             std::cout << "L'ordine non è stato ancora spedito, perciò non può essere effettuato il reso!" << std::endl;
-            InsertToLogDB("WARNING", "Ordine non spedito, non può essere effettuato il reso", sessionID);
+
+            statoReq = statoRequisito::NotSuccess;
+            InsertToLogDB("WARNING", "Ordine non spedito, non può essere effettuato il reso", sessionID, nomeRequisito, statoReq);
             return;
         }
     

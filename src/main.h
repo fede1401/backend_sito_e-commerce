@@ -35,7 +35,7 @@ char sqlcmd[1000];
 
 int rows, k;
 
-#define HORIZON 10  // TICKS
+#define HORIZON 20  // TICKS
 
 /*
 typedef enum {COMPRAVENDITA, RICERCA, COMPRATORE_UPD_RESIDENZA, COMPR_UPD_NUMTEL, COMPR_UPD_PASSWORD, COMPR_LOGOUT,
@@ -44,7 +44,7 @@ typedef enum {COMPRAVENDITA, RICERCA, COMPRATORE_UPD_RESIDENZA, COMPR_UPD_NUMTEL
                     EFFETTUA_RECENSIONE, RIMUOVE_RECENSIONE, EFFETTUA_RESO, ANNULLA_ORDINE,
                     FORN_UPD_PASSWORD, FORN_LOGOUT, FORN_LOGIN, FORN_ELIMINAPROFILO, FORN_UPD_NUMTEL, FORN_INSERT_PRODOTTO, FORN_REMOVE_PRODOTTO,
                     TRASP_UPD_PASSWORD, TRASP_LOGOUT, TRASP_LOGIN, TRASP_ELIMINAPROFILO, TRASP_UPD_NUMTEL, TRASP_AVVIA_SPED, TRASP_AVVISA_SPEDITO } server_type;
-*/
+
 
  std::vector<std::string> server_types = {
         "COMPRAVENDITA", "RICERCA", "COMPRATORE_UPD_RESIDENZA", "COMPR_UPD_NUMTEL", "COMPR_UPD_PASSWORD", "COMPR_LOGOUT", "COMPR_LOGIN", "COMPR_ELIMINAPROFILO", 
@@ -53,10 +53,19 @@ typedef enum {COMPRAVENDITA, RICERCA, COMPRATORE_UPD_RESIDENZA, COMPR_UPD_NUMTEL
         "FORN_UPD_PASSWORD", "FORN_LOGOUT", "FORN_LOGIN", "FORN_ELIMINAPROFILO", "FORN_UPD_NUMTEL", "FORN_INSERT_PRODOTTO", "FORN_REMOVE_PRODOTTO", "FORN_UPD_AZIENDA"
         "TRASP_UPD_PASSWORD", "TRASP_LOGOUT", "TRASP_LOGIN", "TRASP_ELIMINAPROFILO", "TRASP_UPD_NUMTEL", "TRASP_UPD_DITTA", "TRASP_AVVIA_SPED", "TRASP_AVVISA_SPEDITO"
     };
+*/    
 
-void InsertToLogDB(std::string statoLog, std::string message, std::string sessionID);
+enum class statoRequisito {
+    Success, 
+    NotSuccess,
+    Wait
+  };
 
-void svolgiAzione(UtenteCompratore compratore, UtenteTrasportatore trasportatore, UtenteFornitore fornitore, int index_azioneDaSvolgere);
+
+void InsertToLogDB(std::string statoLog, std::string message, std::string sessionID, std::string nomeRequisito, statoRequisito statoReq);
+std::string statoRequisitoToString(statoRequisito statoReq);
+
+//void svolgiAzione(UtenteCompratore compratore, UtenteTrasportatore trasportatore, UtenteFornitore fornitore, int index_azioneDaSvolgere);
 
 int msleep(long msec);
 int micro_sleep(long usec);

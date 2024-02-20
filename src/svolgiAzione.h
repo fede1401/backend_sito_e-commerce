@@ -1,21 +1,17 @@
-#ifndef LOG2DB_H
-#define LOG2DB_H
+#ifndef SVOLGIAZIONE_H
+#define SVOLGIAZIONE_H
 
 
-#include "main.h"
-#include "carrello.h"
-#include "lista_desideri.h"
-#include "carta.h"
-#include "ordine.h"
-#include "reso.h"
-#include "recensione.h"
-#include "user.h"
-#include "user_compratore.h"
-#include "user_fornitore.h"
-#include "user_trasportatore.h"
-#include "product.h"
-#include "spedizione.h"
-#include "log2db.h"
+#include "test_generator.h"
+
+
+std::vector<std::string> server_types = {
+        "COMPRAVENDITA", "RICERCA", "COMPRATORE_UPD_RESIDENZA", "COMPR_UPD_NUMTEL", "COMPR_UPD_PASSWORD", "COMPR_LOGOUT", "COMPR_LOGIN", "COMPR_ELIMINAPROFILO", 
+        "COMPR_CONTROLLA_ORDINI_EFFETTUATI", "INSERT_CARRELLO", "REMOVE_CARRELLO", "INSERT_LISTA_DESIDERI", "REMOVE_LISTA_DESIDERI", "AGGIUNTA_CARTA_PAGAMENTO",
+        "EFFETTUA_RECENSIONE", "RIMUOVE_RECENSIONE", "EFFETTUA_RESO", "ANNULLA_ORDINE",
+        "FORN_UPD_PASSWORD", "FORN_LOGOUT", "FORN_LOGIN", "FORN_ELIMINAPROFILO", "FORN_UPD_NUMTEL", "FORN_INSERT_PRODOTTO", "FORN_REMOVE_PRODOTTO", "FORN_UPD_AZIENDA"
+        "TRASP_UPD_PASSWORD", "TRASP_LOGOUT", "TRASP_LOGIN", "TRASP_ELIMINAPROFILO", "TRASP_UPD_NUMTEL", "TRASP_UPD_DITTA", "TRASP_AVVIA_SPED", "TRASP_AVVISA_SPEDITO"
+    };
 
 
 void svolgiAzione(UtenteCompratore compratore, UtenteTrasportatore trasportatore, UtenteFornitore fornitore, int index_azioneDaSvolgere){

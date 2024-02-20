@@ -1,3 +1,5 @@
+#ifndef MSLEEP_H
+#define MSLEEP_H
 
 #include "main.h"
 
@@ -6,7 +8,7 @@
 int msleep(long msec)
 {
     struct timespec ts;
-    int res;
+    int res1;
 
     if (msec < 0)
     {
@@ -18,11 +20,11 @@ int msleep(long msec)
     ts.tv_nsec = (msec % 1000) * 1000000;
 
     do {
-        res = nanosleep(&ts, &ts);
-    } while (res && errno == EINTR);
+        res1 = nanosleep(&ts, &ts);
+    } while (res1 && errno == EINTR);
 
     
-    return res;  
+    return res1;  
 
 #if 0
     if (res <= 0)
@@ -38,7 +40,7 @@ int msleep(long msec)
 int micro_sleep(long usec)
 {
     struct timespec ts;
-    int res;
+    int res1;
 
     if (usec < 0)
     {
@@ -50,11 +52,11 @@ int micro_sleep(long usec)
     ts.tv_nsec = (usec % 1000000) * 1000;
 
     do {
-        res = nanosleep(&ts, &ts);
-    } while (res && errno == EINTR);
+        res1 = nanosleep(&ts, &ts);
+    } while (res1 && errno == EINTR);
 
     
-    return res;  
+    return res1;  
 
 }
 
@@ -129,3 +131,5 @@ long int nanos2day(char* buf, long int nanosec) {
      
    return (ts.tv_nsec);
 }
+
+#endif

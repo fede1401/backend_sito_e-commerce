@@ -14,7 +14,7 @@ CREATE TYPE statoSpedizione AS ENUM ('in transito', 'consegnato');
 
 CREATE TYPE statoLog AS ENUM ('INFO', 'WARNING', 'ERROR');
 
-CREATE TYPE statoRequisito AS ENUM ('SUCCESS', 'NOT SUCCESS', "WAIT");
+CREATE TYPE statoRequisito AS ENUM ('SUCCESS', 'NOT SUCCESS', 'WAIT');
 
 
 
@@ -235,9 +235,9 @@ CREATE TABLE IF NOT EXISTS LogTable (
     pid int NOT NULL,                     -- pid of process logged
     statoLog statoLog NOT NULL,
     messaggio TEXT,
-    sessionId VARCHAR(50) NOT NULL
+    sessionId VARCHAR(50) NOT NULL,
     nomeRequisiti VARCHAR(50) NOT NULL,
-    statoRequisito statoRequisito--,
+    statoRequisito statoRequisito NOT NULL--,
     -- PRIMARY KEY(timevalue, pid, sessionId)
 );
 

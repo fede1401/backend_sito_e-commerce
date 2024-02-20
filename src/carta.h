@@ -31,6 +31,10 @@ public:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
         std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
+        std::string nomeRequisito = "Aggiunta carta di pagamento.";
+        statoRequisito statoReq = statoRequisito::Wait;
+
+
         // Caricamento del sessionID utile per il log.
         std::string sessionID = "";
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
@@ -52,12 +56,16 @@ public:
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res); 
 
-            InsertToLogDB("INFO", "Inserimento carta di pagamento utente compratore", sessionID);
+            statoReq = statoRequisito::Success;
 
+            InsertToLogDB("INFO", "Inserimento carta di pagamento utente compratore", sessionID, nomeRequisito, statoReq);
         } 
         else{
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-            InsertToLogDB("ERROR", "Utente non trovato", sessionID);
+
+            statoReq = statoRequisito::NotSuccess;
+            
+            InsertToLogDB("ERROR", "Utente non trovato", sessionID, nomeRequisito, statoReq);
             return;
         }
 
@@ -69,6 +77,9 @@ public:
 
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        std::string nomeRequisito = "Rimozione carta di pagamento.";
+        statoRequisito statoReq = statoRequisito::Wait;
 
 
         // Caricamento del sessionID utile per il log.
@@ -83,8 +94,9 @@ public:
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows < 1){
+            statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB("ERROR", "Carta non trovata", sessionID);
+            InsertToLogDB("ERROR", "Carta non trovata", sessionID, nomeRequisito, statoReq);
             std::cout << "La riga da eliminare non esiste!" << std::endl;
             return;
         }
@@ -94,7 +106,9 @@ public:
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
-            InsertToLogDB("INFO", "Eliminazione carta di pagamento", sessionID);
+            statoReq = statoRequisito::Success;
+
+            InsertToLogDB("INFO", "Eliminazione carta di pagamento", sessionID, nomeRequisito, statoReq);
         }
     return;
     }

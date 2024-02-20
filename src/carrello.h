@@ -41,6 +41,9 @@ public:
         */
         Carrello carrello;
 
+        std::string nomeRequisito = "Aggiunta prodotto al carrello.";
+        statoRequisito statoReq = statoRequisito::Wait;
+
         // Connessione al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
         std::cout << "Connessione al database avvenuta con successo." << std::endl;
@@ -63,7 +66,10 @@ public:
         rows = PQntuples(res);
         if (rows < 1){
             std::cout << "Il prodotto non esiste!" << std::endl;
-            InsertToLogDB("ERROR", "Il prodotto non esiste", sessionID);
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Il prodotto non esiste", sessionID, nomeRequisito, statoReq);
             return;
         }
         /////////////////////////////////////
@@ -95,7 +101,9 @@ public:
                 res = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res);
 
-                InsertToLogDB("INFO", "Il prodotto già esiste, ne aggiungiamo la quantità.", sessionID);
+                statoReq = statoRequisito::Success;
+
+                InsertToLogDB("INFO", "Il prodotto già esiste, ne aggiungiamo la quantità.", sessionID, nomeRequisito, statoReq);
 
 
                 // Anima l'oggetto
@@ -114,7 +122,9 @@ public:
             carrello.nome_utente_compratore = in_nome_utente_compratore;
             carrello.quantitàProdotti = 1;
 
-            InsertToLogDB("INFO", "Inserimento del prodotto nel db.", sessionID);
+            statoReq = statoRequisito::Success;
+
+            InsertToLogDB("INFO", "Inserimento del prodotto nel db.", sessionID, nomeRequisito, statoReq);
         }
            
     return;
@@ -144,6 +154,10 @@ public:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");      
         std::cout << "Connessione al database avvenuta con successo." << std::endl;
 
+        std::string nomeRequisito = "Rimozione prodotto dal carrello.";
+        statoRequisito statoReq = statoRequisito::Wait;
+
+
         // Caricamento del sessionID utile per il log.
         std::string sessionID = "";
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
@@ -158,7 +172,10 @@ public:
         rows = PQntuples(res);
         if (rows < 1){
             std::cout << "La riga da eliminare non esiste!" << std::endl;
-            InsertToLogDB("ERROR", "Il prodotto da eliminare non esiste", sessionID);
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "Il prodotto da eliminare non esiste", sessionID, nomeRequisito, statoReq);
             return;
         }
         else{
@@ -167,7 +184,9 @@ public:
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
-            InsertToLogDB("INFO", "Rimozione del prodotto dal carrello nel db.", sessionID);
+            statoReq = statoRequisito::Success;
+
+            InsertToLogDB("INFO", "Rimozione del prodotto dal carrello nel db.", sessionID, nomeRequisito, statoReq);
         }
     return;
     }

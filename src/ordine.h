@@ -2,7 +2,7 @@
 #ifndef ORDINE_H
 #define ORDINE_H
 
-#include "main.h"
+//#include "main.h"
 
 
 enum class StatoOrdine {
@@ -58,6 +58,9 @@ public:
       // Connession al database:
       Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
+      std::string nomeRequisito = "Visione ordini effettuati.";
+      statoRequisito statoReq = statoRequisito::Wait;
+
       // Caricamento del sessionID utile per il log.
       std::string sessionID = "";
       sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
@@ -85,7 +88,9 @@ public:
         std::cout << ordine.identificatore_ordine << std::endl;
       }
 
-      InsertToLogDB("INFO", "Visione degli ordini da parte dell utente.", sessionID);
+      statoReq = statoRequisito::Success;
+
+      InsertToLogDB("INFO", "Visione degli ordini da parte dell utente.", sessionID, nomeRequisito, statoReq);
       return;
     }
 
@@ -95,10 +100,16 @@ public:
       // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
+        std::string nomeRequisito = "Annullamento ordine.";
+        statoRequisito statoReq = statoRequisito::Wait;
+
+
         std::string stato_ordine;
         StatoOrdine stato_ordine_annullato;
 
         std::string nome_utente_compratore;
+
+        std::string sessionID = "";
 
         // Seleziono il nome dell'utente compratore che ha effettuato l'ordine:
         sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", idOrdine);
@@ -108,13 +119,16 @@ public:
             nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
         }
         else{
+          statoReq = statoRequisito::NotSuccess;
+
+          InsertToLogDB("ERROR", "Nessune utente compratore ha effettuato l ordine da annullare.", sessionID, nomeRequisito, statoReq);
+
           std::cout << "Nessun utente compratore ha effettuato l'ordine da annullare!" << std::endl;
           return;
         }
 
         // A questo punto possiamo selezionare il sessionId:
         // Caricamento del sessionID utile per il log.
-        std::string sessionID = "";
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
@@ -144,19 +158,26 @@ public:
                   res = db1.ExecSQLcmd(sqlcmd);
                   PQclear(res); 
 
-                  InsertToLogDB("INFO", "Ordine annullato da parte dell utente Compratore.", sessionID);
+                  statoReq = statoRequisito::Success;
+
+                  InsertToLogDB("INFO", "Ordine annullato da parte dell utente Compratore.", sessionID, nomeRequisito, statoReq);
 
               }
               else{
                   std::cout << "L'ordine è stato spedito, perciò l'ordine non può essere annullato! All'arrivo del pacco potrai effettuare il reso" << std::endl;
-                  InsertToLogDB("WARNING", "Ordine non annullabile perchè già spedito.", sessionID);
+
+                  statoReq = statoRequisito::NotSuccess;
+                  InsertToLogDB("WARNING", "Ordine non annullabile perchè già spedito.", sessionID, nomeRequisito, statoReq);
                   return;
               }
               
             }
             else{
                 std::cout << "L'ordine non è stato trovato" << std::endl;
-                InsertToLogDB("ERROR", "Ordine trovato.", sessionID);
+
+                statoReq = statoRequisito::NotSuccess;
+                InsertToLogDB("ERROR", "Ordine trovato.", sessionID, nomeRequisito, statoReq);
+
                 return;
             }  
     return;

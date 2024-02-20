@@ -48,7 +48,10 @@ public:
       Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
       std::string stato_spedizione;
-        
+
+      std::string nomeRequisito = "Effettuazione recensione.";
+      statoRequisito statoReq = statoRequisito::Wait;
+            
       // Innanzitutto controllo se l'ordine è stato spedito e arrivato correttamente
       sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", idOrdine);
       res = db1.ExecSQLtuples(sqlcmd);
@@ -81,23 +84,33 @@ public:
                   res = db1.ExecSQLcmd(sqlcmd);
                   PQclear(res); 
 
-                  InsertToLogDB("INFO", "Effettuata recensione compratore", sessionID);
+                  statoReq = statoRequisito::Success;
+
+                  InsertToLogDB("INFO", "Effettuata recensione compratore", sessionID, nomeRequisito, statoReq);
               }
               else{
                   std::cout << "L'ordine non è stato trovato!" << std::endl;
-                  InsertToLogDB("WARNING", "Ordine non trovato", sessionID);
+
+                  statoReq = statoRequisito::NotSuccess;
+
+                  InsertToLogDB("WARNING", "Ordine non trovato", sessionID, nomeRequisito, statoReq);
                   return;
               }
           }
           else{
               std::cout << "L'ordine è stato spedito, ma non è ancora arrivato, perciò non può essere effettuata la recensione!" << std::endl;
-              InsertToLogDB("WARNING", "Ordine spedito, ma non arrivato, perciò non può essere effettuata la recensione", sessionID);
+
+              statoReq = statoRequisito::NotSuccess;
+              InsertToLogDB("WARNING", "Ordine spedito, ma non arrivato, perciò non può essere effettuata la recensione", sessionID, nomeRequisito, statoReq);
               return;
             }
       }
       else{
           std::cout << "L'ordine non è stato ancora spedito, perciò non può essere effettuata la recensione!" << std::endl;
-          InsertToLogDB("WARNING", "Ordine non spedito, non può essere effettuata la recensione", sessionID);
+
+          statoReq = statoRequisito::NotSuccess;
+
+          InsertToLogDB("WARNING", "Ordine non spedito, non può essere effettuata la recensione", sessionID, nomeRequisito, statoReq);
           return;
       }
     std::cout << "Recensione effettuata" << std::endl;
@@ -110,6 +123,9 @@ public:
         
         // Connession al database:
         Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+
+        std::string nomeRequisito = "Rimozione recensione.";
+        statoRequisito statoReq = statoRequisito::Wait;
 
         // Caricamento del nome dell'utente compratore che vuole rimuovere la recensione effettuata
         std::string nome_utente_compratore;
@@ -132,7 +148,10 @@ public:
         rows = PQntuples(res);
         if (rows < 1){
             std::cout << "La riga da eliminare non esiste!" << std::endl;
-            InsertToLogDB("ERROR", "La recensione non esiste.", sessionID);
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB("ERROR", "La recensione non esiste.", sessionID, nomeRequisito, statoReq);
             return;
         }
         else{
@@ -141,7 +160,9 @@ public:
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
-            InsertToLogDB("INFO", "Recensione eliminata.", sessionID);
+            statoReq = statoRequisito::Success;
+
+            InsertToLogDB("INFO", "Recensione eliminata.", sessionID, nomeRequisito, statoReq);
         }
         return;
     }
