@@ -6,6 +6,16 @@
 #include <unistd.h>
 #include <time.h>
 
+#include <iostream>
+#include <string>
+#include <cctype> // Per isupper() e isdigit()
+#include <sstream>
+#include <random>
+#include <chrono>
+#include <iomanip>
+#include <ctime>
+#include <array>
+
 #include "con2redis.h"
 
 int micro_sleep(long usec);

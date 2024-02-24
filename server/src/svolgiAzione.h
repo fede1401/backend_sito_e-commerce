@@ -29,7 +29,7 @@ void svolgiAzione(Con2DB db1, UtenteCompratore compratore, UtenteTrasportatore t
         nomi_utente[i] = "Utente" + std::to_string(i + 1);
     }
 
-     // Array di vie di residenza
+    // Array di vie di residenza
     std::array<std::string, 5> vie_di_residenza = {"Via Roma", "Via Milano", "Via Napoli", "Via Firenze", "Via Venezia"};
 
     // Array di numeri civici

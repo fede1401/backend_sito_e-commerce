@@ -274,7 +274,7 @@ void effettua_test(){
 
         int index_azioneDaSvolgere = rand() % 34;
 
-        svolgiAzione(db1, compratore1, trasportatore1, fornitore1, index_azioneDaSvolgere);
+        //svolgiAzione(db1, compratore1, trasportatore1, fornitore1, index_azioneDaSvolgere);
 
         std::cout << "t: " << t << std::endl;
 
@@ -921,7 +921,7 @@ public:
 
         return;
 
-        /* 
+        
         Risultati ottenuti:
         Tabella: LogTable
         Row 0: 2024-02-15 17:36:38,   8075,   INFO,   Utente compratore inserito.,   ,   

@@ -7,7 +7,7 @@
 
 // include hiredis
 extern "C" {
-#include <hiredis/hiredis.h>
+#include </usr/include/hiredis/hiredis.h>
 }
 
 // #include "global.h"
