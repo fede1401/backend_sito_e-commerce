@@ -124,3 +124,7 @@ Per assegnare i privilegi per un tipo o tabella nel database postgreSQL:
 ALTER TABLE Spedizione OWNER TO :username ;
 ALTER TYPE statoOrdine OWNER TO :username;
 ```
+
+
+Per eseguire il main dobbiamo prima avviare il server redis in un terminale con il comando:
+``` redis-server ```  

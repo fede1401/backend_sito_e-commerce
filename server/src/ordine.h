@@ -74,7 +74,7 @@ public:
       sprintf(sqlcmd, "SELECT * FROM Ordine WHERE nome_utente_compratore='%s'", nome_utente_compratore.c_str());
       res = db1.ExecSQLtuples(sqlcmd);
       rows = PQntuples(res);
-      int numCols = PQnfields(res);
+      //int numCols = PQnfields(res);
       PQclear(res);
 
       for (int i = 0; i < rows; ++i) {

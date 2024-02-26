@@ -272,7 +272,7 @@ void effettua_test(){
         trasportatore1.stato = atoi(PQgetvalue(res, n, 9));
         trasportatore1.disponibilità = atoi(PQgetvalue(res, n, 10));
 
-        int index_azioneDaSvolgere = rand() % 34;
+        //int index_azioneDaSvolgere = rand() % 34;
 
         //svolgiAzione(db1, compratore1, trasportatore1, fornitore1, index_azioneDaSvolgere);
 

@@ -23,14 +23,14 @@ int main()
     int send_counter = 0;
     int block = 1000000000;
     int pid;
-    unsigned seed;
+    //unsigned seed;
     char username[100];
     char key[100];
     char value[100];
     char streamname[100];
     char msgid[100];
     char fval[100];
-    int i, k, h, sum;
+    int i, k, h;
     char action[100];
     char nome_utente_compratore[100];
     char nome_utente_fornitore[100];
@@ -95,9 +95,20 @@ int main()
     // Connessione a Redis
     printf("main(): pid %d: user %s: connecting to redis ...\n", pid, username);
     c2r = redisConnect("localhost", 6379);
-    printf("main(): pid %d: user %s: connected to redis\n", pid, username);
-    
+    if (c2r == NULL || c2r->err) {
+        if (c2r) {
+            printf("Errore di connessione: %s\n", c2r->errstr);
+            redisFree(c2r);
+        } else {
+            printf("Errore di allocazione del contesto Redis\n");
+        }
+    // Gestisci l'errore e termina il programma o riprova la connessione
+    }
+    printf("main(): pid %d: user %s: connected to redis, %d\n", pid, username, c2r->err);
 
+
+
+    
     // Eliminazione degli stream se esistono
     reply = RedisCommand(c2r, "DEL %s", READ_STREAM);
     assertReply(c2r, reply);
@@ -106,23 +117,37 @@ int main()
     reply = RedisCommand(c2r, "DEL %s", WRITE_STREAM);
     assertReply(c2r, reply);
     dumpReply(reply, 0);
+    
+    
+
+    //printf("Eliminazione vecchie streams!");
 
 
     /* Create streams/groups */
     initStreams(c2r, READ_STREAM);
     initStreams(c2r, WRITE_STREAM);
 
+    printf("Streams create!\n");
+
+    Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+    printf("Connessione al database avvenuta con successo");
+
     while (1)
     {
         //  read
         read_counter++;
+
+        micro_sleep(5000000); // 5 secondi di attesa necessari per far sì che il client mandi tutte le richieste
+
         // Imposto COUNT a -1 per leggere tutti i messaggi disponibili nello stream
         reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM);
 
-        printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM);
+        printf("\n\nmain(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM);
 
         assertReply(c2r, reply);
         dumpReply(reply, 0);
+
+        printf("Effettuato il dump! \n");
 
         // Elaborazione dei messaggi letti
         // Scorro il numero di Streams nella connessione Redis
@@ -134,6 +159,8 @@ int main()
             {
                 ReadStreamNumMsgID(reply, k, i, msgid);
 
+                printf("Message number %d from Stream: %d\n", i, k );
+
                 printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n",
                        pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
@@ -141,14 +168,26 @@ int main()
                 for (h = 1; h < ReadStreamMsgNumVal(reply, k, i); h = h + 1)
                 {
                     ReadStreamMsgVal(reply, k, i, h, fval);
+
+                    printf("\nValue %d from message number %d from Stream: %d\n", h, i, k );
+
                     printf("main(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                    printf("Fval: %s\n", fval);
 
                     // Qui bisogna estrapolare l'azione da effettuare:
                     if (strcmp(fval, "Action") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
+                        printf("\nFval: %s\n", fval);
+
                         strcpy(action, fval);
+                        
+                        printf("Action: %s\n", action);
+                        printf("Action: %s\n\n", std::string(action));
                     }
+
+
                     // una volta estrapolata selezionare tutti i parametri necessari per effettuarla
                     if (strcmp(fval, "nome_utente_compratore") == 0)
                     {
@@ -379,138 +418,512 @@ int main()
                     }
 
                 }
-                printf("main(): pid %d: user %s: sum = %d\n", pid, username, sum);
+                //printf("main(): pid %d: user %s: sum = %d\n", pid, username, sum);
+
+                printf("Action: %s\n", action);
+                printf("\nnome_utente_compratore: %s\n", nome_utente_compratore);
+                printf("nome_utente_fornitore: %s\n", nome_utente_fornitore);
+                printf("nome_utente_trasportatore: %s\n", nome_utente_trasportatore);
+                printf("nome: %s\n", nome);
+                printf("cognome: %s\n", cognome);
+                printf("categoriaUtente: %s\n", categoriaUtente);
+                printf("password: %s\n", password);
+                printf("nuovoNumeroTelefono: %s\n", nuovoNumeroTelefono);
+                printf("vecchiaPassw: %s\n", vecchiaPassw);
+                printf("nuovaPassw: %s\n", nuovaPassw);
+                printf("numeroTelefono: %s\n", numeroTelefono);
+                printf("email: %s\n", email);
+                printf("viaResidenza: %s\n", viaResidenza);
+                printf("numeroCivico: %s\n", numeroCivico);
+                printf("cap: %s\n", cap);
+                printf("cittàResidenza: %s\n", cittàResidenza);
+                printf("confermaPassword: %s\n", confermaPassword);
+                printf("dataCompleanno: %s\n", dataCompleanno);
+                printf("codiceProdotto: %d\n", codiceProdotto);
+                printf("numeroCartaPagamento: %s\n", numeroCartaPagamento);
+                printf("cvvCartaPagamento: %s\n", cvvCartaPagamento);
+                printf("idCarta: %d\n", idCarta);
+                printf("idOrdine: %d\n", idOrdine);
+                printf("nuovaViaResidenza: %s\n", nuovaViaResidenza);
+                printf("nuovoNumCiv: %s\n", nuovoNumCiv);
+                printf("nuovoCAP: %s\n", nuovoCAP);
+                printf("nuovaCittaResidenza: %s\n", nuovaCittaResidenza);
+                printf("via_spedizione: %s\n", via_spedizione);
+                printf("città_spedizione: %s\n", città_spedizione);
+                printf("numero_civico_spedizione: %s\n", numero_civico_spedizione);
+                printf("descrizioneRecensione: %s\n", descrizioneRecensione);
+                printf("voto_stella: %d\n", voto_stella);
+                printf("idRecensione: %d\n", idRecensione);
+                printf("motivazione_reso: %s\n", motivazione_reso);
+                printf("nomeProdotto: %s\n", nomeProdotto);
+                printf("categoriaProdotto: %s\n", categoriaProdotto);
+                printf("aziendaProduzione: %s\n", aziendaProduzione);
+                printf("nuovaAziendaProduzione: %s\n", nuovaAziendaProduzione);
+                printf("descrizioneProdotto: %s\n", descrizioneProdotto);
+                printf("prezzoProdotto: %.2f\n", prezzoProdotto); // Print float with 2 decimal places
+                printf("numeroCopieDisponibili: %d\n", numeroCopieDisponibili);
+                printf("dittaSpedizione: %s\n", dittaSpedizione);
+                printf("nuovaDittaSpedizione: %s\n", nuovaDittaSpedizione);
+                printf("idSpedizione: %d\n", idSpedizione);
 
                 // Qui bisogna svolgere l'azione:
-                Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+                
 
-                if (action == "EFFETTUA REGISTRAZIONE COMPRATORE")
+                printf("Azione: %s\n", action);
+
+                if (std::string(action) == "EFFETTUA REGISTRAZIONE COMPRATORE")
                 {
+                    //printf("Azione: %s\n", action);
+
                     UtenteCompratore compratore;
                     compratore.effettuaRegistrazione(db1, nome_utente_compratore, categoriaUtente, nome, cognome, numeroTelefono, email, viaResidenza, numeroCivico, cap,
                                                      cittàResidenza, password, confermaPassword, dataCompleanno);
 
                     strcpy(outputs, "Registrazione utente compratore avvenuta");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
+                    
                 }
 
-                if (action == "EFFETTUA_LOGIN_COMPRATORE"){
+                if (std::string(action) == "EFFETTUA_LOGIN_COMPRATORE"){
                     UtenteCompratore compratore;
                     compratore.effettua_login(db1, nome_utente_compratore, password);
 
                     strcpy(outputs, "Login avvenuto");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "EFFETTUA_LOGOUT_COMPRATORE"){
+                if (std::string(action) == "EFFETTUA_LOGOUT_COMPRATORE"){
                     UtenteCompratore compratore;
                     compratore.effettua_logout(db1, nome_utente_compratore);
 
                     strcpy(outputs, "Logout avvenuto");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "ELIMINA_PROFILO_COMPRATORE"){
+                if (std::string(action) == "ELIMINA_PROFILO_COMPRATORE"){
                     UtenteCompratore compratore;
                     compratore.elimina_profilo(db1);
 
                     strcpy(outputs, "Eliminazione profilo avvenuta");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "AGGIORNA_NUMERO_TELEFONO_COMPRATORE"){
+                if (std::string(action) == "AGGIORNA_NUMERO_TELEFONO_COMPRATORE"){
                     UtenteCompratore compratore;
                     compratore.aggiornaNumeroDiTelefono(db1, nuovoNumeroTelefono);
 
-                    strcpy(outputs, "Aggiornamento numero telefono utente compratore");                    
+                    strcpy(outputs, "Aggiornamento numero telefono utente compratore");   
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);                 
                 }
 
-                if (action == "AGGIORNA_PASSWORD_COMPRATORE"){
+                if (std::string(action) == "AGGIORNA_PASSWORD_COMPRATORE"){
                     UtenteCompratore compratore;
                     compratore.aggiornaPassword(db1, vecchiaPassw, nuovaPassw);
 
-                    strcpy(outputs, "Aggiornamento password utente compratore");       
+                    strcpy(outputs, "Aggiornamento password utente compratore");  
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);     
                 }
 
-                if (action == "AGGIORNA_RESIDENZA"){
+                if (std::string(action) == "AGGIORNA_RESIDENZA"){
                     UtenteCompratore compratore;
                     compratore.aggiornaResidenza(db1, nuovaViaResidenza, nuovoNumCiv, nuovoCAP, nuovaCittaResidenza);
 
                     strcpy(outputs, "Aggiornamento residenza utente compratore");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "AGGIUNGI_CARTA_PAGAMENTO"){
+                if (std::string(action) == "AGGIUNGI_CARTA_PAGAMENTO"){
                     Carta carta;
                     carta.aggiungi_carta(db1, nome_utente_compratore, numeroCartaPagamento, cvvCartaPagamento);
 
                     strcpy(outputs, "Aggiornamento carta di pagamento");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "RIMUOVI_CARTA_PAGAMENTO"){
+                if (std::string(action) == "RIMUOVI_CARTA_PAGAMENTO"){
                     Carta carta;
                     carta.remove_carta(db1, idCarta);
 
                     strcpy(outputs, "Rimozione carta di pagamento");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "AGGIUNGI_PRODOTTO_CARRELLO"){
+                if (std::string(action) == "AGGIUNGI_PRODOTTO_CARRELLO"){
                     Carrello carrello;
                     carrello.add_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Aggiunta prodotto al carrello");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "RIMUOVI_PRODOTTO_CARRELLO"){
+                if (std::string(action) == "RIMUOVI_PRODOTTO_CARRELLO"){
                     Carrello carrello;
                     carrello.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Rimozione prodotto dal carrello");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "AGGIUNGI_PRODOTTO_LISTADESIDERI"){
+                if (std::string(action) == "AGGIUNGI_PRODOTTO_LISTADESIDERI"){
                     ListaDesideri listadesideri;
                     listadesideri.add_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Aggiunta prodotto lista desideri");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "RIMUOVI_PRODOTTO_LISTADESIDERI"){
+                if (std::string(action) == "RIMUOVI_PRODOTTO_LISTADESIDERI"){
                     ListaDesideri listadesideri;
                     listadesideri.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Rimozione prodotto lista desideri");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "ACQUISTA_PRODOTTO"){
+                if (std::string(action) == "ACQUISTA_PRODOTTO"){
                     Product prodotto;
                     prodotto.acquistaProdotto(db1, nome_utente_compratore, via_spedizione, città_spedizione, numero_civico_spedizione);
 
                     strcpy(outputs, "Acquisto prodotto");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "RICERCA_PRODOTTO"){
+                if (std::string(action) == "RICERCA_PRODOTTO"){
                     Product prodotto;
                     prodotto.ricerca_mostra_Prodotto(db1, nomeProdotto);
 
                     strcpy(outputs, "Ricerca prodotto");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "VISIONA_ORDINI_EFFETTUATI"){
+                if (std::string(action) == "VISIONA_ORDINI_EFFETTUATI"){
 
                     Ordine ordine;
                     ordine.visione_ordini_effettuati(db1, nome_utente_compratore);
 
                     strcpy(outputs, "Visione ordini effettuata con successo");
 
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
+
                 }
 
 
-                if (action == "ANNULLA_ORDINE"){
+                if (std::string(action) == "ANNULLA_ORDINE"){
                     
                     Ordine ordine;
                     ordine.annulla_ordine(db1, idOrdine);
 
                     strcpy(outputs, "Ordine annullato");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                     
                 }
 
-                if (action == "EFFETTUA_RESO"){
+                if (std::string(action) == "EFFETTUA_RESO"){
 
                     Reso reso;
                     
@@ -520,180 +933,580 @@ int main()
                     reso.effettuaReso(db1, idOrdine, motivazioneReso::CambioOpinione);
 
                     strcpy(outputs, "Effettuamento reso");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
 
-                if (action == "EFFETTUA_RECENSIONE"){
+                if (std::string(action) == "EFFETTUA_RECENSIONE"){
 
                     Recensione recensione;
                     // Modificare
                     //if motivazione_reso == "";
                     recensione.effettuaRecensione(db1, idOrdine, descrizioneRecensione, votoStelle::Cinque);
                     strcpy(outputs, "Effettuamento recensione");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
 
-                if (action == "RIMUOVI_RECENSIONE"){
+                if (std::string(action) == "RIMUOVI_RECENSIONE"){
 
                     Recensione recensione;
 
                     recensione.remove_recensione(db1, idRecensione);
 
                     strcpy(outputs, "Recensione rimossa");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
 
 
                 // Utente fornitore
-                if (action == "EFFETTUA_REGISTRAZIONE_FORNITORE"){
+                if (std::string(action) == "EFFETTUA_REGISTRAZIONE_FORNITORE"){
 
                     UtenteFornitore fornitore;
                     fornitore.effettuaRegistrazione(db1, nome_utente_fornitore, categoriaUtente, nome, cognome, numeroTelefono, email, password, confermaPassword,
                     aziendaProduzione);
 
                     strcpy(outputs, "Registrazione utente fornitore avvenuta");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "AGGIORNA_NOME_AZIENDAPRODUZIONE"){
+                if (std::string(action) == "AGGIORNA_NOME_AZIENDAPRODUZIONE"){
                     UtenteFornitore fornitore;
                     fornitore.aggiornaNomeAziendaProduttrice(db1, nuovaAziendaProduzione);
 
                     strcpy(outputs, "Registrazione utente fornitore avvenuta");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                     
                 }
 
-                if (action == "AGGIUNGI_PRODOTTO_SITO"){
+                if (std::string(action) == "AGGIUNGI_PRODOTTO_SITO"){
                     Product prodotto;
                     prodotto.add_new_product(db1, nomeProdotto, categoriaProdotto, prezzoProdotto, descrizioneProdotto, aziendaProduzione, numeroCopieDisponibili);
 
                     strcpy(outputs, "Prodotto aggiunto al sito");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "RIMUOVI_PRODOTTO_SITO"){
+                if (std::string(action) == "RIMUOVI_PRODOTTO_SITO"){
                     Product prodotto;
 
                     prodotto.remove_prodotto(db1, codiceProdotto);
 
                     strcpy(outputs, "Prodotto rimosso dal sito");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
                 
 
-                if (action == "EFFETTUA_LOGIN_FORNITORE"){
+                if (std::string(action) == "EFFETTUA_LOGIN_FORNITORE"){
                     UtenteFornitore fornitore;
 
                     fornitore.effettua_login(db1, nome_utente_fornitore, password);
 
                     strcpy(outputs, "Login utente fornitore avvenuta");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "EFFETTUA_LOGOUT_FORNITORE"){
+                if (std::string(action) == "EFFETTUA_LOGOUT_FORNITORE"){
                     UtenteFornitore fornitore;
 
                     fornitore.effettua_logout(db1, nome_utente_fornitore);
 
                     strcpy(outputs, "Logout utente fornitore avvenuta");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "ELIMINA_PROFILO_FORNITORE"){
+                if (std::string(action) == "ELIMINA_PROFILO_FORNITORE"){
                     UtenteFornitore fornitore;
 
                     fornitore.elimina_profilo(db1);
 
                     strcpy(outputs, "Eliminazione utente fornitore avvenuta");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "AGGIORNA_NUMERO_TELEFONO_FORNITORE"){
+                if (std::string(action) == "AGGIORNA_NUMERO_TELEFONO_FORNITORE"){
                     UtenteFornitore fornitore;
 
                     fornitore.aggiornaNumeroDiTelefono(db1, nuovoNumeroTelefono);
 
                     strcpy(outputs, "Aggiornamento numero di telefono fornitore");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n",action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "AGGIORNA_PASSWORD_FORNITORE"){
+                if (std::string(action) == "AGGIORNA_PASSWORD_FORNITORE"){
                     UtenteFornitore fornitore;
 
                     fornitore.aggiornaPassword(db1, vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, "Aggiornamento password utente fornitore");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
 
 
                 // Utente trasportatore
-                 if (action == "EFFETTUA_REGISTRAZIONE_TRASPORTATORE"){
+                 if (std::string(action) == "EFFETTUA_REGISTRAZIONE_TRASPORTATORE"){
 
                     UtenteTrasportatore trasportatore;
 
                     trasportatore.effettuaRegistrazione(db1, nome_utente_trasportatore, categoriaUtente, nome, cognome, numeroTelefono, email, password, confermaPassword, dittaSpedizione);
 
                     strcpy(outputs, "Effettuata registrazione trasportatore");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "AGGIORNA_NOME_DITTASPEDIZIONE"){
+                if (std::string(action) == "AGGIORNA_NOME_DITTASPEDIZIONE"){
 
                     UtenteTrasportatore trasportatore;
                     trasportatore.aggiornaNomeDittaSpedizione(db1, nuovaDittaSpedizione);
 
                     strcpy(outputs, "Aggiornamento ditta spedizione");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "AVVISA_SPEDIZIONE_EFFETTUATA"){
+                if (std::string(action) == "AVVISA_SPEDIZIONE_EFFETTUATA"){
                     Spedizione spedizione;
                     spedizione.spedizioneConsegnata(db1, idSpedizione);
                     
                     strcpy(outputs, "Spedizione effettuata");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "ASSEGNA_ORDINE_TRASPORTATORE"){
+                if (std::string(action) == "ASSEGNA_ORDINE_TRASPORTATORE"){
 
                     Spedizione spedizione;
                     spedizione.assegnaOrdineTrasportatore(db1);
 
                     strcpy(outputs, "Spedizione assegnata");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
+
 
                 
 
-                if (action == "EFFETTUA_LOGIN_TRASPORTATORE"){
+                if (std::string(action) == "EFFETTUA_LOGIN_TRASPORTATORE"){
                     UtenteTrasportatore trasportatore;
 
                     trasportatore.effettua_login(db1, nome_utente_trasportatore, password);
 
                     strcpy(outputs, "Login utente trasportatore avvenuta");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "EFFETTUA_LOGOUT_TRASPORTATORE"){
+                if (std::string(action) == "EFFETTUA_LOGOUT_TRASPORTATORE"){
                     UtenteTrasportatore trasportatore;
 
                     trasportatore.effettua_logout(db1, nome_utente_trasportatore);
 
                     strcpy(outputs, "Logout utente trasportatore avvenuta");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "ELIMINA_PROFILO_TRASPORTATORE"){
+                if (std::string(action) == "ELIMINA_PROFILO_TRASPORTATORE"){
                     UtenteTrasportatore trasportatore;
 
                     trasportatore.elimina_profilo(db1);
 
                     strcpy(outputs, "Eliminazione utente trasportatore avvenuta");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "AGGIORNA_NUMERO_TELEFONO_TRASPORTATORE"){
+                if (std::string(action) == "AGGIORNA_NUMERO_TELEFONO_TRASPORTATORE"){
                     UtenteTrasportatore trasportatore;
 
                     trasportatore.aggiornaNumeroDiTelefono(db1, nuovoNumeroTelefono);
 
                     strcpy(outputs, "Aggiornamento numero di telefono trasportatore");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
-                if (action == "AGGIORNA_PASSWORD_TRASPORTATORE"){
+                if (std::string(action) == "AGGIORNA_PASSWORD_TRASPORTATORE"){
                     UtenteTrasportatore trasportatore;
 
                     trasportatore.aggiornaPassword(db1, vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, "Aggiornamento password utente trasportatore");
+
+                    freeReplyObject(reply);
+
+                    // send result to client
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
+
+                    printf("Effettuata azione: %s\n", action);
+
+                    printf("Result: %s \n", outputs);
+
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+                    /* sleep   */
+                    //micro_sleep(5000000);
                 }
 
 
@@ -702,21 +1515,35 @@ int main()
             }
         }
 
-        freeReplyObject(reply);
-
-
         // send result to client
-        send_counter++;
-        sprintf(key, "Result");
-        sprintf(value, "%s", outputs);
+                    send_counter++;
+                    sprintf(key, "Result");
+                    sprintf(value, "%s", outputs);
 
-        reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
-        assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-        printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
-        freeReplyObject(reply);
+                    printf("Result: %s \n", outputs);
 
-        /* sleep   */
-        micro_sleep(5000000);
+                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+                    freeReplyObject(reply);
+
+        // freeReplyObject(reply);
+
+
+        // // send result to client
+        // send_counter++;
+        // sprintf(key, "Result");
+        // sprintf(value, "%s", outputs);
+
+        // reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+        // assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+        // printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+        // freeReplyObject(reply);
+
+        // /* sleep   */
+        // micro_sleep(5000000);
+        
+
     } // while ()
 
     redisFree(c2r);

@@ -82,7 +82,20 @@ void dumpReply(redisReply *r, int indent) {
 
 
 void initStreams(redisContext *c, const char *stream) {
-    redisReply *r = RedisCommand(c, "XGROUP CREATE %s diameter $ MKSTREAM", stream);
-    assertReply(c, r);
-    freeReplyObject(r);
+    if (c == NULL || c->err) {
+        printf("Errore di connessione Redis: %s\n", c ? c->errstr : "Errore sconosciuto");
+        // Gestisci l'errore e termina il programma o riprova la connessione
+        return;
+    }
+
+    redisReply *r = (redisReply *)redisCommand(c, "XGROUP CREATE %s diameter $ MKSTREAM", stream);
+    if (r == NULL) {
+        printf("Errore nell'esecuzione del comando Redis\n");
+        // Gestisci l'errore, ad esempio liberando le risorse e terminando il programma
+    } else {
+        printf("Effettuato comando RedisComand\n");
+        assertReply(c, r);
+        freeReplyObject(r);
+        printf("Stream inizializzata.");
+    }
 }

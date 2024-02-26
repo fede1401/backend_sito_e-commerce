@@ -2,6 +2,7 @@
 #include "main.h"
 #include <array>
 #include <string>
+#include <string.h>
 
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
 // Usage: ./streams <add count> <read count> [block time, default: 1]
@@ -60,77 +61,62 @@ int main()
     int i, k, h;
     std::string server_types[38] = {
         
-                                    "EFFETTUA_REGISTRAZIONE_COMPRATORE", 
-                                    "EFFETTUA_REGISTRAZIONE_FORNITORE", 
-                                    "EFFETTUA_REGISTRAZIONE_TRASPORTATORE", 
+                                    "EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA REGISTRAZIONE FORNITORE", "EFFETTUA REGISTRAZIONE TRASPORTATORE", 
 
-                                    "EFFETTUA_LOGIN_COMPRATORE", 
-                                    "EFFETTUA_LOGIN_FORNITORE", 
-                                    "EFFETTUA_LOGIN_TRASPORTATORE", 
+                                    "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGIN FORNITORE", "EFFETTUA LOGIN TRASPORTATORE", 
+
+                                    "AGGIORNA NUMERO TELEFONO COMPRATORE", "AGGIORNA NUMERO TELEFONO FORNITORE", "AGGIORNA NUMERO TELEFONO TRASPORTATORE", 
 
 
-                                    "AGGIORNA_NUMERO_TELEFONO_COMPRATORE", 
-                                    "AGGIORNA_NUMERO_TELEFONO_FORNITORE", 
-                                    "AGGIORNA_NUMERO_TELEFONO_TRASPORTATORE", 
+                                    "AGGIORNA PASSWORD COMPRATORE", "AGGIORNA PASSWORD FORNITORE","AGGIORNA PASSWORD TRASPORTATORE",
 
 
-                                    "AGGIORNA_PASSWORD_COMPRATORE",
-                                    "AGGIORNA_PASSWORD_FORNITORE",
-                                    "AGGIORNA_PASSWORD_TRASPORTATORE",
+                                    "AGGIORNA RESIDENZA", 
+                                    "AGGIORNA NOME AZIENDAPRODUZIONE", 
+                                    "AGGIORNA NOME DITTASPEDIZIONE", 
 
 
-                                    "AGGIORNA_RESIDENZA", 
-                                    "AGGIORNA_NOME_AZIENDAPRODUZIONE", 
-                                    "AGGIORNA_NOME_DITTASPEDIZIONE", 
+                                    "AGGIUNGI CARTA PAGAMENTO",
 
 
-                                    "AGGIUNGI_CARTA_PAGAMENTO",
+                                    "AGGIUNGI PRODOTTO_SITO", 
+                                    "AGGIUNGI PRODOTTO_CARRELLO", 
+                                    "AGGIUNGI PRODOTTO_LISTADESIDERI", 
 
 
-                                    "AGGIUNGI_PRODOTTO_SITO", 
-                                    "AGGIUNGI_PRODOTTO_CARRELLO", 
-                                    "AGGIUNGI_PRODOTTO_LISTADESIDERI", 
+                                    "RICERCA PRODOTTO", 
+
+                                    "ACQUISTA PRODOTTO", 
+
+                                    "ASSEGNA ORDINE TRASPORTATORE",
+
+                                    "AVVISA SPEDIZIONE EFFETTUATA", 
+
+                                    "VISIONA ORDINI EFFETTUATI",
+
+                                    "EFFETTUA RECENSIONE",
 
 
-                                    "RICERCA_PRODOTTO", 
+                                    "ANNULLA ORDINE", 
 
-                                    "ACQUISTA_PRODOTTO", 
-
-                                    "ASSEGNA_ORDINE_TRASPORTATORE",
-
-                                    "AVVISA_SPEDIZIONE_EFFETTUATA", 
-
-                                    "VISIONA_ORDINI_EFFETTUATI",
-
-                                    "EFFETTUA_RECENSIONE",
+                                    "EFFETTUA RESO", 
 
 
-                                    "ANNULLA_ORDINE", 
-
-                                    "EFFETTUA_RESO", 
+                                    "RIMUOVI RECENSIONE",
 
 
-                                    "RIMUOVI_RECENSIONE",
+                                    "RIMUOVI CARTA PAGAMENTO", 
+
+                                    "RIMUOVI PRODOTTO CARRELLO", 
+
+                                    "RIMUOVI PRODOTTO LISTADESIDERI", 
+
+                                    "RIMUOVI PRODOTTO SITO",
 
 
-                                    "RIMUOVI_CARTA_PAGAMENTO", 
+                                    "EFFETTUA LOGOUT COMPRATORE", "EFFETTUA LOGOUT FORNITORE", "EFFETTUA LOGOUT TRASPORTATORE", 
 
-                                    "RIMUOVI_PRODOTTO_CARRELLO", 
-
-                                    "RIMUOVI_PRODOTTO_LISTADESIDERI", 
-
-                                    "RIMUOVI_PRODOTTO_SITO",
-
-
-                                    "EFFETTUA_LOGOUT_COMPRATORE", 
-                                    "EFFETTUA_LOGOUT_FORNITORE", 
-                                    "EFFETTUA_LOGOUT_TRASPORTATORE", 
-
-
-
-                                    "ELIMINA_PROFILO_COMPRATORE", 
-                                    "ELIMINA_PROFILO_FORNITORE", 
-                                    "ELIMINA_PROFILO_TRASPORTATORE", 
+                                    "ELIMINA PROFILO COMPRATORE", "ELIMINA PROFILO FORNITORE", "ELIMINA PROFILO TRASPORTATORE", 
 
         };
 
@@ -142,11 +128,13 @@ int main()
 #endif
 
     // Inizializzazione del seme per i numeri casuali
-    seed = (unsigned)time(NULL);
-    srand(seed);
+    //seed = (unsigned)time(NULL);
+    //srand(seed);
 
     // Generazione del nome utente basato su un numero casuale
-    sprintf(username, "%u", rand());
+    //sprintf(username, "%u", rand());
+
+    strcpy(username, "federico");
 
     // Ottenimento dell'identificatore del processo
     pid = getpid();
@@ -170,7 +158,7 @@ int main()
     initStreams(c2r, READ_STREAM);
     initStreams(c2r, WRITE_STREAM);
 
-    printf("Creazione Streams");
+    printf("Creazione Streams\n");
 
 
     while (1)
@@ -179,11 +167,14 @@ int main()
         send_counter++;
 
         // Itero sulle azioni che può effettuare il client
-        for (i=0; i<30; i++){
-            sprintf(key1, "Action");
-            sprintf(value1, "%s", server_types[i]);
+        for (i=0; i<38; i++){
 
-            if (server_types[i]== "EFFETTUA_REGISTRAZIONE_COMPRATORE"){
+            printf("\nValore della variabile i: %d \n", i);
+
+            sprintf(key1, "Action");
+            sprintf(value1, server_types[i].c_str());
+
+            if (server_types[i]== "EFFETTUA REGISTRAZIONE COMPRATORE"){
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, "marco1");
 
@@ -228,7 +219,13 @@ int main()
                                         WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
                                         key9, value9, key10, value10, key11, value11, key12, value12, key13, value13, key14, value14);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, 
+
+
+                printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                        WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                        key9, value9, key10, value10, key11, value11, key12, value12, key13, value13, key14, value14);
+
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n\n", pid, WRITE_STREAM, 
                                         key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
                                         key9, value9, key10, value10, key11, value11, key12, value12, key13, value13, key14, value14, 
                                         reply->str);
@@ -240,7 +237,7 @@ int main()
 
 
 
-            if (server_types[i] == "EFFETTUA_LOGIN_COMPRATORE"){
+            if (server_types[i] == "EFFETTUA LOGIN COMPRATORE"){
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, "marco1");
 
@@ -249,45 +246,53 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }
 
 
-            if (server_types[i] == "EFFETTUA_LOGOUT_COMPRATORE"){
+            if (server_types[i] == "EFFETTUA LOGOUT COMPRATORE"){
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, "marco1");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
 
-            if (server_types[i] == "ELIMINA_PROFILO_COMPRATORE"){
+            if (server_types[i] == "ELIMINA PROFILO COMPRATORE"){
             
                 reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key1, value1);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s \n", WRITE_STREAM, key1, value1);
                 printf("main(): pid =%d: stream %s: Added %s %s (id: %s)\n", pid, WRITE_STREAM,  key1, value1, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "AGGIORNA_NUMERO_TELEFONO_COMPRATORE"){
+            if (server_types[i] == "AGGIORNA NUMERO TELEFONO_ OMPRATORE"){
                 sprintf(key2, "nuovoNumeroTelefono");
                 sprintf(value2, "3384459873");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "AGGIORNA_PASSWORD_COMPRATORE"){
+            if (server_types[i] == "AGGIORNA PASSWORD COMPRATORE"){
                 sprintf(key2, "vecchiaPassw");
                 sprintf(value2, "Passsss..121");
 
@@ -296,12 +301,14 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "AGGIORNA_RESIDENZA"){
+            if (server_types[i] == "AGGIORNA RESIDENZA"){
                 sprintf(key2, "nuovaViaResidenza");
                 sprintf(value2, "Via dei Babbuini");
 
@@ -317,12 +324,14 @@ int main()
         
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf( "XADD %s * %s %s %s %s %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "AGGIUNGI_CARTA_PAGAMENTO"){
+            if (server_types[i] == "AGGIUNGI CARTA PAGAMENTO"){
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, "marco1");
 
@@ -334,24 +343,28 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "RIMUOVI_CARTA_PAGAMENTO"){
+            if (server_types[i] == "RIMUOVI CARTA PAGAMENTO"){
                 sprintf(key2, "idCarta");
                 sprintf(value2, "1");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf( "XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
 
-            if (server_types[i] == "AGGIUNGI_PRODOTTO_CARRELLO"){
+            if (server_types[i] == "AGGIUNGI PRODOTTO CARRELLO"){
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, "marco1");
 
@@ -360,12 +373,14 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "RIMUOVI_PRODOTTO_CARRELLO"){
+            if (server_types[i] == "RIMUOVI PRODOTTO CARRELLO"){
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, "marco1");
 
@@ -374,12 +389,14 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "AGGIUNGI_PRODOTTO_LISTADESIDERI"){
+            if (server_types[i] == "AGGIUNGI PRODOTTO LISTADESIDERI"){
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, "marco1");
 
@@ -388,12 +405,14 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "RIMUOVI_PRODOTTO_LISTADESIDERI"){
+            if (server_types[i] == "RIMUOVI PRODOTTO LISTADESIDERI"){
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, "marco1");
 
@@ -402,12 +421,14 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "ACQUISTA_PRODOTTO"){
+            if (server_types[i] == "ACQUISTA PRODOTTO"){
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, "marco1");
 
@@ -423,46 +444,54 @@ int main()
         
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "RICERCA_PRODOTTO"){
+            if (server_types[i] == "RICERCA PRODOTTO"){
                 sprintf(key2, "nomeProdotto");
                 sprintf(value2, "Nike Dump");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "VISIONA_ORDINI_EFFETTUATI"){
+            if (server_types[i] == "VISIONA ORDINI EFFETTUATI"){
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, "marco1");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "ANNULLA_ORDINE"){
+            if (server_types[i] == "ANNULLA ORDINE"){
                 sprintf(key2, "idOrdine");
                 sprintf(value2, "1");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
 
-            if (server_types[i] == "EFFETTUA_RESO"){
+            if (server_types[i] == "EFFETTUA RESO"){
                 sprintf(key2, "idOrdine");
                 sprintf(value2, "1");
 
@@ -472,13 +501,15 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }
 
 
-            if (server_types[i] == "EFFETTUA_RECENSIONE"){
+            if (server_types[i] == "EFFETTUA RECENSIONE"){
                 sprintf(key2, "idOrdine");
                 sprintf(value2, "1");
 
@@ -491,18 +522,22 @@ int main()
                         
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
 
                 freeReplyObject(reply);
             }
 
 
-            if (server_types[i] == "RIMUOVI_RECENSIONE"){
+            if (server_types[i] == "RIMUOVI RECENSIONE"){
                 sprintf(key2, "idRecensione");
                 sprintf(value2, "1");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
@@ -510,7 +545,7 @@ int main()
 
 
 
-            if (server_types[i]== "EFFETTUA_REGISTRAZIONE_FORNITORE"){
+            if (server_types[i]== "EFFETTUA REGISTRAZIONE FORNITORE"){
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, "luigi2");
 
@@ -543,6 +578,10 @@ int main()
                                         WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
                                         key9, value9, key10, value10);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, 
                                         key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
                                         key9, value9, key10, value10, reply->str);
@@ -551,19 +590,21 @@ int main()
             }
 
 
-            if (server_types[i] == "AGGIORNA_NOME_AZIENDAPRODUZIONE"){
+            if (server_types[i] == "AGGIORNA NOME AZIENDAPRODUZIONE"){
                 sprintf(key2, "nuovaAziendaProduzione");
                 sprintf(value2, "Adidas");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
 
-            if (server_types[i]== "AGGIUNGI_PRODOTTO_SITO"){
+            if (server_types[i]== "AGGIUNGI PRODOTTO SITO"){
                 sprintf(key2, "nomeProdotto");
                 sprintf(value2, "luigi2");
 
@@ -585,6 +626,9 @@ int main()
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
                                         WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, 
                                         key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, reply->str);
 
@@ -592,12 +636,14 @@ int main()
             }
 
 
-            if (server_types[i] == "RIMUOVI_PRODOTTO_SITO"){
+            if (server_types[i] == "RIMUOVI PRODOTTO SITO"){
                 sprintf(key2, "codiceProdotto");
                 sprintf(value2, "1");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
@@ -605,7 +651,7 @@ int main()
 
 
 
-            if (server_types[i] == "EFFETTUA_LOGIN_FORNITORE"){
+            if (server_types[i] == "EFFETTUA LOGIN FORNITORE"){
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, "luigi2");
 
@@ -614,45 +660,53 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }
 
 
-            if (server_types[i] == "EFFETTUA_LOGOUT_FORNITORE"){
+            if (server_types[i] == "EFFETTUA LOGOUT FORNITORE"){
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, "luigi2");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
 
-            if (server_types[i] == "ELIMINA_PROFILO_FORNITORE"){
+            if (server_types[i] == "ELIMINA PROFILO FORNITORE"){
             
                 reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key1, value1);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s \n", WRITE_STREAM, key1, value1);
                 printf("main(): pid =%d: stream %s: Added %s %s (id: %s)\n", pid, WRITE_STREAM,  key1, value1, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "AGGIORNA_NUMERO_TELEFONO_FORNITORE"){
+            if (server_types[i] == "AGGIORNA NUMERO TELEFONO FORNITORE"){
                 sprintf(key2, "nuovoNumeroTelefono");
                 sprintf(value2, "1119992228");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "AGGIORNA_PASSWORD_FORNITORE"){
+            if (server_types[i] == "AGGIORNA PASSWORD FORNITORE"){
                 sprintf(key2, "vecchiaPassw");
                 sprintf(value2, "Passsss..121");
 
@@ -661,6 +715,8 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf( "XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
@@ -668,7 +724,7 @@ int main()
 
 
 
-            if (server_types[i]== "EFFETTUA_REGISTRAZIONE_TRASPORTATORE"){
+            if (server_types[i]== "EFFETTUA REGISTRAZIONE TRASPORTATORE"){
                 sprintf(key2, "nome_utente_trasportatore");
                 sprintf(value2, "andrea3");
 
@@ -701,6 +757,11 @@ int main()
                                         WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
                                         key9, value9, key10, value10);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, 
                                         key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
                                         key9, value9, key10, value10, reply->str);
@@ -708,33 +769,39 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "AGGIORNA_NOME_DITTASPEDIZIONE"){
+            if (server_types[i] == "AGGIORNA NOME DITTASPEDIZIONE"){
                 sprintf(key2, "nuovaDittaSpedizione");
                 sprintf(value2, "Bartolini");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
 
-            if (server_types[i] == "AVVISA_SPEDIZIONE_EFFETTUATA"){
+            if (server_types[i] == "AVVISA SPEDIZIONE EFFETTUATA"){
                 sprintf(key2, "idSpedizione");
                 sprintf(value2, "1");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "ASSEGNA_ORDINE_TRASPORTATORE"){
+            if (server_types[i] == "ASSEGNA ORDINE TRASPORTATORE"){
         
                 reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key1, value1);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s \n", WRITE_STREAM, key1, value1);
                 printf("main(): pid =%d: stream %s: Added %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, reply->str);
 
                 freeReplyObject(reply);
@@ -742,7 +809,7 @@ int main()
 
 
 
-            if (server_types[i] == "EFFETTUA_LOGIN_TRASPORTATORE"){
+            if (server_types[i] == "EFFETTUA LOGIN TRASPORTATORE"){
                 sprintf(key2, "nome_utente_trasportatore");
                 sprintf(value2, "andrea3");
 
@@ -751,6 +818,8 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
@@ -763,33 +832,38 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
 
-            if (server_types[i] == "ELIMINA_PROFILO_TRASPORTATORE"){
+            if (server_types[i] == "ELIMINA PROFILO TRASPORTATORE"){
             
                 reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key1, value1);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                printf("XADD %s * %s %s \n", WRITE_STREAM, key1, value1);
                 printf("main(): pid =%d: stream %s: Added %s %s (id: %s)\n", pid, WRITE_STREAM,  key1, value1, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "AGGIORNA_NUMERO_TELEFONO_TRASPORTATORE"){
+            if (server_types[i] == "AGGIORNA NUMERO TELEFONO TRASPORTATORE"){
                 sprintf(key2, "nuovoNumeroTelefono");
                 sprintf(value2, "576768474738");
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "AGGIORNA_PASSWORD_TRASPORTATORE"){
+            if (server_types[i] == "AGGIORNA PASSWORD TRASPORTATORE"){
                 sprintf(key2, "vecchiaPassw");
                 sprintf(value2, "Passsss..121");
 
@@ -798,6 +872,8 @@ int main()
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
@@ -808,10 +884,14 @@ int main()
         }
 
 
+        printf("\n\nOra di leggere i risultati dal server. \n");
+
         //  read result from server
         read_counter++;
         reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >",
                              username, block, READ_STREAM);
+
+        printf("Effettuato comando per leggere i messaggi della Streams. \n");
 
         printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM);
 
@@ -823,10 +903,14 @@ int main()
         {
             ReadStreamName(reply, streamname, k);
 
+            printf("Numero stream: %d\n", k);
+
             // Scorro il numero di messaggi della Streams Redis
             for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
             {
                 ReadStreamNumMsgID(reply, k, i, msgid);
+
+                printf("Numero messaggio: %d della Stream %d\n", i, k);
 
                 printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n",
                        pid, username, streamname,
@@ -846,7 +930,7 @@ int main()
         freeReplyObject(reply);
 
         /* sleep   */
-        micro_sleep(5000000);
+        micro_sleep(10000000); // 10 secondi di attesa
     } // while ()
 
     redisFree(c2r);
