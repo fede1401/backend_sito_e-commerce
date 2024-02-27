@@ -79,9 +79,9 @@ int main()
                                     "AGGIUNGI CARTA PAGAMENTO",
 
 
-                                    "AGGIUNGI PRODOTTO_SITO", 
-                                    "AGGIUNGI PRODOTTO_CARRELLO", 
-                                    "AGGIUNGI PRODOTTO_LISTADESIDERI", 
+                                    "AGGIUNGI PRODOTTO SITO", 
+                                    "AGGIUNGI PRODOTTO CARRELLO", 
+                                    "AGGIUNGI PRODOTTO LISTADESIDERI", 
 
 
                                     "RICERCA PRODOTTO", 
@@ -279,7 +279,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (server_types[i] == "AGGIORNA NUMERO TELEFONO_ OMPRATORE"){
+            if (server_types[i] == "AGGIORNA NUMERO TELEFONO COMPRATORE"){
                 sprintf(key2, "nuovoNumeroTelefono");
                 sprintf(value2, "3384459873");
 
@@ -826,7 +826,7 @@ int main()
             }
 
 
-            if (server_types[i] == "EFFETTUA_LOGOUT_TRASPORTATORE"){
+            if (server_types[i] == "EFFETTUA LOGOUT TRASPORTATORE"){
                 sprintf(key2, "nome_utente_trasportatore");
                 sprintf(value2, "andrea3");
 

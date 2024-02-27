@@ -137,7 +137,7 @@ int main()
         //  read
         read_counter++;
 
-        micro_sleep(5000000); // 5 secondi di attesa necessari per far sì che il client mandi tutte le richieste
+        micro_sleep(7000000); // 7 secondi di attesa necessari per far sì che il client mandi tutte le richieste
 
         // Imposto COUNT a -1 per leggere tutti i messaggi disponibili nello stream
         reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM);
@@ -154,18 +154,27 @@ int main()
         for (k = 0; k < ReadNumStreams(reply); k++)
         {
             ReadStreamName(reply, streamname, k);
+
+            int numberMessageStream = ReadStreamNumMsg(reply, k);
+            printf("Number of message about Stream = %d \n", numberMessageStream);
+            
             // Scorro il numero di messaggi della Streams Redis
-            for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+            for (i = 0; i < ReadStreamNumMsg(reply, k); i++)  // Il problema dell'errore di segmentazione è qua!!!
             {
-                ReadStreamNumMsgID(reply, k, i, msgid);
+                printf("\n\n\n\nPROSSIMO MESSAGGIO NELLA STREAM.");
+
+                ReadStreamNumMsgID(reply, k, i, msgid); 
 
                 printf("Message number %d from Stream: %d\n", i, k );
 
                 printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n",
                        pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
+                
+                
                 // Scorro il numero di valori del messaggio della Streams Redis
-                for (h = 1; h < ReadStreamMsgNumVal(reply, k, i); h = h + 1)
+                // h deve partire da 0, altrimenti non troverà mai fval == "Action"
+                for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h = h + 1)
                 {
                     ReadStreamMsgVal(reply, k, i, h, fval);
 
@@ -183,8 +192,7 @@ int main()
 
                         strcpy(action, fval);
                         
-                        printf("Action: %s\n", action);
-                        printf("Action: %s\n\n", std::string(action));
+                        printf("Action: %s\n\n", action);
                     }
 
 
@@ -420,8 +428,8 @@ int main()
                 }
                 //printf("main(): pid %d: user %s: sum = %d\n", pid, username, sum);
 
-                printf("Action: %s\n", action);
-                printf("\nnome_utente_compratore: %s\n", nome_utente_compratore);
+                printf("\nAction: %s\n", action);
+                printf("nome_utente_compratore: %s\n", nome_utente_compratore);
                 printf("nome_utente_fornitore: %s\n", nome_utente_fornitore);
                 printf("nome_utente_trasportatore: %s\n", nome_utente_trasportatore);
                 printf("nome: %s\n", nome);
@@ -481,29 +489,32 @@ int main()
 
                     strcpy(outputs, "Registrazione utente compratore avvenuta");
 
-                    freeReplyObject(reply);
+                    //freeReplyObject(reply); Cerchiamo di capire se è questo che crea l'errore di segmentazione
 
                     // send result to client
-                    send_counter++;
-                    sprintf(key, "Result");
-                    sprintf(value, "%s", outputs);
+                    
+                    // send_counter++;
+                    // sprintf(key, "Result");
+                    // sprintf(value, "%s", outputs);
 
 
-                    printf("Effettuata azione: %s\n", action);
+                    // printf("Effettuata azione: %s\n", action);
 
-                    printf("Result: %s \n", outputs);
+                    // printf("Result: %s \n", outputs);
 
-                    reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
-                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-                    printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
-                    freeReplyObject(reply);
+                    // reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
+                    // assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    // printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
+
+                    // freeReplyObject(reply);
+                    
 
                     /* sleep   */
                     //micro_sleep(5000000);
                     
                 }
 
-                if (std::string(action) == "EFFETTUA_LOGIN_COMPRATORE"){
+                if (std::string(action) == "EFFETTUA LOGIN COMPRATORE"){
                     UtenteCompratore compratore;
                     compratore.effettua_login(db1, nome_utente_compratore, password);
 
@@ -529,7 +540,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "EFFETTUA_LOGOUT_COMPRATORE"){
+                if (std::string(action) == "EFFETTUA LOGOUT COMPRATORE"){
                     UtenteCompratore compratore;
                     compratore.effettua_logout(db1, nome_utente_compratore);
 
@@ -555,7 +566,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "ELIMINA_PROFILO_COMPRATORE"){
+                if (std::string(action) == "ELIMINA PROFILO COMPRATORE"){
                     UtenteCompratore compratore;
                     compratore.elimina_profilo(db1);
 
@@ -581,7 +592,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AGGIORNA_NUMERO_TELEFONO_COMPRATORE"){
+                if (std::string(action) == "AGGIORNA NUMERO TELEFONO COMPRATORE"){
                     UtenteCompratore compratore;
                     compratore.aggiornaNumeroDiTelefono(db1, nuovoNumeroTelefono);
 
@@ -607,7 +618,7 @@ int main()
                     //micro_sleep(5000000);                 
                 }
 
-                if (std::string(action) == "AGGIORNA_PASSWORD_COMPRATORE"){
+                if (std::string(action) == "AGGIORNA PASSWORD COMPRATORE"){
                     UtenteCompratore compratore;
                     compratore.aggiornaPassword(db1, vecchiaPassw, nuovaPassw);
 
@@ -633,7 +644,7 @@ int main()
                     //micro_sleep(5000000);     
                 }
 
-                if (std::string(action) == "AGGIORNA_RESIDENZA"){
+                if (std::string(action) == "AGGIORNA RESIDENZA"){
                     UtenteCompratore compratore;
                     compratore.aggiornaResidenza(db1, nuovaViaResidenza, nuovoNumCiv, nuovoCAP, nuovaCittaResidenza);
 
@@ -659,7 +670,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AGGIUNGI_CARTA_PAGAMENTO"){
+                if (std::string(action) == "AGGIUNGI CARTA PAGAMENTO"){
                     Carta carta;
                     carta.aggiungi_carta(db1, nome_utente_compratore, numeroCartaPagamento, cvvCartaPagamento);
 
@@ -685,7 +696,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "RIMUOVI_CARTA_PAGAMENTO"){
+                if (std::string(action) == "RIMUOVI CARTA PAGAMENTO"){
                     Carta carta;
                     carta.remove_carta(db1, idCarta);
 
@@ -711,7 +722,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AGGIUNGI_PRODOTTO_CARRELLO"){
+                if (std::string(action) == "AGGIUNGI PRODOTTO CARRELLO"){
                     Carrello carrello;
                     carrello.add_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
@@ -737,7 +748,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "RIMUOVI_PRODOTTO_CARRELLO"){
+                if (std::string(action) == "RIMUOVI PRODOTTO CARRELLO"){
                     Carrello carrello;
                     carrello.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
@@ -763,7 +774,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AGGIUNGI_PRODOTTO_LISTADESIDERI"){
+                if (std::string(action) == "AGGIUNGI PRODOTTO LISTADESIDERI"){
                     ListaDesideri listadesideri;
                     listadesideri.add_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
@@ -789,7 +800,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "RIMUOVI_PRODOTTO_LISTADESIDERI"){
+                if (std::string(action) == "RIMUOVI PRODOTTO LISTADESIDERI"){
                     ListaDesideri listadesideri;
                     listadesideri.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
@@ -815,7 +826,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "ACQUISTA_PRODOTTO"){
+                if (std::string(action) == "ACQUISTA PRODOTTO"){
                     Product prodotto;
                     prodotto.acquistaProdotto(db1, nome_utente_compratore, via_spedizione, città_spedizione, numero_civico_spedizione);
 
@@ -841,7 +852,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "RICERCA_PRODOTTO"){
+                if (std::string(action) == "RICERCA PRODOTTO"){
                     Product prodotto;
                     prodotto.ricerca_mostra_Prodotto(db1, nomeProdotto);
 
@@ -867,7 +878,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "VISIONA_ORDINI_EFFETTUATI"){
+                if (std::string(action) == "VISIONA ORDINI EFFETTUATI"){
 
                     Ordine ordine;
                     ordine.visione_ordini_effettuati(db1, nome_utente_compratore);
@@ -895,7 +906,7 @@ int main()
                 }
 
 
-                if (std::string(action) == "ANNULLA_ORDINE"){
+                if (std::string(action) == "ANNULLA ORDINE"){
                     
                     Ordine ordine;
                     ordine.annulla_ordine(db1, idOrdine);
@@ -923,7 +934,7 @@ int main()
                     
                 }
 
-                if (std::string(action) == "EFFETTUA_RESO"){
+                if (std::string(action) == "EFFETTUA RESO"){
 
                     Reso reso;
                     
@@ -955,7 +966,7 @@ int main()
                 }
 
 
-                if (std::string(action) == "EFFETTUA_RECENSIONE"){
+                if (std::string(action) == "EFFETTUA RECENSIONE"){
 
                     Recensione recensione;
                     // Modificare
@@ -984,7 +995,7 @@ int main()
                 }
 
 
-                if (std::string(action) == "RIMUOVI_RECENSIONE"){
+                if (std::string(action) == "RIMUOVI RECENSIONE"){
 
                     Recensione recensione;
 
@@ -1015,7 +1026,7 @@ int main()
 
 
                 // Utente fornitore
-                if (std::string(action) == "EFFETTUA_REGISTRAZIONE_FORNITORE"){
+                if (std::string(action) == "EFFETTUA REGISTRAZIONE FORNITORE"){
 
                     UtenteFornitore fornitore;
                     fornitore.effettuaRegistrazione(db1, nome_utente_fornitore, categoriaUtente, nome, cognome, numeroTelefono, email, password, confermaPassword,
@@ -1043,7 +1054,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AGGIORNA_NOME_AZIENDAPRODUZIONE"){
+                if (std::string(action) == "AGGIORNA NOME AZIENDAPRODUZIONE"){
                     UtenteFornitore fornitore;
                     fornitore.aggiornaNomeAziendaProduttrice(db1, nuovaAziendaProduzione);
 
@@ -1070,7 +1081,7 @@ int main()
                     
                 }
 
-                if (std::string(action) == "AGGIUNGI_PRODOTTO_SITO"){
+                if (std::string(action) == "AGGIUNGI PRODOTTO SITO"){
                     Product prodotto;
                     prodotto.add_new_product(db1, nomeProdotto, categoriaProdotto, prezzoProdotto, descrizioneProdotto, aziendaProduzione, numeroCopieDisponibili);
 
@@ -1096,7 +1107,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "RIMUOVI_PRODOTTO_SITO"){
+                if (std::string(action) == "RIMUOVI PRODOTTO SITO"){
                     Product prodotto;
 
                     prodotto.remove_prodotto(db1, codiceProdotto);
@@ -1125,7 +1136,7 @@ int main()
 
                 
 
-                if (std::string(action) == "EFFETTUA_LOGIN_FORNITORE"){
+                if (std::string(action) == "EFFETTUA LOGIN FORNITORE"){
                     UtenteFornitore fornitore;
 
                     fornitore.effettua_login(db1, nome_utente_fornitore, password);
@@ -1152,7 +1163,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "EFFETTUA_LOGOUT_FORNITORE"){
+                if (std::string(action) == "EFFETTUA LOGOUT FORNITORE"){
                     UtenteFornitore fornitore;
 
                     fornitore.effettua_logout(db1, nome_utente_fornitore);
@@ -1179,7 +1190,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "ELIMINA_PROFILO_FORNITORE"){
+                if (std::string(action) == "ELIMINA PROFILO FORNITORE"){
                     UtenteFornitore fornitore;
 
                     fornitore.elimina_profilo(db1);
@@ -1206,7 +1217,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AGGIORNA_NUMERO_TELEFONO_FORNITORE"){
+                if (std::string(action) == "AGGIORNA NUMERO TELEFONO FORNITORE"){
                     UtenteFornitore fornitore;
 
                     fornitore.aggiornaNumeroDiTelefono(db1, nuovoNumeroTelefono);
@@ -1233,7 +1244,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AGGIORNA_PASSWORD_FORNITORE"){
+                if (std::string(action) == "AGGIORNA PASSWORD FORNITORE"){
                     UtenteFornitore fornitore;
 
                     fornitore.aggiornaPassword(db1, vecchiaPassw, nuovaPassw);
@@ -1263,7 +1274,7 @@ int main()
 
 
                 // Utente trasportatore
-                 if (std::string(action) == "EFFETTUA_REGISTRAZIONE_TRASPORTATORE"){
+                 if (std::string(action) == "EFFETTUA REGISTRAZIONE TRASPORTATORE"){
 
                     UtenteTrasportatore trasportatore;
 
@@ -1291,7 +1302,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AGGIORNA_NOME_DITTASPEDIZIONE"){
+                if (std::string(action) == "AGGIORNA NOME DITTASPEDIZIONE"){
 
                     UtenteTrasportatore trasportatore;
                     trasportatore.aggiornaNomeDittaSpedizione(db1, nuovaDittaSpedizione);
@@ -1318,7 +1329,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AVVISA_SPEDIZIONE_EFFETTUATA"){
+                if (std::string(action) == "AVVISA SPEDIZIONE EFFETTUATA"){
                     Spedizione spedizione;
                     spedizione.spedizioneConsegnata(db1, idSpedizione);
                     
@@ -1344,7 +1355,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "ASSEGNA_ORDINE_TRASPORTATORE"){
+                if (std::string(action) == "ASSEGNA ORDINE TRASPORTATORE"){
 
                     Spedizione spedizione;
                     spedizione.assegnaOrdineTrasportatore(db1);
@@ -1374,7 +1385,7 @@ int main()
 
                 
 
-                if (std::string(action) == "EFFETTUA_LOGIN_TRASPORTATORE"){
+                if (std::string(action) == "EFFETTUA LOGIN TRASPORTATORE"){
                     UtenteTrasportatore trasportatore;
 
                     trasportatore.effettua_login(db1, nome_utente_trasportatore, password);
@@ -1401,7 +1412,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "EFFETTUA_LOGOUT_TRASPORTATORE"){
+                if (std::string(action) == "EFFETTUA LOGOUT TRASPORTATORE"){
                     UtenteTrasportatore trasportatore;
 
                     trasportatore.effettua_logout(db1, nome_utente_trasportatore);
@@ -1428,7 +1439,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "ELIMINA_PROFILO_TRASPORTATORE"){
+                if (std::string(action) == "ELIMINA PROFILO TRASPORTATORE"){
                     UtenteTrasportatore trasportatore;
 
                     trasportatore.elimina_profilo(db1);
@@ -1455,7 +1466,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AGGIORNA_NUMERO_TELEFONO_TRASPORTATORE"){
+                if (std::string(action) == "AGGIORNA NUMERO TELEFONO TRASPORTATORE"){
                     UtenteTrasportatore trasportatore;
 
                     trasportatore.aggiornaNumeroDiTelefono(db1, nuovoNumeroTelefono);
@@ -1482,7 +1493,7 @@ int main()
                     //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AGGIORNA_PASSWORD_TRASPORTATORE"){
+                if (std::string(action) == "AGGIORNA PASSWORD TRASPORTATORE"){
                     UtenteTrasportatore trasportatore;
 
                     trasportatore.aggiornaPassword(db1, vecchiaPassw, nuovaPassw);
@@ -1508,7 +1519,6 @@ int main()
                     /* sleep   */
                     //micro_sleep(5000000);
                 }
-
 
 
 
