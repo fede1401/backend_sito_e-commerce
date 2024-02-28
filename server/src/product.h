@@ -40,7 +40,7 @@ class Product {
     }
 
 
-    void add_new_product(Con2DB db1, std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili){
+    void add_new_product(Con2DB db1, std::string in_nome_utente_fornitore ,std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili){
 
         // Connessione al database:
         //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
@@ -71,39 +71,38 @@ class Product {
         statoRequisito statoReq = statoRequisito::Wait;
 
 
-        std::string nome_utente_fornitore;
+        //std::string nome_utente_fornitore;
         // Assicuriamoci che l'utente che inserirà il prodotto nel sito è un Utente Fornitore
-        sprintf(sqlcmd, "SELECT nome_utente_fornitore FROM UtenteFornitore WHERE nome_AziendaProduttrice = '%s'", in_azienda_produzione.c_str());
-        res = db1.ExecSQLtuples(sqlcmd);
-        rows = PQntuples(res);
-        PQclear(res);
-        if (rows == 1) { 
-            nome_utente_fornitore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_fornitore"));
+        // sprintf(sqlcmd, "SELECT nome_utente_fornitore FROM UtenteFornitore WHERE nome_AziendaProduttrice = '%s'", in_azienda_produzione.c_str());
+        // res = db1.ExecSQLtuples(sqlcmd);
+        // rows = PQntuples(res);
+        // if (rows == 1) { 
+        //     nome_utente_fornitore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_fornitore"));
 
-            InsertToLogDB(db1, "INFO", "Utente che inserisce il prodotto è un utente fornitore", sessionID, nomeRequisito, statoReq);
+        //     InsertToLogDB(db1, "INFO", "Utente che inserisce il prodotto è un utente fornitore", sessionID, nomeRequisito, statoReq);
 
-            std::cout << "L'utente che inserisce il prodotto nel sito è un utente fornitore" << std::endl;
-        }
-        else{
+        //     std::cout << "L'utente che inserisce il prodotto nel sito è un utente fornitore" << std::endl;
+        // }
+        // else{
 
-            statoReq = statoRequisito::NotSuccess;
+        //     statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB(db1, "ERROR", "Utente che inserisce il prodotto non è un utente fornitore", sessionID, nomeRequisito, statoReq);
+        //     InsertToLogDB(db1, "ERROR", "Utente che inserisce il prodotto non è un utente fornitore", sessionID, nomeRequisito, statoReq);
 
-            std::cout << "L'utente che inserisce il prodotto nel sito NON è un utente fornitore" << std::endl;
-            return;
-        }
-        PQclear(res);  
+        //     std::cout << "L'utente che inserisce il prodotto nel sito NON è un utente fornitore" << std::endl;
+        //     return;
+        // }
+        // PQclear(res);  
 
         *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
 
 
         // Caricamento del sessionID utile per il log.
-        sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nome_utente_fornitore.c_str());
+        sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente_fornitore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);                        
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
+        PQclear(res);                        
 
 
         // Se il prodotto inserito è già presente nella tabella Prodotto, allora dobbiamo solamente incrementare la quantità di copie, altrimenti dovremo inserirlo:
@@ -211,12 +210,14 @@ class Product {
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE nome = '%s'", nomeProdotto.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);
+        //PQclear(res);
         // Il prodotto non è stato trovato
         if (rows < 1){
             std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
 
             statoReq = statoRequisito::NotSuccess;
+
+            PQclear(res); 
             InsertToLogDB(db1, "ERROR", "Non esiste il prodotto che si sta ricercando", "", nomeRequisito, statoReq);
             return;
         }
@@ -239,6 +240,8 @@ class Product {
 
             statoReq = statoRequisito::Success;
 
+            PQclear(res); 
+
             InsertToLogDB(db1, "INFO", "Visione del prodotto ricercato", "", nomeRequisito, statoReq);
 
             
@@ -253,7 +256,7 @@ class Product {
             */
             
         }
-        PQclear(res); 
+        //PQclear(res); 
 
     return;
     }
@@ -280,20 +283,22 @@ class Product {
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtenteCompratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);                        
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+        PQclear(res);                        
+
 
         // Selezioniamo il codice del prodotto
         sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND FLOAT8EQ(prezzoEuro, '%f') AND nome_AziendaProduttrice='%s'", 
                                                             nome.c_str(), categoria.c_str(), descrizione.c_str(), prezzo_euro, azienda_produzione.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);
         if (rows == 1){
             
             //Ottengo i vari dati per costruire l'ordine:
 
             cod_product = atoi(PQgetvalue(res, 0, PQfnumber(res, "codProdotto")));
+            PQclear(res);
+
 
             dataOrdineEffettuato = getCurrentDateAsString();
 

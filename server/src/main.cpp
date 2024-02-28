@@ -87,6 +87,7 @@ int main()
     UtenteCompratore compratore;
     UtenteFornitore fornitore;
     UtenteTrasportatore trasportatore;
+    Product prodotto;
     /*  prg  */
 
 #if (DEBUG > 0)
@@ -302,7 +303,7 @@ int main()
                     if (strcmp(fval, "numeroCartaPagamento") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nome_utente_compratore, fval);
+                        strcpy(numeroCartaPagamento, fval);
                     }
                     if (strcmp(fval, "cvvCartaPagamento") == 0)
                     {
@@ -840,7 +841,7 @@ int main()
                 }
 
                 if (std::string(action) == "ACQUISTA PRODOTTO"){
-                    Product prodotto;
+                    //Product prodotto;
                     prodotto.acquistaProdotto(db1, nome_utente_compratore, via_spedizione, città_spedizione, numero_civico_spedizione);
 
                     strcpy(outputs, "Acquisto prodotto");
@@ -1096,8 +1097,8 @@ int main()
                 }
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO SITO"){
-                    Product prodotto;
-                    prodotto.add_new_product(db1, nomeProdotto, categoriaProdotto, prezzoProdotto, descrizioneProdotto, aziendaProduzione, numeroCopieDisponibili);
+                    //Product prodotto;
+                    prodotto.add_new_product(db1, nome_utente_fornitore, nomeProdotto, categoriaProdotto, prezzoProdotto, descrizioneProdotto, aziendaProduzione, numeroCopieDisponibili);
 
                     strcpy(outputs, "Prodotto aggiunto al sito");
 
@@ -1398,7 +1399,7 @@ int main()
                     printf("Result: %s \n", outputs);
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM, key, value);
-                    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+                    assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM, key, value, reply->str);
                     freeReplyObject(reply2);
 

@@ -255,7 +255,7 @@ void svolgiAzione(Con2DB db1, UtenteCompratore compratore, UtenteTrasportatore t
 
     if (azione == "FORN_INSERT_PRODOTTO"){
         Product prodotto;
-        prodotto.add_new_product(db1,arr_prodotti[i100], categoriaProdotti[i5], rand()%1000, "Descrizione randoma", nomi_aziende_produttrici[i5], rand()%100);
+        //prodotto.add_new_product(db1,arr_prodotti[i100], categoriaProdotti[i5], rand()%1000, "Descrizione randoma", nomi_aziende_produttrici[i5], rand()%100);
     }
 
     if (azione == "FORN_REMOVE_PRODOTTO"){

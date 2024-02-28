@@ -40,8 +40,9 @@ public:
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);        
+            
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+        PQclear(res);    
 
 
         // Check se il nome utente è di un utente compratore:
@@ -87,8 +88,9 @@ public:
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);        
-        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));} 
+        PQclear(res);  
+
 
         sprintf(sqlcmd, "SELECT * FROM Carta WHERE idCarta = '%d'", idCarta);
         res = db1.ExecSQLtuples(sqlcmd);

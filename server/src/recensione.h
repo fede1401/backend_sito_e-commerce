@@ -56,9 +56,10 @@ public:
       sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", idOrdine);
       res = db1.ExecSQLtuples(sqlcmd);
       rows = PQntuples(res);
-      PQclear(res);
       if (rows==1){
           stato_spedizione = PQgetvalue(res, 0, PQfnumber(res, "statoSpedizione"));
+                PQclear(res);
+
 
           if (stato_spedizione == "consegnato"){
                 
@@ -67,17 +68,18 @@ public:
               sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", idOrdine);
               res = db1.ExecSQLtuples(sqlcmd);
               rows = PQntuples(res);
-              PQclear(res);
               if (rows == 1){
                   nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
+                    PQclear(res);
 
                   // Caricamento del sessionID utile per il log.
                   sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
                   res = db1.ExecSQLtuples(sqlcmd);
                   rows = PQntuples(res);
-                  PQclear(res);                  
+                               
                   if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
-                                    
+                  PQclear(res);     
+
                   std::string votoStelleStr = statoVotoStelleToString(voto_stella);
                     
                   sprintf(sqlcmd, "INSERT INTO Recensione (idRec, nome_utente_compratore, idOrdine, descrizione, votoStelle) VALUES (DEFAULT, '%s', '%d', '%s', '%s')", 
@@ -130,11 +132,11 @@ public:
 
         // Caricamento del nome dell'utente compratore che vuole rimuovere la recensione effettuata
         std::string nome_utente_compratore;
-        sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Recensione WHERE idRecensione = '%d'", idRecensione);
+        sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Recensione WHERE idRec = '%d'", idRecensione);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);
         if (rows == 1){ nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore")); }
+        PQclear(res);
 
 
         // Caricamento del sessionID utile per il log.
@@ -142,8 +144,8 @@ public:
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);     
-        PQclear(res);                 
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+        PQclear(res);
 
 
         sprintf(sqlcmd, "SELECT * FROM Recensione WHERE idRec = '%d'", idRecensione);

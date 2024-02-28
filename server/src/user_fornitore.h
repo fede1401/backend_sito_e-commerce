@@ -166,6 +166,33 @@ public:
 
                 InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso.", session_id, nomeRequisito, statoReq);
                 std::cout << "Errore: Il nome utente è già in uso." << std::endl;
+                
+                sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente.c_str());
+
+                res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+
+                if (rows == 1){
+                    std::string nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_fornitore"));
+                    std::string session_id = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));
+                    std::string categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+                    std::string nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+                    std::string cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
+                    std::string email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
+                    std::string numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
+                    std::string azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
+                    std::string password = PQgetvalue(res, 0, PQfnumber(res, "password"));
+                    int stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+
+                    *this = UtenteFornitore(nome_utente, categoria, nome, cognome, numero_telefono, password, email, session_id, azienda_produzione, stato);
+                }
+                else{
+                    std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+                }
+                        
+                PQclear(res);        
+                
+                
                 return;
         }
 
@@ -359,9 +386,8 @@ public:
         sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nomeUtente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);
-
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
+        PQclear(res);
 
         sprintf(sqlcmd, "UPDATE UtenteFornitore set nome_AziendaProduttrice='%s' WHERE nome_utente_fornitore = '%s'",
                                                                             nuovaAziendaProduttrice.c_str(), nomeUtente.c_str());

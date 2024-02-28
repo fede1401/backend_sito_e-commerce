@@ -54,10 +54,8 @@ public:
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);
-
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
-
+        PQclear(res);
 
         ///////////////////////////////////// 
         // Controllo se esiste il codice del prodotto da inserire:
@@ -85,10 +83,11 @@ public:
         sprintf(sqlcmd, "SELECT codProdotto FROM Carrello WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);
+        
         for (int i = 0; i < rows; i++)
         {
             codProdotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
+            PQclear(res);
             if (codProdotto == in_cod_prodotto){
                 // Il prodotto è già stato inserito, perciò ne aumentiamo la quantità:
                 // Prima carichiamo la quantità precedente:
@@ -100,6 +99,8 @@ public:
                 quantitàPrecedente = atoi(PQgetvalue(res, 0, PQfnumber(res, "quantitàProd"))); 
 
                 quantitàPrecedente = quantitàPrecedente + 1;
+                PQclear(res);
+
                 //Update
                 sprintf(sqlcmd, "UPDATE Carrello set quantitàProd = '%d' WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", quantitàPrecedente, in_nome_utente_compratore.c_str(),in_cod_prodotto);
                 res = db1.ExecSQLcmd(sqlcmd);
@@ -167,8 +168,8 @@ public:
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+        PQclear(res);
 
 
         sprintf(sqlcmd, "SELECT * FROM Carrello WHERE nome_utente_compratore = '%s' AND codProdotto ='%d'", in_nome_utente_compratore.c_str(), in_cod_prodotto);
@@ -185,7 +186,7 @@ public:
         }
         else{
             // Eliminazione del prodotto dal carrello dell'utente compratore.
-            sprintf(sqlcmd, "DELETE FROM Carrello WHERE nome_utente_compratore='%s' AND codProdotto='%d", in_nome_utente_compratore.c_str(), in_cod_prodotto);
+            sprintf(sqlcmd, "DELETE FROM Carrello WHERE nome_utente_compratore='%s' AND codProdotto='%d'", in_nome_utente_compratore.c_str(), in_cod_prodotto);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 

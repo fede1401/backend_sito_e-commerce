@@ -1,172 +1,1017 @@
-main(): pid 36302: user federico: connecting to redis ...
-main(): pid 36302: user federico: connected to redis
+main(): pid 38896: user federico: connecting to redis ...
+main(): pid 38896: user federico: connected to redis
 ((Effettuato comando RedisComand
 Stream inizializzata.Effettuato comando RedisComand
 Stream inizializzata.Creazione Streams
 
 Valore della variabile i: 0 
 XADD stream2 * Action EFFETTUA REGISTRAZIONE COMPRATORE nome_utente_compratore marco1 categoriaUtente UtenteCompratore nome Marco cognome Rossi numeroTelefono 123456789 email marco.rossi1@gmail.com viaResidenza Via degli Ulivi numeroCivico 123 cap 01011 citt√†Residenza Roma password Passsss..121 confermaPassword Passsss..121 dataCompleanno 14/01/1999 
-main(): pid =36302: stream stream2: Added Action EFFETTUA REGISTRAZIONE COMPRATORE nome_utente_compratore marco1 categoriaUtente UtenteCompratore nome Marco cognome Rossi numeroTelefono 123456789 email marco.rossi1@gmail.com viaResidenza Via degli Ulivi numeroCivico 123 cap 01011 citt√†Residenza Roma password Passsss..121 confermaPassword Passsss..121 dataCompleanno 14/01/1999 (id: 1709113661983-0)
+main(): pid =38896: stream stream2: Added Action EFFETTUA REGISTRAZIONE COMPRATORE nome_utente_compratore marco1 categoriaUtente UtenteCompratore nome Marco cognome Rossi numeroTelefono 123456789 email marco.rossi1@gmail.com viaResidenza Via degli Ulivi numeroCivico 123 cap 01011 citt√†Residenza Roma password Passsss..121 confermaPassword Passsss..121 dataCompleanno 14/01/1999 (id: 1709119399336-0)
 
 
 Valore della variabile i: 1 
 XADD stream2 * Action EFFETTUA REGISTRAZIONE FORNITORE nome_utente_fornitore luigi2 categoriaUtente UtenteFornitore nome Luigi cognome Pesce numeroTelefono 3334447771 email luigi.pesce@gmail.com password Passsss..121 confermaPassword Passsss..121 aziendaProduzione Nike 
-main(): pid =36302: stream stream2: Added Action EFFETTUA REGISTRAZIONE FORNITORE nome_utente_fornitore luigi2 categoriaUtente UtenteFornitore nome Luigi cognome Pesce numeroTelefono 3334447771 email luigi.pesce@gmail.com password Passsss..121 confermaPassword Passsss..121 aziendaProduzione Nike (id: 1709113661984-0)
+main(): pid =38896: stream stream2: Added Action EFFETTUA REGISTRAZIONE FORNITORE nome_utente_fornitore luigi2 categoriaUtente UtenteFornitore nome Luigi cognome Pesce numeroTelefono 3334447771 email luigi.pesce@gmail.com password Passsss..121 confermaPassword Passsss..121 aziendaProduzione Nike (id: 1709119399336-1)
 
 Valore della variabile i: 2 
 XADD stream2 * Action EFFETTUA REGISTRAZIONE TRASPORTATORE nome_utente_trasportatore andrea3 categoriaUtente UtenteTrasportatore nome Andrea cognome Lancia numeroTelefono 4445558889 email andrea.lancia@gmail.com password Passsss..121 confermaPassword Passsss..121 dittaSpedizione FedEx 
-main(): pid =36302: stream stream2: Added Action EFFETTUA REGISTRAZIONE TRASPORTATORE nome_utente_trasportatore andrea3 categoriaUtente UtenteTrasportatore nome Andrea cognome Lancia numeroTelefono 4445558889 email andrea.lancia@gmail.com password Passsss..121 confermaPassword Passsss..121 dittaSpedizione FedEx (id: 1709113661984-1)
+main(): pid =38896: stream stream2: Added Action EFFETTUA REGISTRAZIONE TRASPORTATORE nome_utente_trasportatore andrea3 categoriaUtente UtenteTrasportatore nome Andrea cognome Lancia numeroTelefono 4445558889 email andrea.lancia@gmail.com password Passsss..121 confermaPassword Passsss..121 dittaSpedizione FedEx (id: 1709119399336-2)
 
 Valore della variabile i: 3 
 XADD stream2 * Action EFFETTUA LOGIN COMPRATORE nome_utente_compratore marco1 password Passsss..121 
-main(): pid =36302: stream stream2: Added Action EFFETTUA LOGIN COMPRATORE nome_utente_compratore marco1 password Passsss..121 (id: 1709113661985-0)
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGIN COMPRATORE nome_utente_compratore marco1 password Passsss..121 (id: 1709119399336-3)
 
 Valore della variabile i: 4 
 XADD stream2 * Action EFFETTUA LOGIN FORNITORE nome_utente_fornitore luigi2 password Passsss..121 
-main(): pid =36302: stream stream2: Added Action EFFETTUA LOGIN FORNITORE nome_utente_fornitore luigi2 password Passsss..121 (id: 1709113661985-1)
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGIN FORNITORE nome_utente_fornitore luigi2 password Passsss..121 (id: 1709119399336-4)
 
 Valore della variabile i: 5 
 XADD stream2 * Action EFFETTUA LOGIN TRASPORTATORE nome_utente_trasportatore andrea3 password Passsss..121 
-main(): pid =36302: stream stream2: Added Action EFFETTUA LOGIN TRASPORTATORE nome_utente_trasportatore andrea3 password Passsss..121 (id: 1709113661985-2)
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGIN TRASPORTATORE nome_utente_trasportatore andrea3 password Passsss..121 (id: 1709119399337-0)
 
 Valore della variabile i: 6 
 XADD stream2 * Action AGGIORNA NUMERO TELEFONO COMPRATORE nuovoNumeroTelefono 3384459873 
-main(): pid =36302: stream stream2: Added Action AGGIORNA NUMERO TELEFONO COMPRATORE nuovoNumeroTelefono 3384459873 (id: 1709113661985-3)
+main(): pid =38896: stream stream2: Added Action AGGIORNA NUMERO TELEFONO COMPRATORE nuovoNumeroTelefono 3384459873 (id: 1709119399337-1)
 
 Valore della variabile i: 7 
 XADD stream2 * Action AGGIORNA NUMERO TELEFONO FORNITORE nuovoNumeroTelefono 1119992228 
-main(): pid =36302: stream stream2: Added Action AGGIORNA NUMERO TELEFONO FORNITORE nuovoNumeroTelefono 1119992228 (id: 1709113661985-4)
+main(): pid =38896: stream stream2: Added Action AGGIORNA NUMERO TELEFONO FORNITORE nuovoNumeroTelefono 1119992228 (id: 1709119399337-2)
 
 Valore della variabile i: 8 
 XADD stream2 * Action AGGIORNA NUMERO TELEFONO TRASPORTATORE nuovoNumeroTelefono 576768474738 
-main(): pid =36302: stream stream2: Added Action AGGIORNA NUMERO TELEFONO TRASPORTATORE nuovoNumeroTelefono 576768474738 (id: 1709113661986-0)
+main(): pid =38896: stream stream2: Added Action AGGIORNA NUMERO TELEFONO TRASPORTATORE nuovoNumeroTelefono 576768474738 (id: 1709119399337-3)
 
 Valore della variabile i: 9 
 XADD stream2 * Action AGGIORNA PASSWORD COMPRATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..333 
-main(): pid =36302: stream stream2: Added Action AGGIORNA PASSWORD COMPRATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..333 (id: 1709113661986-1)
+main(): pid =38896: stream stream2: Added Action AGGIORNA PASSWORD COMPRATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..333 (id: 1709119399337-4)
 
 Valore della variabile i: 10 
 XADD stream2 * Action AGGIORNA PASSWORD FORNITORE vecchiaPassw Passsss..121 nuovaPassw Passsss..555 
-main(): pid =36302: stream stream2: Added Action AGGIORNA PASSWORD FORNITORE vecchiaPassw Passsss..121 nuovaPassw Passsss..555 (id: 1709113661986-2)
+main(): pid =38896: stream stream2: Added Action AGGIORNA PASSWORD FORNITORE vecchiaPassw Passsss..121 nuovaPassw Passsss..555 (id: 1709119399338-0)
 
 Valore della variabile i: 11 
 XADD stream2 * Action AGGIORNA PASSWORD TRASPORTATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..777 
-main(): pid =36302: stream stream2: Added Action AGGIORNA PASSWORD TRASPORTATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..777 (id: 1709113661986-3)
+main(): pid =38896: stream stream2: Added Action AGGIORNA PASSWORD TRASPORTATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..777 (id: 1709119399338-1)
 
 Valore della variabile i: 12 
 XADD stream2 * Action AGGIORNA RESIDENZA nuovaViaResidenza Via dei Babbuini nuovoNumCiv 11 nuovoCAP 10348 nuovaCittaResidenza Torino 
-main(): pid =36302: stream stream2: Added Action AGGIORNA RESIDENZA nuovaViaResidenza Via dei Babbuini nuovoNumCiv 11 nuovoCAP 10348 nuovaCittaResidenza Torino (id: 1709113661987-0)
+main(): pid =38896: stream stream2: Added Action AGGIORNA RESIDENZA nuovaViaResidenza Via dei Babbuini nuovoNumCiv 11 nuovoCAP 10348 nuovaCittaResidenza Torino (id: 1709119399338-2)
 
 Valore della variabile i: 13 
 XADD stream2 * Action AGGIORNA NOME AZIENDAPRODUZIONE nuovaAziendaProduzione Adidas 
-main(): pid =36302: stream stream2: Added Action AGGIORNA NOME AZIENDAPRODUZIONE nuovaAziendaProduzione Adidas (id: 1709113661987-1)
+main(): pid =38896: stream stream2: Added Action AGGIORNA NOME AZIENDAPRODUZIONE nuovaAziendaProduzione Adidas (id: 1709119399338-3)
 
 Valore della variabile i: 14 
 XADD stream2 * Action AGGIORNA NOME DITTASPEDIZIONE nuovaDittaSpedizione Bartolini 
-main(): pid =36302: stream stream2: Added Action AGGIORNA NOME DITTASPEDIZIONE nuovaDittaSpedizione Bartolini (id: 1709113661988-0)
+main(): pid =38896: stream stream2: Added Action AGGIORNA NOME DITTASPEDIZIONE nuovaDittaSpedizione Bartolini (id: 1709119399338-4)
 
 Valore della variabile i: 15 
 XADD stream2 * Action AGGIUNGI CARTA PAGAMENTO nome_utente_compratore marco1 numeroCartaPagamento 4536467287372 cvvCartaPagamento 975 
-main(): pid =36302: stream stream2: Added Action AGGIUNGI CARTA PAGAMENTO nome_utente_compratore marco1 numeroCartaPagamento 4536467287372 cvvCartaPagamento 975 (id: 1709113661988-1)
+main(): pid =38896: stream stream2: Added Action AGGIUNGI CARTA PAGAMENTO nome_utente_compratore marco1 numeroCartaPagamento 4536467287372 cvvCartaPagamento 975 (id: 1709119399338-5)
 
 Valore della variabile i: 16 
-XADD stream2 * Action AGGIUNGI PRODOTTO SITO nomeProdotto luigi2 categoriaProdotto UtenteFornitore prezzoProdotto Luigi descrizioneProdotto Pesce aziendaProduzione 3334447771 numeroCopieDisponibili luigi.pesce@gmail.com 
-main(): pid =36302: stream stream2: Added Action AGGIUNGI PRODOTTO SITO nomeProdotto luigi2 categoriaProdotto UtenteFornitore prezzoProdotto Luigi descrizioneProdotto Pesce aziendaProduzione 3334447771 numeroCopieDisponibili luigi.pesce@gmail.com (id: 1709113661989-0)
+XADD stream2 * Action AGGIUNGI PRODOTTO SITO nome_utente_fornitore luigi2 nomeProdotto Nike Dump categoriaProdotto Abbigliamento prezzoProdotto 50 descrizioneProdotto Scapre Nike Dump aziendaProduzione Nike numeroCopieDisponibili 100 
+main(): pid =38896: stream stream2: Added Action AGGIUNGI PRODOTTO SITO nome_utente_fornitore luigi2 nomeProdotto Nike Dump categoriaProdotto Abbigliamento prezzoProdotto 50 descrizioneProdotto Scapre Nike Dump aziendaProduzione Nike numeroCopieDisponibili 100 (id: 1709119399339-0)
 
 Valore della variabile i: 17 
 XADD stream2 * Action AGGIUNGI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 
-main(): pid =36302: stream stream2: Added Action AGGIUNGI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709113661989-1)
+main(): pid =38896: stream stream2: Added Action AGGIUNGI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119399339-1)
 
 Valore della variabile i: 18 
 XADD stream2 * Action AGGIUNGI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 
-main(): pid =36302: stream stream2: Added Action AGGIUNGI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709113661989-2)
+main(): pid =38896: stream stream2: Added Action AGGIUNGI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119399339-2)
 
 Valore della variabile i: 19 
 XADD stream2 * Action RICERCA PRODOTTO nomeProdotto Nike Dump 
-main(): pid =36302: stream stream2: Added Action RICERCA PRODOTTO nomeProdotto Nike Dump (id: 1709113661989-3)
+main(): pid =38896: stream stream2: Added Action RICERCA PRODOTTO nomeProdotto Nike Dump (id: 1709119399339-3)
 
 Valore della variabile i: 20 
 XADD stream2 * Action ACQUISTA PRODOTTO nome_utente_compratore marco1 via_spedizione Via dei Babbuini citt√†_spedizione Torino numero_civico_spedizione 121 
-main(): pid =36302: stream stream2: Added Action ACQUISTA PRODOTTO nome_utente_compratore marco1 via_spedizione Via dei Babbuini citt√†_spedizione Torino numero_civico_spedizione 121 (id: 1709113661990-0)
+main(): pid =38896: stream stream2: Added Action ACQUISTA PRODOTTO nome_utente_compratore marco1 via_spedizione Via dei Babbuini citt√†_spedizione Torino numero_civico_spedizione 121 (id: 1709119399339-4)
 
 Valore della variabile i: 21 
 XADD stream2 * Action ASSEGNA ORDINE TRASPORTATORE 
-main(): pid =36302: stream stream2: Added Action ASSEGNA ORDINE TRASPORTATORE (id: 1709113661990-1)
+main(): pid =38896: stream stream2: Added Action ASSEGNA ORDINE TRASPORTATORE (id: 1709119399340-0)
 
 Valore della variabile i: 22 
 XADD stream2 * Action AVVISA SPEDIZIONE EFFETTUATA idSpedizione 1 
-main(): pid =36302: stream stream2: Added Action AVVISA SPEDIZIONE EFFETTUATA idSpedizione 1 (id: 1709113661990-2)
+main(): pid =38896: stream stream2: Added Action AVVISA SPEDIZIONE EFFETTUATA idSpedizione 1 (id: 1709119399340-1)
 
 Valore della variabile i: 23 
 XADD stream2 * Action VISIONA ORDINI EFFETTUATI nome_utente_compratore marco1 
-main(): pid =36302: stream stream2: Added Action VISIONA ORDINI EFFETTUATI nome_utente_compratore marco1 (id: 1709113661990-3)
+main(): pid =38896: stream stream2: Added Action VISIONA ORDINI EFFETTUATI nome_utente_compratore marco1 (id: 1709119399340-2)
 
 Valore della variabile i: 24 
 XADD stream2 * Action EFFETTUA RECENSIONE idOrdine 1 descrizioneRecensione Prodotto ottimo voto_stella Cinque 
-main(): pid =36302: stream stream2: Added Action EFFETTUA RECENSIONE idOrdine 1 descrizioneRecensione Prodotto ottimo voto_stella Cinque 1709113661990-4 121 (id: \–ª°™)
+main(): pid =38896: stream stream2: Added Action EFFETTUA RECENSIONE idOrdine 1 descrizioneRecensione Prodotto ottimo voto_stella Cinque 1709119399340-3 121 (id: #yv_†™)
 
 Valore della variabile i: 25 
 XADD stream2 * Action ANNULLA ORDINE idOrdine 1 
-main(): pid =36302: stream stream2: Added Action ANNULLA ORDINE idOrdine 1 (id: 1709113661991-0)
+main(): pid =38896: stream stream2: Added Action ANNULLA ORDINE idOrdine 1 (id: 1709119399340-4)
 
 Valore della variabile i: 26 
 XADD stream2 * Action EFFETTUA RESO idOrdine 1 codiceProdotto 1 
-main(): pid =36302: stream stream2: Added Action EFFETTUA RESO idOrdine 1 codiceProdotto 1 (id: 1709113661991-1)
+main(): pid =38896: stream stream2: Added Action EFFETTUA RESO idOrdine 1 codiceProdotto 1 (id: 1709119399340-5)
 
 Valore della variabile i: 27 
 XADD stream2 * Action RIMUOVI RECENSIONE idRecensione 1 
-main(): pid =36302: stream stream2: Added Action RIMUOVI RECENSIONE idRecensione 1 (id: 1709113661991-2)
+main(): pid =38896: stream stream2: Added Action RIMUOVI RECENSIONE idRecensione 1 (id: 1709119399341-0)
 
 Valore della variabile i: 28 
 XADD stream2 * Action RIMUOVI CARTA PAGAMENTO idCarta 1 
-main(): pid =36302: stream stream2: Added Action RIMUOVI CARTA PAGAMENTO idCarta 1 (id: 1709113661991-3)
+main(): pid =38896: stream stream2: Added Action RIMUOVI CARTA PAGAMENTO idCarta 1 (id: 1709119399341-1)
 
 Valore della variabile i: 29 
 XADD stream2 * Action RIMUOVI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 
-main(): pid =36302: stream stream2: Added Action RIMUOVI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709113661992-0)
+main(): pid =38896: stream stream2: Added Action RIMUOVI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119399341-2)
 
 Valore della variabile i: 30 
 XADD stream2 * Action RIMUOVI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 
-main(): pid =36302: stream stream2: Added Action RIMUOVI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709113661992-1)
+main(): pid =38896: stream stream2: Added Action RIMUOVI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119399341-3)
 
 Valore della variabile i: 31 
 XADD stream2 * Action RIMUOVI PRODOTTO SITO codiceProdotto 1 
-main(): pid =36302: stream stream2: Added Action RIMUOVI PRODOTTO SITO codiceProdotto 1 (id: 1709113661992-2)
+main(): pid =38896: stream stream2: Added Action RIMUOVI PRODOTTO SITO codiceProdotto 1 (id: 1709119399341-4)
 
 Valore della variabile i: 32 
 XADD stream2 * Action EFFETTUA LOGOUT COMPRATORE nome_utente_compratore marco1 
-main(): pid =36302: stream stream2: Added Action EFFETTUA LOGOUT COMPRATORE nome_utente_compratore marco1 (id: 1709113661992-3)
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGOUT COMPRATORE nome_utente_compratore marco1 (id: 1709119399341-5)
 
 Valore della variabile i: 33 
 XADD stream2 * Action EFFETTUA LOGOUT FORNITORE nome_utente_fornitore luigi2 
-main(): pid =36302: stream stream2: Added Action EFFETTUA LOGOUT FORNITORE nome_utente_fornitore luigi2 (id: 1709113661993-0)
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGOUT FORNITORE nome_utente_fornitore luigi2 (id: 1709119399341-6)
 
 Valore della variabile i: 34 
 XADD stream2 * Action EFFETTUA LOGOUT TRASPORTATORE nome_utente_trasportatore andrea3 
-main(): pid =36302: stream stream2: Added Action EFFETTUA LOGOUT TRASPORTATORE nome_utente_trasportatore andrea3 (id: 1709113661993-1)
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGOUT TRASPORTATORE nome_utente_trasportatore andrea3 (id: 1709119399341-7)
 
 Valore della variabile i: 35 
 XADD stream2 * Action ELIMINA PROFILO COMPRATORE 
-main(): pid =36302: stream stream2: Added Action ELIMINA PROFILO COMPRATORE (id: 1709113661993-2)
+main(): pid =38896: stream stream2: Added Action ELIMINA PROFILO COMPRATORE (id: 1709119399342-0)
 
 Valore della variabile i: 36 
 XADD stream2 * Action ELIMINA PROFILO FORNITORE 
-main(): pid =36302: stream stream2: Added Action ELIMINA PROFILO FORNITORE (id: 1709113661993-3)
+main(): pid =38896: stream stream2: Added Action ELIMINA PROFILO FORNITORE (id: 1709119399342-1)
 
 Valore della variabile i: 37 
 XADD stream2 * Action ELIMINA PROFILO TRASPORTATORE 
-main(): pid =36302: stream stream2: Added Action ELIMINA PROFILO TRASPORTATORE (id: 1709113661993-4)
+main(): pid =38896: stream stream2: Added Action ELIMINA PROFILO TRASPORTATORE (id: 1709119399342-2)
 
 
 Ora di leggere i risultati dal server. 
 Effettuato comando per leggere i messaggi della Streams. 
-main(): pid 36302: user federico: Read msg 1 from stream stream1
+main(): pid 38896: user federico: Read msg 1 from stream stream1
     (string) stream1
-        (string) 1709113667128-0
+        (string) 1709119405160-0
           (string) Result
           (string) Registrazione utente compratore avvenuta
 Numero stream: 0
 Numero messaggio: 0 della Stream 0
-main(): pid 36302: user federico: stream stream1, streamnum 0, msg 0, msgid 1709113667128-0 with 2 values
-main(): pid 36302: user federico: streamnum 0, msg 0, msgid 1709113667128-0 value 0 = Result
-main(): pid 36302: user federico: streamnum 0, msg 0, msgid 1709113667128-0 value 1 = Registrazione utente compratore avvenuta
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 0, msgid 1709119405160-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 0, msgid 1709119405160-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 0, msgid 1709119405160-0 value 1 = Registrazione utente compratore avvenuta
+
+Valore della variabile i: 0 
+XADD stream2 * Action EFFETTUA REGISTRAZIONE COMPRATORE nome_utente_compratore marco1 categoriaUtente UtenteCompratore nome Marco cognome Rossi numeroTelefono 123456789 email marco.rossi1@gmail.com viaResidenza Via degli Ulivi numeroCivico 123 cap 01011 citt√†Residenza Roma password Passsss..121 confermaPassword Passsss..121 dataCompleanno 14/01/1999 
+main(): pid =38896: stream stream2: Added Action EFFETTUA REGISTRAZIONE COMPRATORE nome_utente_compratore marco1 categoriaUtente UtenteCompratore nome Marco cognome Rossi numeroTelefono 123456789 email marco.rossi1@gmail.com viaResidenza Via degli Ulivi numeroCivico 123 cap 01011 citt√†Residenza Roma password Passsss..121 confermaPassword Passsss..121 dataCompleanno 14/01/1999 (id: 1709119415161-0)
+
+
+Valore della variabile i: 1 
+XADD stream2 * Action EFFETTUA REGISTRAZIONE FORNITORE nome_utente_fornitore luigi2 categoriaUtente UtenteFornitore nome Luigi cognome Pesce numeroTelefono 3334447771 email luigi.pesce@gmail.com password Passsss..121 confermaPassword Passsss..121 aziendaProduzione Nike 
+main(): pid =38896: stream stream2: Added Action EFFETTUA REGISTRAZIONE FORNITORE nome_utente_fornitore luigi2 categoriaUtente UtenteFornitore nome Luigi cognome Pesce numeroTelefono 3334447771 email luigi.pesce@gmail.com password Passsss..121 confermaPassword Passsss..121 aziendaProduzione Nike (id: 1709119415162-0)
+
+Valore della variabile i: 2 
+XADD stream2 * Action EFFETTUA REGISTRAZIONE TRASPORTATORE nome_utente_trasportatore andrea3 categoriaUtente UtenteTrasportatore nome Andrea cognome Lancia numeroTelefono 4445558889 email andrea.lancia@gmail.com password Passsss..121 confermaPassword Passsss..121 dittaSpedizione FedEx 
+main(): pid =38896: stream stream2: Added Action EFFETTUA REGISTRAZIONE TRASPORTATORE nome_utente_trasportatore andrea3 categoriaUtente UtenteTrasportatore nome Andrea cognome Lancia numeroTelefono 4445558889 email andrea.lancia@gmail.com password Passsss..121 confermaPassword Passsss..121 dittaSpedizione FedEx (id: 1709119415163-0)
+
+Valore della variabile i: 3 
+XADD stream2 * Action EFFETTUA LOGIN COMPRATORE nome_utente_compratore marco1 password Passsss..121 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGIN COMPRATORE nome_utente_compratore marco1 password Passsss..121 (id: 1709119415163-1)
+
+Valore della variabile i: 4 
+XADD stream2 * Action EFFETTUA LOGIN FORNITORE nome_utente_fornitore luigi2 password Passsss..121 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGIN FORNITORE nome_utente_fornitore luigi2 password Passsss..121 (id: 1709119415165-0)
+
+Valore della variabile i: 5 
+XADD stream2 * Action EFFETTUA LOGIN TRASPORTATORE nome_utente_trasportatore andrea3 password Passsss..121 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGIN TRASPORTATORE nome_utente_trasportatore andrea3 password Passsss..121 (id: 1709119415165-1)
+
+Valore della variabile i: 6 
+XADD stream2 * Action AGGIORNA NUMERO TELEFONO COMPRATORE nuovoNumeroTelefono 3384459873 
+main(): pid =38896: stream stream2: Added Action AGGIORNA NUMERO TELEFONO COMPRATORE nuovoNumeroTelefono 3384459873 (id: 1709119415165-2)
+
+Valore della variabile i: 7 
+XADD stream2 * Action AGGIORNA NUMERO TELEFONO FORNITORE nuovoNumeroTelefono 1119992228 
+main(): pid =38896: stream stream2: Added Action AGGIORNA NUMERO TELEFONO FORNITORE nuovoNumeroTelefono 1119992228 (id: 1709119415165-3)
+
+Valore della variabile i: 8 
+XADD stream2 * Action AGGIORNA NUMERO TELEFONO TRASPORTATORE nuovoNumeroTelefono 576768474738 
+main(): pid =38896: stream stream2: Added Action AGGIORNA NUMERO TELEFONO TRASPORTATORE nuovoNumeroTelefono 576768474738 (id: 1709119415165-4)
+
+Valore della variabile i: 9 
+XADD stream2 * Action AGGIORNA PASSWORD COMPRATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..333 
+main(): pid =38896: stream stream2: Added Action AGGIORNA PASSWORD COMPRATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..333 (id: 1709119415166-0)
+
+Valore della variabile i: 10 
+XADD stream2 * Action AGGIORNA PASSWORD FORNITORE vecchiaPassw Passsss..121 nuovaPassw Passsss..555 
+main(): pid =38896: stream stream2: Added Action AGGIORNA PASSWORD FORNITORE vecchiaPassw Passsss..121 nuovaPassw Passsss..555 (id: 1709119415166-1)
+
+Valore della variabile i: 11 
+XADD stream2 * Action AGGIORNA PASSWORD TRASPORTATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..777 
+main(): pid =38896: stream stream2: Added Action AGGIORNA PASSWORD TRASPORTATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..777 (id: 1709119415166-2)
+
+Valore della variabile i: 12 
+XADD stream2 * Action AGGIORNA RESIDENZA nuovaViaResidenza Via dei Babbuini nuovoNumCiv 11 nuovoCAP 10348 nuovaCittaResidenza Torino 
+main(): pid =38896: stream stream2: Added Action AGGIORNA RESIDENZA nuovaViaResidenza Via dei Babbuini nuovoNumCiv 11 nuovoCAP 10348 nuovaCittaResidenza Torino (id: 1709119415166-3)
+
+Valore della variabile i: 13 
+XADD stream2 * Action AGGIORNA NOME AZIENDAPRODUZIONE nuovaAziendaProduzione Adidas 
+main(): pid =38896: stream stream2: Added Action AGGIORNA NOME AZIENDAPRODUZIONE nuovaAziendaProduzione Adidas (id: 1709119415166-4)
+
+Valore della variabile i: 14 
+XADD stream2 * Action AGGIORNA NOME DITTASPEDIZIONE nuovaDittaSpedizione Bartolini 
+main(): pid =38896: stream stream2: Added Action AGGIORNA NOME DITTASPEDIZIONE nuovaDittaSpedizione Bartolini (id: 1709119415166-5)
+
+Valore della variabile i: 15 
+XADD stream2 * Action AGGIUNGI CARTA PAGAMENTO nome_utente_compratore marco1 numeroCartaPagamento 4536467287372 cvvCartaPagamento 975 
+main(): pid =38896: stream stream2: Added Action AGGIUNGI CARTA PAGAMENTO nome_utente_compratore marco1 numeroCartaPagamento 4536467287372 cvvCartaPagamento 975 (id: 1709119415166-6)
+
+Valore della variabile i: 16 
+XADD stream2 * Action AGGIUNGI PRODOTTO SITO nome_utente_fornitore luigi2 nomeProdotto Nike Dump categoriaProdotto Abbigliamento prezzoProdotto 50 descrizioneProdotto Scapre Nike Dump aziendaProduzione Nike numeroCopieDisponibili 100 
+main(): pid =38896: stream stream2: Added Action AGGIUNGI PRODOTTO SITO nome_utente_fornitore luigi2 nomeProdotto Nike Dump categoriaProdotto Abbigliamento prezzoProdotto 50 descrizioneProdotto Scapre Nike Dump aziendaProduzione Nike numeroCopieDisponibili 100 (id: 1709119415166-7)
+
+Valore della variabile i: 17 
+XADD stream2 * Action AGGIUNGI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action AGGIUNGI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119415167-0)
+
+Valore della variabile i: 18 
+XADD stream2 * Action AGGIUNGI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action AGGIUNGI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119415167-1)
+
+Valore della variabile i: 19 
+XADD stream2 * Action RICERCA PRODOTTO nomeProdotto Nike Dump 
+main(): pid =38896: stream stream2: Added Action RICERCA PRODOTTO nomeProdotto Nike Dump (id: 1709119415167-2)
+
+Valore della variabile i: 20 
+XADD stream2 * Action ACQUISTA PRODOTTO nome_utente_compratore marco1 via_spedizione Via dei Babbuini citt√†_spedizione Torino numero_civico_spedizione 121 
+main(): pid =38896: stream stream2: Added Action ACQUISTA PRODOTTO nome_utente_compratore marco1 via_spedizione Via dei Babbuini citt√†_spedizione Torino numero_civico_spedizione 121 (id: 1709119415167-3)
+
+Valore della variabile i: 21 
+XADD stream2 * Action ASSEGNA ORDINE TRASPORTATORE 
+main(): pid =38896: stream stream2: Added Action ASSEGNA ORDINE TRASPORTATORE (id: 1709119415167-4)
+
+Valore della variabile i: 22 
+XADD stream2 * Action AVVISA SPEDIZIONE EFFETTUATA idSpedizione 1 
+main(): pid =38896: stream stream2: Added Action AVVISA SPEDIZIONE EFFETTUATA idSpedizione 1 (id: 1709119415167-5)
+
+Valore della variabile i: 23 
+XADD stream2 * Action VISIONA ORDINI EFFETTUATI nome_utente_compratore marco1 
+main(): pid =38896: stream stream2: Added Action VISIONA ORDINI EFFETTUATI nome_utente_compratore marco1 (id: 1709119415167-6)
+
+Valore della variabile i: 24 
+XADD stream2 * Action EFFETTUA RECENSIONE idOrdine 1 descrizioneRecensione Prodotto ottimo voto_stella Cinque 
+main(): pid =38896: stream stream2: Added Action EFFETTUA RECENSIONE idOrdine 1 descrizioneRecensione Prodotto ottimo voto_stella Cinque 1709119415167-7 121 (id: ≤Uv_†™)
+
+Valore della variabile i: 25 
+XADD stream2 * Action ANNULLA ORDINE idOrdine 1 
+main(): pid =38896: stream stream2: Added Action ANNULLA ORDINE idOrdine 1 (id: 1709119415167-8)
+
+Valore della variabile i: 26 
+XADD stream2 * Action EFFETTUA RESO idOrdine 1 codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action EFFETTUA RESO idOrdine 1 codiceProdotto 1 (id: 1709119415167-9)
+
+Valore della variabile i: 27 
+XADD stream2 * Action RIMUOVI RECENSIONE idRecensione 1 
+main(): pid =38896: stream stream2: Added Action RIMUOVI RECENSIONE idRecensione 1 (id: 1709119415168-0)
+
+Valore della variabile i: 28 
+XADD stream2 * Action RIMUOVI CARTA PAGAMENTO idCarta 1 
+main(): pid =38896: stream stream2: Added Action RIMUOVI CARTA PAGAMENTO idCarta 1 (id: 1709119415168-1)
+
+Valore della variabile i: 29 
+XADD stream2 * Action RIMUOVI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action RIMUOVI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119415168-2)
+
+Valore della variabile i: 30 
+XADD stream2 * Action RIMUOVI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action RIMUOVI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119415168-3)
+
+Valore della variabile i: 31 
+XADD stream2 * Action RIMUOVI PRODOTTO SITO codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action RIMUOVI PRODOTTO SITO codiceProdotto 1 (id: 1709119415168-4)
+
+Valore della variabile i: 32 
+XADD stream2 * Action EFFETTUA LOGOUT COMPRATORE nome_utente_compratore marco1 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGOUT COMPRATORE nome_utente_compratore marco1 (id: 1709119415168-5)
+
+Valore della variabile i: 33 
+XADD stream2 * Action EFFETTUA LOGOUT FORNITORE nome_utente_fornitore luigi2 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGOUT FORNITORE nome_utente_fornitore luigi2 (id: 1709119415168-6)
+
+Valore della variabile i: 34 
+XADD stream2 * Action EFFETTUA LOGOUT TRASPORTATORE nome_utente_trasportatore andrea3 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGOUT TRASPORTATORE nome_utente_trasportatore andrea3 (id: 1709119415168-7)
+
+Valore della variabile i: 35 
+XADD stream2 * Action ELIMINA PROFILO COMPRATORE 
+main(): pid =38896: stream stream2: Added Action ELIMINA PROFILO COMPRATORE (id: 1709119415168-8)
+
+Valore della variabile i: 36 
+XADD stream2 * Action ELIMINA PROFILO FORNITORE 
+main(): pid =38896: stream stream2: Added Action ELIMINA PROFILO FORNITORE (id: 1709119415169-0)
+
+Valore della variabile i: 37 
+XADD stream2 * Action ELIMINA PROFILO TRASPORTATORE 
+main(): pid =38896: stream stream2: Added Action ELIMINA PROFILO TRASPORTATORE (id: 1709119415169-1)
+
+
+Ora di leggere i risultati dal server. 
+Effettuato comando per leggere i messaggi della Streams. 
+main(): pid 38896: user federico: Read msg 2 from stream stream1
+    (string) stream1
+        (string) 1709119406173-0
+          (string) Result
+          (string) Registrazione utente fornitore avvenuta
+        (string) 1709119407182-0
+          (string) Result
+          (string) Effettuata registrazione trasportatore
+        (string) 1709119408195-0
+          (string) Result
+          (string) Login avvenuto
+        (string) 1709119408199-0
+          (string) Result
+          (string) Login utente fornitore avvenuta
+        (string) 1709119408202-0
+          (string) Result
+          (string) Login utente trasportatore avvenuta
+        (string) 1709119408205-0
+          (string) Result
+          (string) Aggiornamento numero telefono utente compratore
+        (string) 1709119408207-0
+          (string) Result
+          (string) Aggiornamento numero di telefono fornitore
+        (string) 1709119408209-0
+          (string) Result
+          (string) Aggiornamento numero di telefono trasportatore
+        (string) 1709119408210-0
+          (string) Result
+          (string) Aggiornamento password utente compratore
+        (string) 1709119408212-0
+          (string) Result
+          (string) Aggiornamento password utente fornitore
+        (string) 1709119408214-0
+          (string) Result
+          (string) Aggiornamento password utente trasportatore
+        (string) 1709119408216-0
+          (string) Result
+          (string) Aggiornamento residenza utente compratore
+        (string) 1709119408218-0
+          (string) Result
+          (string) Registrazione utente fornitore avvenuta
+        (string) 1709119408219-0
+          (string) Result
+          (string) Aggiornamento ditta spedizione
+        (string) 1709119408223-0
+          (string) Result
+          (string) Aggiornamento carta di pagamento
+        (string) 1709119408225-0
+          (string) Result
+          (string) Prodotto aggiunto al sito
+        (string) 1709119408227-0
+          (string) Result
+          (string) Aggiunta prodotto al carrello
+        (string) 1709119408231-0
+          (string) Result
+          (string) Aggiunta prodotto lista desideri
+        (string) 1709119408232-0
+          (string) Result
+          (string) Ricerca prodotto
+        (string) 1709119408235-0
+          (string) Result
+          (string) Acquisto prodotto
+        (string) 1709119408240-0
+          (string) Result
+          (string) Spedizione assegnata
+        (string) 1709119408242-0
+          (string) Result
+          (string) Spedizione effettuata
+        (string) 1709119408243-0
+          (string) Result
+          (string) Visione ordini effettuata con successo
+        (string) 1709119408245-0
+          (string) Result
+          (string) Effettuamento recensione
+        (string) 1709119408246-0
+          (string) Result
+          (string) Ordine annullato
+        (string) 1709119408249-0
+          (string) Result
+          (string) Effettuamento reso
+        (string) 1709119408250-0
+          (string) Result
+          (string) Recensione rimossa
+        (string) 1709119408251-0
+          (string) Result
+          (string) Rimozione carta di pagamento
+        (string) 1709119408253-0
+          (string) Result
+          (string) Rimozione prodotto dal carrello
+        (string) 1709119408255-0
+          (string) Result
+          (string) Rimozione prodotto lista desideri
+        (string) 1709119408256-0
+          (string) Result
+          (string) Prodotto rimosso dal sito
+        (string) 1709119408258-0
+          (string) Result
+          (string) Logout avvenuto
+        (string) 1709119408260-0
+          (string) Result
+          (string) Logout utente fornitore avvenuta
+        (string) 1709119408262-0
+          (string) Result
+          (string) Logout utente trasportatore avvenuta
+        (string) 1709119408264-0
+          (string) Result
+          (string) Eliminazione profilo avvenuta
+        (string) 1709119408265-0
+          (string) Result
+          (string) Eliminazione utente fornitore avvenuta
+        (string) 1709119408266-0
+          (string) Result
+          (string) Eliminazione utente trasportatore avvenuta
+Numero stream: 0
+Numero messaggio: 0 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 0, msgid 1709119406173-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 0, msgid 1709119406173-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 0, msgid 1709119406173-0 value 1 = Registrazione utente fornitore avvenuta
+Numero messaggio: 1 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 1, msgid 1709119407182-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 1, msgid 1709119407182-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 1, msgid 1709119407182-0 value 1 = Effettuata registrazione trasportatore
+Numero messaggio: 2 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 2, msgid 1709119408195-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 2, msgid 1709119408195-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 2, msgid 1709119408195-0 value 1 = Login avvenuto
+Numero messaggio: 3 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 3, msgid 1709119408199-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 3, msgid 1709119408199-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 3, msgid 1709119408199-0 value 1 = Login utente fornitore avvenuta
+Numero messaggio: 4 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 4, msgid 1709119408202-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 4, msgid 1709119408202-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 4, msgid 1709119408202-0 value 1 = Login utente trasportatore avvenuta
+Numero messaggio: 5 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 5, msgid 1709119408205-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 5, msgid 1709119408205-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 5, msgid 1709119408205-0 value 1 = Aggiornamento numero telefono utente compratore
+Numero messaggio: 6 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 6, msgid 1709119408207-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 6, msgid 1709119408207-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 6, msgid 1709119408207-0 value 1 = Aggiornamento numero di telefono fornitore
+Numero messaggio: 7 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 7, msgid 1709119408209-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 7, msgid 1709119408209-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 7, msgid 1709119408209-0 value 1 = Aggiornamento numero di telefono trasportatore
+Numero messaggio: 8 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 8, msgid 1709119408210-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 8, msgid 1709119408210-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 8, msgid 1709119408210-0 value 1 = Aggiornamento password utente compratore
+Numero messaggio: 9 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 9, msgid 1709119408212-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 9, msgid 1709119408212-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 9, msgid 1709119408212-0 value 1 = Aggiornamento password utente fornitore
+Numero messaggio: 10 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 10, msgid 1709119408214-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 10, msgid 1709119408214-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 10, msgid 1709119408214-0 value 1 = Aggiornamento password utente trasportatore
+Numero messaggio: 11 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 11, msgid 1709119408216-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 11, msgid 1709119408216-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 11, msgid 1709119408216-0 value 1 = Aggiornamento residenza utente compratore
+Numero messaggio: 12 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 12, msgid 1709119408218-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 12, msgid 1709119408218-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 12, msgid 1709119408218-0 value 1 = Registrazione utente fornitore avvenuta
+Numero messaggio: 13 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 13, msgid 1709119408219-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 13, msgid 1709119408219-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 13, msgid 1709119408219-0 value 1 = Aggiornamento ditta spedizione
+Numero messaggio: 14 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 14, msgid 1709119408223-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 14, msgid 1709119408223-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 14, msgid 1709119408223-0 value 1 = Aggiornamento carta di pagamento
+Numero messaggio: 15 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 15, msgid 1709119408225-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 15, msgid 1709119408225-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 15, msgid 1709119408225-0 value 1 = Prodotto aggiunto al sito
+Numero messaggio: 16 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 16, msgid 1709119408227-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 16, msgid 1709119408227-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 16, msgid 1709119408227-0 value 1 = Aggiunta prodotto al carrello
+Numero messaggio: 17 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 17, msgid 1709119408231-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 17, msgid 1709119408231-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 17, msgid 1709119408231-0 value 1 = Aggiunta prodotto lista desideri
+Numero messaggio: 18 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 18, msgid 1709119408232-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 18, msgid 1709119408232-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 18, msgid 1709119408232-0 value 1 = Ricerca prodotto
+Numero messaggio: 19 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 19, msgid 1709119408235-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 19, msgid 1709119408235-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 19, msgid 1709119408235-0 value 1 = Acquisto prodotto
+Numero messaggio: 20 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 20, msgid 1709119408240-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 20, msgid 1709119408240-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 20, msgid 1709119408240-0 value 1 = Spedizione assegnata
+Numero messaggio: 21 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 21, msgid 1709119408242-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 21, msgid 1709119408242-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 21, msgid 1709119408242-0 value 1 = Spedizione effettuata
+Numero messaggio: 22 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 22, msgid 1709119408243-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 22, msgid 1709119408243-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 22, msgid 1709119408243-0 value 1 = Visione ordini effettuata con successo
+Numero messaggio: 23 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 23, msgid 1709119408245-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 23, msgid 1709119408245-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 23, msgid 1709119408245-0 value 1 = Effettuamento recensione
+Numero messaggio: 24 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 24, msgid 1709119408246-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 24, msgid 1709119408246-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 24, msgid 1709119408246-0 value 1 = Ordine annullato
+Numero messaggio: 25 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 25, msgid 1709119408249-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 25, msgid 1709119408249-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 25, msgid 1709119408249-0 value 1 = Effettuamento reso
+Numero messaggio: 26 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 26, msgid 1709119408250-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 26, msgid 1709119408250-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 26, msgid 1709119408250-0 value 1 = Recensione rimossa
+Numero messaggio: 27 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 27, msgid 1709119408251-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 27, msgid 1709119408251-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 27, msgid 1709119408251-0 value 1 = Rimozione carta di pagamento
+Numero messaggio: 28 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 28, msgid 1709119408253-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 28, msgid 1709119408253-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 28, msgid 1709119408253-0 value 1 = Rimozione prodotto dal carrello
+Numero messaggio: 29 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 29, msgid 1709119408255-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 29, msgid 1709119408255-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 29, msgid 1709119408255-0 value 1 = Rimozione prodotto lista desideri
+Numero messaggio: 30 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 30, msgid 1709119408256-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 30, msgid 1709119408256-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 30, msgid 1709119408256-0 value 1 = Prodotto rimosso dal sito
+Numero messaggio: 31 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 31, msgid 1709119408258-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 31, msgid 1709119408258-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 31, msgid 1709119408258-0 value 1 = Logout avvenuto
+Numero messaggio: 32 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 32, msgid 1709119408260-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 32, msgid 1709119408260-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 32, msgid 1709119408260-0 value 1 = Logout utente fornitore avvenuta
+Numero messaggio: 33 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 33, msgid 1709119408262-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 33, msgid 1709119408262-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 33, msgid 1709119408262-0 value 1 = Logout utente trasportatore avvenuta
+Numero messaggio: 34 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 34, msgid 1709119408264-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 34, msgid 1709119408264-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 34, msgid 1709119408264-0 value 1 = Eliminazione profilo avvenuta
+Numero messaggio: 35 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 35, msgid 1709119408265-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 35, msgid 1709119408265-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 35, msgid 1709119408265-0 value 1 = Eliminazione utente fornitore avvenuta
+Numero messaggio: 36 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 36, msgid 1709119408266-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 36, msgid 1709119408266-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 36, msgid 1709119408266-0 value 1 = Eliminazione utente trasportatore avvenuta
+
+Valore della variabile i: 0 
+XADD stream2 * Action EFFETTUA REGISTRAZIONE COMPRATORE nome_utente_compratore marco1 categoriaUtente UtenteCompratore nome Marco cognome Rossi numeroTelefono 123456789 email marco.rossi1@gmail.com viaResidenza Via degli Ulivi numeroCivico 123 cap 01011 citt√†Residenza Roma password Passsss..121 confermaPassword Passsss..121 dataCompleanno 14/01/1999 
+main(): pid =38896: stream stream2: Added Action EFFETTUA REGISTRAZIONE COMPRATORE nome_utente_compratore marco1 categoriaUtente UtenteCompratore nome Marco cognome Rossi numeroTelefono 123456789 email marco.rossi1@gmail.com viaResidenza Via degli Ulivi numeroCivico 123 cap 01011 citt√†Residenza Roma password Passsss..121 confermaPassword Passsss..121 dataCompleanno 14/01/1999 (id: 1709119425172-0)
+
+
+Valore della variabile i: 1 
+XADD stream2 * Action EFFETTUA REGISTRAZIONE FORNITORE nome_utente_fornitore luigi2 categoriaUtente UtenteFornitore nome Luigi cognome Pesce numeroTelefono 3334447771 email luigi.pesce@gmail.com password Passsss..121 confermaPassword Passsss..121 aziendaProduzione Nike 
+main(): pid =38896: stream stream2: Added Action EFFETTUA REGISTRAZIONE FORNITORE nome_utente_fornitore luigi2 categoriaUtente UtenteFornitore nome Luigi cognome Pesce numeroTelefono 3334447771 email luigi.pesce@gmail.com password Passsss..121 confermaPassword Passsss..121 aziendaProduzione Nike (id: 1709119425173-0)
+
+Valore della variabile i: 2 
+XADD stream2 * Action EFFETTUA REGISTRAZIONE TRASPORTATORE nome_utente_trasportatore andrea3 categoriaUtente UtenteTrasportatore nome Andrea cognome Lancia numeroTelefono 4445558889 email andrea.lancia@gmail.com password Passsss..121 confermaPassword Passsss..121 dittaSpedizione FedEx 
+main(): pid =38896: stream stream2: Added Action EFFETTUA REGISTRAZIONE TRASPORTATORE nome_utente_trasportatore andrea3 categoriaUtente UtenteTrasportatore nome Andrea cognome Lancia numeroTelefono 4445558889 email andrea.lancia@gmail.com password Passsss..121 confermaPassword Passsss..121 dittaSpedizione FedEx (id: 1709119425173-1)
+
+Valore della variabile i: 3 
+XADD stream2 * Action EFFETTUA LOGIN COMPRATORE nome_utente_compratore marco1 password Passsss..121 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGIN COMPRATORE nome_utente_compratore marco1 password Passsss..121 (id: 1709119425173-2)
+
+Valore della variabile i: 4 
+XADD stream2 * Action EFFETTUA LOGIN FORNITORE nome_utente_fornitore luigi2 password Passsss..121 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGIN FORNITORE nome_utente_fornitore luigi2 password Passsss..121 (id: 1709119425174-0)
+
+Valore della variabile i: 5 
+XADD stream2 * Action EFFETTUA LOGIN TRASPORTATORE nome_utente_trasportatore andrea3 password Passsss..121 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGIN TRASPORTATORE nome_utente_trasportatore andrea3 password Passsss..121 (id: 1709119425174-1)
+
+Valore della variabile i: 6 
+XADD stream2 * Action AGGIORNA NUMERO TELEFONO COMPRATORE nuovoNumeroTelefono 3384459873 
+main(): pid =38896: stream stream2: Added Action AGGIORNA NUMERO TELEFONO COMPRATORE nuovoNumeroTelefono 3384459873 (id: 1709119425174-2)
+
+Valore della variabile i: 7 
+XADD stream2 * Action AGGIORNA NUMERO TELEFONO FORNITORE nuovoNumeroTelefono 1119992228 
+main(): pid =38896: stream stream2: Added Action AGGIORNA NUMERO TELEFONO FORNITORE nuovoNumeroTelefono 1119992228 (id: 1709119425174-3)
+
+Valore della variabile i: 8 
+XADD stream2 * Action AGGIORNA NUMERO TELEFONO TRASPORTATORE nuovoNumeroTelefono 576768474738 
+main(): pid =38896: stream stream2: Added Action AGGIORNA NUMERO TELEFONO TRASPORTATORE nuovoNumeroTelefono 576768474738 (id: 1709119425175-0)
+
+Valore della variabile i: 9 
+XADD stream2 * Action AGGIORNA PASSWORD COMPRATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..333 
+main(): pid =38896: stream stream2: Added Action AGGIORNA PASSWORD COMPRATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..333 (id: 1709119425175-1)
+
+Valore della variabile i: 10 
+XADD stream2 * Action AGGIORNA PASSWORD FORNITORE vecchiaPassw Passsss..121 nuovaPassw Passsss..555 
+main(): pid =38896: stream stream2: Added Action AGGIORNA PASSWORD FORNITORE vecchiaPassw Passsss..121 nuovaPassw Passsss..555 (id: 1709119425175-2)
+
+Valore della variabile i: 11 
+XADD stream2 * Action AGGIORNA PASSWORD TRASPORTATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..777 
+main(): pid =38896: stream stream2: Added Action AGGIORNA PASSWORD TRASPORTATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..777 (id: 1709119425175-3)
+
+Valore della variabile i: 12 
+XADD stream2 * Action AGGIORNA RESIDENZA nuovaViaResidenza Via dei Babbuini nuovoNumCiv 11 nuovoCAP 10348 nuovaCittaResidenza Torino 
+main(): pid =38896: stream stream2: Added Action AGGIORNA RESIDENZA nuovaViaResidenza Via dei Babbuini nuovoNumCiv 11 nuovoCAP 10348 nuovaCittaResidenza Torino (id: 1709119425175-4)
+
+Valore della variabile i: 13 
+XADD stream2 * Action AGGIORNA NOME AZIENDAPRODUZIONE nuovaAziendaProduzione Adidas 
+main(): pid =38896: stream stream2: Added Action AGGIORNA NOME AZIENDAPRODUZIONE nuovaAziendaProduzione Adidas (id: 1709119425175-5)
+
+Valore della variabile i: 14 
+XADD stream2 * Action AGGIORNA NOME DITTASPEDIZIONE nuovaDittaSpedizione Bartolini 
+main(): pid =38896: stream stream2: Added Action AGGIORNA NOME DITTASPEDIZIONE nuovaDittaSpedizione Bartolini (id: 1709119425175-6)
+
+Valore della variabile i: 15 
+XADD stream2 * Action AGGIUNGI CARTA PAGAMENTO nome_utente_compratore marco1 numeroCartaPagamento 4536467287372 cvvCartaPagamento 975 
+main(): pid =38896: stream stream2: Added Action AGGIUNGI CARTA PAGAMENTO nome_utente_compratore marco1 numeroCartaPagamento 4536467287372 cvvCartaPagamento 975 (id: 1709119425176-0)
+
+Valore della variabile i: 16 
+XADD stream2 * Action AGGIUNGI PRODOTTO SITO nome_utente_fornitore luigi2 nomeProdotto Nike Dump categoriaProdotto Abbigliamento prezzoProdotto 50 descrizioneProdotto Scapre Nike Dump aziendaProduzione Nike numeroCopieDisponibili 100 
+main(): pid =38896: stream stream2: Added Action AGGIUNGI PRODOTTO SITO nome_utente_fornitore luigi2 nomeProdotto Nike Dump categoriaProdotto Abbigliamento prezzoProdotto 50 descrizioneProdotto Scapre Nike Dump aziendaProduzione Nike numeroCopieDisponibili 100 (id: 1709119425176-1)
+
+Valore della variabile i: 17 
+XADD stream2 * Action AGGIUNGI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action AGGIUNGI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119425176-2)
+
+Valore della variabile i: 18 
+XADD stream2 * Action AGGIUNGI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action AGGIUNGI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119425176-3)
+
+Valore della variabile i: 19 
+XADD stream2 * Action RICERCA PRODOTTO nomeProdotto Nike Dump 
+main(): pid =38896: stream stream2: Added Action RICERCA PRODOTTO nomeProdotto Nike Dump (id: 1709119425176-4)
+
+Valore della variabile i: 20 
+XADD stream2 * Action ACQUISTA PRODOTTO nome_utente_compratore marco1 via_spedizione Via dei Babbuini citt√†_spedizione Torino numero_civico_spedizione 121 
+main(): pid =38896: stream stream2: Added Action ACQUISTA PRODOTTO nome_utente_compratore marco1 via_spedizione Via dei Babbuini citt√†_spedizione Torino numero_civico_spedizione 121 (id: 1709119425176-5)
+
+Valore della variabile i: 21 
+XADD stream2 * Action ASSEGNA ORDINE TRASPORTATORE 
+main(): pid =38896: stream stream2: Added Action ASSEGNA ORDINE TRASPORTATORE (id: 1709119425176-6)
+
+Valore della variabile i: 22 
+XADD stream2 * Action AVVISA SPEDIZIONE EFFETTUATA idSpedizione 1 
+main(): pid =38896: stream stream2: Added Action AVVISA SPEDIZIONE EFFETTUATA idSpedizione 1 (id: 1709119425177-0)
+
+Valore della variabile i: 23 
+XADD stream2 * Action VISIONA ORDINI EFFETTUATI nome_utente_compratore marco1 
+main(): pid =38896: stream stream2: Added Action VISIONA ORDINI EFFETTUATI nome_utente_compratore marco1 (id: 1709119425177-1)
+
+Valore della variabile i: 24 
+XADD stream2 * Action EFFETTUA RECENSIONE idOrdine 1 descrizioneRecensione Prodotto ottimo voto_stella Cinque 
+main(): pid =38896: stream stream2: Added Action EFFETTUA RECENSIONE idOrdine 1 descrizioneRecensione Prodotto ottimo voto_stella Cinque 1709119425177-2 121 (id: 2Év_†™)
+
+Valore della variabile i: 25 
+XADD stream2 * Action ANNULLA ORDINE idOrdine 1 
+main(): pid =38896: stream stream2: Added Action ANNULLA ORDINE idOrdine 1 (id: 1709119425177-3)
+
+Valore della variabile i: 26 
+XADD stream2 * Action EFFETTUA RESO idOrdine 1 codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action EFFETTUA RESO idOrdine 1 codiceProdotto 1 (id: 1709119425177-4)
+
+Valore della variabile i: 27 
+XADD stream2 * Action RIMUOVI RECENSIONE idRecensione 1 
+main(): pid =38896: stream stream2: Added Action RIMUOVI RECENSIONE idRecensione 1 (id: 1709119425177-5)
+
+Valore della variabile i: 28 
+XADD stream2 * Action RIMUOVI CARTA PAGAMENTO idCarta 1 
+main(): pid =38896: stream stream2: Added Action RIMUOVI CARTA PAGAMENTO idCarta 1 (id: 1709119425178-0)
+
+Valore della variabile i: 29 
+XADD stream2 * Action RIMUOVI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action RIMUOVI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119425178-1)
+
+Valore della variabile i: 30 
+XADD stream2 * Action RIMUOVI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action RIMUOVI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709119425178-2)
+
+Valore della variabile i: 31 
+XADD stream2 * Action RIMUOVI PRODOTTO SITO codiceProdotto 1 
+main(): pid =38896: stream stream2: Added Action RIMUOVI PRODOTTO SITO codiceProdotto 1 (id: 1709119425178-3)
+
+Valore della variabile i: 32 
+XADD stream2 * Action EFFETTUA LOGOUT COMPRATORE nome_utente_compratore marco1 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGOUT COMPRATORE nome_utente_compratore marco1 (id: 1709119425178-4)
+
+Valore della variabile i: 33 
+XADD stream2 * Action EFFETTUA LOGOUT FORNITORE nome_utente_fornitore luigi2 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGOUT FORNITORE nome_utente_fornitore luigi2 (id: 1709119425178-5)
+
+Valore della variabile i: 34 
+XADD stream2 * Action EFFETTUA LOGOUT TRASPORTATORE nome_utente_trasportatore andrea3 
+main(): pid =38896: stream stream2: Added Action EFFETTUA LOGOUT TRASPORTATORE nome_utente_trasportatore andrea3 (id: 1709119425179-0)
+
+Valore della variabile i: 35 
+XADD stream2 * Action ELIMINA PROFILO COMPRATORE 
+main(): pid =38896: stream stream2: Added Action ELIMINA PROFILO COMPRATORE (id: 1709119425179-1)
+
+Valore della variabile i: 36 
+XADD stream2 * Action ELIMINA PROFILO FORNITORE 
+main(): pid =38896: stream stream2: Added Action ELIMINA PROFILO FORNITORE (id: 1709119425179-2)
+
+Valore della variabile i: 37 
+XADD stream2 * Action ELIMINA PROFILO TRASPORTATORE 
+main(): pid =38896: stream stream2: Added Action ELIMINA PROFILO TRASPORTATORE (id: 1709119425179-3)
+
+
+Ora di leggere i risultati dal server. 
+Effettuato comando per leggere i messaggi della Streams. 
+main(): pid 38896: user federico: Read msg 3 from stream stream1
+    (string) stream1
+        (string) 1709119415283-0
+          (string) Result
+          (string) Registrazione utente compratore avvenuta
+        (string) 1709119416291-0
+          (string) Result
+          (string) Registrazione utente fornitore avvenuta
+        (string) 1709119417298-0
+          (string) Result
+          (string) Effettuata registrazione trasportatore
+        (string) 1709119418308-0
+          (string) Result
+          (string) Login avvenuto
+        (string) 1709119418311-0
+          (string) Result
+          (string) Login utente fornitore avvenuta
+        (string) 1709119418315-0
+          (string) Result
+          (string) Login utente trasportatore avvenuta
+        (string) 1709119418316-0
+          (string) Result
+          (string) Aggiornamento numero telefono utente compratore
+        (string) 1709119418317-0
+          (string) Result
+          (string) Aggiornamento numero di telefono fornitore
+        (string) 1709119418318-0
+          (string) Result
+          (string) Aggiornamento numero di telefono trasportatore
+        (string) 1709119418319-0
+          (string) Result
+          (string) Aggiornamento password utente compratore
+        (string) 1709119418320-0
+          (string) Result
+          (string) Aggiornamento password utente fornitore
+        (string) 1709119418321-0
+          (string) Result
+          (string) Aggiornamento password utente trasportatore
+        (string) 1709119418323-0
+          (string) Result
+          (string) Aggiornamento residenza utente compratore
+        (string) 1709119418325-0
+          (string) Result
+          (string) Registrazione utente fornitore avvenuta
+        (string) 1709119418326-0
+          (string) Result
+          (string) Aggiornamento ditta spedizione
+        (string) 1709119418327-0
+          (string) Result
+          (string) Aggiornamento carta di pagamento
+        (string) 1709119418328-0
+          (string) Result
+          (string) Prodotto aggiunto al sito
+        (string) 1709119418330-0
+          (string) Result
+          (string) Aggiunta prodotto al carrello
+        (string) 1709119418331-0
+          (string) Result
+          (string) Aggiunta prodotto lista desideri
+        (string) 1709119418332-0
+          (string) Result
+          (string) Ricerca prodotto
+        (string) 1709119418333-0
+          (string) Result
+          (string) Acquisto prodotto
+        (string) 1709119418337-0
+          (string) Result
+          (string) Spedizione assegnata
+        (string) 1709119418338-0
+          (string) Result
+          (string) Spedizione effettuata
+        (string) 1709119418339-0
+          (string) Result
+          (string) Visione ordini effettuata con successo
+        (string) 1709119418340-0
+          (string) Result
+          (string) Effettuamento recensione
+        (string) 1709119418341-0
+          (string) Result
+          (string) Ordine annullato
+        (string) 1709119418342-0
+          (string) Result
+          (string) Effettuamento reso
+        (string) 1709119418342-1
+          (string) Result
+          (string) Recensione rimossa
+        (string) 1709119418343-0
+          (string) Result
+          (string) Rimozione carta di pagamento
+        (string) 1709119418345-0
+          (string) Result
+          (string) Rimozione prodotto dal carrello
+        (string) 1709119418346-0
+          (string) Result
+          (string) Rimozione prodotto lista desideri
+        (string) 1709119418347-0
+          (string) Result
+          (string) Prodotto rimosso dal sito
+        (string) 1709119418349-0
+          (string) Result
+          (string) Logout avvenuto
+        (string) 1709119418351-0
+          (string) Result
+          (string) Logout utente fornitore avvenuta
+        (string) 1709119418353-0
+          (string) Result
+          (string) Logout utente trasportatore avvenuta
+        (string) 1709119418355-0
+          (string) Result
+          (string) Eliminazione profilo avvenuta
+        (string) 1709119418356-0
+          (string) Result
+          (string) Eliminazione utente fornitore avvenuta
+        (string) 1709119418357-0
+          (string) Result
+          (string) Eliminazione utente trasportatore avvenuta
+Numero stream: 0
+Numero messaggio: 0 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 0, msgid 1709119415283-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 0, msgid 1709119415283-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 0, msgid 1709119415283-0 value 1 = Registrazione utente compratore avvenuta
+Numero messaggio: 1 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 1, msgid 1709119416291-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 1, msgid 1709119416291-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 1, msgid 1709119416291-0 value 1 = Registrazione utente fornitore avvenuta
+Numero messaggio: 2 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 2, msgid 1709119417298-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 2, msgid 1709119417298-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 2, msgid 1709119417298-0 value 1 = Effettuata registrazione trasportatore
+Numero messaggio: 3 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 3, msgid 1709119418308-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 3, msgid 1709119418308-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 3, msgid 1709119418308-0 value 1 = Login avvenuto
+Numero messaggio: 4 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 4, msgid 1709119418311-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 4, msgid 1709119418311-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 4, msgid 1709119418311-0 value 1 = Login utente fornitore avvenuta
+Numero messaggio: 5 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 5, msgid 1709119418315-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 5, msgid 1709119418315-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 5, msgid 1709119418315-0 value 1 = Login utente trasportatore avvenuta
+Numero messaggio: 6 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 6, msgid 1709119418316-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 6, msgid 1709119418316-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 6, msgid 1709119418316-0 value 1 = Aggiornamento numero telefono utente compratore
+Numero messaggio: 7 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 7, msgid 1709119418317-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 7, msgid 1709119418317-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 7, msgid 1709119418317-0 value 1 = Aggiornamento numero di telefono fornitore
+Numero messaggio: 8 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 8, msgid 1709119418318-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 8, msgid 1709119418318-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 8, msgid 1709119418318-0 value 1 = Aggiornamento numero di telefono trasportatore
+Numero messaggio: 9 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 9, msgid 1709119418319-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 9, msgid 1709119418319-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 9, msgid 1709119418319-0 value 1 = Aggiornamento password utente compratore
+Numero messaggio: 10 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 10, msgid 1709119418320-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 10, msgid 1709119418320-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 10, msgid 1709119418320-0 value 1 = Aggiornamento password utente fornitore
+Numero messaggio: 11 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 11, msgid 1709119418321-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 11, msgid 1709119418321-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 11, msgid 1709119418321-0 value 1 = Aggiornamento password utente trasportatore
+Numero messaggio: 12 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 12, msgid 1709119418323-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 12, msgid 1709119418323-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 12, msgid 1709119418323-0 value 1 = Aggiornamento residenza utente compratore
+Numero messaggio: 13 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 13, msgid 1709119418325-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 13, msgid 1709119418325-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 13, msgid 1709119418325-0 value 1 = Registrazione utente fornitore avvenuta
+Numero messaggio: 14 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 14, msgid 1709119418326-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 14, msgid 1709119418326-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 14, msgid 1709119418326-0 value 1 = Aggiornamento ditta spedizione
+Numero messaggio: 15 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 15, msgid 1709119418327-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 15, msgid 1709119418327-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 15, msgid 1709119418327-0 value 1 = Aggiornamento carta di pagamento
+Numero messaggio: 16 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 16, msgid 1709119418328-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 16, msgid 1709119418328-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 16, msgid 1709119418328-0 value 1 = Prodotto aggiunto al sito
+Numero messaggio: 17 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 17, msgid 1709119418330-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 17, msgid 1709119418330-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 17, msgid 1709119418330-0 value 1 = Aggiunta prodotto al carrello
+Numero messaggio: 18 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 18, msgid 1709119418331-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 18, msgid 1709119418331-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 18, msgid 1709119418331-0 value 1 = Aggiunta prodotto lista desideri
+Numero messaggio: 19 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 19, msgid 1709119418332-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 19, msgid 1709119418332-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 19, msgid 1709119418332-0 value 1 = Ricerca prodotto
+Numero messaggio: 20 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 20, msgid 1709119418333-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 20, msgid 1709119418333-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 20, msgid 1709119418333-0 value 1 = Acquisto prodotto
+Numero messaggio: 21 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 21, msgid 1709119418337-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 21, msgid 1709119418337-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 21, msgid 1709119418337-0 value 1 = Spedizione assegnata
+Numero messaggio: 22 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 22, msgid 1709119418338-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 22, msgid 1709119418338-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 22, msgid 1709119418338-0 value 1 = Spedizione effettuata
+Numero messaggio: 23 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 23, msgid 1709119418339-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 23, msgid 1709119418339-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 23, msgid 1709119418339-0 value 1 = Visione ordini effettuata con successo
+Numero messaggio: 24 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 24, msgid 1709119418340-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 24, msgid 1709119418340-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 24, msgid 1709119418340-0 value 1 = Effettuamento recensione
+Numero messaggio: 25 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 25, msgid 1709119418341-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 25, msgid 1709119418341-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 25, msgid 1709119418341-0 value 1 = Ordine annullato
+Numero messaggio: 26 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 26, msgid 1709119418342-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 26, msgid 1709119418342-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 26, msgid 1709119418342-0 value 1 = Effettuamento reso
+Numero messaggio: 27 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 27, msgid 1709119418342-1 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 27, msgid 1709119418342-1 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 27, msgid 1709119418342-1 value 1 = Recensione rimossa
+Numero messaggio: 28 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 28, msgid 1709119418343-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 28, msgid 1709119418343-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 28, msgid 1709119418343-0 value 1 = Rimozione carta di pagamento
+Numero messaggio: 29 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 29, msgid 1709119418345-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 29, msgid 1709119418345-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 29, msgid 1709119418345-0 value 1 = Rimozione prodotto dal carrello
+Numero messaggio: 30 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 30, msgid 1709119418346-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 30, msgid 1709119418346-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 30, msgid 1709119418346-0 value 1 = Rimozione prodotto lista desideri
+Numero messaggio: 31 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 31, msgid 1709119418347-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 31, msgid 1709119418347-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 31, msgid 1709119418347-0 value 1 = Prodotto rimosso dal sito
+Numero messaggio: 32 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 32, msgid 1709119418349-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 32, msgid 1709119418349-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 32, msgid 1709119418349-0 value 1 = Logout avvenuto
+Numero messaggio: 33 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 33, msgid 1709119418351-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 33, msgid 1709119418351-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 33, msgid 1709119418351-0 value 1 = Logout utente fornitore avvenuta
+Numero messaggio: 34 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 34, msgid 1709119418353-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 34, msgid 1709119418353-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 34, msgid 1709119418353-0 value 1 = Logout utente trasportatore avvenuta
+Numero messaggio: 35 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 35, msgid 1709119418355-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 35, msgid 1709119418355-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 35, msgid 1709119418355-0 value 1 = Eliminazione profilo avvenuta
+Numero messaggio: 36 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 36, msgid 1709119418356-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 36, msgid 1709119418356-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 36, msgid 1709119418356-0 value 1 = Eliminazione utente fornitore avvenuta
+Numero messaggio: 37 della Stream 0
+main(): pid 38896: user federico: stream stream1, streamnum 0, msg 37, msgid 1709119418357-0 with 2 values
+main(): pid 38896: user federico: streamnum 0, msg 37, msgid 1709119418357-0 value 0 = Result
+main(): pid 38896: user federico: streamnum 0, msg 37, msgid 1709119418357-0 value 1 = Eliminazione utente trasportatore avvenuta

@@ -605,32 +605,35 @@ int main()
 
 
             if (server_types[i]== "AGGIUNGI PRODOTTO SITO"){
-                sprintf(key2, "nomeProdotto");
+                sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, "luigi2");
+                
+                sprintf(key3, "nomeProdotto");
+                sprintf(value3, "Nike Dump");
 
-                sprintf(key3, "categoriaProdotto");
-                sprintf(value3, "UtenteFornitore");
+                sprintf(key4, "categoriaProdotto");
+                sprintf(value4, "Abbigliamento");
 
-                sprintf(key4, "prezzoProdotto");
-                sprintf(value4, "Luigi");
+                sprintf(key5, "prezzoProdotto");
+                sprintf(value5, "50");
 
-                sprintf(key5, "descrizioneProdotto");
-                sprintf(value5, "Pesce");
+                sprintf(key6, "descrizioneProdotto");
+                sprintf(value6, "Scapre Nike Dump");
 
-                sprintf(key6, "aziendaProduzione");
-                sprintf(value6, "3334447771");
+                sprintf(key7, "aziendaProduzione");
+                sprintf(value7, "Nike");
 
-                sprintf(key7, "numeroCopieDisponibili");
-                sprintf(value7, "luigi.pesce@gmail.com");
+                sprintf(key8, "numeroCopieDisponibili");
+                sprintf(value8, "100");
 
-                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
-                                        WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7);
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
+                                        WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
-                                        WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7);
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, 
-                                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, reply->str);
+                printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM, 
+                                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7,key8, value8, reply->str);
 
                 freeReplyObject(reply);
             }

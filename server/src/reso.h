@@ -56,9 +56,9 @@ public:
         sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", idOrdine);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);
         if (rows==1){
             stato_spedizione = PQgetvalue(res, 0, PQfnumber(res, "statoSpedizione"));
+            PQclear(res);
 
             if (stato_spedizione == "consegnato"){
 
@@ -67,17 +67,17 @@ public:
               sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", idOrdine);
               res = db1.ExecSQLtuples(sqlcmd);
               rows = PQntuples(res);
-              PQclear(res);
               if (rows == 1){
                   nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
+                    PQclear(res);
 
                   // Caricamento del sessionID utile per il log.
                   sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
                   res = db1.ExecSQLtuples(sqlcmd);
                   rows = PQntuples(res);
-                  PQclear(res);                   
                   if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
-                    
+                  PQclear(res);                   
+
                   std::string motivazione_resoStr = statoMotivazioneResoToString(motivazione_reso);
                     
                   sprintf(sqlcmd, "INSERT INTO Reso (idReso, nome_utente_compratore, idOrdine, motivazioneReso) VALUES (DEFAULT, '%s', '%d', '%s')", 

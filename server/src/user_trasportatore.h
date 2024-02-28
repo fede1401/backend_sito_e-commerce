@@ -162,6 +162,32 @@ public:
 
                 InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso.", session_id, nomeRequisito, statoReq);
                 std::cout << "Errore: Il nome utente è già in uso." << std::endl;
+                
+                sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", in_nome_utente.c_str());
+
+                res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+
+                if (rows == 1){
+                    std::string nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_trasportatore"));
+                    std::string session_id = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));
+                    std::string categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+                    std::string nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+                    std::string cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
+                    std::string email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
+                    std::string numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
+                    std::string ditta_spedizione = PQgetvalue(res, 0, PQfnumber(res, "nome_DittaSpedizione"));
+                    std::string password = PQgetvalue(res, 0, PQfnumber(res, "password"));
+                    int stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+                    int disponibilità = atoi(PQgetvalue(res, 0, PQfnumber(res, "dispo")));
+
+                    *this = UtenteTrasportatore(nome_utente, categoria, nome, cognome, numero_telefono, password, email, session_id, ditta_spedizione, stato, disponibilità);
+                }
+                else{
+                    std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+                }
+                
+                
                 return;
         }
 
@@ -356,7 +382,9 @@ public:
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         
-        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}  
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}
+
+        PQclear(res);  
 
         sprintf(sqlcmd, "UPDATE UtenteTrasportatore set nome_DittaSpedizione='%s' WHERE nome_utente_trasportatore = '%s'",
                                                                             nuovaDittaSpedizione.c_str(), nomeUtente.c_str());
@@ -369,6 +397,7 @@ public:
 
     return;
     }
+
 
 };
 
