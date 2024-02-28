@@ -1,13 +1,13 @@
-main(): pid 23572: user federico: connecting to redis ...
-main(): pid 23572: user federico: connected to redis, 0
+main(): pid 36297: user federico: connecting to redis ...
+main(): pid 36297: user federico: connected to redis, 0
 ((Effettuato comando RedisComand
 Stream inizializzata.Effettuato comando RedisComand
 Stream inizializzata.Streams create!
 Connessione al database avvenuta con successo
 
-main(): pid 23572: user federico: Read msg 1 from stream stream2
+main(): pid 36297: user federico: Read msg 1 from stream stream2
     (string) stream2
-        (string) 1709036409810-0
+        (string) 1709113661983-0
           (string) Action
           (string) EFFETTUA REGISTRAZIONE COMPRATORE
           (string) nome_utente_compratore
@@ -36,7 +36,7 @@ main(): pid 23572: user federico: Read msg 1 from stream stream2
           (string) Passsss..121
           (string) dataCompleanno
           (string) 14/01/1999
-        (string) 1709036409810-1
+        (string) 1709113661984-0
           (string) Action
           (string) EFFETTUA REGISTRAZIONE FORNITORE
           (string) nome_utente_fornitore
@@ -57,7 +57,7 @@ main(): pid 23572: user federico: Read msg 1 from stream stream2
           (string) Passsss..121
           (string) aziendaProduzione
           (string) Nike
-        (string) 1709036409810-2
+        (string) 1709113661984-1
           (string) Action
           (string) EFFETTUA REGISTRAZIONE TRASPORTATORE
           (string) nome_utente_trasportatore
@@ -78,64 +78,64 @@ main(): pid 23572: user federico: Read msg 1 from stream stream2
           (string) Passsss..121
           (string) dittaSpedizione
           (string) FedEx
-        (string) 1709036409811-0
+        (string) 1709113661985-0
           (string) Action
           (string) EFFETTUA LOGIN COMPRATORE
           (string) nome_utente_compratore
           (string) marco1
           (string) password
           (string) Passsss..121
-        (string) 1709036409811-1
+        (string) 1709113661985-1
           (string) Action
           (string) EFFETTUA LOGIN FORNITORE
           (string) nome_utente_fornitore
           (string) luigi2
           (string) password
           (string) Passsss..121
-        (string) 1709036409811-2
+        (string) 1709113661985-2
           (string) Action
           (string) EFFETTUA LOGIN TRASPORTATORE
           (string) nome_utente_trasportatore
           (string) andrea3
           (string) password
           (string) Passsss..121
-        (string) 1709036409811-3
+        (string) 1709113661985-3
           (string) Action
           (string) AGGIORNA NUMERO TELEFONO COMPRATORE
           (string) nuovoNumeroTelefono
           (string) 3384459873
-        (string) 1709036409811-4
+        (string) 1709113661985-4
           (string) Action
           (string) AGGIORNA NUMERO TELEFONO FORNITORE
           (string) nuovoNumeroTelefono
           (string) 1119992228
-        (string) 1709036409812-0
+        (string) 1709113661986-0
           (string) Action
           (string) AGGIORNA NUMERO TELEFONO TRASPORTATORE
           (string) nuovoNumeroTelefono
           (string) 576768474738
-        (string) 1709036409812-1
+        (string) 1709113661986-1
           (string) Action
           (string) AGGIORNA PASSWORD COMPRATORE
           (string) vecchiaPassw
           (string) Passsss..121
           (string) nuovaPassw
           (string) Passsss..333
-        (string) 1709036409812-2
+        (string) 1709113661986-2
           (string) Action
           (string) AGGIORNA PASSWORD FORNITORE
           (string) vecchiaPassw
           (string) Passsss..121
           (string) nuovaPassw
           (string) Passsss..555
-        (string) 1709036409812-3
+        (string) 1709113661986-3
           (string) Action
           (string) AGGIORNA PASSWORD TRASPORTATORE
           (string) vecchiaPassw
           (string) Passsss..121
           (string) nuovaPassw
           (string) Passsss..777
-        (string) 1709036409812-4
+        (string) 1709113661987-0
           (string) Action
           (string) AGGIORNA RESIDENZA
           (string) nuovaViaResidenza
@@ -146,17 +146,17 @@ main(): pid 23572: user federico: Read msg 1 from stream stream2
           (string) 10348
           (string) nuovaCittaResidenza
           (string) Torino
-        (string) 1709036409812-5
+        (string) 1709113661987-1
           (string) Action
           (string) AGGIORNA NOME AZIENDAPRODUZIONE
           (string) nuovaAziendaProduzione
           (string) Adidas
-        (string) 1709036409812-6
+        (string) 1709113661988-0
           (string) Action
           (string) AGGIORNA NOME DITTASPEDIZIONE
           (string) nuovaDittaSpedizione
           (string) Bartolini
-        (string) 1709036409812-7
+        (string) 1709113661988-1
           (string) Action
           (string) AGGIUNGI CARTA PAGAMENTO
           (string) nome_utente_compratore
@@ -165,7 +165,7 @@ main(): pid 23572: user federico: Read msg 1 from stream stream2
           (string) 4536467287372
           (string) cvvCartaPagamento
           (string) 975
-        (string) 1709036409813-0
+        (string) 1709113661989-0
           (string) Action
           (string) AGGIUNGI PRODOTTO SITO
           (string) nomeProdotto
@@ -180,26 +180,26 @@ main(): pid 23572: user federico: Read msg 1 from stream stream2
           (string) 3334447771
           (string) numeroCopieDisponibili
           (string) luigi.pesce@gmail.com
-        (string) 1709036409813-1
+        (string) 1709113661989-1
           (string) Action
           (string) AGGIUNGI PRODOTTO CARRELLO
           (string) nome_utente_compratore
           (string) marco1
           (string) codiceProdotto
           (string) 1
-        (string) 1709036409813-2
+        (string) 1709113661989-2
           (string) Action
           (string) AGGIUNGI PRODOTTO LISTADESIDERI
           (string) nome_utente_compratore
           (string) marco1
           (string) codiceProdotto
           (string) 1
-        (string) 1709036409813-3
+        (string) 1709113661989-3
           (string) Action
           (string) RICERCA PRODOTTO
           (string) nomeProdotto
           (string) Nike Dump
-        (string) 1709036409813-4
+        (string) 1709113661990-0
           (string) Action
           (string) ACQUISTA PRODOTTO
           (string) nome_utente_compratore
@@ -210,20 +210,20 @@ main(): pid 23572: user federico: Read msg 1 from stream stream2
           (string) Torino
           (string) numero_civico_spedizione
           (string) 121
-        (string) 1709036409813-5
+        (string) 1709113661990-1
           (string) Action
           (string) ASSEGNA ORDINE TRASPORTATORE
-        (string) 1709036409813-6
+        (string) 1709113661990-2
           (string) Action
           (string) AVVISA SPEDIZIONE EFFETTUATA
           (string) idSpedizione
           (string) 1
-        (string) 1709036409813-7
+        (string) 1709113661990-3
           (string) Action
           (string) VISIONA ORDINI EFFETTUATI
           (string) nome_utente_compratore
           (string) marco1
-        (string) 1709036409814-0
+        (string) 1709113661990-4
           (string) Action
           (string) EFFETTUA RECENSIONE
           (string) idOrdine
@@ -232,69 +232,69 @@ main(): pid 23572: user federico: Read msg 1 from stream stream2
           (string) Prodotto ottimo
           (string) voto_stella
           (string) Cinque
-        (string) 1709036409814-1
+        (string) 1709113661991-0
           (string) Action
           (string) ANNULLA ORDINE
           (string) idOrdine
           (string) 1
-        (string) 1709036409814-2
+        (string) 1709113661991-1
           (string) Action
           (string) EFFETTUA RESO
           (string) idOrdine
           (string) 1
           (string) codiceProdotto
           (string) 1
-        (string) 1709036409814-3
+        (string) 1709113661991-2
           (string) Action
           (string) RIMUOVI RECENSIONE
           (string) idRecensione
           (string) 1
-        (string) 1709036409814-4
+        (string) 1709113661991-3
           (string) Action
           (string) RIMUOVI CARTA PAGAMENTO
           (string) idCarta
           (string) 1
-        (string) 1709036409814-5
+        (string) 1709113661992-0
           (string) Action
           (string) RIMUOVI PRODOTTO CARRELLO
           (string) nome_utente_compratore
           (string) marco1
           (string) codiceProdotto
           (string) 1
-        (string) 1709036409815-0
+        (string) 1709113661992-1
           (string) Action
           (string) RIMUOVI PRODOTTO LISTADESIDERI
           (string) nome_utente_compratore
           (string) marco1
           (string) codiceProdotto
           (string) 1
-        (string) 1709036409815-1
+        (string) 1709113661992-2
           (string) Action
           (string) RIMUOVI PRODOTTO SITO
           (string) codiceProdotto
           (string) 1
-        (string) 1709036409815-2
+        (string) 1709113661992-3
           (string) Action
           (string) EFFETTUA LOGOUT COMPRATORE
           (string) nome_utente_compratore
           (string) marco1
-        (string) 1709036409815-3
+        (string) 1709113661993-0
           (string) Action
           (string) EFFETTUA LOGOUT FORNITORE
           (string) nome_utente_fornitore
           (string) luigi2
-        (string) 1709036409815-4
+        (string) 1709113661993-1
           (string) Action
           (string) EFFETTUA LOGOUT TRASPORTATORE
           (string) nome_utente_trasportatore
           (string) andrea3
-        (string) 1709036409815-5
+        (string) 1709113661993-2
           (string) Action
           (string) ELIMINA PROFILO COMPRATORE
-        (string) 1709036409815-6
+        (string) 1709113661993-3
           (string) Action
           (string) ELIMINA PROFILO FORNITORE
-        (string) 1709036409815-7
+        (string) 1709113661993-4
           (string) Action
           (string) ELIMINA PROFILO TRASPORTATORE
 Effettuato il dump! 
@@ -304,10 +304,10 @@ Number of message about Stream = 38
 
 
 PROSSIMO MESSAGGIO NELLA STREAM.Message number 0 from Stream: 0
-main(): pid 23572: user federico: stream stream2, streamnum 0, msg 0, msgid 1709036409810-0 with 28 values
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 0, msgid 1709113661983-0 with 28 values
 
 Value 0 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 0 = Action
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 0 = Action
 Fval: Action
 
 Fval: EFFETTUA REGISTRAZIONE COMPRATORE
@@ -315,111 +315,111 @@ Action: EFFETTUA REGISTRAZIONE COMPRATORE
 
 
 Value 1 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 1 = EFFETTUA REGISTRAZIONE COMPRATORE
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 1 = EFFETTUA REGISTRAZIONE COMPRATORE
 Fval: EFFETTUA REGISTRAZIONE COMPRATORE
 
 Value 2 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 2 = nome_utente_compratore
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 2 = nome_utente_compratore
 Fval: nome_utente_compratore
 
 Value 3 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 3 = marco1
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 3 = marco1
 Fval: marco1
 
 Value 4 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 4 = categoriaUtente
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 4 = categoriaUtente
 Fval: categoriaUtente
 
 Value 5 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 5 = UtenteCompratore
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 5 = UtenteCompratore
 Fval: UtenteCompratore
 
 Value 6 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 6 = nome
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 6 = nome
 Fval: nome
 
 Value 7 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 7 = Marco
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 7 = Marco
 Fval: Marco
 
 Value 8 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 8 = cognome
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 8 = cognome
 Fval: cognome
 
 Value 9 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 9 = Rossi
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 9 = Rossi
 Fval: Rossi
 
 Value 10 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 10 = numeroTelefono
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 10 = numeroTelefono
 Fval: numeroTelefono
 
 Value 11 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 11 = 123456789
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 11 = 123456789
 Fval: 123456789
 
 Value 12 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 12 = email
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 12 = email
 Fval: email
 
 Value 13 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 13 = marco.rossi1@gmail.com
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 13 = marco.rossi1@gmail.com
 Fval: marco.rossi1@gmail.com
 
 Value 14 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 14 = viaResidenza
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 14 = viaResidenza
 Fval: viaResidenza
 
 Value 15 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 15 = Via degli Ulivi
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 15 = Via degli Ulivi
 Fval: Via degli Ulivi
 
 Value 16 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 16 = numeroCivico
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 16 = numeroCivico
 Fval: numeroCivico
 
 Value 17 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 17 = 123
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 17 = 123
 Fval: 123
 
 Value 18 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 18 = cap
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 18 = cap
 Fval: cap
 
 Value 19 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 19 = 01011
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 19 = 01011
 Fval: 01011
 
 Value 20 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 20 = cittàResidenza
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 20 = cittàResidenza
 Fval: cittàResidenza
 
 Value 21 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 21 = Roma
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 21 = Roma
 Fval: Roma
 
 Value 22 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 22 = password
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 22 = password
 Fval: password
 
 Value 23 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 23 = Passsss..121
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 23 = Passsss..121
 Fval: Passsss..121
 
 Value 24 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 24 = confermaPassword
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 24 = confermaPassword
 Fval: confermaPassword
 
 Value 25 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 25 = Passsss..121
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 25 = Passsss..121
 Fval: Passsss..121
 
 Value 26 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 26 = dataCompleanno
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 26 = dataCompleanno
 Fval: dataCompleanno
 
 Value 27 from message number 0 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 0, msgid 1709036409810-0 value 27 = 14/01/1999
+main(): pid 36297: user federico: streamnum 0, msg 0, msgid 1709113661983-0 value 27 = 14/01/1999
 Fval: 14/01/1999
 
 Action: EFFETTUA REGISTRAZIONE COMPRATORE
@@ -441,11 +441,11 @@ cap: 01011
 cittàResidenza: Roma
 confermaPassword: Passsss..121
 dataCompleanno: 14/01/1999
-codiceProdotto: -931063200
+codiceProdotto: -1122076864
 numeroCartaPagamento: 
 cvvCartaPagamento: 
-idCarta: 43690
-idOrdine: -418467400
+idCarta: 65535
+idOrdine: -929033152
 nuovaViaResidenza: 
 nuovoNumCiv: 
 nuovoCAP: 
@@ -455,7 +455,7 @@ città_spedizione:
 numero_civico_spedizione: 
 descrizioneRecensione: 
 voto_stella: 43690
-idRecensione: -418185880
+idRecensione: -1088966088
 motivazione_reso: 
 nomeProdotto: 
 categoriaProdotto: 
@@ -463,22 +463,25 @@ aziendaProduzione:
 nuovaAziendaProduzione: 
 descrizioneProdotto: 
 prezzoProdotto: 0.00
-numeroCopieDisponibili: 0
+numeroCopieDisponibili: 43690
 dittaSpedizione: 
 nuovaDittaSpedizione: 
-idSpedizione: 1
+idSpedizione: -1088684696
 Azione: EFFETTUA REGISTRAZIONE COMPRATORE
 Categoria utente:UtenteCompratore
 Utente inserito.
+Effettuata azione: EFFETTUA REGISTRAZIONE COMPRATORE
+Result: Registrazione utente compratore avvenuta 
+main(): pid =36297: stream stream1: Added Result -> Registrazione utente compratore avvenuta (id: 1709113667128-0)
 
 
 
 
 PROSSIMO MESSAGGIO NELLA STREAM.Message number 1 from Stream: 0
-main(): pid 23572: user federico: stream stream2, streamnum 0, msg 1, msgid 1709036409810-1 with 20 values
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 1, msgid 1709113661984-0 with 20 values
 
 Value 0 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 0 = Action
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 0 = Action
 Fval: Action
 
 Fval: EFFETTUA REGISTRAZIONE FORNITORE
@@ -486,79 +489,79 @@ Action: EFFETTUA REGISTRAZIONE FORNITORE
 
 
 Value 1 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 1 = EFFETTUA REGISTRAZIONE FORNITORE
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 1 = EFFETTUA REGISTRAZIONE FORNITORE
 Fval: EFFETTUA REGISTRAZIONE FORNITORE
 
 Value 2 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 2 = nome_utente_fornitore
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 2 = nome_utente_fornitore
 Fval: nome_utente_fornitore
 
 Value 3 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 3 = luigi2
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 3 = luigi2
 Fval: luigi2
 
 Value 4 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 4 = categoriaUtente
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 4 = categoriaUtente
 Fval: categoriaUtente
 
 Value 5 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 5 = UtenteFornitore
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 5 = UtenteFornitore
 Fval: UtenteFornitore
 
 Value 6 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 6 = nome
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 6 = nome
 Fval: nome
 
 Value 7 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 7 = Luigi
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 7 = Luigi
 Fval: Luigi
 
 Value 8 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 8 = cognome
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 8 = cognome
 Fval: cognome
 
 Value 9 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 9 = Pesce
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 9 = Pesce
 Fval: Pesce
 
 Value 10 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 10 = numeroTelefono
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 10 = numeroTelefono
 Fval: numeroTelefono
 
 Value 11 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 11 = 3334447771
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 11 = 3334447771
 Fval: 3334447771
 
 Value 12 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 12 = email
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 12 = email
 Fval: email
 
 Value 13 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 13 = luigi.pesce@gmail.com
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 13 = luigi.pesce@gmail.com
 Fval: luigi.pesce@gmail.com
 
 Value 14 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 14 = password
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 14 = password
 Fval: password
 
 Value 15 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 15 = Passsss..121
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 15 = Passsss..121
 Fval: Passsss..121
 
 Value 16 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 16 = confermaPassword
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 16 = confermaPassword
 Fval: confermaPassword
 
 Value 17 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 17 = Passsss..121
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 17 = Passsss..121
 Fval: Passsss..121
 
 Value 18 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 18 = aziendaProduzione
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 18 = aziendaProduzione
 Fval: aziendaProduzione
 
 Value 19 from message number 1 from Stream: 0
-main(): pid 23572: user federico: streamnum 0, msg 1, msgid 1709036409810-1 value 19 = Nike
+main(): pid 36297: user federico: streamnum 0, msg 1, msgid 1709113661984-0 value 19 = Nike
 Fval: Nike
 
 Action: EFFETTUA REGISTRAZIONE FORNITORE
@@ -580,11 +583,11 @@ cap: 01011
 cittàResidenza: Roma
 confermaPassword: Passsss..121
 dataCompleanno: 14/01/1999
-codiceProdotto: -931063200
+codiceProdotto: -1122076864
 numeroCartaPagamento: 
 cvvCartaPagamento: 
-idCarta: 43690
-idOrdine: -418467400
+idCarta: 65535
+idOrdine: -929033152
 nuovaViaResidenza: 
 nuovoNumCiv: 
 nuovoCAP: 
@@ -594,7 +597,7 @@ città_spedizione:
 numero_civico_spedizione: 
 descrizioneRecensione: 
 voto_stella: 43690
-idRecensione: -418185880
+idRecensione: -1088966088
 motivazione_reso: 
 nomeProdotto: 
 categoriaProdotto: 
@@ -602,13 +605,1074 @@ aziendaProduzione: Nike
 nuovaAziendaProduzione: 
 descrizioneProdotto: 
 prezzoProdotto: 0.00
-numeroCopieDisponibili: 0
+numeroCopieDisponibili: 43690
 dittaSpedizione: 
 nuovaDittaSpedizione: 
-idSpedizione: 1
+idSpedizione: -1088684696
 Azione: EFFETTUA REGISTRAZIONE FORNITORE
 Categoria utente:UtenteFornitore
 Utente inserito.
+Registrazione avvenuta con successo.
 Effettuata azione: EFFETTUA REGISTRAZIONE FORNITORE
 Result: Registrazione utente fornitore avvenuta 
-main(): pid =23572: stream stream1: Added Result -> Registrazione utente fornitore avvenuta (id: 1709036415249-0)
+main(): pid =36297: stream stream1: Added Result -> Registrazione utente fornitore avvenuta (id: 1709113668146-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 2 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 2, msgid 1709113661984-1 with 20 values
+
+Value 0 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 0 = Action
+Fval: Action
+
+Fval: EFFETTUA REGISTRAZIONE TRASPORTATORE
+Action: EFFETTUA REGISTRAZIONE TRASPORTATORE
+
+
+Value 1 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 1 = EFFETTUA REGISTRAZIONE TRASPORTATORE
+Fval: EFFETTUA REGISTRAZIONE TRASPORTATORE
+
+Value 2 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 2 = nome_utente_trasportatore
+Fval: nome_utente_trasportatore
+
+Value 3 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 3 = andrea3
+Fval: andrea3
+
+Value 4 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 4 = categoriaUtente
+Fval: categoriaUtente
+
+Value 5 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 5 = UtenteTrasportatore
+Fval: UtenteTrasportatore
+
+Value 6 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 6 = nome
+Fval: nome
+
+Value 7 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 7 = Andrea
+Fval: Andrea
+
+Value 8 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 8 = cognome
+Fval: cognome
+
+Value 9 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 9 = Lancia
+Fval: Lancia
+
+Value 10 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 10 = numeroTelefono
+Fval: numeroTelefono
+
+Value 11 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 11 = 4445558889
+Fval: 4445558889
+
+Value 12 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 12 = email
+Fval: email
+
+Value 13 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 13 = andrea.lancia@gmail.com
+Fval: andrea.lancia@gmail.com
+
+Value 14 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 14 = password
+Fval: password
+
+Value 15 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 15 = Passsss..121
+Fval: Passsss..121
+
+Value 16 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 16 = confermaPassword
+Fval: confermaPassword
+
+Value 17 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 17 = Passsss..121
+Fval: Passsss..121
+
+Value 18 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 18 = dittaSpedizione
+Fval: dittaSpedizione
+
+Value 19 from message number 2 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 2, msgid 1709113661984-1 value 19 = FedEx
+Fval: FedEx
+
+Action: EFFETTUA REGISTRAZIONE TRASPORTATORE
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 
+vecchiaPassw: 
+nuovaPassw: 
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: 
+nuovoNumCiv: 
+nuovoCAP: 
+nuovaCittaResidenza: 
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: 
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: EFFETTUA REGISTRAZIONE TRASPORTATORE
+Categoria utente:UtenteTrasportatore
+Utente inserito.
+Effettuata azione: EFFETTUA REGISTRAZIONE TRASPORTATORE
+Result: Effettuata registrazione trasportatore 
+main(): pid =36297: stream stream1: Added Result -> Effettuata registrazione trasportatore (id: 1709113669157-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 3 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 3, msgid 1709113661985-0 with 6 values
+
+Value 0 from message number 3 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 3, msgid 1709113661985-0 value 0 = Action
+Fval: Action
+
+Fval: EFFETTUA LOGIN COMPRATORE
+Action: EFFETTUA LOGIN COMPRATORE
+
+
+Value 1 from message number 3 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 3, msgid 1709113661985-0 value 1 = EFFETTUA LOGIN COMPRATORE
+Fval: EFFETTUA LOGIN COMPRATORE
+
+Value 2 from message number 3 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 3, msgid 1709113661985-0 value 2 = nome_utente_compratore
+Fval: nome_utente_compratore
+
+Value 3 from message number 3 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 3, msgid 1709113661985-0 value 3 = marco1
+Fval: marco1
+
+Value 4 from message number 3 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 3, msgid 1709113661985-0 value 4 = password
+Fval: password
+
+Value 5 from message number 3 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 3, msgid 1709113661985-0 value 5 = Passsss..121
+Fval: Passsss..121
+
+Action: EFFETTUA LOGIN COMPRATORE
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 
+vecchiaPassw: 
+nuovaPassw: 
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: 
+nuovoNumCiv: 
+nuovoCAP: 
+nuovaCittaResidenza: 
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: 
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: EFFETTUA LOGIN COMPRATORE
+Nome utente compratore: marco1
+Si blocca qua nel login COMPRAOTORE!La passowrd inserita: Passsss..121è corretta.
+Effettuata azione: EFFETTUA LOGIN COMPRATORE
+Result: Login avvenuto 
+main(): pid =36297: stream stream1: Added Result -> Login avvenuto (id: 1709113670172-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 4 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 4, msgid 1709113661985-1 with 6 values
+
+Value 0 from message number 4 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 4, msgid 1709113661985-1 value 0 = Action
+Fval: Action
+
+Fval: EFFETTUA LOGIN FORNITORE
+Action: EFFETTUA LOGIN FORNITORE
+
+
+Value 1 from message number 4 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 4, msgid 1709113661985-1 value 1 = EFFETTUA LOGIN FORNITORE
+Fval: EFFETTUA LOGIN FORNITORE
+
+Value 2 from message number 4 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 4, msgid 1709113661985-1 value 2 = nome_utente_fornitore
+Fval: nome_utente_fornitore
+
+Value 3 from message number 4 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 4, msgid 1709113661985-1 value 3 = luigi2
+Fval: luigi2
+
+Value 4 from message number 4 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 4, msgid 1709113661985-1 value 4 = password
+Fval: password
+
+Value 5 from message number 4 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 4, msgid 1709113661985-1 value 5 = Passsss..121
+Fval: Passsss..121
+
+Action: EFFETTUA LOGIN FORNITORE
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 
+vecchiaPassw: 
+nuovaPassw: 
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: 
+nuovoNumCiv: 
+nuovoCAP: 
+nuovaCittaResidenza: 
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: 
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: EFFETTUA LOGIN FORNITORE
+Nome utente fornitore: luigi2
+Si blocca qua nel login COMPRAOTORE!La passowrd inserita: Passsss..121è corretta.
+Effettuata azione: EFFETTUA LOGIN FORNITORE
+Result: Login utente fornitore avvenuta 
+main(): pid =36297: stream stream1: Added Result -> Login utente fornitore avvenuta (id: 1709113670177-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 5 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 5, msgid 1709113661985-2 with 6 values
+
+Value 0 from message number 5 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 5, msgid 1709113661985-2 value 0 = Action
+Fval: Action
+
+Fval: EFFETTUA LOGIN TRASPORTATORE
+Action: EFFETTUA LOGIN TRASPORTATORE
+
+
+Value 1 from message number 5 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 5, msgid 1709113661985-2 value 1 = EFFETTUA LOGIN TRASPORTATORE
+Fval: EFFETTUA LOGIN TRASPORTATORE
+
+Value 2 from message number 5 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 5, msgid 1709113661985-2 value 2 = nome_utente_trasportatore
+Fval: nome_utente_trasportatore
+
+Value 3 from message number 5 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 5, msgid 1709113661985-2 value 3 = andrea3
+Fval: andrea3
+
+Value 4 from message number 5 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 5, msgid 1709113661985-2 value 4 = password
+Fval: password
+
+Value 5 from message number 5 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 5, msgid 1709113661985-2 value 5 = Passsss..121
+Fval: Passsss..121
+
+Action: EFFETTUA LOGIN TRASPORTATORE
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 
+vecchiaPassw: 
+nuovaPassw: 
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: 
+nuovoNumCiv: 
+nuovoCAP: 
+nuovaCittaResidenza: 
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: 
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: EFFETTUA LOGIN TRASPORTATORE
+Si blocca qua nel login COMPRAOTORE!La passowrd inserita: Passsss..121è corretta.
+Effettuata azione: EFFETTUA LOGIN TRASPORTATORE
+Result: Login utente trasportatore avvenuta 
+main(): pid =36297: stream stream1: Added Result -> Login utente trasportatore avvenuta (id: 1709113670180-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 6 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 6, msgid 1709113661985-3 with 4 values
+
+Value 0 from message number 6 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 6, msgid 1709113661985-3 value 0 = Action
+Fval: Action
+
+Fval: AGGIORNA NUMERO TELEFONO COMPRATORE
+Action: AGGIORNA NUMERO TELEFONO COMPRATORE
+
+
+Value 1 from message number 6 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 6, msgid 1709113661985-3 value 1 = AGGIORNA NUMERO TELEFONO COMPRATORE
+Fval: AGGIORNA NUMERO TELEFONO COMPRATORE
+
+Value 2 from message number 6 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 6, msgid 1709113661985-3 value 2 = nuovoNumeroTelefono
+Fval: nuovoNumeroTelefono
+
+Value 3 from message number 6 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 6, msgid 1709113661985-3 value 3 = 3384459873
+Fval: 3384459873
+
+Action: AGGIORNA NUMERO TELEFONO COMPRATORE
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 3384459873
+vecchiaPassw: 
+nuovaPassw: 
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: 
+nuovoNumCiv: 
+nuovoCAP: 
+nuovaCittaResidenza: 
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: 
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: AGGIORNA NUMERO TELEFONO COMPRATORE
+Nome utente compratore: marco1
+Effettuata azione: AGGIORNA NUMERO TELEFONO COMPRATORE
+Result: Aggiornamento numero telefono utente compratore 
+main(): pid =36297: stream stream1: Added Result -> Aggiornamento numero telefono utente compratore (id: 1709113670182-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 7 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 7, msgid 1709113661985-4 with 4 values
+
+Value 0 from message number 7 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 7, msgid 1709113661985-4 value 0 = Action
+Fval: Action
+
+Fval: AGGIORNA NUMERO TELEFONO FORNITORE
+Action: AGGIORNA NUMERO TELEFONO FORNITORE
+
+
+Value 1 from message number 7 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 7, msgid 1709113661985-4 value 1 = AGGIORNA NUMERO TELEFONO FORNITORE
+Fval: AGGIORNA NUMERO TELEFONO FORNITORE
+
+Value 2 from message number 7 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 7, msgid 1709113661985-4 value 2 = nuovoNumeroTelefono
+Fval: nuovoNumeroTelefono
+
+Value 3 from message number 7 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 7, msgid 1709113661985-4 value 3 = 1119992228
+Fval: 1119992228
+
+Action: AGGIORNA NUMERO TELEFONO FORNITORE
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 1119992228
+vecchiaPassw: 
+nuovaPassw: 
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: 
+nuovoNumCiv: 
+nuovoCAP: 
+nuovaCittaResidenza: 
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: 
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: AGGIORNA NUMERO TELEFONO FORNITORE
+Nome utente fornitore: luigi2
+Effettuata azione: AGGIORNA NUMERO TELEFONO FORNITORE
+Result: Aggiornamento numero di telefono fornitore 
+main(): pid =36297: stream stream1: Added Result -> Aggiornamento numero di telefono fornitore (id: 1709113670184-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 8 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 8, msgid 1709113661986-0 with 4 values
+
+Value 0 from message number 8 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 8, msgid 1709113661986-0 value 0 = Action
+Fval: Action
+
+Fval: AGGIORNA NUMERO TELEFONO TRASPORTATORE
+Action: AGGIORNA NUMERO TELEFONO TRASPORTATORE
+
+
+Value 1 from message number 8 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 8, msgid 1709113661986-0 value 1 = AGGIORNA NUMERO TELEFONO TRASPORTATORE
+Fval: AGGIORNA NUMERO TELEFONO TRASPORTATORE
+
+Value 2 from message number 8 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 8, msgid 1709113661986-0 value 2 = nuovoNumeroTelefono
+Fval: nuovoNumeroTelefono
+
+Value 3 from message number 8 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 8, msgid 1709113661986-0 value 3 = 576768474738
+Fval: 576768474738
+
+Action: AGGIORNA NUMERO TELEFONO TRASPORTATORE
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 576768474738
+vecchiaPassw: 
+nuovaPassw: 
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: 
+nuovoNumCiv: 
+nuovoCAP: 
+nuovaCittaResidenza: 
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: 
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: AGGIORNA NUMERO TELEFONO TRASPORTATORE
+Effettuata azione: AGGIORNA NUMERO TELEFONO TRASPORTATORE
+Result: Aggiornamento numero di telefono trasportatore 
+main(): pid =36297: stream stream1: Added Result -> Aggiornamento numero di telefono trasportatore (id: 1709113670185-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 9 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 9, msgid 1709113661986-1 with 6 values
+
+Value 0 from message number 9 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 9, msgid 1709113661986-1 value 0 = Action
+Fval: Action
+
+Fval: AGGIORNA PASSWORD COMPRATORE
+Action: AGGIORNA PASSWORD COMPRATORE
+
+
+Value 1 from message number 9 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 9, msgid 1709113661986-1 value 1 = AGGIORNA PASSWORD COMPRATORE
+Fval: AGGIORNA PASSWORD COMPRATORE
+
+Value 2 from message number 9 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 9, msgid 1709113661986-1 value 2 = vecchiaPassw
+Fval: vecchiaPassw
+
+Value 3 from message number 9 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 9, msgid 1709113661986-1 value 3 = Passsss..121
+Fval: Passsss..121
+
+Value 4 from message number 9 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 9, msgid 1709113661986-1 value 4 = nuovaPassw
+Fval: nuovaPassw
+
+Value 5 from message number 9 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 9, msgid 1709113661986-1 value 5 = Passsss..333
+Fval: Passsss..333
+
+Action: AGGIORNA PASSWORD COMPRATORE
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 576768474738
+vecchiaPassw: Passsss..121
+nuovaPassw: Passsss..333
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: 
+nuovoNumCiv: 
+nuovoCAP: 
+nuovaCittaResidenza: 
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: 
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: AGGIORNA PASSWORD COMPRATORE
+Nome utente compratore: marco1
+Effettuata azione: AGGIORNA PASSWORD COMPRATORE
+Result: Aggiornamento password utente compratore 
+main(): pid =36297: stream stream1: Added Result -> Aggiornamento password utente compratore (id: 1709113670187-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 10 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 10, msgid 1709113661986-2 with 6 values
+
+Value 0 from message number 10 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 10, msgid 1709113661986-2 value 0 = Action
+Fval: Action
+
+Fval: AGGIORNA PASSWORD FORNITORE
+Action: AGGIORNA PASSWORD FORNITORE
+
+
+Value 1 from message number 10 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 10, msgid 1709113661986-2 value 1 = AGGIORNA PASSWORD FORNITORE
+Fval: AGGIORNA PASSWORD FORNITORE
+
+Value 2 from message number 10 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 10, msgid 1709113661986-2 value 2 = vecchiaPassw
+Fval: vecchiaPassw
+
+Value 3 from message number 10 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 10, msgid 1709113661986-2 value 3 = Passsss..121
+Fval: Passsss..121
+
+Value 4 from message number 10 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 10, msgid 1709113661986-2 value 4 = nuovaPassw
+Fval: nuovaPassw
+
+Value 5 from message number 10 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 10, msgid 1709113661986-2 value 5 = Passsss..555
+Fval: Passsss..555
+
+Action: AGGIORNA PASSWORD FORNITORE
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 576768474738
+vecchiaPassw: Passsss..121
+nuovaPassw: Passsss..555
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: 
+nuovoNumCiv: 
+nuovoCAP: 
+nuovaCittaResidenza: 
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: 
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: AGGIORNA PASSWORD FORNITORE
+Nome utente fornitore: luigi2
+Effettuata azione: AGGIORNA PASSWORD FORNITORE
+Result: Aggiornamento password utente fornitore 
+main(): pid =36297: stream stream1: Added Result -> Aggiornamento password utente fornitore (id: 1709113670188-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 11 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 11, msgid 1709113661986-3 with 6 values
+
+Value 0 from message number 11 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 11, msgid 1709113661986-3 value 0 = Action
+Fval: Action
+
+Fval: AGGIORNA PASSWORD TRASPORTATORE
+Action: AGGIORNA PASSWORD TRASPORTATORE
+
+
+Value 1 from message number 11 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 11, msgid 1709113661986-3 value 1 = AGGIORNA PASSWORD TRASPORTATORE
+Fval: AGGIORNA PASSWORD TRASPORTATORE
+
+Value 2 from message number 11 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 11, msgid 1709113661986-3 value 2 = vecchiaPassw
+Fval: vecchiaPassw
+
+Value 3 from message number 11 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 11, msgid 1709113661986-3 value 3 = Passsss..121
+Fval: Passsss..121
+
+Value 4 from message number 11 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 11, msgid 1709113661986-3 value 4 = nuovaPassw
+Fval: nuovaPassw
+
+Value 5 from message number 11 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 11, msgid 1709113661986-3 value 5 = Passsss..777
+Fval: Passsss..777
+
+Action: AGGIORNA PASSWORD TRASPORTATORE
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 576768474738
+vecchiaPassw: Passsss..121
+nuovaPassw: Passsss..777
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: 
+nuovoNumCiv: 
+nuovoCAP: 
+nuovaCittaResidenza: 
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: 
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: AGGIORNA PASSWORD TRASPORTATORE
+Effettuata azione: AGGIORNA PASSWORD TRASPORTATORE
+Result: Aggiornamento password utente trasportatore 
+main(): pid =36297: stream stream1: Added Result -> Aggiornamento password utente trasportatore (id: 1709113670190-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 12 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 12, msgid 1709113661987-0 with 10 values
+
+Value 0 from message number 12 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 12, msgid 1709113661987-0 value 0 = Action
+Fval: Action
+
+Fval: AGGIORNA RESIDENZA
+Action: AGGIORNA RESIDENZA
+
+
+Value 1 from message number 12 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 12, msgid 1709113661987-0 value 1 = AGGIORNA RESIDENZA
+Fval: AGGIORNA RESIDENZA
+
+Value 2 from message number 12 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 12, msgid 1709113661987-0 value 2 = nuovaViaResidenza
+Fval: nuovaViaResidenza
+
+Value 3 from message number 12 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 12, msgid 1709113661987-0 value 3 = Via dei Babbuini
+Fval: Via dei Babbuini
+
+Value 4 from message number 12 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 12, msgid 1709113661987-0 value 4 = nuovoNumCiv
+Fval: nuovoNumCiv
+
+Value 5 from message number 12 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 12, msgid 1709113661987-0 value 5 = 11
+Fval: 11
+
+Value 6 from message number 12 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 12, msgid 1709113661987-0 value 6 = nuovoCAP
+Fval: nuovoCAP
+
+Value 7 from message number 12 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 12, msgid 1709113661987-0 value 7 = 10348
+Fval: 10348
+
+Value 8 from message number 12 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 12, msgid 1709113661987-0 value 8 = nuovaCittaResidenza
+Fval: nuovaCittaResidenza
+
+Value 9 from message number 12 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 12, msgid 1709113661987-0 value 9 = Torino
+Fval: Torino
+
+Action: AGGIORNA RESIDENZA
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 576768474738
+vecchiaPassw: Passsss..121
+nuovaPassw: Passsss..777
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: Via dei Babbuini
+nuovoNumCiv: 11
+nuovoCAP: 10348
+nuovaCittaResidenza: Torino
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: 
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: AGGIORNA RESIDENZA
+Nome utente compratore: marco1
+ENTRATO NEL METODO
+FINO A INSERTTOLOGDB tutto ok
+Effettuata azione: AGGIORNA RESIDENZA
+Result: Aggiornamento residenza utente compratore 
+main(): pid =36297: stream stream1: Added Result -> Aggiornamento residenza utente compratore (id: 1709113670191-0)
+
+
+
+
+PROSSIMO MESSAGGIO NELLA STREAM.Message number 13 from Stream: 0
+main(): pid 36297: user federico: stream stream2, streamnum 0, msg 13, msgid 1709113661987-1 with 4 values
+
+Value 0 from message number 13 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 13, msgid 1709113661987-1 value 0 = Action
+Fval: Action
+
+Fval: AGGIORNA NOME AZIENDAPRODUZIONE
+Action: AGGIORNA NOME AZIENDAPRODUZIONE
+
+
+Value 1 from message number 13 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 13, msgid 1709113661987-1 value 1 = AGGIORNA NOME AZIENDAPRODUZIONE
+Fval: AGGIORNA NOME AZIENDAPRODUZIONE
+
+Value 2 from message number 13 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 13, msgid 1709113661987-1 value 2 = nuovaAziendaProduzione
+Fval: nuovaAziendaProduzione
+
+Value 3 from message number 13 from Stream: 0
+main(): pid 36297: user federico: streamnum 0, msg 13, msgid 1709113661987-1 value 3 = Adidas
+Fval: Adidas
+
+Action: AGGIORNA NOME AZIENDAPRODUZIONE
+nome_utente_compratore: marco1
+nome_utente_fornitore: luigi2
+nome_utente_trasportatore: andrea3
+nome: Andrea
+cognome: Lancia
+categoriaUtente: UtenteTrasportatore
+password: Passsss..121
+nuovoNumeroTelefono: 576768474738
+vecchiaPassw: Passsss..121
+nuovaPassw: Passsss..777
+numeroTelefono: 4445558889
+email: andrea.lancia@gmail.com
+viaResidenza: Via degli Ulivi
+numeroCivico: 123
+cap: 01011
+cittàResidenza: Roma
+confermaPassword: Passsss..121
+dataCompleanno: 14/01/1999
+codiceProdotto: -1122076864
+numeroCartaPagamento: 
+cvvCartaPagamento: 
+idCarta: 65535
+idOrdine: -929033152
+nuovaViaResidenza: Via dei Babbuini
+nuovoNumCiv: 11
+nuovoCAP: 10348
+nuovaCittaResidenza: Torino
+via_spedizione: 
+città_spedizione: 
+numero_civico_spedizione: 
+descrizioneRecensione: 
+voto_stella: 43690
+idRecensione: -1088966088
+motivazione_reso: 
+nomeProdotto: 
+categoriaProdotto: 
+aziendaProduzione: Nike
+nuovaAziendaProduzione: Adidas
+descrizioneProdotto: 
+prezzoProdotto: 0.00
+numeroCopieDisponibili: 43690
+dittaSpedizione: FedEx
+nuovaDittaSpedizione: 
+idSpedizione: -1088684696
+Azione: AGGIORNA NOME AZIENDAPRODUZIONE
+Nome utente fornitore: luigi2

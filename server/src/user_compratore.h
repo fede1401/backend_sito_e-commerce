@@ -70,124 +70,7 @@ public:
         std::cout << "Saldo: " << saldo << std::endl;
         std::cout << "Stato: " << stato << std::endl;
     }
-
-    /*void effettuaRegistrazione(std::string nome_utente, std::string nome,
-                                std::string cognome, std::string numero_telefono,
-                                std::string email, std::string via_residenza,
-                                int numero_civico, std::string CAP, std::string città_residenza,
-                                std:: string password, std:: string conferma_password,
-                                std::string data_compleanno  ){
-                                    */
-    /*
-    void effettuaRegistrazione(UtenteCompratore utente, std::string conferma_password){
-
-        nome_utente = utente.nome_utente;
-        categoria = utente.categoria;
-        nome = utente.nome;
-        cognome = utente.cognome;
-        numero_telefono = utente.numero_telefono;
-        email = utente.email;
-        data_compleanno = utente.data_compleanno;
-                    password = utente.password;
-                    via_residenza = utente.via_residenza;
-                    numero_civico = utente.numero_civico;
-                    CAP = utente.CAP;
-                    città_residenza = utente.città_residenza;
-                    stato = utente.stato;
-                    saldo = utente.saldo;
-
-
-                    // Controllo se la mail contiene il carattere "@".
-                    if (email.find("@") == std::string::npos) {
-                        std::cout << "Errore: La mail deve contenere il carattere '@'." << std::endl;
-                        return;
-                    }
-
-                    // Controllo se la password rispetta i criteri: lunghezza di almeno 8, almeno una lettere maiuscola, un numero e un carattere speciale.
-                    if (password.length() < 8){
-                        std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
-                        return;
-                    }
-
-                    if (conferma_password.length() < 8){
-                        std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
-                        return;
-                    }
-
-                    bool hasUpperCase = false;
-                    bool hasDigit = false;
-                    bool hasSpecialChar = false;
-                    for (size_t i = 0; i < password.length(); i++){
-                        if (std::isupper(password[i])) {  hasUpperCase = true; }
-
-                        else if (std::isdigit(password[i])) { hasDigit = true;}
-
-                        else if (isSpecialCharacter(password[i])) {  hasSpecialChar = true; }
-                        }
-
-                    if (!hasUpperCase) { std::cout << "La password deve contenere almeno un carattere maiuscolo." << std::endl;  }
-                    if (!hasDigit) { std::cout << "La password deve contenere almeno un numero." << std::endl; }
-                    if (!hasSpecialChar) {  std::cout << "La password deve contenere almeno un carattere speciale." << std::endl; }
-
-
-                    // Controllo se la password è uguale al campo conferma_password
-                    if (password != conferma_password){
-                        std::cout << "Errore: Le password non corrispondono." << std::endl;
-                        return;
-                        }
-
-                    Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce");
-                    std::cout << "Connessione al database avvenuta con successo." << std::endl;
-
-
-                    // Controllo se il nome utente è univoco
-                    sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente = '%s'", nome_utente.c_str());
-                    PGresult *res = db1.ExecSQLtuples(sqlcmd);
-                    rows = PQntuples(res);
-
-                    PQclear(res);
-                    if (rows > 0) {
-                        std::cout << "Errore: Il nome utente è già in uso." << std::endl;
-                            return;
-                    }
-
-                    // Controllo se l'email è univoca
-                    sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE indirizzo_mail = '%s'", email.c_str());
-                    res = db1.ExecSQLtuples(sqlcmd);
-                    rows = PQntuples(res);
-
-                    PQclear(res);
-                    if (rows > 0) {
-                        std::cout << "Errore: L'indirizzo mail è già in uso." << std::endl;
-                            return;
-                    }
-
-
-                    std::string formatted_date;
-                    std::stringstream ss(data_compleanno); // Utilizza un stringstream per manipolare la stringa
-                    std::string token;
-                    while (std::getline(ss, token, '/')) { // Assumendo che la data sia nel formato "GG/MM/AAAA"
-                        formatted_date += token + "-";
-                    }
-                    formatted_date.pop_back(); // Rimuove il carattere '-' in eccesso alla fine
-
-                    // Trasforma 02/03/2023 in 02-03-2023.
-
-                    UtenteCompratore(categoria, nome_utente, nome, cognome, numero_telefono, password, email, formatted_date, via_residenza, numero_civico, CAP, città_residenza, saldo, stato);
-
-                    std::cout << "Fino a riga 167 tutto ok." << std::endl;
-
-                    std::cout << "Categoria utente:" << utente.categoria << std::endl;
-
-                    sprintf(sqlcmd, "INSERT INTO UtenteCompratore (idUtComp, categoriaUtente, nome_utente, nome, cognome, indirizzo_mail, numero_di_telefono, password, data_compleanno, via_di_residenza, numero_civico, CAP, citta_di_residenza, saldo, stato ) VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', %f, %d)",
-           categoria.c_str(), nome_utente.c_str(), nome.c_str(), cognome.c_str(), email.c_str(), numero_telefono.c_str(), password.c_str(), formatted_date.c_str(), via_residenza.c_str(), numero_civico, CAP.c_str(), città_residenza.c_str(), saldo, stato);
-
-                    res = db1.ExecSQLcmd(sqlcmd);
-                    PQclear(res);
-
-                    std::cout << "Utente inserito." << std::endl;
-        }
-    */
+    
 
     void effettuaRegistrazione( Con2DB db1,
                                std::string in_nome_utente,
@@ -326,6 +209,49 @@ public:
 
             InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso." << std::endl;
+
+            sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
+            
+            res = db1.ExecSQLtuples(sqlcmd);
+
+            std::cout << "RES: " << res << std::endl;
+
+            rows = PQntuples(res);
+
+            //std::cout << "RES: " << res << std::endl;
+            //std::cout << "ROWS: " << rows << std::endl;
+
+            if (rows == 1)
+            {
+                std::string nome_utente;
+                nome_utente = (PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore")));
+                std::string session_id = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));
+                std::string categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+                std::string nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+                std::string cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
+                std::string email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
+                std::string numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
+                std::string password = PQgetvalue(res, 0, PQfnumber(res, "password"));
+                std::string data_compleanno = PQgetvalue(res, 0, PQfnumber(res, "data_compleanno"));
+                std::string via_residenza = PQgetvalue(res, 0, PQfnumber(res, "via_di_residenza"));
+                std::string numero_civico = PQgetvalue(res, 0, PQfnumber(res, "numero_civico"));
+                std::string CAP = PQgetvalue(res, 0, PQfnumber(res, "CAP"));
+                std::string città_residenza = PQgetvalue(res, 0, PQfnumber(res, "citta_di_residenza"));
+                float saldo = atof(PQgetvalue(res, 0, PQfnumber(res, "saldo")));
+                int stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
+
+
+                *this = UtenteCompratore(nome_utente, "UtenteCompratore", nome, cognome, numero_telefono, password, email, session_id, data_compleanno, via_residenza, numero_civico, CAP, città_residenza, saldo, stato);
+
+            }
+            else
+            {
+                std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+                
+            }
+
+            PQclear(res);
+
             return;
         }
 
@@ -506,6 +432,8 @@ public:
 
     void aggiornaResidenza(Con2DB db1, std::string nuovaViaResidenza, std::string nuovoNumCiv, std::string nuovoCAP, std::string nuovaCittaResidenza)
     {
+        printf("ENTRATO NEL METODO\n");
+        
         // Utilizza i membri dell'istanza corrente per ottenere il nome utente.
         std::string nomeUtente = nome_utente;
 
@@ -519,11 +447,11 @@ public:
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        PQclear(res);
         if (rows == 1)
         {
             sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));
         }
+        PQclear(res);
 
         sprintf(sqlcmd, "UPDATE UtenteCompratore set via_di_residenza='%s', numero_civico ='%s', CAP='%s', citta_di_residenza='%s' WHERE nome_utente_compratore = '%s'",
                 nuovaViaResidenza.c_str(), nuovoNumCiv.c_str(), nuovoCAP.c_str(), nuovaCittaResidenza.c_str(), nomeUtente.c_str());
@@ -531,6 +459,8 @@ public:
         PQclear(res);
 
         statoReq = statoRequisito::Success;
+
+        printf("FINO A INSERTTOLOGDB tutto ok\n");
 
         InsertToLogDB(db1,"INFO", "Aggiornata la residenza utente compratore.", sessionID, nomeRequisito, statoReq);
 

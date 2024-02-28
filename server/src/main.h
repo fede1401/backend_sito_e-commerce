@@ -31,7 +31,7 @@
 
 
 PGresult *res;
-char sqlcmd[1000];
+char sqlcmd[2048];
 
 int rows, k;
 

@@ -1,172 +1,172 @@
-main(): pid 23574: user federico: connecting to redis ...
-main(): pid 23574: user federico: connected to redis
+main(): pid 36302: user federico: connecting to redis ...
+main(): pid 36302: user federico: connected to redis
 ((Effettuato comando RedisComand
 Stream inizializzata.Effettuato comando RedisComand
 Stream inizializzata.Creazione Streams
 
 Valore della variabile i: 0 
 XADD stream2 * Action EFFETTUA REGISTRAZIONE COMPRATORE nome_utente_compratore marco1 categoriaUtente UtenteCompratore nome Marco cognome Rossi numeroTelefono 123456789 email marco.rossi1@gmail.com viaResidenza Via degli Ulivi numeroCivico 123 cap 01011 citt√†Residenza Roma password Passsss..121 confermaPassword Passsss..121 dataCompleanno 14/01/1999 
-main(): pid =23574: stream stream2: Added Action EFFETTUA REGISTRAZIONE COMPRATORE nome_utente_compratore marco1 categoriaUtente UtenteCompratore nome Marco cognome Rossi numeroTelefono 123456789 email marco.rossi1@gmail.com viaResidenza Via degli Ulivi numeroCivico 123 cap 01011 citt√†Residenza Roma password Passsss..121 confermaPassword Passsss..121 dataCompleanno 14/01/1999 (id: 1709036409810-0)
+main(): pid =36302: stream stream2: Added Action EFFETTUA REGISTRAZIONE COMPRATORE nome_utente_compratore marco1 categoriaUtente UtenteCompratore nome Marco cognome Rossi numeroTelefono 123456789 email marco.rossi1@gmail.com viaResidenza Via degli Ulivi numeroCivico 123 cap 01011 citt√†Residenza Roma password Passsss..121 confermaPassword Passsss..121 dataCompleanno 14/01/1999 (id: 1709113661983-0)
 
 
 Valore della variabile i: 1 
 XADD stream2 * Action EFFETTUA REGISTRAZIONE FORNITORE nome_utente_fornitore luigi2 categoriaUtente UtenteFornitore nome Luigi cognome Pesce numeroTelefono 3334447771 email luigi.pesce@gmail.com password Passsss..121 confermaPassword Passsss..121 aziendaProduzione Nike 
-main(): pid =23574: stream stream2: Added Action EFFETTUA REGISTRAZIONE FORNITORE nome_utente_fornitore luigi2 categoriaUtente UtenteFornitore nome Luigi cognome Pesce numeroTelefono 3334447771 email luigi.pesce@gmail.com password Passsss..121 confermaPassword Passsss..121 aziendaProduzione Nike (id: 1709036409810-1)
+main(): pid =36302: stream stream2: Added Action EFFETTUA REGISTRAZIONE FORNITORE nome_utente_fornitore luigi2 categoriaUtente UtenteFornitore nome Luigi cognome Pesce numeroTelefono 3334447771 email luigi.pesce@gmail.com password Passsss..121 confermaPassword Passsss..121 aziendaProduzione Nike (id: 1709113661984-0)
 
 Valore della variabile i: 2 
 XADD stream2 * Action EFFETTUA REGISTRAZIONE TRASPORTATORE nome_utente_trasportatore andrea3 categoriaUtente UtenteTrasportatore nome Andrea cognome Lancia numeroTelefono 4445558889 email andrea.lancia@gmail.com password Passsss..121 confermaPassword Passsss..121 dittaSpedizione FedEx 
-main(): pid =23574: stream stream2: Added Action EFFETTUA REGISTRAZIONE TRASPORTATORE nome_utente_trasportatore andrea3 categoriaUtente UtenteTrasportatore nome Andrea cognome Lancia numeroTelefono 4445558889 email andrea.lancia@gmail.com password Passsss..121 confermaPassword Passsss..121 dittaSpedizione FedEx (id: 1709036409810-2)
+main(): pid =36302: stream stream2: Added Action EFFETTUA REGISTRAZIONE TRASPORTATORE nome_utente_trasportatore andrea3 categoriaUtente UtenteTrasportatore nome Andrea cognome Lancia numeroTelefono 4445558889 email andrea.lancia@gmail.com password Passsss..121 confermaPassword Passsss..121 dittaSpedizione FedEx (id: 1709113661984-1)
 
 Valore della variabile i: 3 
 XADD stream2 * Action EFFETTUA LOGIN COMPRATORE nome_utente_compratore marco1 password Passsss..121 
-main(): pid =23574: stream stream2: Added Action EFFETTUA LOGIN COMPRATORE nome_utente_compratore marco1 password Passsss..121 (id: 1709036409811-0)
+main(): pid =36302: stream stream2: Added Action EFFETTUA LOGIN COMPRATORE nome_utente_compratore marco1 password Passsss..121 (id: 1709113661985-0)
 
 Valore della variabile i: 4 
 XADD stream2 * Action EFFETTUA LOGIN FORNITORE nome_utente_fornitore luigi2 password Passsss..121 
-main(): pid =23574: stream stream2: Added Action EFFETTUA LOGIN FORNITORE nome_utente_fornitore luigi2 password Passsss..121 (id: 1709036409811-1)
+main(): pid =36302: stream stream2: Added Action EFFETTUA LOGIN FORNITORE nome_utente_fornitore luigi2 password Passsss..121 (id: 1709113661985-1)
 
 Valore della variabile i: 5 
 XADD stream2 * Action EFFETTUA LOGIN TRASPORTATORE nome_utente_trasportatore andrea3 password Passsss..121 
-main(): pid =23574: stream stream2: Added Action EFFETTUA LOGIN TRASPORTATORE nome_utente_trasportatore andrea3 password Passsss..121 (id: 1709036409811-2)
+main(): pid =36302: stream stream2: Added Action EFFETTUA LOGIN TRASPORTATORE nome_utente_trasportatore andrea3 password Passsss..121 (id: 1709113661985-2)
 
 Valore della variabile i: 6 
 XADD stream2 * Action AGGIORNA NUMERO TELEFONO COMPRATORE nuovoNumeroTelefono 3384459873 
-main(): pid =23574: stream stream2: Added Action AGGIORNA NUMERO TELEFONO COMPRATORE nuovoNumeroTelefono 3384459873 (id: 1709036409811-3)
+main(): pid =36302: stream stream2: Added Action AGGIORNA NUMERO TELEFONO COMPRATORE nuovoNumeroTelefono 3384459873 (id: 1709113661985-3)
 
 Valore della variabile i: 7 
 XADD stream2 * Action AGGIORNA NUMERO TELEFONO FORNITORE nuovoNumeroTelefono 1119992228 
-main(): pid =23574: stream stream2: Added Action AGGIORNA NUMERO TELEFONO FORNITORE nuovoNumeroTelefono 1119992228 (id: 1709036409811-4)
+main(): pid =36302: stream stream2: Added Action AGGIORNA NUMERO TELEFONO FORNITORE nuovoNumeroTelefono 1119992228 (id: 1709113661985-4)
 
 Valore della variabile i: 8 
 XADD stream2 * Action AGGIORNA NUMERO TELEFONO TRASPORTATORE nuovoNumeroTelefono 576768474738 
-main(): pid =23574: stream stream2: Added Action AGGIORNA NUMERO TELEFONO TRASPORTATORE nuovoNumeroTelefono 576768474738 (id: 1709036409812-0)
+main(): pid =36302: stream stream2: Added Action AGGIORNA NUMERO TELEFONO TRASPORTATORE nuovoNumeroTelefono 576768474738 (id: 1709113661986-0)
 
 Valore della variabile i: 9 
 XADD stream2 * Action AGGIORNA PASSWORD COMPRATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..333 
-main(): pid =23574: stream stream2: Added Action AGGIORNA PASSWORD COMPRATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..333 (id: 1709036409812-1)
+main(): pid =36302: stream stream2: Added Action AGGIORNA PASSWORD COMPRATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..333 (id: 1709113661986-1)
 
 Valore della variabile i: 10 
 XADD stream2 * Action AGGIORNA PASSWORD FORNITORE vecchiaPassw Passsss..121 nuovaPassw Passsss..555 
-main(): pid =23574: stream stream2: Added Action AGGIORNA PASSWORD FORNITORE vecchiaPassw Passsss..121 nuovaPassw Passsss..555 (id: 1709036409812-2)
+main(): pid =36302: stream stream2: Added Action AGGIORNA PASSWORD FORNITORE vecchiaPassw Passsss..121 nuovaPassw Passsss..555 (id: 1709113661986-2)
 
 Valore della variabile i: 11 
 XADD stream2 * Action AGGIORNA PASSWORD TRASPORTATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..777 
-main(): pid =23574: stream stream2: Added Action AGGIORNA PASSWORD TRASPORTATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..777 (id: 1709036409812-3)
+main(): pid =36302: stream stream2: Added Action AGGIORNA PASSWORD TRASPORTATORE vecchiaPassw Passsss..121 nuovaPassw Passsss..777 (id: 1709113661986-3)
 
 Valore della variabile i: 12 
 XADD stream2 * Action AGGIORNA RESIDENZA nuovaViaResidenza Via dei Babbuini nuovoNumCiv 11 nuovoCAP 10348 nuovaCittaResidenza Torino 
-main(): pid =23574: stream stream2: Added Action AGGIORNA RESIDENZA nuovaViaResidenza Via dei Babbuini nuovoNumCiv 11 nuovoCAP 10348 nuovaCittaResidenza Torino (id: 1709036409812-4)
+main(): pid =36302: stream stream2: Added Action AGGIORNA RESIDENZA nuovaViaResidenza Via dei Babbuini nuovoNumCiv 11 nuovoCAP 10348 nuovaCittaResidenza Torino (id: 1709113661987-0)
 
 Valore della variabile i: 13 
 XADD stream2 * Action AGGIORNA NOME AZIENDAPRODUZIONE nuovaAziendaProduzione Adidas 
-main(): pid =23574: stream stream2: Added Action AGGIORNA NOME AZIENDAPRODUZIONE nuovaAziendaProduzione Adidas (id: 1709036409812-5)
+main(): pid =36302: stream stream2: Added Action AGGIORNA NOME AZIENDAPRODUZIONE nuovaAziendaProduzione Adidas (id: 1709113661987-1)
 
 Valore della variabile i: 14 
 XADD stream2 * Action AGGIORNA NOME DITTASPEDIZIONE nuovaDittaSpedizione Bartolini 
-main(): pid =23574: stream stream2: Added Action AGGIORNA NOME DITTASPEDIZIONE nuovaDittaSpedizione Bartolini (id: 1709036409812-6)
+main(): pid =36302: stream stream2: Added Action AGGIORNA NOME DITTASPEDIZIONE nuovaDittaSpedizione Bartolini (id: 1709113661988-0)
 
 Valore della variabile i: 15 
 XADD stream2 * Action AGGIUNGI CARTA PAGAMENTO nome_utente_compratore marco1 numeroCartaPagamento 4536467287372 cvvCartaPagamento 975 
-main(): pid =23574: stream stream2: Added Action AGGIUNGI CARTA PAGAMENTO nome_utente_compratore marco1 numeroCartaPagamento 4536467287372 cvvCartaPagamento 975 (id: 1709036409812-7)
+main(): pid =36302: stream stream2: Added Action AGGIUNGI CARTA PAGAMENTO nome_utente_compratore marco1 numeroCartaPagamento 4536467287372 cvvCartaPagamento 975 (id: 1709113661988-1)
 
 Valore della variabile i: 16 
 XADD stream2 * Action AGGIUNGI PRODOTTO SITO nomeProdotto luigi2 categoriaProdotto UtenteFornitore prezzoProdotto Luigi descrizioneProdotto Pesce aziendaProduzione 3334447771 numeroCopieDisponibili luigi.pesce@gmail.com 
-main(): pid =23574: stream stream2: Added Action AGGIUNGI PRODOTTO SITO nomeProdotto luigi2 categoriaProdotto UtenteFornitore prezzoProdotto Luigi descrizioneProdotto Pesce aziendaProduzione 3334447771 numeroCopieDisponibili luigi.pesce@gmail.com (id: 1709036409813-0)
+main(): pid =36302: stream stream2: Added Action AGGIUNGI PRODOTTO SITO nomeProdotto luigi2 categoriaProdotto UtenteFornitore prezzoProdotto Luigi descrizioneProdotto Pesce aziendaProduzione 3334447771 numeroCopieDisponibili luigi.pesce@gmail.com (id: 1709113661989-0)
 
 Valore della variabile i: 17 
 XADD stream2 * Action AGGIUNGI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 
-main(): pid =23574: stream stream2: Added Action AGGIUNGI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709036409813-1)
+main(): pid =36302: stream stream2: Added Action AGGIUNGI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709113661989-1)
 
 Valore della variabile i: 18 
 XADD stream2 * Action AGGIUNGI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 
-main(): pid =23574: stream stream2: Added Action AGGIUNGI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709036409813-2)
+main(): pid =36302: stream stream2: Added Action AGGIUNGI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709113661989-2)
 
 Valore della variabile i: 19 
 XADD stream2 * Action RICERCA PRODOTTO nomeProdotto Nike Dump 
-main(): pid =23574: stream stream2: Added Action RICERCA PRODOTTO nomeProdotto Nike Dump (id: 1709036409813-3)
+main(): pid =36302: stream stream2: Added Action RICERCA PRODOTTO nomeProdotto Nike Dump (id: 1709113661989-3)
 
 Valore della variabile i: 20 
 XADD stream2 * Action ACQUISTA PRODOTTO nome_utente_compratore marco1 via_spedizione Via dei Babbuini citt√†_spedizione Torino numero_civico_spedizione 121 
-main(): pid =23574: stream stream2: Added Action ACQUISTA PRODOTTO nome_utente_compratore marco1 via_spedizione Via dei Babbuini citt√†_spedizione Torino numero_civico_spedizione 121 (id: 1709036409813-4)
+main(): pid =36302: stream stream2: Added Action ACQUISTA PRODOTTO nome_utente_compratore marco1 via_spedizione Via dei Babbuini citt√†_spedizione Torino numero_civico_spedizione 121 (id: 1709113661990-0)
 
 Valore della variabile i: 21 
 XADD stream2 * Action ASSEGNA ORDINE TRASPORTATORE 
-main(): pid =23574: stream stream2: Added Action ASSEGNA ORDINE TRASPORTATORE (id: 1709036409813-5)
+main(): pid =36302: stream stream2: Added Action ASSEGNA ORDINE TRASPORTATORE (id: 1709113661990-1)
 
 Valore della variabile i: 22 
 XADD stream2 * Action AVVISA SPEDIZIONE EFFETTUATA idSpedizione 1 
-main(): pid =23574: stream stream2: Added Action AVVISA SPEDIZIONE EFFETTUATA idSpedizione 1 (id: 1709036409813-6)
+main(): pid =36302: stream stream2: Added Action AVVISA SPEDIZIONE EFFETTUATA idSpedizione 1 (id: 1709113661990-2)
 
 Valore della variabile i: 23 
 XADD stream2 * Action VISIONA ORDINI EFFETTUATI nome_utente_compratore marco1 
-main(): pid =23574: stream stream2: Added Action VISIONA ORDINI EFFETTUATI nome_utente_compratore marco1 (id: 1709036409813-7)
+main(): pid =36302: stream stream2: Added Action VISIONA ORDINI EFFETTUATI nome_utente_compratore marco1 (id: 1709113661990-3)
 
 Valore della variabile i: 24 
 XADD stream2 * Action EFFETTUA RECENSIONE idOrdine 1 descrizioneRecensione Prodotto ottimo voto_stella Cinque 
-main(): pid =23574: stream stream2: Added Action EFFETTUA RECENSIONE idOrdine 1 descrizioneRecensione Prodotto ottimo voto_stella Cinque 1709036409814-0 121 (id: Ω±|†™)
+main(): pid =36302: stream stream2: Added Action EFFETTUA RECENSIONE idOrdine 1 descrizioneRecensione Prodotto ottimo voto_stella Cinque 1709113661990-4 121 (id: \–ª°™)
 
 Valore della variabile i: 25 
 XADD stream2 * Action ANNULLA ORDINE idOrdine 1 
-main(): pid =23574: stream stream2: Added Action ANNULLA ORDINE idOrdine 1 (id: 1709036409814-1)
+main(): pid =36302: stream stream2: Added Action ANNULLA ORDINE idOrdine 1 (id: 1709113661991-0)
 
 Valore della variabile i: 26 
 XADD stream2 * Action EFFETTUA RESO idOrdine 1 codiceProdotto 1 
-main(): pid =23574: stream stream2: Added Action EFFETTUA RESO idOrdine 1 codiceProdotto 1 (id: 1709036409814-2)
+main(): pid =36302: stream stream2: Added Action EFFETTUA RESO idOrdine 1 codiceProdotto 1 (id: 1709113661991-1)
 
 Valore della variabile i: 27 
 XADD stream2 * Action RIMUOVI RECENSIONE idRecensione 1 
-main(): pid =23574: stream stream2: Added Action RIMUOVI RECENSIONE idRecensione 1 (id: 1709036409814-3)
+main(): pid =36302: stream stream2: Added Action RIMUOVI RECENSIONE idRecensione 1 (id: 1709113661991-2)
 
 Valore della variabile i: 28 
 XADD stream2 * Action RIMUOVI CARTA PAGAMENTO idCarta 1 
-main(): pid =23574: stream stream2: Added Action RIMUOVI CARTA PAGAMENTO idCarta 1 (id: 1709036409814-4)
+main(): pid =36302: stream stream2: Added Action RIMUOVI CARTA PAGAMENTO idCarta 1 (id: 1709113661991-3)
 
 Valore della variabile i: 29 
 XADD stream2 * Action RIMUOVI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 
-main(): pid =23574: stream stream2: Added Action RIMUOVI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709036409814-5)
+main(): pid =36302: stream stream2: Added Action RIMUOVI PRODOTTO CARRELLO nome_utente_compratore marco1 codiceProdotto 1 (id: 1709113661992-0)
 
 Valore della variabile i: 30 
 XADD stream2 * Action RIMUOVI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 
-main(): pid =23574: stream stream2: Added Action RIMUOVI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709036409815-0)
+main(): pid =36302: stream stream2: Added Action RIMUOVI PRODOTTO LISTADESIDERI nome_utente_compratore marco1 codiceProdotto 1 (id: 1709113661992-1)
 
 Valore della variabile i: 31 
 XADD stream2 * Action RIMUOVI PRODOTTO SITO codiceProdotto 1 
-main(): pid =23574: stream stream2: Added Action RIMUOVI PRODOTTO SITO codiceProdotto 1 (id: 1709036409815-1)
+main(): pid =36302: stream stream2: Added Action RIMUOVI PRODOTTO SITO codiceProdotto 1 (id: 1709113661992-2)
 
 Valore della variabile i: 32 
 XADD stream2 * Action EFFETTUA LOGOUT COMPRATORE nome_utente_compratore marco1 
-main(): pid =23574: stream stream2: Added Action EFFETTUA LOGOUT COMPRATORE nome_utente_compratore marco1 (id: 1709036409815-2)
+main(): pid =36302: stream stream2: Added Action EFFETTUA LOGOUT COMPRATORE nome_utente_compratore marco1 (id: 1709113661992-3)
 
 Valore della variabile i: 33 
 XADD stream2 * Action EFFETTUA LOGOUT FORNITORE nome_utente_fornitore luigi2 
-main(): pid =23574: stream stream2: Added Action EFFETTUA LOGOUT FORNITORE nome_utente_fornitore luigi2 (id: 1709036409815-3)
+main(): pid =36302: stream stream2: Added Action EFFETTUA LOGOUT FORNITORE nome_utente_fornitore luigi2 (id: 1709113661993-0)
 
 Valore della variabile i: 34 
 XADD stream2 * Action EFFETTUA LOGOUT TRASPORTATORE nome_utente_trasportatore andrea3 
-main(): pid =23574: stream stream2: Added Action EFFETTUA LOGOUT TRASPORTATORE nome_utente_trasportatore andrea3 (id: 1709036409815-4)
+main(): pid =36302: stream stream2: Added Action EFFETTUA LOGOUT TRASPORTATORE nome_utente_trasportatore andrea3 (id: 1709113661993-1)
 
 Valore della variabile i: 35 
 XADD stream2 * Action ELIMINA PROFILO COMPRATORE 
-main(): pid =23574: stream stream2: Added Action ELIMINA PROFILO COMPRATORE (id: 1709036409815-5)
+main(): pid =36302: stream stream2: Added Action ELIMINA PROFILO COMPRATORE (id: 1709113661993-2)
 
 Valore della variabile i: 36 
 XADD stream2 * Action ELIMINA PROFILO FORNITORE 
-main(): pid =23574: stream stream2: Added Action ELIMINA PROFILO FORNITORE (id: 1709036409815-6)
+main(): pid =36302: stream stream2: Added Action ELIMINA PROFILO FORNITORE (id: 1709113661993-3)
 
 Valore della variabile i: 37 
 XADD stream2 * Action ELIMINA PROFILO TRASPORTATORE 
-main(): pid =23574: stream stream2: Added Action ELIMINA PROFILO TRASPORTATORE (id: 1709036409815-7)
+main(): pid =36302: stream stream2: Added Action ELIMINA PROFILO TRASPORTATORE (id: 1709113661993-4)
 
 
 Ora di leggere i risultati dal server. 
 Effettuato comando per leggere i messaggi della Streams. 
-main(): pid 23574: user federico: Read msg 1 from stream stream1
+main(): pid 36302: user federico: Read msg 1 from stream stream1
     (string) stream1
-        (string) 1709036415249-0
+        (string) 1709113667128-0
           (string) Result
-          (string) Registrazione utente fornitore avvenuta
+          (string) Registrazione utente compratore avvenuta
 Numero stream: 0
 Numero messaggio: 0 della Stream 0
-main(): pid 23574: user federico: stream stream1, streamnum 0, msg 0, msgid 1709036415249-0 with 2 values
-main(): pid 23574: user federico: streamnum 0, msg 0, msgid 1709036415249-0 value 0 = Result
-main(): pid 23574: user federico: streamnum 0, msg 0, msgid 1709036415249-0 value 1 = Registrazione utente fornitore avvenuta
+main(): pid 36302: user federico: stream stream1, streamnum 0, msg 0, msgid 1709113667128-0 with 2 values
+main(): pid 36302: user federico: streamnum 0, msg 0, msgid 1709113667128-0 value 0 = Result
+main(): pid 36302: user federico: streamnum 0, msg 0, msgid 1709113667128-0 value 1 = Registrazione utente compratore avvenuta

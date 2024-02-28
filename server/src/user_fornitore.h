@@ -307,6 +307,8 @@ public:
 
         InsertToLogDB(db1,"INFO", "Utente fornitore inserito.", sessionID,  nomeRequisito, statoReq);
 
+        printf("Registrazione avvenuta con successo.\n");
+
         return;
     }
 

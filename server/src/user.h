@@ -39,7 +39,7 @@ public:
 
     void effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw)
     {
-
+        
         // Connession al database:
         //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
@@ -52,6 +52,8 @@ public:
 
         // Controlla se l'utente è già loggato:
         int stato_utente;
+
+        printf("Si blocca qua nel login COMPRAOTORE!");
 
         // UTENTE COMPRATORE
         if (categoriaUtenteLogin == "UtenteCompratore"){
