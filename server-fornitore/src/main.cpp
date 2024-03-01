@@ -1,5 +1,6 @@
-#include "svolgiAzione.h"
-// #include "main.h"
+
+#include "include.h"
+
 
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/src/con2redis.h"
 #include <string.h>
@@ -84,9 +85,7 @@ int main()
 
     char outputs[100];
 
-    UtenteCompratore compratore;
     UtenteFornitore fornitore;
-    UtenteTrasportatore trasportatore;
     Product prodotto;
     /*  prg  */
 

@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS UtenteCompratore (
     numero_civico VARCHAR(10),
     CAP VARCHAR(10),
     citta_di_residenza VARCHAR(50),
-    saldo DECIMAL(10, 2),
     stato INTEGER,
     PRIMARY KEY(nome_utente_compratore)
 );
@@ -128,29 +127,6 @@ CREATE TABLE IF NOT EXISTS ListaDesideri (
 
 
 
-CREATE TABLE IF NOT EXISTS AssistenzaClienti (
-	idChiamata SERIAL,
-  nome_utente_compratore VARCHAR(50) NOT NULL,
-  nome_utente_fornitore VARCHAR(50) NOT NULL,
-  nome_utente_trasportatore VARCHAR(50) NOT NULL,
-  motivazioneChiamata VARCHAR(50) NOT NULL,
-  numeroTelefonoAssistenza VARCHAR(20) NOT NULL,
-  PRIMARY KEY(idChiamata),
-  CONSTRAINT fk_nome_utente_compratore
-      FOREIGN KEY(nome_utente_compratore)
-      REFERENCES UtenteCompratore(nome_utente_compratore)
-      ON DELETE CASCADE,
-  CONSTRAINT fk_nome_utente_trasportatore
-      FOREIGN KEY(nome_utente_trasportatore)
-      REFERENCES UtenteTrasportatore(nome_utente_trasportatore)
-      ON DELETE CASCADE,
-  CONSTRAINT fk_nome_utente_fornitore
-      FOREIGN KEY(nome_utente_fornitore)
-      REFERENCES UtenteFornitore(nome_utente_fornitore)
-      ON DELETE CASCADE
-);
-
-
 
 CREATE TABLE IF NOT EXISTS Ordine (
     idOrdine SERIAL,
@@ -161,6 +137,7 @@ CREATE TABLE IF NOT EXISTS Ordine (
     viaSpedizione VARCHAR(50) NOT NULL,
     cittaSpedizione VARCHAR(50) NOT NULL,
     numCivSpedizione VARCHAR(10) NOT NULL, 
+    CAPSpedizione VARCHAR(10),
     PRIMARY KEY(idOrdine),
     CONSTRAINT fk_codProdotto
       FOREIGN KEY(codProdotto)

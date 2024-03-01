@@ -40,9 +40,6 @@ public:
     void effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw)
     {
         
-        // Connession al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-
         std::string nomeRequisito = "Login utente.";
         statoRequisito statoReq = statoRequisito::Wait;
 
@@ -53,8 +50,7 @@ public:
         // Controlla se l'utente è già loggato:
         int stato_utente;
 
-        printf("Si blocca qua nel login COMPRAOTORE!");
-
+    
         // UTENTE COMPRATORE
         if (categoriaUtenteLogin == "UtenteCompratore"){
             sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
@@ -343,9 +339,7 @@ public:
 
     void effettua_logout(Con2DB db1)
     {
-        // Connessione al database
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-
+        
         // Utilizza i membri dell'istanza corrente per ottenere il nome utente 
         std::string nomeUtenteLogout = nome_utente;
 
@@ -379,7 +373,6 @@ public:
 
         if (rows == 1)
         {
-                // std::cout << "Fino a riga 58 tutto ok." << std::endl;
 
             // Importante che come parametri PQgetvalues al secondo campo indica il numero di riga, dato che c'è solo uno stato di un'utente, si troverà all'indice 0 della riga
             stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
@@ -557,10 +550,7 @@ public:
         std::string nomeRequisito = "Eliminazione profilo.";
         statoRequisito statoReq = statoRequisito::Wait;
 
-        // Eliminiamo in cascata l'utente dal database:
-        // Connession al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-
+  
         std::string sessionID = "";
         if (categoria == "UtenteCompratore"){ 
             sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtenteDaEliminare.c_str());
@@ -633,9 +623,6 @@ public:
 
         //std::string categoriaUtente = categoria;
 
-        // Connession al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-
         std::string sessionID = "";
         if (categoria == "UtenteCompratore"){ 
             sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtente.c_str());
@@ -705,9 +692,6 @@ public:
 
         std::string nomeRequisito = "Aggiornamento password.";
         statoRequisito statoReq = statoRequisito::Wait;
-
-        // Connession al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string sessionID = "";
         if (categoria == "UtenteCompratore"){ 

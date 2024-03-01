@@ -22,6 +22,7 @@ public:
     std::string via_spedizione;
     std::string città_spedizione;
     std::string numero_civico_spedizione;
+    std::string CAP_spedizione;
 
 
     // Definizione costruttori:  
@@ -33,10 +34,11 @@ public:
       stato_ordine(),
       via_spedizione(""),
       città_spedizione(""),
-      numero_civico_spedizione(""){}
+      numero_civico_spedizione(""),
+      CAP_spedizione(""){}
           
     Ordine( int identificatore_ordine,  int codice_prodotto, std::string nome_uteCompratore, std::string data_ordine, StatoOrdine stato_ordine,
-    std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione ): 
+    std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione, std::string CAP_spedizione ): 
           
           identificatore_ordine(identificatore_ordine),
           codice_prodotto(codice_prodotto), 
@@ -45,7 +47,8 @@ public:
           stato_ordine(stato_ordine),
           via_spedizione(via_spedizione),
           città_spedizione(città_spedizione),
-          numero_civico_spedizione(numero_civico_spedizione) {}  
+          numero_civico_spedizione(numero_civico_spedizione),
+          CAP_spedizione(CAP_spedizione) {}  
 
 
     void impostaStato(StatoOrdine nuovoStato) {   

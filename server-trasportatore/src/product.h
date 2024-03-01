@@ -234,7 +234,7 @@ class Product {
 
 
 
-    Ordine acquistaProdotto(Con2DB db1, std::string nomeUtenteCompratore, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione){
+   Ordine acquistaProdotto(Con2DB db1, std::string nomeUtenteCompratore, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione, std::string CAP_spedizione){
 
         Ordine ordine;
         std::string dataOrdineEffettuato;
@@ -246,8 +246,6 @@ class Product {
 
         //std::string nomeDittaSpedizione;
         
-        // Connession al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         // Caricamento del sessionID utile per il log.
         std::string sessionID = "";
@@ -290,8 +288,8 @@ class Product {
             // }
 
             // Inseriamo i valori nel database:
-            sprintf(sqlcmd, "INSERT INTO Ordine (idOrdine, codProdotto, nome_utente_compratore, dataOrdineEffettuato, statoOrdine, viaSpedizione, cittaSpedizione, numCivSpedizione) VALUES (DEFAULT, '%d', '%s', '%s', '%s','%s','%s','%s' )", 
-            cod_product, nomeUtenteCompratore.c_str(), dataOrdineEffettuato.c_str(), statoOrdineStr.c_str(), via_spedizione.c_str(),città_spedizione.c_str(), numero_civico_spedizione.c_str());
+            sprintf(sqlcmd, "INSERT INTO Ordine (idOrdine, codProdotto, nome_utente_compratore, dataOrdineEffettuato, statoOrdine, viaSpedizione, cittaSpedizione, numCivSpedizione, CAPSpedizione) VALUES (DEFAULT, '%d', '%s', '%s', '%s','%s','%s','%s', '%s' )", 
+            cod_product, nomeUtenteCompratore.c_str(), dataOrdineEffettuato.c_str(), statoOrdineStr.c_str(), via_spedizione.c_str(),città_spedizione.c_str(), numero_civico_spedizione.c_str(), CAP_spedizione.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);     
 
@@ -315,6 +313,7 @@ class Product {
             ordine.via_spedizione = via_spedizione;
             ordine.città_spedizione = città_spedizione;
             ordine.numero_civico_spedizione = numero_civico_spedizione;
+            ordine.CAP_spedizione = CAP_spedizione;
         }
         else{
             std::cout << "Errore: il prodotto non è stato trovato!" << std::endl;

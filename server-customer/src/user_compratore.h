@@ -14,7 +14,6 @@ public:
     std::string numero_civico;
     std::string CAP;
     std::string città_residenza;
-    float saldo;
     int stato;
 
     // Costruttori di UtenteCompratore
@@ -26,7 +25,6 @@ public:
                          numero_civico(""),
                          CAP(""),
                          città_residenza(""),
-                         saldo(0.0),
                          stato(0) {}
 
     UtenteCompratore(
@@ -43,7 +41,6 @@ public:
         std::string numero_civico,
         std::string CAP,
         std::string città_residenza,
-        float saldo,
         int stato) :
 
                      Utente(nome_utente, categoria, nome, cognome, numero_telefono, password, email),
@@ -53,7 +50,6 @@ public:
                      numero_civico(numero_civico),
                      CAP(CAP),
                      città_residenza(città_residenza),
-                     saldo(saldo),
                      stato(stato)
     {
     }
@@ -67,7 +63,6 @@ public:
         std::cout << "Numero civico: " << numero_civico << std::endl;
         std::cout << "CAP: " << CAP << std::endl;
         std::cout << "Città di residenza: " << città_residenza << std::endl;
-        std::cout << "Saldo: " << saldo << std::endl;
         std::cout << "Stato: " << stato << std::endl;
     }
     
@@ -84,7 +79,6 @@ public:
     {
 
         int stato = 0;
-        float saldo = 0.0;
         //std::string session_id = "";
 
         std::string nomeRequisito = "Registrazione utente compratore.";
@@ -190,11 +184,6 @@ public:
         }
         /////////////////////////////////////
 
-        /////////////////////////////////////
-        // Connessione al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-        //std::cout << "Connessione al database avvenuta con successo." << std::endl;
-        /////////////////////////////////////
 
         /////////////////////////////////////
         // Controllo se il nome utente è univoco
@@ -237,11 +226,10 @@ public:
                 std::string numero_civico = PQgetvalue(res, 0, PQfnumber(res, "numero_civico"));
                 std::string CAP = PQgetvalue(res, 0, PQfnumber(res, "CAP"));
                 std::string città_residenza = PQgetvalue(res, 0, PQfnumber(res, "citta_di_residenza"));
-                float saldo = atof(PQgetvalue(res, 0, PQfnumber(res, "saldo")));
                 int stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
 
 
-                *this = UtenteCompratore(nome_utente, "UtenteCompratore", nome, cognome, numero_telefono, password, email, session_id, data_compleanno, via_residenza, numero_civico, CAP, città_residenza, saldo, stato);
+                *this = UtenteCompratore(nome_utente, "UtenteCompratore", nome, cognome, numero_telefono, password, email, session_id, data_compleanno, via_residenza, numero_civico, CAP, città_residenza, stato);
 
             }
             else
@@ -367,10 +355,12 @@ public:
             return;
         }
 
+        printf("Il saldo non è più dentro la query!");
+
         /////////////////////////////////////
         // Inserisco nel database il nuovo utente:
-        sprintf(sqlcmd, "INSERT INTO UtenteCompratore (nome_utente_compratore, session_id_c, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, data_compleanno, via_di_residenza, numero_civico, CAP, citta_di_residenza, saldo, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, %d)",
-                in_nome_utente.c_str(), sessionID.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), formatted_date.c_str(), in_via_residenza.c_str(), in_numero_civico.c_str(), in_CAP.c_str(), in_città_residenza.c_str(), saldo, stato);
+        sprintf(sqlcmd, "INSERT INTO UtenteCompratore (nome_utente_compratore, session_id_c, categoriaUtente, nome, cognome, indirizzo_mail, numero_di_telefono, password, data_compleanno, via_di_residenza, numero_civico, CAP, citta_di_residenza, stato ) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)",
+                in_nome_utente.c_str(), sessionID.c_str(), in_categoria.c_str(), in_nome.c_str(), in_cognome.c_str(), in_email.c_str(), in_numero_telefono.c_str(), in_password.c_str(), formatted_date.c_str(), in_via_residenza.c_str(), in_numero_civico.c_str(), in_CAP.c_str(), in_città_residenza.c_str(), stato);
 
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);
@@ -385,7 +375,7 @@ public:
 
         /////////////////////////////////////
         // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
-        *this = UtenteCompratore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, session_id, formatted_date, in_via_residenza, in_numero_civico, in_CAP, in_città_residenza, saldo, stato);
+        *this = UtenteCompratore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, session_id, formatted_date, in_via_residenza, in_numero_civico, in_CAP, in_città_residenza, stato);
         /////////////////////////////////////
 
         return;
@@ -418,7 +408,6 @@ public:
             compratore.numero_civico = PQgetvalue(res, 0, PQfnumber(res, "numero_civico"));
             compratore.CAP = PQgetvalue(res, 0, PQfnumber(res, "CAP"));
             compratore.città_residenza = PQgetvalue(res, 0, PQfnumber(res, "citta_di_residenza"));
-            compratore.saldo = atof(PQgetvalue(res, 0, PQfnumber(res, "saldo")));
             compratore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
         }
         else

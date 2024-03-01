@@ -551,21 +551,27 @@ int main()
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, nomi_utente[i100].c_str());
 
-                sprintf(key3, "via_spedizione");
-                sprintf(value3, vie_di_residenza[i5].c_str());
+                sprintf(key3, "nomeProdotto");
+                sprintf(value3, nomi_prodotti[i100].c_str());
 
-                sprintf(key4, "città_spedizione");
-                sprintf(value4, citta_di_residenza[i5].c_str());
+                sprintf(key4, "via_spedizione");
+                sprintf(value4, vie_di_residenza[i5].c_str());
 
-                sprintf(key5, "numero_civico_spedizione");
-                sprintf(value5, numeri_civici[i100].c_str());
+                sprintf(key5, "città_spedizione");
+                sprintf(value5, citta_di_residenza[i5].c_str());
+
+                sprintf(key6, "numero_civico_spedizione");
+                sprintf(value6, numeri_civici[i100].c_str());
+
+                sprintf(key7, "CAP_spedizione");
+                sprintf(value7, CAP[i100].c_str());
 
         
-                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5);
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                printf("XADD %s * %s %s %s %s %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5);
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, reply->str);
+                printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6,  key7, value7);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, reply->str);
 
                 freeReplyObject(reply);
             }

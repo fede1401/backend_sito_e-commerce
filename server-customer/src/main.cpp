@@ -1,5 +1,4 @@
-#include "svolgiAzione.h"
-// #include "main.h"
+#include "include.h"
 
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/src/con2redis.h"
 #include <string.h>
@@ -66,6 +65,7 @@ int main()
     char via_spedizione[100];
     char città_spedizione[100];
     char numero_civico_spedizione[100];
+    char CAP_spedizione[100];
     char descrizioneRecensione[100];
     int voto_stella;
     int idRecensione;
@@ -343,6 +343,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(numero_civico_spedizione, fval);
                     }
+
+                    if (strcmp(fval, "CAP_spedizione") == 0)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h+1, fval);
+                        strcpy(CAP_spedizione, fval);
+                    }
+
+
                     if (strcmp(fval, "descrizioneRecensione") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -823,7 +831,7 @@ int main()
 
                 if (std::string(action) == "ACQUISTA PRODOTTO"){
                     //Product prodotto;
-                    prodotto.acquistaProdotto(db1, nome_utente_compratore, via_spedizione, città_spedizione, numero_civico_spedizione);
+                    prodotto.acquistaProdotto(db1, nome_utente_compratore, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
 
                     strcpy(outputs, "Acquisto prodotto");
 
@@ -1022,35 +1030,7 @@ int main()
         }
 
         freeReplyObject(reply);
-
-        // send result to client
-                    // send_counter++;
-                    // sprintf(key, "Result");
-                    // sprintf(value, "%s", outputs);
-
-                    // printf("Result: %s \n", outputs);
-
-                    // reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_CUSTOMER, key, value);
-                    // assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-                    // printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply->str);
-                    // freeReplyObject(reply);
-
-        // freeReplyObject(reply);
-
-
-        // // send result to client
-        // send_counter++;
-        // sprintf(key, "Result");
-        // sprintf(value, "%s", outputs);
-
-        // reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_CUSTOMER, key, value);
-        // assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-        // printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply->str);
-        // freeReplyObject(reply);
-
-        // /* sleep   */
-        // micro_sleep(5000000);
-        
+    
 
     } // while ()
 

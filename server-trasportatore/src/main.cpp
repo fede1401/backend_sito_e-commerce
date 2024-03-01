@@ -1,5 +1,6 @@
-#include "svolgiAzione.h"
-// #include "main.h"
+
+#include "include.h"
+
 
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/src/con2redis.h"
 #include <string.h>
@@ -82,8 +83,6 @@ int main()
 
     char outputs[100];
 
-    UtenteCompratore compratore;
-    UtenteFornitore fornitore;
     UtenteTrasportatore trasportatore;
     Product prodotto;
     /*  prg  */
@@ -736,35 +735,6 @@ int main()
         }
 
         freeReplyObject(reply);
-
-        // send result to client
-                    // send_counter++;
-                    // sprintf(key, "Result");
-                    // sprintf(value, "%s", outputs);
-
-                    // printf("Result: %s \n", outputs);
-
-                    // reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
-                    // assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-                    // printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key, value, reply->str);
-                    // freeReplyObject(reply);
-
-        // freeReplyObject(reply);
-
-
-        // // send result to client
-        // send_counter++;
-        // sprintf(key, "Result");
-        // sprintf(value, "%s", outputs);
-
-        // reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
-        // assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-        // printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key, value, reply->str);
-        // freeReplyObject(reply);
-
-        // /* sleep   */
-        // micro_sleep(5000000);
-        
 
     } // while ()
 

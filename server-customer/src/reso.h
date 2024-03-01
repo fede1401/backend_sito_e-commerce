@@ -47,9 +47,6 @@ public:
         std::string nomeRequisito = "Effettuazione Reso.";
         statoRequisito statoReq = statoRequisito::Wait;
 
-        // Connession al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-
         std::string stato_spedizione;
 
         // Innanzitutto controllo se l'ordine è stato spedito e arrivato correttamente

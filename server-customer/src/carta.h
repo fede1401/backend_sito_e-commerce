@@ -91,7 +91,7 @@ public:
         rows = PQntuples(res);
         int idCarta;
         if (rows == 1){
-            idCarta = atoi(PQgetvalue(res, 0, PQfnumber(res, "session_id_c")));
+            idCarta = atoi(PQgetvalue(res, 0, PQfnumber(res, "idCarta")));
         }
 
         sprintf(sqlcmd, "SELECT * FROM Carta WHERE idCarta = '%d'", idCarta);
