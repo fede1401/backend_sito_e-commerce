@@ -1,7 +1,7 @@
 
 
 #IDIR=../hdr
-IDIR=.
+IDIR=.,../../shared-server
 ODIR=../obj
 BDIR=../bin
 

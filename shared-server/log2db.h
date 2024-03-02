@@ -2,7 +2,7 @@
 #ifndef LOG2DB_H
 #define LOG2DB_H
 
-#include "main.h"
+#include "../server-customer/src/main.h"
 
 
 

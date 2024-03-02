@@ -408,8 +408,6 @@ public:
 
     UtenteCompratore anima_oggetto(Con2DB db1, std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw)
     {
-        // Connession al database:
-        // Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         // Creo il costruttore della classe utente compratore dopo il login:
         UtenteCompratore compratore;
