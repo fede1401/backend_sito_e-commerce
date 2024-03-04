@@ -31,6 +31,11 @@ public:
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
         PQclear(res);
 
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiunto il prodotto alla lista .", sessionID, nomeRequisito, statoReq);
+            return;
+        }
+
 
         // Selezioniamo il codice del prodotto tramite il suo nome:
         sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome = '%s'", nomeProdotto);
@@ -125,6 +130,11 @@ public:
         rows = PQntuples(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
         PQclear(res);
+
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere rimosso il prodotto dalla lista .", sessionID, nomeRequisito, statoReq);
+            return;
+        }
 
 
         // Selezioniamo il codice del prodotto tramite il suo nome:

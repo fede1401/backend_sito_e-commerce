@@ -1,8 +1,7 @@
 #ifndef USER_FORNITORE_H
 #define USER_FORNITORE_H
 
-//#include "main.h"
-#include "user.h"
+#include "../../shared-server/user.h"
 
 
 class UtenteFornitore : public Utente {
@@ -49,6 +48,7 @@ public:
                                 std::string in_nome_utente, 
                                 std::string in_categoria,
                                 std::string in_nome, std::string in_cognome, 
+                                std::string sessionID,
                                 std::string in_numero_telefono, 
                                 std::string in_email, 
                                 std:: string in_password, std:: string in_conferma_password, 
@@ -146,12 +146,6 @@ public:
         }
         ///////////////////////////////////// 
 
-
-        ///////////////////////////////////// 
-        // Connessione al database:
-        // Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-        // std::cout << "Connessione al database avvenuta con successo." << std::endl;
-        ///////////////////////////////////// 
 
 
         /////////////////////////////////////                         
@@ -259,18 +253,13 @@ public:
         /////////////////////////////////////
         
 
-        /////////////////////////////////////
-        // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
-        *this = UtenteFornitore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, session_id, in_aziendaProd, stato);
-        /////////////////////////////////////
-
 
         std::cout << "Categoria utente:" << this->categoria << std::endl;
 
 
         // SESSION ID
         // Generiamo il session id:
-        std::string sessionID = generateSessionID();
+        //std::string sessionID = generateSessionID();
 
         // Controllo se il sessionID sia univoco con i session ID di tutte le tipologie d'utente:
         sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE session_id_c = '%s'", sessionID.c_str());
@@ -325,7 +314,12 @@ public:
                     
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);  
-        /////////////////////////////////////      
+        /////////////////////////////////////     
+
+        /////////////////////////////////////
+        // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
+        *this = UtenteFornitore(in_nome_utente, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, session_id, in_aziendaProd, stato);
+        ///////////////////////////////////// 
 
         // Conferma di inserimento nel db
         std::cout << "Utente inserito." << std::endl;
@@ -379,15 +373,17 @@ public:
         std::string nomeRequisito = "Aggiornamento azienda Produttrice.";
         statoRequisito statoReq = statoRequisito::Wait;
 
-        // Connession al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-
         std::string sessionID = "";
         sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nomeUtente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
         PQclear(res);
+
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiornato il nome dell'azienda produttrice.", sessionID, nomeRequisito, statoReq);
+            return;
+        }
 
         sprintf(sqlcmd, "UPDATE UtenteFornitore set nome_AziendaProduttrice='%s' WHERE nome_utente_fornitore = '%s'",
                                                                             nuovaAziendaProduttrice.c_str(), nomeUtente.c_str());

@@ -9,7 +9,7 @@
 #include "product.h"
 #include "spedizione.h"
 #include "user_fornitore.h"
-#include "user.h"
+//#include "user.h"
 
 
 #endif // INCLUDE_H

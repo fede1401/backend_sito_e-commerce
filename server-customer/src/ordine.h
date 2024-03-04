@@ -69,6 +69,11 @@ public:
       if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
       PQclear(res);                 
 
+      if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può visionare gli ordini .", sessionID, nomeRequisito, statoReq);
+            return;
+        }
+
 
       // Query per caricare tutti gli ordini effettuati:
       sprintf(sqlcmd, "SELECT * FROM Ordine WHERE nome_utente_compratore='%s'", nome_utente_compratore.c_str());
@@ -145,6 +150,11 @@ public:
                      
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
         PQclear(res);   
+
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può annullare un ordine .", sessionID, nomeRequisito, statoReq);
+            return;
+        }
 
         // Devo controllare se l'ordine è stato spedito o meno:
           // Se l'ordine non è stato spedito, allora può essere annullato;

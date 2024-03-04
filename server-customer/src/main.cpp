@@ -15,6 +15,28 @@ using namespace std;
 
 
 
+std::string generateSessionID()
+    {
+        // Caratteri validi per il Session ID
+        const std::string valid_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        // Inizializzazione del generatore di numeri casuali
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> dis(0, valid_characters.size() - 1);
+
+        // Generazione del Session ID casuale
+        std::string session_id;
+        for (int i = 0; i < 10; ++i)
+        {
+            session_id += valid_characters[dis(gen)];
+        }
+
+        return session_id;
+    }
+
+
+
 
 int main()
 {
@@ -480,8 +502,11 @@ int main()
                 {
                     //printf("Azione: %s\n", action);
 
-                    compratore.effettuaRegistrazione(db1, nome_utente_compratore, categoriaUtente, nome, cognome, numeroTelefono, email, viaResidenza, numeroCivico, cap,
-                                                     cittàResidenza, password, confermaPassword, dataCompleanno);
+                    std::string sessionID = generateSessionID();
+
+                    compratore.effettuaRegistrazione(db1, nome_utente_compratore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, 
+                                                    viaResidenza, numeroCivico, cap,
+                                                    cittàResidenza, password, confermaPassword, dataCompleanno);
 
                     strcpy(outputs, "Registrazione utente compratore avvenuta");
 
@@ -513,8 +538,10 @@ int main()
                 if (std::string(action) == "EFFETTUA LOGIN COMPRATORE"){
                     //UtenteCompratore compratore;
 
+                    std::string sessionID = generateSessionID();
+
                     std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
-                    compratore.effettua_login(db1, nome_utente_compratore, password);
+                    compratore.effettua_login(db1, nome_utente_compratore, password, sessionID);
 
                     strcpy(outputs, "Login avvenuto");
 
@@ -831,7 +858,7 @@ int main()
 
                 if (std::string(action) == "ACQUISTA PRODOTTO"){
                     //Product prodotto;
-                    prodotto.acquistaProdotto(db1, nome_utente_compratore, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
+                    Ordine ordine = prodotto.acquistaProdotto(db1, nome_utente_compratore, nomeProdotto, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
 
                     strcpy(outputs, "Acquisto prodotto");
 
@@ -850,6 +877,7 @@ int main()
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
+                    printf("Effettuata la freeReply della Reply2.\n");
 
                     /* sleep   */
                     //micro_sleep(5000000);
@@ -1030,6 +1058,7 @@ int main()
         }
 
         freeReplyObject(reply);
+        printf("Effettuata anche la reply 1;\n");
     
 
     } // while ()

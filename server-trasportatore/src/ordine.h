@@ -50,15 +50,13 @@ public:
           numero_civico_spedizione(numero_civico_spedizione),
           CAP_spedizione(CAP_spedizione) {}  
 
+
     void impostaStato(StatoOrdine nuovoStato) {   
       stato_ordine = nuovoStato;    
     }
 
 
     void visione_ordini_effettuati(Con2DB db1, std::string nome_utente_compratore){
-
-      // Connession al database:
-      //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
       std::string nomeRequisito = "Visione ordini effettuati.";
       statoRequisito statoReq = statoRequisito::Wait;
@@ -70,6 +68,11 @@ public:
       rows = PQntuples(res);
       if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
       PQclear(res);                 
+
+      if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può visionare gli ordini .", sessionID, nomeRequisito, statoReq);
+            return;
+        }
 
 
       // Query per caricare tutti gli ordini effettuati:
@@ -101,8 +104,6 @@ public:
 
 
     void annulla_ordine(Con2DB db1, std::string in_nome_utenteCompratore, int idOrdine){
-      // Connession al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string nomeRequisito = "Annullamento ordine.";
         statoRequisito statoReq = statoRequisito::Wait;
@@ -149,6 +150,11 @@ public:
                      
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
         PQclear(res);   
+
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può annullare un ordine .", sessionID, nomeRequisito, statoReq);
+            return;
+        }
 
         // Devo controllare se l'ordine è stato spedito o meno:
           // Se l'ordine non è stato spedito, allora può essere annullato;

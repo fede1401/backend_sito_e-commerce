@@ -47,9 +47,6 @@ public:
         std::string nomeRequisito = "Effettuazione Reso.";
         statoRequisito statoReq = statoRequisito::Wait;
 
-        // Connession al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
-
         std::string stato_spedizione;
 
         // Innanzitutto controllo se l'ordine è stato spedito e arrivato correttamente
@@ -82,7 +79,14 @@ public:
                   res = db1.ExecSQLtuples(sqlcmd);
                   rows = PQntuples(res);
                   if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
-                  PQclear(res);                   
+                  PQclear(res);     
+
+
+                  if (sessionID == ""){
+                    InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può effettuare un reso .", sessionID, nomeRequisito, statoReq);
+                    return;
+                 }
+
 
                   std::string motivazione_resoStr = statoMotivazioneResoToString(motivazione_reso);
                     

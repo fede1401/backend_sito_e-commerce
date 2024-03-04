@@ -57,6 +57,11 @@ class Product {
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
         PQclear(res);                        
 
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può aggiungere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
+            return;
+        }
+
 
         // Se il prodotto inserito è già presente nella tabella Prodotto, allora dobbiamo solamente incrementare la quantità di copie, altrimenti dovremo inserirlo:
         sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND prezzoEuro='%f' AND nome_AziendaProduttrice='%s'" , 
@@ -79,8 +84,10 @@ class Product {
                 in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str());
                 res = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res);
+                
                 if (rows == 1){
                     numCopieDisponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
+
                     PQclear(res);
 
                     // 2.
@@ -118,6 +125,7 @@ class Product {
         
         std::string nomeRequisito = "Rimozione prodotto dal sito.";
         statoRequisito statoReq = statoRequisito::Wait;
+        std::string sessionID = "";
 
 
         // Verifica se l'utente fornitore che vuole rimuovere il prodotto dal sito è effettivamente un utente fornitore:
@@ -128,6 +136,19 @@ class Product {
         if (rows != 1){
             InsertToLogDB(db1, "ERROR", "Utente non fornitore vuole rimuovere il prodotto", "", nomeRequisito, statoReq);
 
+            return;
+        }
+
+        // Caricamento del sessionID utile per il log.
+        sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente_fornitore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
+        PQclear(res);     
+
+
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può rimuovere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
             return;
         }
 
@@ -168,10 +189,8 @@ class Product {
     }
 
 
+    // Sistemare per aggiugnere l'utente che ricerca il prodotto
     void ricerca_mostra_Prodotto(Con2DB db1, std::string nomeProdotto){
-
-        // Connession al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
 
         std::string nomeRequisito = "Ricerca e mostra informazioni del prodotto.";
@@ -234,7 +253,7 @@ class Product {
 
 
 
-   Ordine acquistaProdotto(Con2DB db1, std::string nomeUtenteCompratore, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione, std::string CAP_spedizione){
+    Ordine acquistaProdotto(Con2DB db1, std::string nomeUtenteCompratore, std::string nomeProdotto, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione, std::string CAP_spedizione){
 
         Ordine ordine;
         std::string dataOrdineEffettuato;
@@ -245,6 +264,8 @@ class Product {
         statoRequisito statoReq = statoRequisito::Wait;
 
         //std::string nomeDittaSpedizione;
+
+        //printf("Nome prodotto: %s \n", nome);
         
 
         // Caricamento del sessionID utile per il log.
@@ -253,12 +274,20 @@ class Product {
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
-        PQclear(res);                        
+        PQclear(res);     
+
+
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può acquistare un prodotto.", sessionID, nomeRequisito, statoReq);
+            return;
+        }                   
 
 
         // Selezioniamo il codice del prodotto
-        sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND FLOAT8EQ(prezzoEuro, '%f') AND nome_AziendaProduttrice='%s'", 
-                                                            nome.c_str(), categoria.c_str(), descrizione.c_str(), prezzo_euro, azienda_produzione.c_str());
+        //sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND FLOAT8EQ(prezzoEuro, '%f') AND nome_AziendaProduttrice='%s'", 
+        //                                                    nome.c_str(), categoria.c_str(), descrizione.c_str(), prezzo_euro, azienda_produzione.c_str());
+        sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s'", nomeProdotto.c_str());
+        
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows == 1){

@@ -1,8 +1,7 @@
 #ifndef USER_COMPRATORE_H
 #define USER_COMPRATORE_H
 
-// #include "main.h"
-#include "user.h"
+#include "../../shared-server/user.h"
 
 class UtenteCompratore : public Utente
 {
@@ -73,6 +72,7 @@ public:
 
     void effettuaRegistrazione( Con2DB db1,
                                std::string in_nome_utente, std::string in_categoria, std::string in_nome, std::string in_cognome,
+                               std::string sessionID,
                                std::string in_numero_telefono, std::string in_email,
                                std::string in_via_residenza, std::string in_numero_civico, std::string in_CAP, std::string in_città_residenza,
                                std::string in_password, std::string in_conferma_password,
@@ -81,18 +81,31 @@ public:
 
         int stato = 0;
         
-        std::string sessionID = "";
+        //std::string sessionID = "";
 
         std::string nomeRequisito = "Registrazione utente compratore.";
         statoRequisito statoReq = statoRequisito::Wait;
 
 
+        // controllo se il sessionID è univoco.
+        bool resultSession = check_sessionID(db1, nomeRequisito, statoReq, sessionID);
+        if (resultSession==false){
+            return;
+        }
+
         // Controllo se la mail contiene il carattere "@".
-        check_email(db1, in_email, nomeRequisito, statoReq, sessionID);
-        
+        bool resultEmail = check_email(db1, in_email, nomeRequisito, statoReq, sessionID);
+        if (resultEmail==false){
+            return;
+        }
+
+
         // Controllo se la password rispetta i criteri: lunghezza di almeno 8, almeno una lettere maiuscola, un numero e un carattere speciale.
-        check_password(db1, in_password, in_conferma_password,  nomeRequisito, statoReq, sessionID);
-    
+        bool resultPassw = check_password(db1, in_password, in_conferma_password,  nomeRequisito, statoReq, sessionID);
+        if (resultPassw==false){
+            return;
+        }
+
         // Controllo se la password è uguale al campo conferma_password
         if (in_password != in_conferma_password)
         {
@@ -104,16 +117,31 @@ public:
             return;
         }
 
+        printf("Errore prima di nome utente\n\n");
+
         // Controllo che il nome utente sia univoco con gli altri utenti.
-        check_nome_utente_univoco(db1, in_nome_utente, nomeRequisito, statoReq, sessionID);
-        
+        bool resultUsername = check_nome_utente_univoco(db1, in_nome_utente, nomeRequisito, statoReq, sessionID);
+        if (resultUsername==false){
+            return;
+        }
+
+
         // Controllo che l'email sia univoca
-        check_email_univoca(db1, in_email, nomeRequisito, statoReq, sessionID);
+        bool resultEmailUn = check_email_univoca(db1, in_email, nomeRequisito, statoReq, sessionID);
+        if (resultEmailUn==false){
+            return;
+        }
 
         // Transformo la data di compleanno in una stringa che accetta il database
         std::string formatted_date =  codifica_dataCompleanno(in_data_compleanno);
 
-        check_sessionID(db1, nomeRequisito, statoReq);
+
+        // SESSION ID
+        // Generiamo il session id:
+        //std::string sessionID = generateSessionID();
+
+    
+        //printf("SessionID: %s \n", sessionID);
 
 
         // Se tutti i check sono andati importo, possiamo aggiungere l'utente al database:
@@ -143,27 +171,33 @@ public:
 
 
 
-    void check_email(Con2DB db1, std::string in_email, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID){
+    bool check_email(Con2DB db1, std::string in_email, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID){
+        bool result = true;
         if (in_email.find("@") == std::string::npos)
         {
             statoReq = statoRequisito::NotSuccess;
 
             InsertToLogDB(db1,"ERROR", "La mail deve contenere il carattere -@-.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: La mail deve contenere il carattere '@'." << std::endl;
-            return;
+            return false;
         }
+        return result;
     }
 
 
 
-    void check_password(Con2DB db1, std::string in_password, std::string in_conferma_password, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID){
+    bool check_password(Con2DB db1, std::string in_password, std::string in_conferma_password, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID){
+        
+        bool result = true;
+
+
         if (in_password.length() < 8)
         {
             statoReq = statoRequisito::NotSuccess;
 
             InsertToLogDB(db1,"ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
-            return;
+            return false;
         }
 
         if (in_conferma_password.length() < 8)
@@ -173,7 +207,7 @@ public:
 
             InsertToLogDB(db1,"ERROR", "La password deve contenere almeno 8 caratteri.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: La passowrd deve contenere almeno 8 caratteri." << std::endl;
-            return;
+            return false;
         }
 
         bool hasUpperCase = false;
@@ -204,7 +238,7 @@ public:
             statoReq = statoRequisito::NotSuccess;
 
             InsertToLogDB(db1,"ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", session_id, nomeRequisito, statoReq);
-            return;
+            return false;
         }
 
         if (!hasDigit)
@@ -214,7 +248,7 @@ public:
             statoReq = statoRequisito::NotSuccess;
 
             InsertToLogDB(db1,"ERROR", "La nuova passowrd deve contenere almeno un numero.", session_id, nomeRequisito, statoReq);
-            return;
+            return false;
         }
 
         if (!hasSpecialChar)
@@ -224,13 +258,16 @@ public:
             statoReq = statoRequisito::NotSuccess;
 
             InsertToLogDB(db1,"ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", session_id, nomeRequisito, statoReq);
-            return;
+            return false;
         }
+    return result;
     }
 
 
 
-    void check_nome_utente_univoco(Con2DB db1, std::string in_nome_utente, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID){
+    bool check_nome_utente_univoco(Con2DB db1, std::string in_nome_utente, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID){
+
+        bool result = true;
 
         // Controllo se il nome utente è univoco
         sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
@@ -278,7 +315,7 @@ public:
 
             PQclear(res);
 
-            return;
+            return false;
         }
 
 
@@ -295,7 +332,7 @@ public:
 
             InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti fornitori.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti fornitori." << std::endl;
-            return;
+            return false;
         }
 
         sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", in_nome_utente.c_str());
@@ -309,14 +346,15 @@ public:
 
             InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti trasportatori.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti trasportatori." << std::endl;
-            return;
+            return false;
         }
-
+    return result;
     }
 
 
 
-    void check_email_univoca(Con2DB db1, std::string in_email, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID){
+    bool check_email_univoca(Con2DB db1, std::string in_email, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID){
+        bool result = true;
         
         // Controllo se l'email è univoca
         sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE indirizzo_mail = '%s'", in_email.c_str());
@@ -330,9 +368,9 @@ public:
 
             InsertToLogDB(db1,"ERROR", "Indirizzo mail è già in uso.", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: L'indirizzo mail è già in uso." << std::endl;
-            return;
+            return false;
         }
-        
+        return result;
     }
 
 
@@ -353,11 +391,9 @@ public:
        }
 
 
-    void check_sessionID(Con2DB db1, std::string nomeRequisito, statoRequisito statoReq){
-        // SESSION ID
-        // Generiamo il session id:
-        std::string sessionID = generateSessionID();
-
+    bool check_sessionID(Con2DB db1, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID){
+        bool result = true;
+    
         // Controllo se il sessionID sia univoco con i session ID di tutte le tipologie d'utente:
         sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE session_id_c = '%s'", sessionID.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
@@ -370,7 +406,7 @@ public:
 
             InsertToLogDB(db1,"ERROR", "Il session ID è già in uso da utenti compratori.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: Il session ID è già in uso da utenti compratori." << std::endl;
-            return;
+            return false;
         }
 
         sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE session_id_f = '%s'", sessionID.c_str());
@@ -384,7 +420,7 @@ public:
 
             InsertToLogDB(db1,"ERROR", "Il session ID è già in uso da utenti fornitori.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: Il session ID è già in uso da utenti fornitori." << std::endl;
-            return;
+            return false;
         }
 
         sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE session_id_t = '%s'", sessionID.c_str());
@@ -398,11 +434,32 @@ public:
 
             InsertToLogDB(db1,"ERROR", "Il session ID è già in uso da utenti trasportatori.", sessionID, nomeRequisito, statoReq);
             std::cout << "Errore: Il session ID è già in uso da utenti trasportatori." << std::endl;
-            return;
+            return false;
         }
+    return result;
     }
 
 
+
+    std::string generateSessionID()
+    {
+        // Caratteri validi per il Session ID
+        const std::string valid_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        // Inizializzazione del generatore di numeri casuali
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> dis(0, valid_characters.size() - 1);
+
+        // Generazione del Session ID casuale
+        std::string session_id;
+        for (int i = 0; i < 10; ++i)
+        {
+            session_id += valid_characters[dis(gen)];
+        }
+
+        return session_id;
+    }
 
 
 
@@ -444,6 +501,10 @@ public:
 
 
 
+    
+
+
+
 
 
     void aggiornaResidenza(Con2DB db1, std::string nuovaViaResidenza, std::string nuovoNumCiv, std::string nuovoCAP, std::string nuovaCittaResidenza)
@@ -465,6 +526,11 @@ public:
             sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));
         }
         PQclear(res);
+
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiornata la residenza.", sessionID, nomeRequisito, statoReq);
+            return;
+        }
 
         sprintf(sqlcmd, "UPDATE UtenteCompratore set via_di_residenza='%s', numero_civico ='%s', CAP='%s', citta_di_residenza='%s' WHERE nome_utente_compratore = '%s'",
                 nuovaViaResidenza.c_str(), nuovoNumCiv.c_str(), nuovoCAP.c_str(), nuovaCittaResidenza.c_str(), nomeUtente.c_str());

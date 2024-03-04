@@ -37,9 +37,14 @@ public:
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-            
+    
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
         PQclear(res);    
+
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiunta la carta di pagamento.", sessionID, nomeRequisito, statoReq);
+            return;
+        }
 
 
         // Check se il nome utente è di un utente compratore:
@@ -83,6 +88,11 @@ public:
         rows = PQntuples(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));} 
         PQclear(res);  
+
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere rimossa la carta di pagamento.", sessionID, nomeRequisito, statoReq);
+            return;
+        }
 
 
         // Selezioniamo l'id della carta tramite il suo numero 

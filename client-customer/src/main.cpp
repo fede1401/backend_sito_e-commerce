@@ -93,7 +93,7 @@ int main()
         };
 
 
-        std::string test2[21] ={
+        std::string test2[18] ={
                             "EFFETTUA REGISTRAZIONE COMPRATORE", 
                             "EFFETTUA REGISTRAZIONE COMPRATORE", 
                             "EFFETTUA REGISTRAZIONE COMPRATORE", 
@@ -111,11 +111,11 @@ int main()
                             "AGGIORNA RESIDENZA", 
 
                             "RICERCA PRODOTTO", 
-                            "ACQUISTA PRODOTTO", 
+                            //"ACQUISTA PRODOTTO", 
                             "RICERCA PRODOTTO", 
-                            "ACQUISTA PRODOTTO", 
+                            //"ACQUISTA PRODOTTO", 
                             "RICERCA PRODOTTO", 
-                            "ACQUISTA PRODOTTO", 
+                            //"ACQUISTA PRODOTTO", 
 
                             "EFFETTUA RESO", 
                             "EFFETTUA RECENSIONE"

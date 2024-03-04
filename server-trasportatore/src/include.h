@@ -11,7 +11,7 @@
 #include "reso.h"
 #include "spedizione.h"
 #include "user_trasportatore.h"
-#include "user.h"
+//#include "user.h"
 
 
 #endif // INCLUDE_H

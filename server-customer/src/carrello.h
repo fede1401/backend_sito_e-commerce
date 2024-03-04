@@ -36,6 +36,12 @@ public:
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
         PQclear(res);
 
+
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiunto il prodotto al carrello.", sessionID, nomeRequisito, statoReq);
+            return;
+        }
+
         ///////////////////////////////////// 
 
         // Selezioniamo il codice del prodotto tramite il suo nome:
@@ -142,6 +148,12 @@ public:
         rows = PQntuples(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
         PQclear(res);
+
+
+        if (sessionID == ""){
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere rimosso il prodotto al carrello.", sessionID, nomeRequisito, statoReq);
+            return;
+        }
 
 
         // Selezioniamo il codice del prodotto tramite il suo nome:

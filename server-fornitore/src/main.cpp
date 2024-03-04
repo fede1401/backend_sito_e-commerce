@@ -16,6 +16,27 @@
 using namespace std;
 
 
+std::string generateSessionID()
+    {
+        // Caratteri validi per il Session ID
+        const std::string valid_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        // Inizializzazione del generatore di numeri casuali
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> dis(0, valid_characters.size() - 1);
+
+        // Generazione del Session ID casuale
+        std::string session_id;
+        for (int i = 0; i < 10; ++i)
+        {
+            session_id += valid_characters[dis(gen)];
+        }
+
+        return session_id;
+    }
+
+
 
 
 int main()
@@ -489,8 +510,10 @@ int main()
                 // Utente fornitore
                 if (std::string(action) == "EFFETTUA REGISTRAZIONE FORNITORE"){
 
+                    std::string sessionID = generateSessionID();
+
                     //UtenteFornitore fornitore;
-                    fornitore.effettuaRegistrazione(db1, nome_utente_fornitore, categoriaUtente, nome, cognome, numeroTelefono, email, password, confermaPassword,
+                    fornitore.effettuaRegistrazione(db1, nome_utente_fornitore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword,
                     aziendaProduzione);
 
                     strcpy(outputs, "Registrazione utente fornitore avvenuta");
@@ -601,9 +624,11 @@ int main()
                 if (std::string(action) == "EFFETTUA LOGIN FORNITORE"){
                     //UtenteFornitore fornitore;
 
+                    std::string sessionID = generateSessionID();
+
                     std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
 
-                    fornitore.effettua_login(db1, nome_utente_fornitore, password);
+                    fornitore.effettua_login(db1, nome_utente_fornitore, password, sessionID);
 
                     strcpy(outputs, "Login utente fornitore avvenuta");
 
