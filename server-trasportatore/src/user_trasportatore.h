@@ -55,6 +55,8 @@ public:
         std::string nomeRequisito = "Registrazione utente trasportatore.";
         statoRequisito statoReq = statoRequisito::Wait;
 
+        std::string messageLog = "";
+
 
 
         ///////////////////////////////////// 
@@ -159,8 +161,10 @@ public:
         if (rows > 0) {
                 statoReq = statoRequisito::NotSuccess;
 
+                messageLog = "Il nome utente" +in_nome_utente + "è già in uso.";
 
-                InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso.", session_id, nomeRequisito, statoReq);
+
+                InsertToLogDB(db1,"ERROR", messageLog, session_id, nomeRequisito, statoReq);
                 std::cout << "Errore: Il nome utente è già in uso." << std::endl;
                 
                 sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", in_nome_utente.c_str());
@@ -201,7 +205,10 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti compratori.", session_id,  nomeRequisito, statoReq);
+            messageLog = "Il nome utente" + in_nome_utente + " è già in uso da utenti compratori.";
+
+
+            InsertToLogDB(db1,"ERROR", messageLog, session_id,  nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti compratori." << std::endl;
             return;
         }
@@ -216,7 +223,9 @@ public:
             
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti fornitori.", session_id,  nomeRequisito, statoReq);
+            messageLog = "Il nome utente" + in_nome_utente + " è già in uso da utenti fornitori.";
+
+            InsertToLogDB(db1,"ERROR", messageLog, session_id,  nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti fornitori." << std::endl;
             return;
         }
@@ -233,7 +242,9 @@ public:
         if (rows > 0) {
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB(db1,"ERROR", "Indirizzo mail è già in uso.", session_id,  nomeRequisito, statoReq);
+            messageLog = "Indirizzo mail" + in_email + "è già in uso.";
+
+            InsertToLogDB(db1,"ERROR", messageLog, session_id,  nomeRequisito, statoReq);
             std::cout << "Errore: L'indirizzo mail è già in uso." << std::endl;
             return;
         }
@@ -312,7 +323,10 @@ public:
         std::cout << "Utente inserito." << std::endl;
 
         statoReq = statoRequisito::Success;
-        InsertToLogDB(db1,"INFO", "Utente trasportatore inserito.", sessionID, nomeRequisito, statoReq);
+
+        messageLog = "Utente trasportatore " + in_nome_utente + " inserito";
+
+        InsertToLogDB(db1,"INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
         return;
     }
@@ -351,18 +365,17 @@ public:
 
 
 
-    void aggiornaNomeDittaSpedizione(Con2DB db1, std::string nuovaDittaSpedizione){
+    void aggiornaNomeDittaSpedizione(Con2DB db1, std::string input_nome_utente, std::string nuovaDittaSpedizione){
         // Utilizza i membri dell'istanza corrente per ottenere il nome utente.
-        std::string nomeUtente = nome_utente;
+        //std::string nomeUtente = nome_utente;
 
         std::string nomeRequisito = "Aggiornamento ditta Spedizione.";
         statoRequisito statoReq = statoRequisito::Wait;
 
-        // Connession al database:
-        //Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        std::string messageLog = "";
 
         std::string sessionID = "";
-        sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nomeUtente.c_str());
+        sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", input_nome_utente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         
@@ -376,13 +389,15 @@ public:
         }
 
         sprintf(sqlcmd, "UPDATE UtenteTrasportatore set nome_DittaSpedizione='%s' WHERE nome_utente_trasportatore = '%s'",
-                                                                            nuovaDittaSpedizione.c_str(), nomeUtente.c_str());
+                                                                            nuovaDittaSpedizione.c_str(), input_nome_utente.c_str());
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res); 
 
         statoReq = statoRequisito::Success;
 
-        InsertToLogDB(db1,"INFO", "Aggiornamento ditta spedizione", sessionID, nomeRequisito, statoReq);
+        messageLog = "Aggiornamento ditta spedizione per utente: " + input_nome_utente;
+
+        InsertToLogDB(db1,"INFO", messageLog , sessionID, nomeRequisito, statoReq);
 
     return;
     }

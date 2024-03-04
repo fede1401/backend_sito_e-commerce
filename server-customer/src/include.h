@@ -12,7 +12,7 @@
 #include "product.h"
 #include "recensione.h"
 #include "reso.h"
-#include "spedizione.h"
+//#include "spedizione.h"
 #include "user_compratore.h"
 //#include "user.h"
 

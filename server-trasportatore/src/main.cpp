@@ -533,13 +533,13 @@ int main()
                     freeReplyObject(reply2);
 
                     /* sleep   */
-                    micro_sleep(1000000);
+                    // micro_sleep(1000000);
                 }
 
                 if (std::string(action) == "AGGIORNA NOME DITTASPEDIZIONE"){
 
                     //UtenteTrasportatore trasportatore;
-                    trasportatore.aggiornaNomeDittaSpedizione(db1, nuovaDittaSpedizione);
+                    trasportatore.aggiornaNomeDittaSpedizione(db1, nome_utente_trasportatore, nuovaDittaSpedizione);
 
                     strcpy(outputs, "Aggiornamento ditta spedizione");
 
@@ -651,7 +651,7 @@ int main()
                 if (std::string(action) == "EFFETTUA LOGOUT TRASPORTATORE"){
                     //UtenteTrasportatore trasportatore;
 
-                    trasportatore.effettua_logout(db1);
+                    trasportatore.effettua_logout(db1, nome_utente_trasportatore);
 
                     strcpy(outputs, "Logout utente trasportatore avvenuta");
 
@@ -678,7 +678,7 @@ int main()
                 if (std::string(action) == "ELIMINA PROFILO TRASPORTATORE"){
                     //UtenteTrasportatore trasportatore;
 
-                    trasportatore.elimina_profilo(db1);
+                    trasportatore.elimina_profilo(db1, nome_utente_trasportatore);
 
                     strcpy(outputs, "Eliminazione utente trasportatore avvenuta");
 
@@ -705,7 +705,7 @@ int main()
                 if (std::string(action) == "AGGIORNA NUMERO TELEFONO TRASPORTATORE"){
                     //UtenteTrasportatore trasportatore;
 
-                    trasportatore.aggiornaNumeroDiTelefono(db1, nuovoNumeroTelefono);
+                    trasportatore.aggiornaNumeroDiTelefono(db1,nome_utente_trasportatore,  nuovoNumeroTelefono);
 
                     strcpy(outputs, "Aggiornamento numero di telefono trasportatore");
 
@@ -732,7 +732,7 @@ int main()
                 if (std::string(action) == "AGGIORNA PASSWORD TRASPORTATORE"){
                     //UtenteTrasportatore trasportatore;
 
-                    trasportatore.aggiornaPassword(db1, vecchiaPassw, nuovaPassw);
+                    trasportatore.aggiornaPassword(db1, nome_utente_trasportatore,vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, "Aggiornamento password utente trasportatore");
 

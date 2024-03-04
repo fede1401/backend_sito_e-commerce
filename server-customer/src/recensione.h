@@ -51,6 +51,10 @@ public:
         std::string nomeRequisito = "Effettuazione recensione.";
         statoRequisito statoReq = statoRequisito::Wait;
 
+
+        std::string messageLog = "";
+
+
         // Innanzitutto controllo se l'ordine è stato spedito e arrivato correttamente
         sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", idOrdine);
         res = db1.ExecSQLtuples(sqlcmd);
@@ -106,7 +110,9 @@ public:
 
                     statoReq = statoRequisito::Success;
 
-                    InsertToLogDB(db1, "INFO", "Effettuata recensione compratore", sessionID, nomeRequisito, statoReq);
+                    messageLog = "Effettuata recensione compratore " + in_nome_utente_compratore;
+
+                    InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
                 }
                 else
                 {
@@ -149,6 +155,9 @@ public:
         std::string nomeRequisito = "Rimozione recensione.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string sessionID = "";
+
+        std::string messageLog = "";
+
 
         // Caricamento del nome dell'utente compratore che vuole rimuovere la recensione effettuata
         std::string nome_utente_compratore;
@@ -206,7 +215,9 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB(db1, "INFO", "Recensione eliminata.", sessionID, nomeRequisito, statoReq);
+            messageLog = "Recensione eliminata da parte di " + in_nome_utente_compratore;
+
+            InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
         return;
     }

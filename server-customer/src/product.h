@@ -47,6 +47,8 @@ class Product {
         std::string nomeRequisito = "Aggiunta prodotto al sito.";
         statoRequisito statoReq = statoRequisito::Wait;
 
+        std::string messageLog = "";
+
 
         *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
 
@@ -101,7 +103,9 @@ class Product {
 
                     statoReq = statoRequisito::Success;
 
-                    InsertToLogDB(db1, "INFO", "Aumentata quantità del prodotto inserito", sessionID, nomeRequisito, statoReq);
+                    messageLog = "Aumentata quantità del prodotto inserito da parte di " + in_nome_utente_fornitore;
+
+                    InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
                 }
         }
         else{
@@ -113,7 +117,10 @@ class Product {
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB(db1, "INFO", "Prodotto inserito nel sito", sessionID, nomeRequisito, statoReq);
+            messageLog = "Prodotto inserito nel sito da parte di " + in_nome_utente_fornitore;
+
+
+            InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
         
             
@@ -126,6 +133,9 @@ class Product {
         std::string nomeRequisito = "Rimozione prodotto dal sito.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string sessionID = "";
+
+        std::string messageLog = "";
+
 
 
         // Verifica se l'utente fornitore che vuole rimuovere il prodotto dal sito è effettivamente un utente fornitore:
@@ -182,7 +192,10 @@ class Product {
             PQclear(res);
 
             statoReq = statoRequisito::Success;
-            InsertToLogDB(db1, "INFO", "Eliminato prodotto", "", nomeRequisito, statoReq);
+
+            messageLog = "Eliminato prodotto da " + in_nome_utente_fornitore;
+
+            InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
         }
     return;
@@ -263,6 +276,9 @@ class Product {
         std::string nomeRequisito = "Acquisto Prodotto.";
         statoRequisito statoReq = statoRequisito::Wait;
 
+        std::string messageLog = "";
+
+
         //std::string nomeDittaSpedizione;
 
         //printf("Nome prodotto: %s \n", nome);
@@ -324,7 +340,9 @@ class Product {
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB(db1, "INFO", "Utente ha acquistato il prodotto, ordine inserito nel db", sessionID, nomeRequisito, statoReq);
+            messageLog = "Utente " + nomeUtenteCompratore + " ha acquistato il prodotto, ordine inserito nel db ";
+
+            InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
             // Esegui una query SELECT per ottenere l'ultimo ID inserito nella tabella Ordine:
             // 1. Selezioniamo tutti gli idOrdine dalla tabella Ordine:

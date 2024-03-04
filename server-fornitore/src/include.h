@@ -7,7 +7,7 @@
 #include "../../shared-server/msleep.h"
 #include "ordine.h"
 #include "product.h"
-#include "spedizione.h"
+//#include "spedizione.h"
 #include "user_fornitore.h"
 //#include "user.h"
 

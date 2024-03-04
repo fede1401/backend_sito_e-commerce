@@ -93,7 +93,7 @@ int main()
         };
 
 
-        std::string test2[18] ={
+        std::string test2[38] ={
                             "EFFETTUA REGISTRAZIONE COMPRATORE", 
                             "EFFETTUA REGISTRAZIONE COMPRATORE", 
                             "EFFETTUA REGISTRAZIONE COMPRATORE", 
@@ -109,22 +109,47 @@ int main()
                             "AGGIORNA NUMERO TELEFONO COMPRATORE", 
                             "AGGIORNA PASSWORD COMPRATORE", 
                             "AGGIORNA RESIDENZA", 
+                            "AGGIORNA NUMERO TELEFONO COMPRATORE", 
+                            "AGGIORNA PASSWORD COMPRATORE", 
+
+
+                            "AGGIUNGI PRODOTTO CARRELLO",
+                            "AGGIUNGI CARTA PAGAMENTO",
+                            "AGGIUNGI CARTA PAGAMENTO",
+                            "AGGIUNGI PRODOTTO LISTADESIDERI",
+                            "VISIONA ORDINI EFFETTUATI",
+                            "RIMUOVI CARTA PAGAMENTO",
+                            "AGGIUNGI PRODOTTO LISTADESIDERI",
+                            "RIMUOVI PRODOTTO LISTADESIDERI",
+                            "AGGIUNGI PRODOTTO CARRELLO",
+                            "AGGIUNGI PRODOTTO CARRELLO",
+                            "AGGIUNGI PRODOTTO CARRELLO",
+                            "AGGIUNGI PRODOTTO CARRELLO",
+                            "AGGIUNGI PRODOTTO CARRELLO",
+
+                            "AGGIUNGI PRODOTTO LISTADESIDERI",
+                            "AGGIUNGI PRODOTTO LISTADESIDERI",
+                            "AGGIUNGI PRODOTTO LISTADESIDERI",
+                            "AGGIUNGI PRODOTTO LISTADESIDERI",
+                            "RIMUOVI PRODOTTO CARRELLO",
 
                             "RICERCA PRODOTTO", 
                             //"ACQUISTA PRODOTTO", 
-                            "RICERCA PRODOTTO", 
+                            //"RICERCA PRODOTTO", 
                             //"ACQUISTA PRODOTTO", 
-                            "RICERCA PRODOTTO", 
+                            //"RICERCA PRODOTTO", 
                             //"ACQUISTA PRODOTTO", 
 
                             "EFFETTUA RESO", 
-                            "EFFETTUA RECENSIONE"
+                            "EFFETTUA RECENSIONE",
+                            "EFFETTUA LOGOUT COMPRATORE",
+                            "ELIMINA PROFILO COMPRATORE"
         };
 
 
     // Array di nomi utente
-    std::array<std::string, 100> nomi_utente;
-    for (int i = 0; i < 100; ++i) {
+    std::array<std::string, 30> nomi_utente;
+    for (int i = 0; i < 30; ++i) {
         nomi_utente[i] = "Utente" + std::to_string(i + 1);
     }
 
@@ -135,30 +160,30 @@ int main()
     std::array<std::string, 10> cognomi = {"Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Esposito", "Romano", "Gallo", "Conti", "De Luca"};
 
     // Array di email
-    std::array<std::string, 100> email;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> email;
+    for (int i = 0; i < 30; ++i)
     {
         email[i] = nomi_utente[i] + "@example.com";
     }
 
     // Array di numeri di telefono
-    std::array<std::string, 100> numeri_telefono;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> numeri_telefono;
+    for (int i = 0; i < 30; ++i)
     {
         numeri_telefono[i] = "123456789" + std::to_string(i);
     }
 
     // Array di password
-    std::array<std::string, 100> password;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> password;
+    for (int i = 0; i < 30; ++i)
     {
         password[i] = "P.assword" + std::to_string(i + 1);
     }
 
 
     // Array di nomi di prodotti
-    std::array<std::string, 100> nomi_prodotti;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> nomi_prodotti;
+    for (int i = 0; i < 30; ++i)
     {
         nomi_prodotti[i] = "Prodotto" + std::to_string(i + 1);
     }
@@ -171,15 +196,15 @@ int main()
 
 
     // Array di prezzi e copie disponibili di prodotti
-    std::array<std::string, 100> prezzo_copie_disponibili;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> prezzo_copie_disponibili;
+    for (int i = 0; i < 30; ++i)
     {
         prezzo_copie_disponibili[i] = std::to_string(i + 1);
     }
 
     // Array di date di nascita
-    std::array<std::string, 100> date_di_nascita;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> date_di_nascita;
+    for (int i = 0; i < 30; ++i)
     {
         date_di_nascita[i] = "01/01/2000"; // Esempio di data di nascita fittizia
     }
@@ -194,15 +219,15 @@ int main()
     std::array<std::string, 5> vie_di_residenza = {"Via Roma", "Via Milano", "Via Napoli", "Via Firenze", "Via Venezia"};
 
     // Array di numeri civici
-    std::array<std::string, 100> numeri_civici;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> numeri_civici;
+    for (int i = 0; i < 30; ++i)
     {
         numeri_civici[i] = std::to_string(i + 1);
     }
 
     // Array di numeri di carte di pagamento:
-    std::array<std::string, 100> carte_pagamento;
-    for (int i = 0; i < 100; ++i) {
+    std::array<std::string, 30> carte_pagamento;
+    for (int i = 0; i < 30; ++i) {
         std::string carta = ""; 
         
         // Genera le restanti 10 cifre casuali
@@ -214,8 +239,8 @@ int main()
     }
 
     // Array di numeri di carte di pagamento:
-    std::array<std::string, 100> cvv_cartePagamento;
-    for (int i = 0; i < 100; ++i) {
+    std::array<std::string, 30> cvv_cartePagamento;
+    for (int i = 0; i < 30; ++i) {
         std::string cvv = ""; 
         
         // Genera le restanti 10 cifre casuali
@@ -286,13 +311,14 @@ int main()
             int i5 = rand()%5;
             int i10 = rand()%10;
             int i100 = rand()%100;
+            int i30 = rand()%30;
 
             sprintf(key1, "Action");
             sprintf(value1, test2[i].c_str());
 
             if (test2[i]== "EFFETTUA REGISTRAZIONE COMPRATORE"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "categoriaUtente");
                 sprintf(value3, "UtenteCompratore");
@@ -304,16 +330,16 @@ int main()
                 sprintf(value5, cognomi[i10].c_str());
 
                 sprintf(key6, "numeroTelefono");
-                sprintf(value6, numeri_telefono[i100].c_str());
+                sprintf(value6, numeri_telefono[i30].c_str());
 
                 sprintf(key7, "email");
-                sprintf(value7, email[i100].c_str());
+                sprintf(value7, email[i30].c_str());
 
                 sprintf(key8, "viaResidenza");
                 sprintf(value8, vie_di_residenza[i5].c_str());
 
                 sprintf(key9, "numeroCivico");
-                sprintf(value9, numeri_civici[i100].c_str());
+                sprintf(value9, numeri_civici[i30].c_str());
 
                 sprintf(key10, "cap");
                 sprintf(value10, CAP[i5].c_str());
@@ -322,13 +348,13 @@ int main()
                 sprintf(value11, citta_di_residenza[i5].c_str());
 
                 sprintf(key12, "password");
-                sprintf(value12, password[i100].c_str());
+                sprintf(value12, password[i30].c_str());
                 
                 sprintf(key13, "confermaPassword");
-                sprintf(value13, password[i100].c_str());
+                sprintf(value13, password[i30].c_str());
 
                 sprintf(key14, "dataCompleanno");
-                sprintf(value14, date_di_nascita[i100].c_str());
+                sprintf(value14, date_di_nascita[i30].c_str());
 
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
@@ -355,10 +381,10 @@ int main()
 
             if (test2[i] == "EFFETTUA LOGIN COMPRATORE"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "password");
-                sprintf(value3, password[i100].c_str());
+                sprintf(value3, password[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -371,12 +397,14 @@ int main()
 
 
             if (test2[i] == "EFFETTUA LOGOUT COMPRATORE"){
+                sprintf(key2, "nome_utente_compratore");
+                sprintf(value2, nomi_utente[i30].c_str());
                 
-                reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_CUSTOMER, key1, value1);
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
                 
-                printf("XADD %s * %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1);
-                printf("main(): pid =%d: stream %s: Added %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, reply->str);
+                printf("XADD %s * %s %s %s %s\n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
@@ -384,34 +412,24 @@ int main()
 
             if (test2[i] == "ELIMINA PROFILO COMPRATORE"){
             
-                reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_CUSTOMER, key1, value1);
-                assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-
-                printf("XADD %s * %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1);
-                printf("main(): pid =%d: stream %s: Added %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER,  key1, value1, reply->str);
-
-                freeReplyObject(reply);
-            }
-
-            if (test2[i] == "AGGIORNA NUMERO TELEFONO COMPRATORE"){
-                sprintf(key2, "nuovoNumeroTelefono");
-                sprintf(value2, numeri_telefono[i100].c_str());
-
+                sprintf(key2, "nome_utente_compratore");
+                sprintf(value2, nomi_utente[i30].c_str());
+                
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-
+                
                 printf("XADD %s * %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
-            if (test2[i] == "AGGIORNA PASSWORD COMPRATORE"){
-                sprintf(key2, "vecchiaPassw");
-                sprintf(value2, password[i100].c_str());
+            if (test2[i] == "AGGIORNA NUMERO TELEFONO COMPRATORE"){
+                sprintf(key2, "nome_utente_compratore");
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                sprintf(key3, "nuovaPassw");
-                sprintf(value3, password[i100].c_str());
+                sprintf(key3, "nuovoNumeroTelefono");
+                sprintf(value3, numeri_telefono[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -422,38 +440,60 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[i] == "AGGIORNA RESIDENZA"){
-                sprintf(key2, "nuovaViaResidenza");
-                sprintf(value2, vie_di_residenza[i5].c_str());
+            if (test2[i] == "AGGIORNA PASSWORD COMPRATORE"){
+                sprintf(key2, "nome_utente_compratore");
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                sprintf(key3, "nuovoNumCiv");
-                sprintf(value3, numeri_civici[i100].c_str());
+                sprintf(key3, "vecchiaPassw");
+                sprintf(value3, password[i30].c_str());
 
-                sprintf(key4, "nuovoCAP");
-                sprintf(value4, CAP[i5].c_str());
+                sprintf(key4, "nuovaPassw");
+                sprintf(value4, password[i30].c_str());
 
-                sprintf(key5, "nuovaCittaResidenza");
-                sprintf(value5, citta_di_residenza[i5].c_str());
-
-        
-                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5);
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                printf( "XADD %s * %s %s %s %s %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5);
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, reply->str);
+                printf("XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+
+                freeReplyObject(reply);
+            }
+
+            if (test2[i] == "AGGIORNA RESIDENZA"){
+                sprintf(key2, "nome_utente_compratore");
+                sprintf(value2, nomi_utente[i30].c_str());
+
+                sprintf(key3, "nuovaViaResidenza");
+                sprintf(value3, vie_di_residenza[i5].c_str());
+
+                sprintf(key4, "nuovoNumCiv");
+                sprintf(value4, numeri_civici[i30].c_str());
+
+                sprintf(key5, "nuovoCAP");
+                sprintf(value5, CAP[i5].c_str());
+
+                sprintf(key6, "nuovaCittaResidenza");
+                sprintf(value6, citta_di_residenza[i5].c_str());
+
+        
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6);
+                assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf( "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, reply->str);
 
                 freeReplyObject(reply);
             }
 
             if (test2[i] == "AGGIUNGI CARTA PAGAMENTO"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "numeroCartaPagamento");
-                sprintf(value3, carte_pagamento[i100].c_str());
+                sprintf(value3, carte_pagamento[i30].c_str());
 
                 sprintf(key4, "cvvCartaPagamento");
-                sprintf(value4, cvv_cartePagamento[i100].c_str());
+                sprintf(value4, cvv_cartePagamento[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -466,10 +506,10 @@ int main()
 
             if (test2[i] == "RIMUOVI CARTA PAGAMENTO"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "numeroCartaPagamento");
-                sprintf(value3, carte_pagamento[i100].c_str());
+                sprintf(value3, carte_pagamento[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -483,10 +523,11 @@ int main()
 
             if (test2[i] == "AGGIUNGI PRODOTTO CARRELLO"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                sprintf(key3, "nomeProdotto");
-                sprintf(value3, nomi_prodotti[i100].c_str());
+                sprintf(key3, "codiceProdotto");
+                std::string codiceProdotto = std::to_string(rand()%30);
+                sprintf(value3, codiceProdotto.c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -499,10 +540,11 @@ int main()
 
             if (test2[i] == "RIMUOVI PRODOTTO CARRELLO"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                sprintf(key3, "nomeProdotto");
-                sprintf(value3, nomi_prodotti[i100].c_str());
+                sprintf(key3, "codiceProdotto");
+                std::string codiceProdotto = std::to_string(rand()%30);
+                sprintf(value3, codiceProdotto.c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -515,10 +557,11 @@ int main()
 
             if (test2[i] == "AGGIUNGI PRODOTTO LISTADESIDERI"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                sprintf(key3, "nomeProdotto");
-                sprintf(value3, nomi_prodotti[i100].c_str());
+                sprintf(key3, "codiceProdotto");
+                std::string codiceProdotto = std::to_string(rand()%30);
+                sprintf(value3, codiceProdotto.c_str());
 
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
@@ -532,10 +575,11 @@ int main()
 
             if (test2[i] == "RIMUOVI PRODOTTO LISTADESIDERI"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                sprintf(key3, "nomeProdotto");
-                sprintf(value3, nomi_prodotti[i100].c_str());
+                sprintf(key3, "codiceProdotto");
+                std::string codiceProdotto = std::to_string(rand()%30);
+                sprintf(value3, codiceProdotto.c_str());
 
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
@@ -549,10 +593,10 @@ int main()
 
             if (test2[i] == "ACQUISTA PRODOTTO"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "nomeProdotto");
-                sprintf(value3, nomi_prodotti[i100].c_str());
+                sprintf(value3, nomi_prodotti[i30].c_str());
 
                 sprintf(key4, "via_spedizione");
                 sprintf(value4, vie_di_residenza[i5].c_str());
@@ -561,10 +605,10 @@ int main()
                 sprintf(value5, citta_di_residenza[i5].c_str());
 
                 sprintf(key6, "numero_civico_spedizione");
-                sprintf(value6, numeri_civici[i100].c_str());
+                sprintf(value6, numeri_civici[i30].c_str());
 
                 sprintf(key7, "CAP_spedizione");
-                sprintf(value7, CAP[i100].c_str());
+                sprintf(value7, CAP[i30].c_str());
 
         
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7);
@@ -578,7 +622,7 @@ int main()
 
             if (test2[i] == "RICERCA PRODOTTO"){
                 sprintf(key2, "nomeProdotto");
-                sprintf(value2, nomi_prodotti[i100].c_str());
+                sprintf(value2, nomi_prodotti[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -591,7 +635,7 @@ int main()
 
             if (test2[i] == "VISIONA ORDINI EFFETTUATI"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -604,7 +648,7 @@ int main()
 
             if (test2[i] == "ANNULLA ORDINE"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "idOrdine");
                 // Dovrei effettuare una selezione del numero ordine compreso tra quelli presenti.
@@ -640,7 +684,7 @@ int main()
 
             if (test2[i] == "EFFETTUA RECENSIONE"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2,  nomi_utente[i100].c_str());
+                sprintf(value2,  nomi_utente[i30].c_str());
 
                 sprintf(key3, "idOrdine");
                 sprintf(value3, "1");
@@ -664,7 +708,7 @@ int main()
 
             if (test2[i] == "RIMUOVI RECENSIONE"){
                 sprintf(key2, "nome_utente_compratore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "idRecensione");
                 sprintf(value3, "1");

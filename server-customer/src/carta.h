@@ -31,6 +31,8 @@ public:
         std::string nomeRequisito = "Aggiunta carta di pagamento.";
         statoRequisito statoReq = statoRequisito::Wait;
 
+        std::string messageLog = "";
+
 
         // Caricamento del sessionID utile per il log.
         std::string sessionID = "";
@@ -53,6 +55,21 @@ public:
         rows = PQntuples(res);
         PQclear(res);
         if (rows == 1){
+
+            // Verifichiamo che il numero carta sia univoco:
+            sprintf(sqlcmd, "SELECT * FROM Carta WHERE numeroCarta = '%s'", in_numeroCarta.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            if (rows >= 1){
+                messageLog = "La carta con il numero " + in_numeroCarta + " non può essere inserita poichè già esiste!";
+
+                InsertToLogDB(db1, "INFO", messageLog , sessionID, nomeRequisito, statoReq);
+
+                return;
+            }
+
+
+
             // Il nome utente è di un utente compratore, possiamo aggiungere la carta al database:
             sprintf(sqlcmd, "INSERT INTO Carta (idCarta, nome_utente_compratore, numeroCarta, cvv) VALUES (DEFAULT, '%s', '%s', '%s')", in_nome_utente.c_str(), in_numeroCarta.c_str(), in_cvv.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
@@ -60,7 +77,9 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB(db1, "INFO", "Inserimento carta di pagamento utente compratore", sessionID, nomeRequisito, statoReq);
+            messageLog = "Inserimento carta di pagamento utente compratore " + in_nome_utente;
+
+            InsertToLogDB(db1, "INFO", messageLog , sessionID, nomeRequisito, statoReq);
         } 
         else{
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
@@ -79,6 +98,8 @@ public:
 
         std::string nomeRequisito = "Rimozione carta di pagamento.";
         statoRequisito statoReq = statoRequisito::Wait;
+
+        std::string messageLog = "";
 
 
         // Caricamento del sessionID utile per il log.
@@ -123,7 +144,9 @@ public:
 
             statoReq = statoRequisito::Success;
 
-            InsertToLogDB(db1, "INFO", "Eliminazione carta di pagamento", sessionID, nomeRequisito, statoReq);
+            messageLog = "Eliminazione carta di pagamento utente compratore " + in_nome_utente_compratore;
+
+            InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
     return;
     }

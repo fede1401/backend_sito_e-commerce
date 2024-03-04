@@ -61,6 +61,8 @@ public:
       std::string nomeRequisito = "Visione ordini effettuati.";
       statoRequisito statoReq = statoRequisito::Wait;
 
+      std::string messageLog = "";
+
       // Caricamento del sessionID utile per il log.
       std::string sessionID = "";
       sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
@@ -97,7 +99,9 @@ public:
 
       statoReq = statoRequisito::Success;
 
-      InsertToLogDB(db1, "INFO", "Visione degli ordini da parte dell utente.", sessionID, nomeRequisito, statoReq);
+      messageLog = "Visione degli ordini da parte dell utente " + nome_utente_compratore;
+
+      InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
       return;
     }
 
@@ -108,6 +112,7 @@ public:
         std::string nomeRequisito = "Annullamento ordine.";
         statoRequisito statoReq = statoRequisito::Wait;
 
+        std::string messageLog = "";
 
         std::string stato_ordine;
         StatoOrdine stato_ordine_annullato;
@@ -180,7 +185,9 @@ public:
 
                   statoReq = statoRequisito::Success;
 
-                  InsertToLogDB(db1, "INFO", "Ordine annullato da parte dell utente Compratore.", sessionID, nomeRequisito, statoReq);
+                  messageLog = "Ordine annullato da parte dell utente Compratore " + in_nome_utenteCompratore;
+
+                  InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
               }
               else{
@@ -196,7 +203,7 @@ public:
                 std::cout << "L'ordine non è stato trovato" << std::endl;
 
                 statoReq = statoRequisito::NotSuccess;
-                InsertToLogDB(db1, "ERROR", "Ordine trovato.", sessionID, nomeRequisito, statoReq);
+                InsertToLogDB(db1, "ERROR", "Ordine non trovato.", sessionID, nomeRequisito, statoReq);
 
                 return;
             }  

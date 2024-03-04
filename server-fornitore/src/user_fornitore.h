@@ -61,6 +61,8 @@ public:
         std::string nomeRequisito = "Registrazione utente fornitore.";
         statoRequisito statoReq = statoRequisito::Wait;
 
+        std::string messageLog = "";
+
 
         ///////////////////////////////////// 
         // Controllo se la mail contiene il carattere "@".
@@ -158,7 +160,9 @@ public:
         if (rows > 0) {
                 statoReq = statoRequisito::NotSuccess;
 
-                InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso.", session_id, nomeRequisito, statoReq);
+                messageLog = "Il nome utente" + in_nome_utente  + "è già in uso.";
+
+                InsertToLogDB(db1,"ERROR", messageLog , session_id, nomeRequisito, statoReq);
                 std::cout << "Errore: Il nome utente è già in uso." << std::endl;
                 
                 sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente.c_str());
@@ -200,7 +204,10 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti compratori.", session_id, nomeRequisito, statoReq);
+            messageLog = "Il nome utente" + in_nome_utente  + " è già in uso da utenti compratori.";
+
+
+            InsertToLogDB(db1,"ERROR", messageLog, session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti compratori." << std::endl;
             return;
         }
@@ -215,7 +222,10 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti trasportatori.", session_id, nomeRequisito, statoReq);
+            messageLog = "Il nome utente" + in_nome_utente  + " è già in uso da utenti trasportatori.";
+
+
+            InsertToLogDB(db1,"ERROR", messageLog, session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti trasportatori." << std::endl;
             return;
         }
@@ -232,7 +242,10 @@ public:
         if (rows > 0) {
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB(db1,"ERROR", "Indirizzo mail è già in uso.", session_id, nomeRequisito, statoReq);
+            messageLog = "Indirizzo mail " + in_email  + "è già in uso.";
+
+
+            InsertToLogDB(db1,"ERROR", messageLog, session_id, nomeRequisito, statoReq);
             std::cout << "Errore: L'indirizzo mail è già in uso." << std::endl;
             return;
         }
@@ -326,7 +339,9 @@ public:
 
         statoReq = statoRequisito::Success;
 
-        InsertToLogDB(db1,"INFO", "Utente fornitore inserito.", sessionID,  nomeRequisito, statoReq);
+        messageLog = "Utente fornitore " + in_nome_utente + " inserito";
+
+        InsertToLogDB(db1,"INFO", messageLog, sessionID,  nomeRequisito, statoReq);
 
         printf("Registrazione avvenuta con successo.\n");
 
@@ -366,33 +381,37 @@ public:
 
 
 
-    void aggiornaNomeAziendaProduttrice(Con2DB db1, std::string nuovaAziendaProduttrice){
+    void aggiornaNomeAziendaProduttrice(Con2DB db1, std::string input_nome_utente, std::string nuovaAziendaProduttrice){
         // Utilizza i membri dell'istanza corrente per ottenere il nome utente.
-        std::string nomeUtente = nome_utente;
+        //std::string nomeUtente = nome_utente;
 
         std::string nomeRequisito = "Aggiornamento azienda Produttrice.";
         statoRequisito statoReq = statoRequisito::Wait;
 
+        std::string messageLog= "";
+
         std::string sessionID = "";
-        sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", nomeUtente.c_str());
+        sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", input_nome_utente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
         PQclear(res);
 
         if (sessionID == ""){
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiornato il nome dell'azienda produttrice.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiornato il nome dell azienda produttrice.", sessionID, nomeRequisito, statoReq);
             return;
         }
 
         sprintf(sqlcmd, "UPDATE UtenteFornitore set nome_AziendaProduttrice='%s' WHERE nome_utente_fornitore = '%s'",
-                                                                            nuovaAziendaProduttrice.c_str(), nomeUtente.c_str());
+                                                                            nuovaAziendaProduttrice.c_str(), input_nome_utente.c_str());
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res); 
 
         statoReq = statoRequisito::Success;
 
-        InsertToLogDB(db1,"INFO", "Aggiornamento azienda produttrice", sessionID, nomeRequisito, statoReq);
+        messageLog = "Aggiornamento azienda produttrice per utente: " + input_nome_utente;
+
+        InsertToLogDB(db1,"INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
     return;
     }

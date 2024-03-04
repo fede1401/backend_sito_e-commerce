@@ -49,6 +49,9 @@ public:
 
         std::string stato_spedizione;
 
+        std::string messageLog = "";
+
+
         // Innanzitutto controllo se l'ordine è stato spedito e arrivato correttamente
         sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", idOrdine);
         res = db1.ExecSQLtuples(sqlcmd);
@@ -97,7 +100,9 @@ public:
 
                   statoReq = statoRequisito::Success;
 
-                  InsertToLogDB(db1, "INFO", "Effettuata reso del prodotto", sessionID, nomeRequisito, statoReq);
+                  messageLog = "Effettuata reso del prodotto da " + in_nome_utente_compratore;
+
+                  InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                 }
                 else{

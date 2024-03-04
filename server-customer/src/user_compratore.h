@@ -159,7 +159,9 @@ public:
 
         statoReq = statoRequisito::Success;
 
-        InsertToLogDB(db1,"INFO", "Utente compratore inserito.", sessionID, nomeRequisito, statoReq);
+        std::string messageLog = "Utente compratore " + in_nome_utente + " inserito";
+
+        InsertToLogDB(db1,"INFO", messageLog , sessionID, nomeRequisito, statoReq);
 
         
         // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
@@ -269,6 +271,8 @@ public:
 
         bool result = true;
 
+        std::string messageLog = "";
+
         // Controllo se il nome utente è univoco
         sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
         PGresult *res = db1.ExecSQLtuples(sqlcmd);
@@ -279,7 +283,9 @@ public:
         {
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso.", session_id, nomeRequisito, statoReq);
+            messageLog = "Il nome utente " + in_nome_utente +  " è già in uso. ";
+
+            InsertToLogDB(db1,"ERROR", messageLog, session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso." << std::endl;
 
 
@@ -330,7 +336,9 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti fornitori.", session_id, nomeRequisito, statoReq);
+            messageLog = "Il nome utente " + in_nome_utente +  " è già in uso da utenti fornitori. ";
+
+            InsertToLogDB(db1,"ERROR", messageLog, session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti fornitori." << std::endl;
             return false;
         }
@@ -344,7 +352,9 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB(db1,"ERROR", "Il nome utente è già in uso da utenti trasportatori.", session_id, nomeRequisito, statoReq);
+            messageLog = "Il nome utente " + in_nome_utente +  " è già in uso da utenti trasportatori. ";
+
+            InsertToLogDB(db1,"ERROR", messageLog, session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Il nome utente è già in uso da utenti trasportatori." << std::endl;
             return false;
         }
@@ -355,6 +365,8 @@ public:
 
     bool check_email_univoca(Con2DB db1, std::string in_email, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID){
         bool result = true;
+
+        std::string messageLog = "";
         
         // Controllo se l'email è univoca
         sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE indirizzo_mail = '%s'", in_email.c_str());
@@ -366,7 +378,10 @@ public:
         {
             statoReq = statoRequisito::NotSuccess;
 
-            InsertToLogDB(db1,"ERROR", "Indirizzo mail è già in uso.", session_id, nomeRequisito, statoReq);
+            messageLog = "Indirizzo mail " + in_email +  " è già in uso. ";
+
+
+            InsertToLogDB(db1,"ERROR", messageLog, session_id, nomeRequisito, statoReq);
             std::cout << "Errore: L'indirizzo mail è già in uso." << std::endl;
             return false;
         }
@@ -507,18 +522,19 @@ public:
 
 
 
-    void aggiornaResidenza(Con2DB db1, std::string nuovaViaResidenza, std::string nuovoNumCiv, std::string nuovoCAP, std::string nuovaCittaResidenza)
+    void aggiornaResidenza(Con2DB db1, std::string input_nome_utente, std::string nuovaViaResidenza, std::string nuovoNumCiv, std::string nuovoCAP, std::string nuovaCittaResidenza)
     {
         
         // Utilizza i membri dell'istanza corrente per ottenere il nome utente.
-        std::string nomeUtente = nome_utente;
+        //std::string nomeUtente = nome_utente;
 
         std::string nomeRequisito = "Aggiornamento residenza.";
         statoRequisito statoReq = statoRequisito::Wait;
 
+        std::string messageLog = "" ;
 
         std::string sessionID = "";
-        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtente.c_str());
+        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", input_nome_utente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows == 1)
@@ -533,13 +549,15 @@ public:
         }
 
         sprintf(sqlcmd, "UPDATE UtenteCompratore set via_di_residenza='%s', numero_civico ='%s', CAP='%s', citta_di_residenza='%s' WHERE nome_utente_compratore = '%s'",
-                nuovaViaResidenza.c_str(), nuovoNumCiv.c_str(), nuovoCAP.c_str(), nuovaCittaResidenza.c_str(), nomeUtente.c_str());
+                nuovaViaResidenza.c_str(), nuovoNumCiv.c_str(), nuovoCAP.c_str(), nuovaCittaResidenza.c_str(), input_nome_utente.c_str());
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);
 
         statoReq = statoRequisito::Success;
 
-        InsertToLogDB(db1,"INFO", "Aggiornata la residenza utente compratore.", sessionID, nomeRequisito, statoReq);
+        messageLog = "Aggiornata residenza utente compratore: " + input_nome_utente;
+
+        InsertToLogDB(db1,"INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
         return;
     }

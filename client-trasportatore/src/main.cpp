@@ -72,7 +72,7 @@ int main()
         };
 
 
-    std::string test2[9] = {
+    std::string test2[10] = {
 
         "EFFETTUA REGISTRAZIONE TRASPORTATORE",
         "EFFETTUA REGISTRAZIONE TRASPORTATORE",
@@ -85,13 +85,14 @@ int main()
         "ASSEGNA ORDINE TRASPORTATORE",
         "ASSEGNA ORDINE TRASPORTATORE",
 
-        "AVVISA SPEDIZIONE EFFETTUATA"
+        "AVVISA SPEDIZIONE EFFETTUATA",
+        "EFFETTUA LOGOUT TRASPORTATORE"
         };
 
     
     // Array di nomi utente
-    std::array<std::string, 100> nomi_utente;
-    for (int i = 0; i < 100; ++i) {
+    std::array<std::string, 30> nomi_utente;
+    for (int i = 0; i < 30; ++i) {
         nomi_utente[i] = "Utente" + std::to_string(i + 1);
     }
 
@@ -102,22 +103,22 @@ int main()
     std::array<std::string, 10> cognomi = {"Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Esposito", "Romano", "Gallo", "Conti", "De Luca"};
 
     // Array di email
-    std::array<std::string, 100> email;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> email;
+    for (int i = 0; i < 30; ++i)
     {
         email[i] = nomi_utente[i] + "@example.com";
     }
 
     // Array di numeri di telefono
-    std::array<std::string, 100> numeri_telefono;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> numeri_telefono;
+    for (int i = 0; i < 30; ++i)
     {
         numeri_telefono[i] = "123456789" + std::to_string(i);
     }
 
     // Array di password
-    std::array<std::string, 100> password;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> password;
+    for (int i = 0; i < 30; ++i)
     {
         password[i] = "P.assword" + std::to_string(i + 1);
     }
@@ -188,6 +189,7 @@ int main()
             int i5 = rand()%5;
             int i10 = rand()%10;
             int i100 = rand()%100;
+            int i30 = rand()%30;
 
             sprintf(key1, "Action");
             sprintf(value1, test2[i].c_str());
@@ -195,7 +197,7 @@ int main()
         
             if (test2[i]== "EFFETTUA REGISTRAZIONE TRASPORTATORE"){
                 sprintf(key2, "nome_utente_trasportatore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "categoriaUtente");
                 sprintf(value3, "UtenteTrasportatore");
@@ -207,16 +209,16 @@ int main()
                 sprintf(value5, cognomi[i10].c_str());
 
                 sprintf(key6, "numeroTelefono");
-                sprintf(value6, numeri_telefono[i100].c_str());
+                sprintf(value6, numeri_telefono[i30].c_str());
 
                 sprintf(key7, "email");
-                sprintf(value7, email[i100].c_str());
+                sprintf(value7, email[i30].c_str());
 
                 sprintf(key8, "password");
-                sprintf(value8, password[i100].c_str());
+                sprintf(value8, password[i30].c_str());
                 
                 sprintf(key9, "confermaPassword");
-                sprintf(value9, password[i100].c_str());
+                sprintf(value9, password[i30].c_str());
 
                 sprintf(key10, "dittaSpedizione");
                 sprintf(value10, nomi_ditte_spedizione[i5].c_str());
@@ -239,14 +241,17 @@ int main()
             }
 
             if (test2[i] == "AGGIORNA NOME DITTASPEDIZIONE"){
-                sprintf(key2, "nuovaDittaSpedizione");
-                sprintf(value2, nomi_ditte_spedizione[i5].c_str());
+                sprintf(key2, "nome_utente_trasportatore");
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2);
+                sprintf(key3, "nuovaDittaSpedizione");
+                sprintf(value3, nomi_ditte_spedizione[i5].c_str());
+
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2);
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, reply->str);
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }
@@ -254,7 +259,7 @@ int main()
 
             if (test2[i] == "AVVISA SPEDIZIONE EFFETTUATA"){
                 sprintf(key2, "nome_utente_trasportatore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "idSpedizione");
                 sprintf(value3, "1");
@@ -283,10 +288,10 @@ int main()
 
             if (test2[i] == "EFFETTUA LOGIN TRASPORTATORE"){
                 sprintf(key2, "nome_utente_trasportatore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "password");
-                sprintf(value3, password[i100].c_str());
+                sprintf(value3, password[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -299,29 +304,8 @@ int main()
 
 
             if (test2[i] == "EFFETTUA LOGOUT TRASPORTATORE"){
-                reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1);
-                assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-
-                printf("XADD %s * %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1);
-                printf("main(): pid =%d: stream %s: Added %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, reply->str);
-
-                freeReplyObject(reply);
-            }
-
-
-            if (test2[i] == "ELIMINA PROFILO TRASPORTATORE"){
-            
-                reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1);
-                assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-                printf("XADD %s * %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1);
-                printf("main(): pid =%d: stream %s: Added %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE,  key1, value1, reply->str);
-
-                freeReplyObject(reply);
-            }
-
-            if (test2[i] == "AGGIORNA NUMERO TELEFONO TRASPORTATORE"){
-                sprintf(key2, "nuovoNumeroTelefono");
-                sprintf(value2, numeri_telefono[i100].c_str());
+                sprintf(key2, "nome_utente_trasportatore");
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -332,18 +316,52 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[i] == "AGGIORNA PASSWORD TRASPORTATORE"){
-                sprintf(key2, "vecchiaPassw");
-                sprintf(value2, password[i100].c_str());
 
-                sprintf(key3, "nuovaPassw");
-                sprintf(value3, password[i100].c_str());
+            if (test2[i] == "ELIMINA PROFILO TRASPORTATORE"){
+            
+                sprintf(key2, "nome_utente_trasportatore");
+                sprintf(value2, nomi_utente[i30].c_str());
+
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2);
+                assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, reply->str);
+
+                freeReplyObject(reply);
+            }
+
+            if (test2[i] == "AGGIORNA NUMERO TELEFONO TRASPORTATORE"){
+                sprintf(key2, "nome_utente_trasportatore");
+                sprintf(value2, nomi_utente[i30].c_str());
+
+                sprintf(key3, "nuovoNumeroTelefono");
+                sprintf(value3, numeri_telefono[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, reply->str);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2,key3, value3, reply->str);
+
+                freeReplyObject(reply);
+            }
+
+            if (test2[i] == "AGGIORNA PASSWORD TRASPORTATORE"){
+                sprintf(key2, "nome_utente_trasportatore");
+                sprintf(value2, nomi_utente[i30].c_str());
+
+                sprintf(key3, "vecchiaPassw");
+                sprintf(value3, password[i30].c_str());
+
+                sprintf(key4, "nuovaPassw");
+                sprintf(value4, password[i30].c_str());
+
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4);
+                assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+                printf("XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
 
                 freeReplyObject(reply);
             }

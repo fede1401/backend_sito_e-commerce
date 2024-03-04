@@ -535,13 +535,13 @@ int main()
                     freeReplyObject(reply2);
 
                     /* sleep   */
-                    micro_sleep(1000000);
+                    //micro_sleep(1000000);
                 }
 
                 if (std::string(action) == "AGGIORNA NOME AZIENDAPRODUZIONE"){
                     //UtenteFornitore fornitore;
                     std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
-                    fornitore.aggiornaNomeAziendaProduttrice(db1, nuovaAziendaProduzione);
+                    fornitore.aggiornaNomeAziendaProduttrice(db1, nome_utente_fornitore,nuovaAziendaProduzione);
 
                     strcpy(outputs, "Registrazione utente fornitore avvenuta");
 
@@ -657,7 +657,7 @@ int main()
 
                     std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
 
-                    fornitore.effettua_logout(db1);
+                    fornitore.effettua_logout(db1, nome_utente_fornitore);
 
                     strcpy(outputs, "Logout utente fornitore avvenuta");
 
@@ -686,7 +686,7 @@ int main()
 
                     std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
 
-                    fornitore.elimina_profilo(db1);
+                    fornitore.elimina_profilo(db1, nome_utente_fornitore);
 
                     strcpy(outputs, "Eliminazione utente fornitore avvenuta");
 
@@ -715,7 +715,7 @@ int main()
 
                     std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
 
-                    fornitore.aggiornaNumeroDiTelefono(db1, nuovoNumeroTelefono);
+                    fornitore.aggiornaNumeroDiTelefono(db1, nome_utente_fornitore, nuovoNumeroTelefono);
 
                     strcpy(outputs, "Aggiornamento numero di telefono fornitore");
 
@@ -744,7 +744,7 @@ int main()
 
                     std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
 
-                    fornitore.aggiornaPassword(db1, vecchiaPassw, nuovaPassw);
+                    fornitore.aggiornaPassword(db1, nome_utente_fornitore, vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, "Aggiornamento password utente fornitore");
 

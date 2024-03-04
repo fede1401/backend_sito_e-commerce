@@ -59,8 +59,8 @@ public:
         std::string nomeRequisito = "Assegna ordine a Utente trasportatore.";
         statoRequisito statoReq = statoRequisito::Wait;
 
-        // Connession al database:
-        // Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+        std::string messageLog = "";
+
 
         // int idOrdine = identificatore_ordine;
 
@@ -137,7 +137,9 @@ public:
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res);
 
-                    InsertToLogDB(db1, "INFO", "Assegnato ordine al trasportatore", sessionID, nomeRequisito, statoReq);
+                    messageLog = "Assegnato ordine al trasportatore " + nome_utente_trasportatore;
+
+                    InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                     // A questo punto dobbiamo modificare la disponibilità dell'utente trasportatore:
                     sprintf(sqlcmd, "UPDATE UtenteTrasportatore set dispo='1' WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
@@ -211,13 +213,27 @@ public:
     // Nell'implementazione di questo metodo l'utente trasportatore associato alla spedizione avvisa il sistema che ha completato la spedizione e consegnato il prodotto dell'ordine
     void spedizioneConsegnata(Con2DB db1, std::string in_nome_utente_trasportatore, int idSpedizione)
     {
-        // Connession al database:
-        // Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
 
         std::string sessionID = "";
 
         std::string nomeRequisito = "Consegna Spedizione.";
         statoRequisito statoReq = statoRequisito::Wait;
+
+        std::string messageLog = "";
+
+
+        // Mi assicuro che esista l'id della spedizione:
+        sprintf(sqlcmd, "SELECT * FROM Spedizione WHERE idSpedizione = '%d'", idSpedizione);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        if (rows < 1){
+            messageLog = "Non esiste id " + std::to_string(idSpedizione) + " della spedizione";
+
+            statoReq = statoRequisito::NotSuccess;
+
+            InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }
 
         // Aggiorno lo stato della spedizione nella tabella Spedizione:
         sprintf(sqlcmd, "UPDATE Spedizione set statoSpedizione='consegnato' WHERE idSpedizione = '%d'", idSpedizione);
@@ -225,6 +241,8 @@ public:
         PQclear(res);
 
         statoReq = statoRequisito::Success;
+
+        messageLog = "Ordine consegnato da " + in_nome_utente_trasportatore;
 
         InsertToLogDB(db1, "INFO", "Ordine consegnato", sessionID, nomeRequisito, statoReq);
 
@@ -269,6 +287,9 @@ public:
 
             nomeRequisito = "Utente Trasportatore liberato.";
             statoReq = statoRequisito::Success;
+
+            messageLog = "Disponibilità utente trasportatore " + in_nome_utente_trasportatore + "per prendere in consegna un nuovo pacco ";
+
 
             InsertToLogDB(db1, "INFO", "Disponibilità utente trasportatore per prendere in consegna un nuovo pacco", sessionID, nomeRequisito, statoReq);
         }

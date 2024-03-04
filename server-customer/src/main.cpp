@@ -75,7 +75,7 @@ int main()
     char cittàResidenza[100];
     char confermaPassword[100];
     char dataCompleanno[100];
-    //int codiceProdotto;
+    int codiceProdotto;
     char numeroCartaPagamento[100];
     char cvvCartaPagamento[100];
     int idCarta;
@@ -350,6 +350,11 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(nomeProdotto, fval);
                     }
+                    if (strcmp(fval, "codiceProdotto") == 0)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h+1, fval);
+                        codiceProdotto = atoi(fval);
+                    }
                     if (strcmp(fval, "via_spedizione") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -448,50 +453,50 @@ int main()
                 //printf("main(): pid %d: user %s: sum = %d\n", pid, username, sum);
 
                 printf("\nAction: %s\n", action);
-                printf("nome_utente_compratore: %s\n", nome_utente_compratore);
-                //printf("nome_utente_fornitore: %s\n", nome_utente_fornitore);
-                //printf("nome_utente_trasportatore: %s\n", nome_utente_trasportatore);
-                printf("nome: %s\n", nome);
-                printf("cognome: %s\n", cognome);
-                printf("categoriaUtente: %s\n", categoriaUtente);
-                printf("password: %s\n", password);
-                printf("nuovoNumeroTelefono: %s\n", nuovoNumeroTelefono);
-                printf("vecchiaPassw: %s\n", vecchiaPassw);
-                printf("nuovaPassw: %s\n", nuovaPassw);
-                printf("numeroTelefono: %s\n", numeroTelefono);
-                printf("email: %s\n", email);
-                printf("viaResidenza: %s\n", viaResidenza);
-                printf("numeroCivico: %s\n", numeroCivico);
-                printf("cap: %s\n", cap);
-                printf("cittàResidenza: %s\n", cittàResidenza);
-                printf("confermaPassword: %s\n", confermaPassword);
-                printf("dataCompleanno: %s\n", dataCompleanno);
-                //printf("codiceProdotto: %d\n", codiceProdotto);
-                printf("numeroCartaPagamento: %s\n", numeroCartaPagamento);
-                printf("cvvCartaPagamento: %s\n", cvvCartaPagamento);
-                printf("idCarta: %d\n", idCarta);
-                //printf("idOrdine: %d\n", idOrdine);
-                printf("nuovaViaResidenza: %s\n", nuovaViaResidenza);
-                printf("nuovoNumCiv: %s\n", nuovoNumCiv);
-                printf("nuovoCAP: %s\n", nuovoCAP);
-                printf("nuovaCittaResidenza: %s\n", nuovaCittaResidenza);
-                printf("via_spedizione: %s\n", via_spedizione);
-                printf("città_spedizione: %s\n", città_spedizione);
-                printf("numero_civico_spedizione: %s\n", numero_civico_spedizione);
-                printf("descrizioneRecensione: %s\n", descrizioneRecensione);
-                printf("voto_stella: %d\n", voto_stella);
-                printf("idRecensione: %d\n", idRecensione);
-                printf("motivazione_reso: %s\n", motivazione_reso);
-                printf("nomeProdotto: %s\n", nomeProdotto);
-                printf("categoriaProdotto: %s\n", categoriaProdotto);
-                printf("aziendaProduzione: %s\n", aziendaProduzione);
-                printf("nuovaAziendaProduzione: %s\n", nuovaAziendaProduzione);
-                printf("descrizioneProdotto: %s\n", descrizioneProdotto);
-                printf("prezzoProdotto: %.2f\n", prezzoProdotto); // Print float with 2 decimal places
-                printf("numeroCopieDisponibili: %d\n", numeroCopieDisponibili);
-                printf("dittaSpedizione: %s\n", dittaSpedizione);
-                printf("nuovaDittaSpedizione: %s\n", nuovaDittaSpedizione);
-                printf("idSpedizione: %d\n", idSpedizione);
+                // printf("nome_utente_compratore: %s\n", nome_utente_compratore);
+                // //printf("nome_utente_fornitore: %s\n", nome_utente_fornitore);
+                // //printf("nome_utente_trasportatore: %s\n", nome_utente_trasportatore);
+                // printf("nome: %s\n", nome);
+                // printf("cognome: %s\n", cognome);
+                // printf("categoriaUtente: %s\n", categoriaUtente);
+                // printf("password: %s\n", password);
+                // printf("nuovoNumeroTelefono: %s\n", nuovoNumeroTelefono);
+                // printf("vecchiaPassw: %s\n", vecchiaPassw);
+                // printf("nuovaPassw: %s\n", nuovaPassw);
+                // printf("numeroTelefono: %s\n", numeroTelefono);
+                // printf("email: %s\n", email);
+                // printf("viaResidenza: %s\n", viaResidenza);
+                // printf("numeroCivico: %s\n", numeroCivico);
+                // printf("cap: %s\n", cap);
+                // printf("cittàResidenza: %s\n", cittàResidenza);
+                // printf("confermaPassword: %s\n", confermaPassword);
+                // printf("dataCompleanno: %s\n", dataCompleanno);
+                // //printf("codiceProdotto: %d\n", codiceProdotto);
+                // printf("numeroCartaPagamento: %s\n", numeroCartaPagamento);
+                // printf("cvvCartaPagamento: %s\n", cvvCartaPagamento);
+                // printf("idCarta: %d\n", idCarta);
+                // //printf("idOrdine: %d\n", idOrdine);
+                // printf("nuovaViaResidenza: %s\n", nuovaViaResidenza);
+                // printf("nuovoNumCiv: %s\n", nuovoNumCiv);
+                // printf("nuovoCAP: %s\n", nuovoCAP);
+                // printf("nuovaCittaResidenza: %s\n", nuovaCittaResidenza);
+                // printf("via_spedizione: %s\n", via_spedizione);
+                // printf("città_spedizione: %s\n", città_spedizione);
+                // printf("numero_civico_spedizione: %s\n", numero_civico_spedizione);
+                // printf("descrizioneRecensione: %s\n", descrizioneRecensione);
+                // printf("voto_stella: %d\n", voto_stella);
+                // printf("idRecensione: %d\n", idRecensione);
+                // printf("motivazione_reso: %s\n", motivazione_reso);
+                // printf("nomeProdotto: %s\n", nomeProdotto);
+                // printf("categoriaProdotto: %s\n", categoriaProdotto);
+                // printf("aziendaProduzione: %s\n", aziendaProduzione);
+                // printf("nuovaAziendaProduzione: %s\n", nuovaAziendaProduzione);
+                // printf("descrizioneProdotto: %s\n", descrizioneProdotto);
+                // printf("prezzoProdotto: %.2f\n", prezzoProdotto); // Print float with 2 decimal places
+                // printf("numeroCopieDisponibili: %d\n", numeroCopieDisponibili);
+                // printf("dittaSpedizione: %s\n", dittaSpedizione);
+                // printf("nuovaDittaSpedizione: %s\n", nuovaDittaSpedizione);
+                // printf("idSpedizione: %d\n", idSpedizione);
 
                 // Qui bisogna svolgere l'azione:
                 
@@ -531,7 +536,7 @@ int main()
                     
 
                     /* sleep   */
-                    micro_sleep(1000000);
+                    //micro_sleep(1000000);
                     
                 }
 
@@ -568,7 +573,7 @@ int main()
                 if (std::string(action) == "EFFETTUA LOGOUT COMPRATORE"){
                     //UtenteCompratore compratore;
                     std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
-                    compratore.effettua_logout(db1);
+                    compratore.effettua_logout(db1, nome_utente_compratore);
 
                     strcpy(outputs, "Logout avvenuto");
 
@@ -595,7 +600,7 @@ int main()
                 if (std::string(action) == "ELIMINA PROFILO COMPRATORE"){
                     //UtenteCompratore compratore;
                     std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
-                    compratore.elimina_profilo(db1);
+                    compratore.elimina_profilo(db1, nome_utente_compratore);
 
                     strcpy(outputs, "Eliminazione profilo avvenuta");
 
@@ -622,7 +627,7 @@ int main()
                 if (std::string(action) == "AGGIORNA NUMERO TELEFONO COMPRATORE"){
                     //UtenteCompratore compratore;
                     std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
-                    compratore.aggiornaNumeroDiTelefono(db1, nuovoNumeroTelefono);
+                    compratore.aggiornaNumeroDiTelefono(db1, nome_utente_compratore, nuovoNumeroTelefono);
 
                     strcpy(outputs, "Aggiornamento numero telefono utente compratore");   
 
@@ -649,7 +654,7 @@ int main()
                 if (std::string(action) == "AGGIORNA PASSWORD COMPRATORE"){
                     //UtenteCompratore compratore;
                     std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
-                    compratore.aggiornaPassword(db1, vecchiaPassw, nuovaPassw);
+                    compratore.aggiornaPassword(db1, nome_utente_compratore ,vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, "Aggiornamento password utente compratore");  
 
@@ -676,7 +681,7 @@ int main()
                 if (std::string(action) == "AGGIORNA RESIDENZA"){
                     //UtenteCompratore compratore;
                     std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
-                    compratore.aggiornaResidenza(db1, nuovaViaResidenza, nuovoNumCiv, nuovoCAP, nuovaCittaResidenza);
+                    compratore.aggiornaResidenza(db1, nome_utente_compratore, nuovaViaResidenza, nuovoNumCiv, nuovoCAP, nuovaCittaResidenza);
 
                     strcpy(outputs, "Aggiornamento residenza utente compratore");
 
@@ -754,7 +759,7 @@ int main()
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO CARRELLO"){
                     Carrello carrello;
-                    carrello.add_prodotto(db1, nome_utente_compratore, nomeProdotto);
+                    carrello.add_prodotto(db1, nome_utente_compratore, codiceProdotto );
 
                     strcpy(outputs, "Aggiunta prodotto al carrello");
 
@@ -780,7 +785,7 @@ int main()
 
                 if (std::string(action) == "RIMUOVI PRODOTTO CARRELLO"){
                     Carrello carrello;
-                    carrello.remove_prodotto(db1, nome_utente_compratore, nomeProdotto);
+                    carrello.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Rimozione prodotto dal carrello");
 
@@ -806,7 +811,8 @@ int main()
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO LISTADESIDERI"){
                     ListaDesideri listadesideri;
-                    listadesideri.add_prodotto(db1, nome_utente_compratore, nomeProdotto);
+                    printf("NOME PRODOTTO: %s", nomeProdotto);
+                    listadesideri.add_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Aggiunta prodotto lista desideri");
 
@@ -832,7 +838,7 @@ int main()
 
                 if (std::string(action) == "RIMUOVI PRODOTTO LISTADESIDERI"){
                     ListaDesideri listadesideri;
-                    listadesideri.remove_prodotto(db1, nome_utente_compratore, nomeProdotto);
+                    listadesideri.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Rimozione prodotto lista desideri");
 

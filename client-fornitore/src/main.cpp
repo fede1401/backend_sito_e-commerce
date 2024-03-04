@@ -54,14 +54,47 @@ int main()
                             "AGGIORNA PASSWORD FORNITORE", "AGGIORNA NOME AZIENDAPRODUZIONE", "AGGIUNGI PRODOTTO SITO", //"RIMUOVI PRODOTTO SITO", //"EFFETTUA LOGOUT FORNITORE",  //"ELIMINA PROFILO FORNITORE" 
                             };
 
-    std::string test2[13] = {"EFFETTUA REGISTRAZIONE FORNITORE", "EFFETTUA REGISTRAZIONE FORNITORE", "EFFETTUA REGISTRAZIONE FORNITORE", "EFFETTUA REGISTRAZIONE FORNITORE",
-                            "EFFETTUA LOGIN FORNITORE", "EFFETTUA LOGIN FORNITORE", "EFFETTUA LOGIN FORNITORE", "EFFETTUA LOGIN FORNITORE",
-                            "AGGIUNGI PRODOTTO SITO", "AGGIUNGI PRODOTTO SITO", "AGGIUNGI PRODOTTO SITO", "AGGIUNGI PRODOTTO SITO", "AGGIUNGI PRODOTTO SITO" };
+    std::string test2[29] = {
+                            "EFFETTUA REGISTRAZIONE FORNITORE", 
+                            "EFFETTUA REGISTRAZIONE FORNITORE", 
+                            "EFFETTUA REGISTRAZIONE FORNITORE", 
+                            "EFFETTUA REGISTRAZIONE FORNITORE",
+                            
+                            "EFFETTUA LOGIN FORNITORE", 
+                            "EFFETTUA LOGIN FORNITORE", 
+                            "EFFETTUA LOGIN FORNITORE", 
+                            "EFFETTUA LOGIN FORNITORE",
+
+                            "AGGIORNA NOME AZIENDAPRODUZIONE",
+                            
+
+                            "AGGIUNGI PRODOTTO SITO", 
+                            "AGGIUNGI PRODOTTO SITO", 
+                            "AGGIUNGI PRODOTTO SITO", 
+                            "AGGIUNGI PRODOTTO SITO", 
+                            "AGGIUNGI PRODOTTO SITO", 
+                            "AGGIUNGI PRODOTTO SITO", 
+                            "AGGIUNGI PRODOTTO SITO",
+                            "AGGIUNGI PRODOTTO SITO",
+                            "AGGIUNGI PRODOTTO SITO",
+                            "AGGIUNGI PRODOTTO SITO",
+                            "AGGIUNGI PRODOTTO SITO",
+                            "AGGIUNGI PRODOTTO SITO",
+                            "RIMUOVI PRODOTTO SITO",
+                            "RIMUOVI PRODOTTO SITO"
+                            "AGGIORNA NUMERO TELEFONO FORNITORE",
+                            "AGGIORNA PASSWORD FORNITORE",
+                            "AGGIORNA NUMERO TELEFONO FORNITORE",
+                            //"RIMUOVI PRODOTTO SITO",
+                            "AGGIORNA NOME AZIENDAPRODUZIONE",
+                            "EFFETTUA LOGOUT FORNITORE" ,
+                            "ELIMINA PROFILO FORNITORE"
+                            };
 
     
     // Array di nomi utente
-    std::array<std::string, 100> nomi_utente;
-    for (int i = 0; i < 100; ++i) {
+    std::array<std::string, 30> nomi_utente;
+    for (int i = 0; i < 30; ++i) {
         nomi_utente[i] = "Utente" + std::to_string(i + 1);
     }
 
@@ -75,30 +108,30 @@ int main()
     std::array<std::string, 10> cognomi = {"Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Esposito", "Romano", "Gallo", "Conti", "De Luca"};
 
     // Array di email
-    std::array<std::string, 100> email;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> email;
+    for (int i = 0; i < 30; ++i)
     {
         email[i] = nomi_utente[i] + "@example.com";
     }
 
     // Array di numeri di telefono
-    std::array<std::string, 100> numeri_telefono;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> numeri_telefono;
+    for (int i = 0; i < 30; ++i)
     {
         numeri_telefono[i] = "123456789" + std::to_string(i);
     }
 
     // Array di password
-    std::array<std::string, 100> password;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> password;
+    for (int i = 0; i < 30; ++i)
     {
         password[i] = "P.assword" + std::to_string(i + 1);
     }
 
 
     // Array di nomi di prodotti
-    std::array<std::string, 100> nomi_prodotti;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> nomi_prodotti;
+    for (int i = 0; i < 30; ++i)
     {
         nomi_prodotti[i] = "Prodotto" + std::to_string(i + 1);
     }
@@ -107,12 +140,13 @@ int main()
     std::string descrizioneProdotti = "Prodotto eccellente.";
 
     // Array di categorie prodotti
-    std::array<std::string, 10> categorie_prodotti = {"Abbigliamento", "Elettronica", "Informatica", "Arredamento", "Culinario", "Sportivo", "Illuminazione", "Giardinaggio", "Musicale", "Fotografia"};
+    //std::array<std::string, 10> categorie_prodotti = {"Abbigliamento", "Elettronica", "Informatica", "Arredamento", "Culinario", "Sportivo", "Illuminazione", "Giardinaggio", "Musicale", "Fotografia"};
+    std::array<std::string, 2> categorie_prodotti = {"Abbigliamento", "Elettronica"};
 
 
     // Array di nomi di prodotti
-    std::array<std::string, 100> prezzo_copie_disponibili;
-    for (int i = 0; i < 100; ++i)
+    std::array<std::string, 30> prezzo_copie_disponibili;
+    for (int i = 0; i < 30; ++i)
     {
         prezzo_copie_disponibili[i] = std::to_string(i + 1);
     }
@@ -176,6 +210,8 @@ int main()
             int i5 = rand()%5;
             int i10 = rand()%10;
             int i100 = rand()%100;
+            int i30 = rand()%30;
+            int i2 = rand()%2;
 
             printf("\n\nValore della variabile i: %d \n", i);
             printf("Valore di i5: %d \n", i5);
@@ -188,7 +224,7 @@ int main()
             
             if (test2[i]== "EFFETTUA REGISTRAZIONE FORNITORE"){
                 sprintf(key2, "nome_utente_fornitore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "categoriaUtente");
                 sprintf(value3, "UtenteFornitore");
@@ -200,16 +236,16 @@ int main()
                 sprintf(value5, cognomi[i10].c_str());
 
                 sprintf(key6, "numeroTelefono");
-                sprintf(value6, numeri_telefono[i100].c_str());
+                sprintf(value6, numeri_telefono[i30].c_str());
 
                 sprintf(key7, "email");
-                sprintf(value7, email[i100].c_str());
+                sprintf(value7, email[i30].c_str());
 
                 sprintf(key8, "password");
-                sprintf(value8, password[i100].c_str());
+                sprintf(value8, password[i30].c_str());
                 
                 sprintf(key9, "confermaPassword");
-                sprintf(value9, password[i100].c_str());
+                sprintf(value9, password[i30].c_str());
 
                 sprintf(key10, "aziendaProduzione");
                 sprintf(value10, nomi_aziende_produttrici[i5].c_str());
@@ -232,14 +268,17 @@ int main()
 
 
             if (test2[i] == "AGGIORNA NOME AZIENDAPRODUZIONE"){
-                sprintf(key2, "nuovaAziendaProduzione");
-                sprintf(value2, nomi_aziende_produttrici[i5].c_str());
+                sprintf(key2, "nome_utente_fornitore");
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+                sprintf(key3, "nuovaAziendaProduzione");
+                sprintf(value3, nomi_aziende_produttrici[i5].c_str());
+
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }
@@ -247,16 +286,16 @@ int main()
 
             if (test2[i]== "AGGIUNGI PRODOTTO SITO"){
                 sprintf(key2, "nome_utente_fornitore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
                 
                 sprintf(key3, "nomeProdotto");
-                sprintf(value3, nomi_prodotti[i100].c_str());
+                sprintf(value3, nomi_prodotti[i30].c_str());
 
                 sprintf(key4, "categoriaProdotto");
-                sprintf(value4, categorie_prodotti[i10].c_str());
+                sprintf(value4, categorie_prodotti[i2].c_str());
 
                 sprintf(key5, "prezzoProdotto");
-                sprintf(value5,  prezzo_copie_disponibili[i100].c_str());
+                sprintf(value5,  prezzo_copie_disponibili[i30].c_str());
 
                 sprintf(key6, "descrizioneProdotto");
                 sprintf(value6, descrizioneProdotti.c_str());
@@ -265,7 +304,7 @@ int main()
                 sprintf(value7, nomi_aziende_produttrici[i5].c_str());
 
                 sprintf(key8, "numeroCopieDisponibili");
-                sprintf(value8, prezzo_copie_disponibili[i100].c_str());
+                sprintf(value8, prezzo_copie_disponibili[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
                                         WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8);
@@ -282,10 +321,10 @@ int main()
 
             if (test2[i] == "RIMUOVI PRODOTTO SITO"){
                 sprintf(key2, "nome_utente_fornitore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
                 
                 sprintf(key3, "nomeProdotto");
-                sprintf(value3, nomi_prodotti[i100].c_str());
+                sprintf(value3, nomi_prodotti[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -300,10 +339,10 @@ int main()
 
             if (test2[i] == "EFFETTUA LOGIN FORNITORE"){
                 sprintf(key2, "nome_utente_fornitore");
-                sprintf(value2, nomi_utente[i100].c_str());
+                sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "password");
-                sprintf(value3, password[i100].c_str());
+                sprintf(value3, password[i30].c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
@@ -317,11 +356,14 @@ int main()
 
             if (test2[i] == "EFFETTUA LOGOUT FORNITORE"){
 
-                reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key1, value1);
+                sprintf(key2, "nome_utente_fornitore");
+                sprintf(value2, nomi_utente[i30].c_str());
+
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                printf("XADD %s * %s %s \n", WRITE_STREAM_FORNITORE, key1, value1);
-                printf("main(): pid =%d: stream %s: Added %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, reply->str);
+                printf("XADD %s * %s %s %s %s\n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
@@ -329,40 +371,49 @@ int main()
 
             if (test2[i] == "ELIMINA PROFILO FORNITORE"){
             
-                reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key1, value1);
+                sprintf(key2, "nome_utente_fornitore");
+                sprintf(value2, nomi_utente[i30].c_str());
+
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                printf("XADD %s * %s %s \n", WRITE_STREAM_FORNITORE, key1, value1);
-                printf("main(): pid =%d: stream %s: Added %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE,  key1, value1, reply->str);
+                printf("XADD %s * %s %s %s %s\n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
 
                 freeReplyObject(reply);
             }
 
             if (test2[i] == "AGGIORNA NUMERO TELEFONO FORNITORE"){
-                sprintf(key2, "nuovoNumeroTelefono");
-                sprintf(value2, numeri_telefono[i100].c_str());
+                sprintf(key2, "nome_utente_fornitore");
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+                sprintf(key3, "nuovoNumeroTelefono");
+                sprintf(value3, numeri_telefono[i100].c_str());
+
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }
 
             if (test2[i] == "AGGIORNA PASSWORD FORNITORE"){
-                sprintf(key2, "vecchiaPassw");
-                sprintf(value2, password[i100].c_str());
+                sprintf(key2, "nome_utente_fornitore");
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                sprintf(key3, "nuovaPassw");
-                sprintf(value3, password[i100].c_str());
+                sprintf(key3, "vecchiaPassw");
+                sprintf(value3, password[i30].c_str());
 
-                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                sprintf(key4, "nuovaPassw");
+                sprintf(value4, password[i30].c_str());
+
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                printf( "XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
+                printf( "XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
 
                 freeReplyObject(reply);
             }
