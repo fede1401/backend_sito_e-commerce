@@ -136,11 +136,12 @@ public:
 
                 if (categoria == "UtenteTrasportatore")
                 {
+                    sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", input_nome_utente.c_str());
+                    res = db1.ExecSQLtuples(sqlcmd);
+                    rows = PQntuples(res);
+                    
                     if (rows == 1)
                     {
-                        sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", input_nome_utente.c_str());
-                        res = db1.ExecSQLtuples(sqlcmd);
-                        rows = PQntuples(res);
                         sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));
                     }
                 }
