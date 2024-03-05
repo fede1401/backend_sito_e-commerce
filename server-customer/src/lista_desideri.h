@@ -18,6 +18,8 @@ public:
 
 
     void add_prodotto(Con2DB db1, std::string in_nome_utente_compratore, int in_codProdotto){
+
+        printf("Entrato nel metodo add_prodotto Lista Desideri.\n");
                 
         std::string nomeRequisito = "Aggiunta prodotto alla lista desideri.";
         statoRequisito statoReq = statoRequisito::Wait;
@@ -90,16 +92,21 @@ public:
                 trovato = true;
                 int quantitàPrecedente;
                 sprintf(sqlcmd, "SELECT quantitàProd FROM ListaDesideri WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", in_nome_utente_compratore.c_str(),in_codProdotto);
-                res = db1.ExecSQLtuples(sqlcmd);
-                rows = PQntuples(res);
-                PQclear(res);
-                quantitàPrecedente = atoi(PQgetvalue(res, 0, PQfnumber(res, "quantitàProd"))); 
+                PGresult *res1 = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res1);
+                quantitàPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
+                PQclear(res1);
+
+                printf("Si ferma dopo il PQclear(res1)!\n");
 
                 quantitàPrecedente = quantitàPrecedente + 1;
                 //Update
                 sprintf(sqlcmd, "UPDATE ListaDesideri set quantitàProd = '%d' WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", quantitàPrecedente, in_nome_utente_compratore.c_str(),in_codProdotto);
-                res = db1.ExecSQLcmd(sqlcmd);
-                PQclear(res);
+                PGresult *res2 = db1.ExecSQLcmd(sqlcmd);
+                PQclear(res2);
+
+                printf("Si ferma dopo il PQclear(res2)!\n");
+
 
                 statoReq = statoRequisito::Success;
 
@@ -107,7 +114,13 @@ public:
 
                 InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
             }
+            printf("Uscito dall'if\n");
+            break;
+
         }
+        printf("Il problema va nella PQclear(res)\n");
+        //PQclear(res);
+        printf("Si ferma dopo PQclear(res)\n");
          
         if (trovato == false){
              // Inseriamo il prodotto per la prima volta nel carrello:

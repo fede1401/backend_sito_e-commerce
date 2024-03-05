@@ -811,7 +811,7 @@ int main()
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO LISTADESIDERI"){
                     ListaDesideri listadesideri;
-                    printf("NOME PRODOTTO: %s", nomeProdotto);
+                    //printf("NOME PRODOTTO: %s", nomeProdotto);
                     listadesideri.add_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Aggiunta prodotto lista desideri");

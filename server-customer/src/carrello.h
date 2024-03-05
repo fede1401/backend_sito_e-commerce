@@ -21,6 +21,8 @@ public:
 
     // Funzione per aggiungere un prodotto al carrello
     void add_prodotto(Con2DB db1,std::string in_nome_utente_compratore, int in_cod_prodotto){
+
+        printf("Entrato nel metodo add_prodotto Carrello.\n");
         
         Carrello carrello;
 
@@ -43,6 +45,9 @@ public:
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
+
+
+        printf("Selezionato session ID.\n");
 
         ///////////////////////////////////// 
 
@@ -77,7 +82,8 @@ public:
         }
         /////////////////////////////////////
 
-        
+        printf("Codice prodotto esistente\n");
+
         // Controllo se il prodotto è stato già inserito dall'utente nel carrello:
         int codProdotto; 
         bool trovato=false;
@@ -88,25 +94,35 @@ public:
         
         for (int i = 0; i < rows; i++)
         {
+            printf("Entrato nel for.\n");
             codProdotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
-            PQclear(res);
             if (codProdotto == in_cod_prodotto){
                 // Il prodotto è già stato inserito, perciò ne aumentiamo la quantità:
                 // Prima carichiamo la quantità precedente:
                 trovato = true;
                 int quantitàPrecedente;
                 sprintf(sqlcmd, "SELECT quantitàProd FROM Carrello WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", in_nome_utente_compratore.c_str(),in_cod_prodotto);
-                res = db1.ExecSQLtuples(sqlcmd);
-                rows = PQntuples(res);
-                quantitàPrecedente = atoi(PQgetvalue(res, 0, PQfnumber(res, "quantitàProd"))); 
+                PGresult *res1 = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res1);
+                quantitàPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
 
                 quantitàPrecedente = quantitàPrecedente + 1;
-                PQclear(res);
+                PQclear(res1);
+
+                printf("Si ferma dopo il PQclear(res1)!\n");
+
+
+                printf("Aumentata quantità.\n");
 
                 //Update
                 sprintf(sqlcmd, "UPDATE Carrello set quantitàProd = '%d' WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", quantitàPrecedente, in_nome_utente_compratore.c_str(),in_cod_prodotto);
-                res = db1.ExecSQLcmd(sqlcmd);
-                PQclear(res);
+                PGresult *res2 = db1.ExecSQLcmd(sqlcmd);
+                PQclear(res2);
+
+                printf("Si ferma dopo il PQclear(res1)!\n");
+
+
+                printf("Aumentata quantità e aggionrata nel db.\n");
 
                 statoReq = statoRequisito::Success;
 
@@ -114,13 +130,17 @@ public:
 
                 InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
-
                 // Anima l'oggetto
                 carrello.codice_prodotto = codProdotto;
                 carrello.nome_utente_compratore = in_nome_utente_compratore;
                 carrello.quantitàProdotti = quantitàPrecedente;
             }
+            printf("Uscito dall'if\n");
+            break;
         }
+        printf("Il problema va nella PQclear(res)\n");
+        //PQclear(res);
+        printf("Si ferma dopo PQclear(res)\n");
          
         if (trovato == false){
              // Inseriamo il prodotto per la prima volta nel carrello:
