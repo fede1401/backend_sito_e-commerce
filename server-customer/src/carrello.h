@@ -19,19 +19,18 @@ public:
     Carrello(): nome_utente_compratore(""), codice_prodotto(-1), quantitàProdotti(-1){}
 
 
-    // Funzione per aggiungere un prodotto al carrello
+    // Funzione per aggiungere un prodotto al carrello  dato il nome dell'utente e il codice prodotto
     void add_prodotto(Con2DB db1,std::string in_nome_utente_compratore, int in_cod_prodotto){
 
         printf("Entrato nel metodo add_prodotto Carrello.\n");
         
-        Carrello carrello;
-
+        // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Aggiunta prodotto al carrello.";
         statoRequisito statoReq = statoRequisito::Wait;
-
         std::string messageLog = "";
 
-        // Caricamento del sessionID utile per il log.
+
+        // Caricamento del sessionID.
         std::string sessionID = "";
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
@@ -40,7 +39,9 @@ public:
         PQclear(res);
 
 
+        // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
+            // Log dell'errore e uscita dalla funzione
             messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato o non registrato, non può essere aggiunto il prodotto al carrello";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
@@ -49,38 +50,23 @@ public:
 
         printf("Selezionato session ID.\n");
 
-        ///////////////////////////////////// 
 
-        // Selezioniamo il codice del prodotto tramite il suo nome:
-        // sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome = '%s'", nomeProdotto.c_str());
-        // res = db1.ExecSQLtuples(sqlcmd);
-        // rows = PQntuples(res);
-
-        // int in_cod_prodotto=-1;
-
-        // if (rows == 1){  in_cod_prodotto = atoi(PQgetvalue(res, 0, PQfnumber(res, "codProdotto"))); }
-        // PQclear(res);
-        /////////////////////////////////////
-
-
-        // Controllo se esiste il codice del prodotto da inserire:
-        // SELECT:
+        // Controllo se il codice del prodotto da inserire nel carrello esiste nel database
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", in_cod_prodotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
 
         if (rows < 1){
+            // Log dell'errore e uscita dalla funzione
             std::cout << "Il prodotto non esiste!" << std::endl;
 
             statoReq = statoRequisito::NotSuccess;
-
             messageLog = "Il prodotto con codice " + std::to_string(in_cod_prodotto) + " non esiste.";
-
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
-        /////////////////////////////////////
+        
 
         printf("Codice prodotto esistente\n");
 
@@ -88,6 +74,7 @@ public:
         int codProdotto; 
         bool trovato=false;
         
+        // Seleziono i codici dei prodotti nel carrello dell'utente:
         sprintf(sqlcmd, "SELECT codProdotto FROM Carrello WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
@@ -96,6 +83,7 @@ public:
         {
             printf("Entrato nel for.\n");
             codProdotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
+            // Se il codice del prodotto i-esimo è uguale a quello del prodotto che l'utente vuole inserire, il prodotto già è presente nel carrello
             if (codProdotto == in_cod_prodotto){
                 // Il prodotto è già stato inserito, perciò ne aumentiamo la quantità:
                 // Prima carichiamo la quantità precedente:
@@ -106,6 +94,7 @@ public:
                 rows = PQntuples(res1);
                 quantitàPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
 
+                // Aumenta la quantità del prodotto da inserire
                 quantitàPrecedente = quantitàPrecedente + 1;
                 PQclear(res1);
 
@@ -114,7 +103,7 @@ public:
 
                 printf("Aumentata quantità.\n");
 
-                //Update
+                // Aggiorno la quantità del prodotto da inserire
                 sprintf(sqlcmd, "UPDATE Carrello set quantitàProd = '%d' WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", quantitàPrecedente, in_nome_utente_compratore.c_str(),in_cod_prodotto);
                 PGresult *res2 = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res2);
@@ -124,16 +113,16 @@ public:
 
                 printf("Aumentata quantità e aggionrata nel db.\n");
 
+                // Log 
                 statoReq = statoRequisito::Success;
-
                 messageLog = "Il prodotto esiste già, aggiungiamo la quantità nel carrello di " + in_nome_utente_compratore;
-
                 InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
+
                 // Anima l'oggetto
-                carrello.codice_prodotto = codProdotto;
-                carrello.nome_utente_compratore = in_nome_utente_compratore;
-                carrello.quantitàProdotti = quantitàPrecedente;
+                nome_utente_compratore = in_nome_utente_compratore;
+                codice_prodotto = in_cod_prodotto;
+                quantitàProdotti = quantitàPrecedente;
             }
             printf("Uscito dall'if\n");
             break;
@@ -142,19 +131,22 @@ public:
         //PQclear(res);
         printf("Si ferma dopo PQclear(res)\n");
          
+
+        // Controlliamo se il prodotto non è nel carrello e dobbiamo inserirlo lo inseriamo per la prima volta 
         if (trovato == false){
-             // Inseriamo il prodotto per la prima volta nel carrello:
+            // Inseriamo il prodotto per la prima volta nel carrello:
             sprintf(sqlcmd, "INSERT INTO Carrello (nome_utente_compratore, codProdotto, quantitàProd) VALUES ('%s', '%d', '%d')", in_nome_utente_compratore.c_str(), in_cod_prodotto, 1);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);   
-            carrello.codice_prodotto = in_cod_prodotto;
-            carrello.nome_utente_compratore = in_nome_utente_compratore;
-            carrello.quantitàProdotti = 1;
 
+            // Anima l'oggetto
+            nome_utente_compratore = in_nome_utente_compratore;
+            codice_prodotto = in_cod_prodotto;
+            quantitàProdotti = 1;
+
+            // Log 
             statoReq = statoRequisito::Success;
-
             messageLog = "Inserimento del prodotto nel carrello di " + in_nome_utente_compratore;
-
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
            
@@ -162,15 +154,16 @@ public:
     }
 
 
+    // Funzione per rimuovere un prodotto dal carrello dato il nome dell'utente e il codice prodotto
     void remove_prodotto(Con2DB db1,std::string in_nome_utente_compratore, int codProdotto){
         
-
+        // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione prodotto dal carrello.";
         statoRequisito statoReq = statoRequisito::Wait;
-
         std::string messageLog = "";
 
-        // Caricamento del sessionID utile per il log.
+
+        // Caricamento del sessionID.
         std::string sessionID = "";
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
@@ -179,34 +172,28 @@ public:
         PQclear(res);
 
 
+        // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
+            // Log dell'errore e uscita dalla funzione
             InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere rimosso il prodotto al carrello.", sessionID, nomeRequisito, statoReq);
             return;
         }
 
 
-        // Selezioniamo il codice del prodotto tramite il suo nome:
-        //sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome = '%s'", nomeProdotto.c_str());
-        //res = db1.ExecSQLtuples(sqlcmd);
-        //rows = PQntuples(res);
-
-        //  int in_cod_prodotto;
-
-        //if (rows == 1){  in_cod_prodotto = atoi(PQgetvalue(res, 0, PQfnumber(res, "codProdotto"))); }
-        //PQclear(res);
-        /////////////////////////////////////
-
-
+        // Controlliamo se il codice del prodotto esiste all'interno del carrello dell'utente compratore
         sprintf(sqlcmd, "SELECT * FROM Carrello WHERE nome_utente_compratore = '%s' AND codProdotto ='%d'", in_nome_utente_compratore.c_str(), codProdotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
+
         if (rows < 1){
+            // Log dell'errore (il prodotto non esiste nel carrello dell'utente) e uscita dalla funzione
             std::cout << "La riga da eliminare non esiste!" << std::endl;
 
+            // Log
             statoReq = statoRequisito::NotSuccess;
-
             InsertToLogDB(db1, "ERROR", "Il prodotto da eliminare non esiste", sessionID, nomeRequisito, statoReq);
+            
             return;
         }
         else{
@@ -215,10 +202,9 @@ public:
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
+            // Log
             statoReq = statoRequisito::Success;
-
             messageLog = "Rimozione del prodotto con il codice " + std::to_string(codProdotto) + " dal carrello di " + in_nome_utente_compratore;
-
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
     return;

@@ -24,9 +24,7 @@ public:
                    idOrdine(-1),
                    nome_utente_trasportatore(""),
                    stato_spedizione(),
-                   ditta_spedizione("")
-    {
-    }
+                   ditta_spedizione(""){}
 
     Spedizione(int idSpedizione, int idOrdine,
                std::string nome_utente_trasportatore,
@@ -38,33 +36,30 @@ public:
                                                nome_utente_trasportatore(nome_utente_trasportatore),
                                                stato_spedizione(stato_spedizione),
                                                ditta_spedizione(ditta_spedizione)
-    {
-    }
+    {}
 
     void impostaStatoSpedizione(StatoSpedizione nuovstato)
     {
         stato_spedizione = nuovstato;
     }
 
-    // Un utente trasportatore con attibuto disponibilità=0 accede al sistema e controlla gli ordini che non sono ancora stati spediti e li prende in carico per la spedizione.
+    // Funzione che permette di assegnare un ordine che ha lo stato "in elaborazione" a un utente trasportatore che ha come attibuto "disponibilità"=0 .
     Spedizione assegnaOrdineTrasportatore(Con2DB db1)
     {
-
         Spedizione spedizione;
 
         StatoSpedizione stato_spedizione;
         int idOrdine;
         std::string sessionID = "";
 
+
+        // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Assegna ordine a Utente trasportatore.";
         statoRequisito statoReq = statoRequisito::Wait;
-
         std::string messageLog = "";
 
 
-        // int idOrdine = identificatore_ordine;
-
-        // Selezione utenti trasportatori con attributo disponibilità = 0;
+        // Recupero di tutti gli utenti trasportatori con attributo "disponibilità" = 0, cioè che non sono impegnati in alcuna spedizione.
         sprintf(sqlcmd, "SELECT nome_utente_trasportatore FROM UtenteTrasportatore WHERE dispo='0'");
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
@@ -75,31 +70,34 @@ public:
         stato_spedizione = StatoSpedizione::InTransito;
         std::string statoSpedizioneStr = statoSpedizioneToString(stato_spedizione);
 
+
+        // Se il numero di righe del risultato della query è maggiore o uguale a 1, cioè ci sono utenti trasportatori con attributo "disponibilità" = 0:
         if (rows >= 1)
         {
             nome_utente_trasportatore = PQgetvalue(res, 0, 0);
             PQclear(res);
 
-            // Caricamento del sessionID utile per il log.
+            // Caricamento del sessionID.
             sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
-            if (rows == 1)
-            {
-                sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));
-            }
+            if (rows == 1) { sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t")); }
             PQclear(res);
 
+            // Verifica se l'utente è loggato e ha una sessionID valida
             if (sessionID == "")
             {
+                // Log dell'errore e uscita dalla funzione
                 InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può assegnare ordine al trasportatore .", sessionID, nomeRequisito, statoReq);
                 return;
             }
 
-            // Selezione il nome della ditta di spedizione dell'utente trasportatore:
+            // Recupero del nome della ditta di spedizione dell'utente trasportatore:
             sprintf(sqlcmd, "SELECT nome_DittaSpedizione FROM UtenteTrasportatore WHERE nome_utente_trasportatore='%s'", nome_utente_trasportatore.c_str());
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
+            
+            // Se il numero di righe del risultato della query è uguale di 1, allora c'è una ditta di spdedizione associata all'utente
             if (rows == 1)
             {
                 nome_ditta_spedizione = PQgetvalue(res, 0, 0);
@@ -123,37 +121,43 @@ public:
                 Row 1: 2,   2,   _trasportatore2_,   in transito,   Bartolini,
                 */
 
+                // Recupero degli id degli ordini che hanno come attributo "statoOrdine" = elaborazione.
                 sprintf(sqlcmd, "SELECT idOrdine FROM Ordine WHERE statoOrdine='in elaborazione'");
                 res = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res);
+
+                // Se il numero di righe del risultato della query è maggiore o uguale di 1, cioè ci sono ordini con lo stato "in elaborazione" allora possiamo creare delle spedizione
                 if (rows >= 1)
                 {
                     idOrdine = atoi(PQgetvalue(res, 0, 0));
                     // Inseriamo nel database la spedizione dell'utente trasportatore libero all'ordine associato
                     PQclear(res);
 
+                    // Inserisco nel database una riga corrispondente alla spedizione effettuata dall'utente trasportatore libero (con disponibilità 0) e con un ordine "in elaborazione":
                     sprintf(sqlcmd, "INSERT INTO Spedizione (idSpedizione, idOrdine, nome_utente_trasportatore, statoSpedizione, nome_DittaSpedizione) VALUES (DEFAULT, '%d', '%s', '%s', '%s')",
                             idOrdine, nome_utente_trasportatore.c_str(), statoSpedizioneStr.c_str(), nome_ditta_spedizione.c_str());
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res);
 
+                    // Log
                     messageLog = "Assegnato ordine al trasportatore " + nome_utente_trasportatore;
-
                     InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
-                    // A questo punto dobbiamo modificare la disponibilità dell'utente trasportatore:
+                    // Una volta assegnata la spedizione all'utente trasportatore dobbiamo modificare la disponibilità di quest'ultimo.
                     sprintf(sqlcmd, "UPDATE UtenteTrasportatore set dispo='1' WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res);
 
+                    // Log
                     InsertToLogDB(db1, "INFO", "Modificata disponibilità utente trasportatore", sessionID, nomeRequisito, statoReq);
 
+                    // Inoltre dobbiamo rendere lo stato dell'ordine "spedito", poichè è stato spedito.
                     sprintf(sqlcmd, "UPDATE Ordine set statoOrdine ='spedito' WHERE idOrdine = '%d'", idOrdine);
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res);
 
+                    // Log
                     statoReq = statoRequisito::Success;
-
                     InsertToLogDB(db1, "INFO", "Avviata spedizione ordine", sessionID, nomeRequisito, statoReq);
 
                     // Animiamo l'oggetto Spedizione:
@@ -162,17 +166,21 @@ public:
                     spedizione.stato_spedizione = stato_spedizione;
                     spedizione.ditta_spedizione = nome_ditta_spedizione;
                 }
+
+                // Se il numero di righe del risultato della query è < 1 allora non esistono ordini con stato "in elaborazione"
                 else
                 {
+                    // Log dell'errore e uscita dalla funzione
                     std::cout << "Gli ordini sono tutti spediti." << std::endl;
 
                     statoReq = statoRequisito::NotSuccess;
-
                     InsertToLogDB(db1, "WARNING", "Ordini tutti spediti", sessionID, nomeRequisito, statoReq);
 
                     return spedizione;
                 }
             }
+
+            // Se il numero di righe del risultato della query è diverso da 1, allora NON c'è una ditta di spdedizione associata all'utente
             else
             {
                 std::cout << "L'utente non è stato trovato." << std::endl;
@@ -184,6 +192,8 @@ public:
                 return spedizione;
             }
         }
+
+        // Se il numero di righe del risultato della query è < 1, NON ci sono utenti trasportatori con attributo "disponibilità" = 0, perciò non possono essere create spedizioni.
         else
         {
             std::cout << "Nessun utente ha disponibilità per prendere in carico l'ordine." << std::endl;
@@ -197,40 +207,31 @@ public:
         return spedizione;
     }
 
-    std::string statoSpedizioneToString(StatoSpedizione stato)
-    {
-        switch (stato)
-        {
-        case StatoSpedizione::InTransito:
-            return "in transito";
-        case StatoSpedizione::Consegnato:
-            return "consegnato";
-        default:
-            return ""; // gestione degli errori o valori non validi
-        }
-    }
 
-    // Nell'implementazione di questo metodo l'utente trasportatore associato alla spedizione avvisa il sistema che ha completato la spedizione e consegnato il prodotto dell'ordine
+
+    // Nell'implementazione di questo metodo l'utente trasportatore associato alla spedizione avvisa il sistema che ha completato la spedizione e consegnato il prodotto dell'ordine.
     void spedizioneConsegnata(Con2DB db1, std::string in_nome_utente_trasportatore, int idSpedizione)
     {
-
         std::string sessionID = "";
 
+
+        // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Consegna Spedizione.";
         statoRequisito statoReq = statoRequisito::Wait;
-
         std::string messageLog = "";
 
 
-        // Mi assicuro che esista l'id della spedizione:
+        // Verifico che l'id della spedizione esista effettuando una query.
         sprintf(sqlcmd, "SELECT * FROM Spedizione WHERE idSpedizione = '%d'", idSpedizione);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+
+        // Se il numero di righe del risultato della query è < di 1, allora l'id non esiste, errore
         if (rows < 1){
+            
+            // Log dell'errore e uscita dalla funzione
             messageLog = "Non esiste id " + std::to_string(idSpedizione) + " della spedizione";
-
             statoReq = statoRequisito::NotSuccess;
-
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
@@ -240,14 +241,15 @@ public:
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res);
 
+        // Log
         statoReq = statoRequisito::Success;
-
         messageLog = "Ordine consegnato da " + in_nome_utente_trasportatore;
-
         InsertToLogDB(db1, "INFO", "Ordine consegnato", sessionID, nomeRequisito, statoReq);
 
+
         // Aggiorno la disponibilità dell'utente Trasportatore che può effettuare una nuova consegna:
-        // Prima selezioniamo il nome dell'utente Trasportatore:
+        
+        // Prima recupero il nome dell'utente trasportatore associato all'id della spedizione
         std::string nome_utente_trasportatore;
         sprintf(sqlcmd, "SELECT nome_utente_trasportatore FROM Spedizione WHERE idSpedizione = '%d'", idSpedizione);
         res = db1.ExecSQLtuples(sqlcmd);
@@ -303,6 +305,20 @@ public:
         }
         std::cout << "Spedizione " << idSpedizione << " consegnata! " << std::endl;
         return;
+    }
+
+
+     std::string statoSpedizioneToString(StatoSpedizione stato)
+    {
+        switch (stato)
+        {
+        case StatoSpedizione::InTransito:
+            return "in transito";
+        case StatoSpedizione::Consegnato:
+            return "consegnato";
+        default:
+            return ""; // gestione degli errori o valori non validi
+        }
     }
 };
 
