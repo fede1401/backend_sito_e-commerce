@@ -83,8 +83,6 @@ public:
                 quantitàPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
                 PQclear(res1);
 
-                printf("Si ferma dopo il PQclear(res1)!\n");
-
                 // Aumenta la quantità del prodotto da inserire
                 quantitàPrecedente = quantitàPrecedente + 1;
                 
@@ -93,11 +91,9 @@ public:
                 PGresult *res2 = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res2);
 
-                printf("Si ferma dopo il PQclear(res2)!\n");
-
                 // Log 
                 statoReq = statoRequisito::Success;
-                messageLog = "Il prodotto già esiste nella lista desideri, ne aggiungiamo la quantità per utente: " + in_nome_utente_compratore;
+                messageLog = "Il prodotto con codice " +  std::to_string(in_codProdotto)  + " già esiste nella lista desideri, ne aggiungiamo la quantità per utente: " + in_nome_utente_compratore;
                 InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                 // Anima l'oggetto:
@@ -106,13 +102,10 @@ public:
                 quantitàProdotti = quantitàPrecedente;
 
             }
-            printf("Uscito dall'if\n");
             break;
 
         }
-        printf("Il problema va nella PQclear(res)\n");
         //PQclear(res);
-        printf("Si ferma dopo PQclear(res)\n");
          
 
         // Controlliamo se il prodotto non è nella lista desideri e dobbiamo inserirlo lo inseriamo per la prima volta 
@@ -124,7 +117,7 @@ public:
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Inserimento del prodotto nella lista desideri per utente: " + in_nome_utente_compratore;
+            messageLog = "Inserimento del prodotto con codice " +  std::to_string(in_codProdotto)  + " nella lista desideri per utente: " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
             // Anima l'oggetto:
@@ -174,7 +167,8 @@ public:
 
             // Log
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "ERROR", "Il prodotto da eliminare non esiste", sessionID, nomeRequisito, statoReq);
+            messageLog = "Il prodotto con codice " +  std::to_string(in_cod_prodotto)  + " non esiste";
+            InsertToLogDB(db1, "ERROR", messageLog , sessionID, nomeRequisito, statoReq);
             return;
         }
         else{
@@ -185,7 +179,7 @@ public:
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Rimozione del prodotto dalla lista desideri per utente: " + in_nome_utente_compratore;
+            messageLog = "Rimozione del prodotto con codice " +  std::to_string(in_cod_prodotto)  + " dalla lista desideri per utente: " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
     return;

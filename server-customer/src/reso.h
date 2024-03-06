@@ -3,14 +3,8 @@
 #define RESO_H
 
 #include "main.h"
+#include "../../shared-server/statoMotivazioneResoToString.h"
 
-
-enum class motivazioneReso {
-    Difettoso,
-    MisuraErrata,
-    NonConformeAlleAspettative,
-    CambioOpinione
-    };
 
 
 class Reso {
@@ -148,23 +142,6 @@ public:
         }
     std::cout << "Reso effettuato" << std::endl;
     return;
-    }
-
-
-    // Metodo che prende un tipo enumerativo motivazioneReso come input e restituisce una stringa che rappresenta quel particolare stato.
-    std::string statoMotivazioneResoToString(motivazioneReso stato) {
-        switch (stato) {
-            case motivazioneReso::Difettoso :
-                return "difettoso";
-            case motivazioneReso::MisuraErrata :
-                return "misura errata";
-            case motivazioneReso::NonConformeAlleAspettative :
-                return "non conforme alle aspettative";
-            case motivazioneReso::CambioOpinione :
-                return "cambio opinione";
-            default:
-                return ""; // gestione degli errori o valori non validi
-        }
     }
 
 

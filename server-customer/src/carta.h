@@ -97,7 +97,8 @@ public:
 
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "ERROR", "Utente non trovato", sessionID, nomeRequisito, statoReq);
+            messageLog = "Utente " + in_nome_utente + " non trovato.";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
 
@@ -163,7 +164,7 @@ public:
 
             // Log della rimozione della carta
             statoReq = statoRequisito::Success;
-            messageLog = "Eliminazione carta di pagamento utente compratore " + in_nome_utente_compratore;
+            messageLog = "Eliminazione carta di pagamento " + in_numeroCarta + " dell utente compratore " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
     return;

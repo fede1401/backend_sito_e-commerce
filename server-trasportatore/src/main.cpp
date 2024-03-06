@@ -5,6 +5,9 @@
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/src/con2redis.h"
 #include <string.h>
 
+#include "../../shared-server/generateSessionID.h"      // Migliore separazione delle responsabilità
+
+
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
 // Usage: ./streams <add count> <read count> [block time, default: 1]
 
@@ -14,27 +17,6 @@
 #define WRITE_STREAM_TRASPORTATORE "stream6"
 
 using namespace std;
-
-
-std::string generateSessionID()
-    {
-        // Caratteri validi per il Session ID
-        const std::string valid_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        // Inizializzazione del generatore di numeri casuali
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<int> dis(0, valid_characters.size() - 1);
-
-        // Generazione del Session ID casuale
-        std::string session_id;
-        for (int i = 0; i < 10; ++i)
-        {
-            session_id += valid_characters[dis(gen)];
-        }
-
-        return session_id;
-    }
 
 
 int main()
@@ -105,7 +87,6 @@ int main()
     char outputs[100];
 
     UtenteTrasportatore trasportatore;
-    Product prodotto;
     /*  prg  */
 
 #if (DEBUG > 0)

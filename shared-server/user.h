@@ -815,7 +815,7 @@ public:
 
 
         // Se la password del db è diversa dalla password inserita dall'utente allora non può essere effettuata l'azione
-        if (passwUtente != vecchiaPassw)
+        if (passwDB != vecchiaPassw)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
