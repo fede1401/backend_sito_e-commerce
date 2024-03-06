@@ -595,7 +595,7 @@ int main()
                 if (std::string(action) == "RIMUOVI PRODOTTO SITO"){
                     Product prodotto;
 
-                    prodotto.remove_prodotto(db1, nome_utente_fornitore, nomeProdotto);
+                    prodotto.remove_prodotto(db1, nome_utente_fornitore, codiceProdotto);
 
                     strcpy(outputs, "Prodotto rimosso dal sito");
 

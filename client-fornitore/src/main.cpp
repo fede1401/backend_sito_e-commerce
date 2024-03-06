@@ -323,8 +323,9 @@ int main()
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, nomi_utente[i30].c_str());
                 
-                sprintf(key3, "nomeProdotto");
-                sprintf(value3, nomi_prodotti[i30].c_str());
+                sprintf(key3, "codiceProdotto");
+                std::string codiceProdotto = std::to_string(rand()%30);
+                sprintf(value3, codiceProdotto.c_str());
 
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);

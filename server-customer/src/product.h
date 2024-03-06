@@ -134,75 +134,74 @@ class Product {
 
 
     // Funzione utilizzata per permettere ad un utente fornitore di rimuovere un prodotto 
-    void remove_prodotto(Con2DB db1, std::string in_nome_utente_fornitore, std::string in_nome_prodotto){
+    void remove_prodotto(Con2DB db1, std::string in_nome_utente_fornitore, int codProdotto){
         
+        // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione prodotto dal sito.";
         statoRequisito statoReq = statoRequisito::Wait;
-        std::string sessionID = "";
-
         std::string messageLog = "";
 
 
+        std::string sessionID = "";
 
-        // Verifica se l'utente fornitore che vuole rimuovere il prodotto dal sito è effettivamente un utente fornitore:
+
+        // Verifica se l'utente che vuole rimuovere il prodotto dal sito è effettivamente un utente fornitore:
         sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente_fornitore);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
+
+        // Se il numero di righe del risultato della query è diverso da 1 non c'è nessun utente fornitore con quel nome utente.
         if (rows != 1){
+            // Log dell'errore e uscita dalla funzione.
             InsertToLogDB(db1, "ERROR", "Utente non fornitore vuole rimuovere il prodotto", "", nomeRequisito, statoReq);
 
             return;
         }
 
-        // Caricamento del sessionID utile per il log.
+        // Caricamento del sessionID.
         sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente_fornitore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
         PQclear(res);     
 
-
+        // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
+            // Log dell'errore e uscita dalla funzione
             InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può rimuovere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
             return;
         }
 
 
-        // Selezione del codice del prodotto tramite il suo nome:
-        sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome = '%s'", in_nome_prodotto);
-        res = db1.ExecSQLtuples(sqlcmd);
-        rows = PQntuples(res);
-        int codProdotto;
-        if (rows == 1){codProdotto = atoi(PQgetvalue(res, 0, PQfnumber(res, "codProdotto")));}
-        PQclear(res);
-        
-        
+        // Verifica che il prodotto da rimuovere esista
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
+
+        // Se il numero di righe del risultato della query è minore di 1 non c'è nessun prodotto con quel codice, perciò non può essere rimosso.
         if (rows < 1){
-            std::cout << "La riga da eliminare non esiste!" << std::endl;
-
+            // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-
             InsertToLogDB(db1, "ERROR", "Il prodotto da eliminare non esiste", "", nomeRequisito, statoReq);
+            
+            std::cout << "La riga da eliminare non esiste!" << std::endl;
 
             return;
         }
+
+        // Se il numero di righe del risultato della query è maggiore o uguale a 1 il prodotto può essere rimosso
         else{
             // Eliminazione del prodotto dal carrello dell'utente compratore.
             sprintf(sqlcmd, "DELETE FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
+            // Log
             statoReq = statoRequisito::Success;
-
             messageLog = "Eliminato prodotto da " + in_nome_utente_fornitore;
-
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
-
         }
     return;
     }

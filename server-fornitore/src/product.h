@@ -40,32 +40,35 @@ class Product {
     }
 
 
+    // Funzione utilizzata per permettere ad un utente fornitore di aggiungere un prodotto al backend.
     void add_new_product(Con2DB db1, std::string in_nome_utente_fornitore ,std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili){
 
         std::string sessionID = "";
-    
+
+        // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Aggiunta prodotto al sito.";
         statoRequisito statoReq = statoRequisito::Wait;
-
         std::string messageLog = "";
 
 
-        *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
-
-        // Caricamento del sessionID utile per il log.
+        // Caricamento del sessionID.
         sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente_fornitore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
         PQclear(res);                        
 
+        // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
+            // Log dell'errore e uscita dalla funzione
             InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può aggiungere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
             return;
         }
 
+        // Controlliamo se il prodotto che l'utente fornitore vuole inserire nel database è già presente o meno.
+        // Se il prodotto è già presente dobbiamo solamente incrementare la quantità di copie, altrimenti dovremo inserirlo per la prima volta
 
-        // Se il prodotto inserito è già presente nella tabella Prodotto, allora dobbiamo solamente incrementare la quantità di copie, altrimenti dovremo inserirlo:
+        // Recupero del codice del prodotto tramite tutti i campi di input per controllare se è già present nel database
         sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND prezzoEuro='%f' AND nome_AziendaProduttrice='%s'" , 
         in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
@@ -73,15 +76,13 @@ class Product {
         PQclear(res);
         std::cout << "Le righe dopo la query di codProdotto è: " << rows << std::endl; 
 
+        // Se il numero di righe del risultato della query è maggiore o uguale a 1, allora il prodotto è già all'interno del database
         if (rows >= 1){
             // Il prodotto è già all'interno del backend, perciò dobbiamo solamente aumentarne la quantità di 1
-                // 1. Caricihiamo il numero di copie disponibili;
-                // 2. Le incrementiamo di 1;
-                // 3. Eseguiamo un UPDATE per modificare il valore delle copie disponibili;
 
                 int numCopieDisponibili;
 
-                // 1.
+                // 1. Recuperiamo il numero di copie disponibili del prodotto
                 sprintf(sqlcmd, "SELECT num_copie_dispo FROM Prodotto WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND prezzoEuro='%f' AND nome_AziendaProduttrice='%s'" , 
                 in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str());
                 res = db1.ExecSQLtuples(sqlcmd);
@@ -92,111 +93,115 @@ class Product {
 
                     PQclear(res);
 
-                    // 2.
+                    // 2. Incrementiamo la variabile di 1, perchè dovrà essere aggiornata nel db
                     numCopieDisponibili = numCopieDisponibili + 1;
 
-                    // 3.
+                    // 3. Eseguiamo un UPDATE per modificare il valore delle copie disponibili, appena aggiornato.
                     sprintf(sqlcmd, "UPDATE Prodotto set num_copie_dispo = '%d' WHERE nome='%s' AND categoria='%s' AND descrizione='%s' AND prezzoEuro='%f' AND nome_AziendaProduttrice='%s'" , 
                     numCopieDisponibili , in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str());
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res); 
 
+                    // Log
                     statoReq = statoRequisito::Success;
-
                     messageLog = "Aumentata quantità del prodotto inserito da parte di " + in_nome_utente_fornitore;
-
                     InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
+
+                    // Animo l'oggetto
+                    *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
                 }
         }
+
+        // Se il numero di righe del risultato della query non è maggiore o uguale a 1, cioè il prodotto non è all'interno del database dobbiamo aggiungerlo per la prima volta:
         else{
-            // Il prodotto non è all'interno del backend, inseriamolo:
+            // Il prodotto non è all'interno del database, inseriamolo per la prima volta
             sprintf(sqlcmd, "INSERT INTO Prodotto(codProdotto, nome, categoria,descrizione, prezzoEuro, nome_AziendaProduttrice, num_copie_dispo) VALUES (DEFAULT, '%s', '%s', '%s', '%f', '%s', '%d')", 
                                                             in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str(), in_numero_copie_disponibili);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res); 
 
+            // Log
             statoReq = statoRequisito::Success;
-
             messageLog = "Prodotto inserito nel sito da parte di " + in_nome_utente_fornitore;
-
-
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
+
+            // Animo l'oggetto
+            *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
         }
-        
             
     return;
     }
 
 
-    void remove_prodotto(Con2DB db1, std::string in_nome_utente_fornitore, std::string in_nome_prodotto){
+    // Funzione utilizzata per permettere ad un utente fornitore di rimuovere un prodotto 
+    void remove_prodotto(Con2DB db1, std::string in_nome_utente_fornitore, int codProdotto){
         
+        // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione prodotto dal sito.";
         statoRequisito statoReq = statoRequisito::Wait;
-        std::string sessionID = "";
-
         std::string messageLog = "";
 
 
+        std::string sessionID = "";
 
-        // Verifica se l'utente fornitore che vuole rimuovere il prodotto dal sito è effettivamente un utente fornitore:
+
+        // Verifica se l'utente che vuole rimuovere il prodotto dal sito è effettivamente un utente fornitore:
         sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente_fornitore);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
+
+        // Se il numero di righe del risultato della query è diverso da 1 non c'è nessun utente fornitore con quel nome utente.
         if (rows != 1){
+            // Log dell'errore e uscita dalla funzione.
             InsertToLogDB(db1, "ERROR", "Utente non fornitore vuole rimuovere il prodotto", "", nomeRequisito, statoReq);
 
             return;
         }
 
-        // Caricamento del sessionID utile per il log.
+        // Caricamento del sessionID.
         sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente_fornitore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
         PQclear(res);     
 
-
+        // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
+            // Log dell'errore e uscita dalla funzione
             InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può rimuovere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
             return;
         }
 
 
-        // Selezione del codice del prodotto tramite il suo nome:
-        sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto WHERE nome = '%s'", in_nome_prodotto);
-        res = db1.ExecSQLtuples(sqlcmd);
-        rows = PQntuples(res);
-        int codProdotto;
-        if (rows == 1){codProdotto = atoi(PQgetvalue(res, 0, PQfnumber(res, "codProdotto")));}
-        PQclear(res);
-        
-        
+        // Verifica che il prodotto da rimuovere esista
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
+
+        // Se il numero di righe del risultato della query è minore di 1 non c'è nessun prodotto con quel codice, perciò non può essere rimosso.
         if (rows < 1){
-            std::cout << "La riga da eliminare non esiste!" << std::endl;
-
+            // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-
             InsertToLogDB(db1, "ERROR", "Il prodotto da eliminare non esiste", "", nomeRequisito, statoReq);
+            
+            std::cout << "La riga da eliminare non esiste!" << std::endl;
 
             return;
         }
+
+        // Se il numero di righe del risultato della query è maggiore o uguale a 1 il prodotto può essere rimosso
         else{
             // Eliminazione del prodotto dal carrello dell'utente compratore.
             sprintf(sqlcmd, "DELETE FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
+            // Log
             statoReq = statoRequisito::Success;
-
             messageLog = "Eliminato prodotto da " + in_nome_utente_fornitore;
-
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
-
         }
     return;
     }
@@ -265,7 +270,7 @@ class Product {
     }
 
 
-
+    // Funzione che permette a un utente compratore di acquistare un prodotto specificando il nome del prodotto e l'indirizzo per la spedizione.
     Ordine acquistaProdotto(Con2DB db1, std::string nomeUtenteCompratore, std::string nomeProdotto, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione, std::string CAP_spedizione){
 
         Ordine ordine;
@@ -273,18 +278,14 @@ class Product {
 
         StatoOrdine stato_ordine;
 
+
+        // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Acquisto Prodotto.";
         statoRequisito statoReq = statoRequisito::Wait;
-
         std::string messageLog = "";
 
-
-        //std::string nomeDittaSpedizione;
-
-        //printf("Nome prodotto: %s \n", nome);
         
-
-        // Caricamento del sessionID utile per il log.
+        // Caricamento del sessionID.
         std::string sessionID = "";
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtenteCompratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
@@ -292,8 +293,9 @@ class Product {
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
         PQclear(res);     
 
-
+        // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
+             // Log dell'errore e uscita dalla funzione
             InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può acquistare un prodotto.", sessionID, nomeRequisito, statoReq);
             return;
         }                   
@@ -375,6 +377,7 @@ class Product {
     }
 
 
+    // Metodo che prende un tipo enumerativo StatoOrdine come input e restituisce una stringa che rappresenta quel particolare stato.
     std::string statoOrdineToString(StatoOrdine stato) {
         switch (stato) {
             case StatoOrdine::InElaborazione:
