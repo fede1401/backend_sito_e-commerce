@@ -864,7 +864,7 @@ int main()
 
                 if (std::string(action) == "ACQUISTA PRODOTTO"){
                     //Product prodotto;
-                    Ordine ordine = prodotto.acquistaProdotto(db1, nome_utente_compratore, nomeProdotto, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
+                    Ordine ordine = prodotto.acquistaProdotto(db1, nome_utente_compratore, codiceProdotto, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
 
                     strcpy(outputs, "Acquisto prodotto");
 

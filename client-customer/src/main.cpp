@@ -595,8 +595,9 @@ int main()
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, nomi_utente[i30].c_str());
 
-                sprintf(key3, "nomeProdotto");
-                sprintf(value3, nomi_prodotti[i30].c_str());
+                sprintf(key3, "codiceProdotto");
+                std::string codiceProdotto = std::to_string(rand()%30);
+                sprintf(value3, codiceProdotto.c_str());
 
                 sprintf(key4, "via_spedizione");
                 sprintf(value4, vie_di_residenza[i5].c_str());
