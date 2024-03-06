@@ -207,36 +207,59 @@ class Product {
     }
 
 
-    // Sistemare per aggiugnere l'utente che ricerca il prodotto
-    void ricerca_mostra_Prodotto(Con2DB db1, std::string nomeProdotto){
+    // Funzione utilizzata per permettere ad un utente compratore di ricercare un prodotto 
+    void ricerca_mostra_Prodotto(Con2DB db1, std::string in_nome_utente_compratore, int codProdotto){
 
+        std::string sessionID = "";
 
+        // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Ricerca e mostra informazioni del prodotto.";
         statoRequisito statoReq = statoRequisito::Wait;
 
-        // Cerchiamo il prodotto nel database:
-        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE nome = '%s'", nomeProdotto.c_str());
+        // Caricamento del sessionID.
+        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        //PQclear(res);
-        // Il prodotto non è stato trovato
-        if (rows < 1){
-            std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+        PQclear(res);     
 
-            statoReq = statoRequisito::NotSuccess;
-
-            PQclear(res); 
-            InsertToLogDB(db1, "ERROR", "Non esiste il prodotto che si sta ricercando", "", nomeRequisito, statoReq);
+        // Verifica se l'utente è loggato e ha una sessionID valida
+        if (sessionID == ""){
+            // Log dell'errore e uscita dalla funzione
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può rimuovere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
             return;
         }
+
+
+        // Effettuiamo la ricerca del prodotto nel database nella tabella Prodotto
+        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%s'", codProdotto);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        // Se il numero di righe del risultato della query è minore di 1 non c'è nessun prodotto con quel codice, perciò non può essere effettuata la ricerca.
+        if (rows < 1){
+            
+            PQclear(res); 
+
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            InsertToLogDB(db1, "ERROR", "Non esiste il prodotto che si sta ricercando", "", nomeRequisito, statoReq);
+
+            std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
+
+            return;
+        }
+
+        // Se il numero di righe del risultato della query è minore di 1 non c'è nessun prodotto con quel codice, perciò non può essere effettuata la ricerca.
         else{
-            // Animo l'oggetto Product:
+            // Animo l'oggetto prodotto:
+            cod_product = codProdotto;
             nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
             categoria = PQgetvalue(res, 0, PQfnumber(res, "categoria"));
             descrizione = PQgetvalue(res, 0, PQfnumber(res, "descrizione"));
             prezzo_euro = atof(PQgetvalue(res, 0, PQfnumber(res, "prezzoEuro")));
             azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
-            numero_copie_disponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
+            numero_copie_disponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));       
 
             // Mostro le informazioni del Prodotto;
             std::cout << "Nome prodotto:" << nome << std::endl;
@@ -246,25 +269,13 @@ class Product {
             std::cout << "Azienda di produzione: " << azienda_produzione << std::endl;
             std::cout << "Numero delle copie disponibili: " << numero_copie_disponibili << std::endl;
 
-            statoReq = statoRequisito::Success;
 
             PQclear(res); 
 
+            // Log
+            statoReq = statoRequisito::Success;
             InsertToLogDB(db1, "INFO", "Visione del prodotto ricercato", "", nomeRequisito, statoReq);
-
-            
-            /*int numCols = PQnfields(res);
-            for (int i = 0; i < rows; ++i) {
-                std::cout << "Row " << i << ": ";
-                for (int j = 0; j < numCols; ++j) {
-                    std::cout << PQgetvalue(res, i, j) << ",   ";
-                }
-                std::cout << std::endl;
-            }
-            */
-            
         }
-        //PQclear(res); 
 
     return;
     }

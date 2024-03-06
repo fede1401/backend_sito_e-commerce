@@ -621,14 +621,18 @@ int main()
             }
 
             if (test2[i] == "RICERCA PRODOTTO"){
-                sprintf(key2, "nomeProdotto");
-                sprintf(value2, nomi_prodotti[i30].c_str());
+                sprintf(key2, "nome_utente_compratore");
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
+                sprintf(key3, "codiceProdotto");
+                std::string codiceProdotto = std::to_string(rand()%30);
+                sprintf(value3, codiceProdotto.c_str());
+
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                printf("XADD %s * %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, reply->str);
+                printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
 
                 freeReplyObject(reply);
             }

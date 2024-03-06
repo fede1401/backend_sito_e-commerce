@@ -891,7 +891,7 @@ int main()
 
                 if (std::string(action) == "RICERCA PRODOTTO"){
                     Product prodotto;
-                    prodotto.ricerca_mostra_Prodotto(db1, nomeProdotto);
+                    prodotto.ricerca_mostra_Prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Ricerca prodotto");
 
