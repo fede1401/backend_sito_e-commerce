@@ -233,6 +233,7 @@ public:
     }
 
 
+    // Metodo che prende un tipo enumerativo votoStelle come input e restituisce una stringa che rappresenta quel particolare stato.
     std::string statoVotoStelleToString(votoStelle stato)
     {
         switch (stato)

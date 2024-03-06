@@ -151,7 +151,7 @@ public:
     }
 
 
-
+    // Metodo che prende un tipo enumerativo motivazioneReso come input e restituisce una stringa che rappresenta quel particolare stato.
     std::string statoMotivazioneResoToString(motivazioneReso stato) {
         switch (stato) {
             case motivazioneReso::Difettoso :

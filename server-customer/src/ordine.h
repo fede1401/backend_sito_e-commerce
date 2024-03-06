@@ -227,7 +227,7 @@ public:
         
     
 
-
+    // Metodo che prende un tipo enumerativo StatoOrdine come input e restituisce una stringa che rappresenta quel particolare stato.
     std::string statoOrdineToString(StatoOrdine stato) {
         switch (stato) {
             case StatoOrdine::InElaborazione:

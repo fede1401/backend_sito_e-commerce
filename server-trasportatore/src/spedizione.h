@@ -247,13 +247,15 @@ public:
         InsertToLogDB(db1, "INFO", "Ordine consegnato", sessionID, nomeRequisito, statoReq);
 
 
-        // Aggiorno la disponibilità dell'utente Trasportatore che può effettuare una nuova consegna:
+        // Aggiorno la disponibilità dell'utente Trasportatore , il quale può effettuare una nuova consegna:
         
-        // Prima recupero il nome dell'utente trasportatore associato all'id della spedizione
+        // Recupero il nome dell'utente trasportatore associato all'id della spedizione
         std::string nome_utente_trasportatore;
         sprintf(sqlcmd, "SELECT nome_utente_trasportatore FROM Spedizione WHERE idSpedizione = '%d'", idSpedizione);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+
+        // Se il numero di righe del risultato della query è uguale a 1, allora esiste l'utente trasportatore associato alla spedizione
         if (rows == 1)
         {
             nome_utente_trasportatore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_trasportatore"));
@@ -262,39 +264,39 @@ public:
             // Controlliamo se l'utente trasportatore corrisponde a quello che vuole avvisare che la spedizione è consegnata:
             if (in_nome_utente_trasportatore != nome_utente_trasportatore)
             {
+                // Log dell'errore e uscita dalla funzione
                 InsertToLogDB(db1, "ERROR", "Utente che sta cercando di eliminare la recensione non corrisponde a quello che vuole avvisare che la spedizione è consegnata", sessionID, nomeRequisito, statoReq);
                 return;
             }
 
-            // Caricamento del sessionID utile per il log.
+            // Caricamento del sessionID.
             sprintf(sqlcmd, "SELECT session_id_t FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
-            if (rows == 1)
-            {
-                sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));
-            }
+            if (rows == 1) { sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t")); }
             PQclear(res);
 
+            // Verifica se l'utente è loggato e ha una sessionID valida
             if (sessionID == "")
             {
+                // Log dell'errore e uscita dalla funzione
                 InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può avvisare che la spedizione è consegnata .", sessionID, nomeRequisito, statoReq);
                 return;
             }
 
-            // Ora aggiorniamo la disponibilità dell'utente Trasportatore:
+            // A questo punto l'utente trasportatore può prendere nuove consegne, perciò aggiorniamo la sua disponibilità.
             sprintf(sqlcmd, "UPDATE UtenteTrasportatore set dispo='0' WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
+            // Log
             nomeRequisito = "Utente Trasportatore liberato.";
             statoReq = statoRequisito::Success;
-
             messageLog = "Disponibilità utente trasportatore " + in_nome_utente_trasportatore + "per prendere in consegna un nuovo pacco ";
-
-
             InsertToLogDB(db1, "INFO", "Disponibilità utente trasportatore per prendere in consegna un nuovo pacco", sessionID, nomeRequisito, statoReq);
         }
+
+        // Se il numero di righe del risultato della query è diverso da 1, allora NON esiste l'utente trasportatore associato alla spedizione.
         else
         {
             std::cout << "Nessun utente trasportatore associato alla spedizione! " << std::endl;
@@ -303,12 +305,14 @@ public:
             InsertToLogDB(db1, "WARNING", "Nessun utente trasportatore associato alla spedizione.", sessionID, nomeRequisito, statoReq);
             return;
         }
+
         std::cout << "Spedizione " << idSpedizione << " consegnata! " << std::endl;
         return;
     }
 
 
-     std::string statoSpedizioneToString(StatoSpedizione stato)
+    // Metodo che prende uno stato di spedizione come input e restituisce una stringa che rappresenta quel particolare stato.
+    std::string statoSpedizioneToString(StatoSpedizione stato)
     {
         switch (stato)
         {
