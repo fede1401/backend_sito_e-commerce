@@ -138,7 +138,7 @@ public:
                     PQclear(res);
 
                     // Log
-                    messageLog = "Assegnato ordine al trasportatore " + nome_utente_trasportatore;
+                    messageLog = "Assegnato ordine " + std::to_string(idOrdine) + " al trasportatore " + nome_utente_trasportatore;
                     InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                     // Una volta assegnata la spedizione all'utente trasportatore dobbiamo modificare la disponibilità di quest'ultimo.
@@ -147,7 +147,8 @@ public:
                     PQclear(res);
 
                     // Log
-                    InsertToLogDB(db1, "INFO", "Modificata disponibilità utente trasportatore", sessionID, nomeRequisito, statoReq);
+                    messageLog = "Modificata disponibilità al trasportatore " + nome_utente_trasportatore;
+                    InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                     // Inoltre dobbiamo rendere lo stato dell'ordine "spedito", poichè è stato spedito.
                     sprintf(sqlcmd, "UPDATE Ordine set statoOrdine ='spedito' WHERE idOrdine = '%d'", idOrdine);
@@ -156,7 +157,8 @@ public:
 
                     // Log
                     statoReq = statoRequisito::Success;
-                    InsertToLogDB(db1, "INFO", "Avviata spedizione ordine", sessionID, nomeRequisito, statoReq);
+                    messageLog = "Avviata spedizione per ordine " + std::to_string(idOrdine);
+                    InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                     // Animiamo l'oggetto Spedizione:
                     spedizione.idOrdine = idOrdine;
@@ -183,8 +185,8 @@ public:
             {
                 std::cout << "L'utente non è stato trovato." << std::endl;
 
+                // Log
                 statoReq = statoRequisito::NotSuccess;
-
                 InsertToLogDB(db1, "WARNING", "Utente non trovato", sessionID, nomeRequisito, statoReq);
 
                 return spedizione;
@@ -263,7 +265,8 @@ public:
             if (in_nome_utente_trasportatore != nome_utente_trasportatore)
             {
                 // Log dell'errore e uscita dalla funzione
-                InsertToLogDB(db1, "ERROR", "Utente che sta cercando di eliminare la recensione non corrisponde a quello che vuole avvisare che la spedizione è consegnata", sessionID, nomeRequisito, statoReq);
+                messageLog = "Utente che sta cercando di avvisare che la spedizione è consegnata ( " + in_nome_utente_trasportatore + ") non corrisponde a quello della spedizione ( " + nome_utente_trasportatore+ ").";
+                InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
                 return;
             }
 
@@ -290,8 +293,8 @@ public:
             // Log
             nomeRequisito = "Utente Trasportatore liberato.";
             statoReq = statoRequisito::Success;
-            messageLog = "Disponibilità utente trasportatore " + in_nome_utente_trasportatore + "per prendere in consegna un nuovo pacco ";
-            InsertToLogDB(db1, "INFO", "Disponibilità utente trasportatore per prendere in consegna un nuovo pacco", sessionID, nomeRequisito, statoReq);
+            messageLog = "Disponibilità utente trasportatore " + in_nome_utente_trasportatore + " aggiornata per prendere in consegna un nuovo pacco ";
+            InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
 
         // Se il numero di righe del risultato della query è diverso da 1, allora NON esiste l'utente trasportatore associato alla spedizione.

@@ -88,7 +88,7 @@ public:
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Inserimento carta di pagamento utente compratore " + in_nome_utente;
+            messageLog = "Inserimento carta di pagamento con il numero " + in_numeroCarta + " per utente compratore " + in_nome_utente;
             InsertToLogDB(db1, "INFO", messageLog , sessionID, nomeRequisito, statoReq);
         } 
         else{
@@ -151,7 +151,8 @@ public:
         if (rows < 1){
             // La carta non esiste nel database, log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "ERROR", "Carta non trovata", sessionID, nomeRequisito, statoReq);
+            messageLog = "Carta con il numero " + in_numeroCarta + " non trovata";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             std::cout << "La riga da eliminare non esiste!" << std::endl;
             
             return;

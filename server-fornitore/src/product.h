@@ -111,7 +111,7 @@ public:
 
                 // Log
                 statoReq = statoRequisito::Success;
-                messageLog = "Aumentata quantità del prodotto inserito da parte di " + in_nome_utente_fornitore;
+                messageLog = "Aumentata quantità del prodotto con nome " + in_nome  + " da parte di " + in_nome_utente_fornitore;
                 InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                 // Animo l'oggetto
@@ -130,7 +130,7 @@ public:
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Prodotto inserito nel sito da parte di " + in_nome_utente_fornitore;
+            messageLog = "Prodotto con nome " + in_nome +  " inserito nel sito da parte di " + in_nome_utente_fornitore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
             // Animo l'oggetto
@@ -161,7 +161,8 @@ public:
         if (rows != 1)
         {
             // Log dell'errore e uscita dalla funzione.
-            InsertToLogDB(db1, "ERROR", "Utente non fornitore vuole rimuovere il prodotto", "", nomeRequisito, statoReq);
+            messageLog = "Utente fornitore " + in_nome_utente_fornitore + " non trovato";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
 
             return;
         }
@@ -195,7 +196,8 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "ERROR", "Il prodotto da eliminare non esiste", "", nomeRequisito, statoReq);
+            messageLog = "Il prodotto con codice " + std::to_string(codProdotto) + " non esiste";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
 
             std::cout << "La riga da eliminare non esiste!" << std::endl;
 
@@ -212,7 +214,7 @@ public:
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Eliminato prodotto da " + in_nome_utente_fornitore;
+            messageLog = "Eliminato prodotto con codice " + std::to_string(codProdotto) + " da " + in_nome_utente_fornitore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
         return;

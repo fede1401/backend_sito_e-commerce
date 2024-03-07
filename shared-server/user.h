@@ -238,7 +238,8 @@ public:
                 {
                     // Log dell'errore e uscita dalla funzione
                     statoReq = statoRequisito::NotSuccess;
-                    InsertToLogDB(db1, "ERROR", "Utente non trovato.", sessionID, nomeRequisito, statoReq);
+                    messageLog = "Utente " + input_nome_utente + " non trovato";
+                    InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
                     
                     std::cout << "Errore: L'utente non è stato trovato." << std::endl;
                     return;
@@ -253,7 +254,8 @@ public:
                 {
                     // Log dell'errore e uscita dalla funzione
                     statoReq = statoRequisito::NotSuccess;
-                    InsertToLogDB(db1, "ERROR", "Password non corretta", sessionID, nomeRequisito, statoReq);
+                    messageLog = "Password " + input_passw + " non corretta.";
+                    InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
                     std::cout << "Errore: La passowrd non è corretta, riprovare." << std::endl;
                     return;
@@ -313,7 +315,8 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "ERROR", "Utente non trovato", "", nomeRequisito, statoReq);
+            messageLog = "Utente " + input_nome_utente + " non trovato";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
             
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
             return;
@@ -494,7 +497,8 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "ERROR", "Utente non trovato.", sessionID, nomeRequisito, statoReq);
+            messageLog = "Utente " + nomeUtenteLogout + " non trovato.";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
             return;
@@ -660,7 +664,7 @@ public:
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Aggiornamento numero di telefono utente: " + input_nome_utente;
+            messageLog = "Aggiornamento numero di telefono : " + nuovoNumeroTelefono +" per utente: " + input_nome_utente;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
         if (categoria == "UtenteFornitore")
@@ -672,7 +676,7 @@ public:
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Aggiornamento numero di telefono utente: " + input_nome_utente;
+            messageLog = "Aggiornamento numero di telefono : " + nuovoNumeroTelefono +" per utente: " + input_nome_utente;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
         if (categoria == "UtenteTrasportatore")
@@ -684,7 +688,7 @@ public:
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Aggiornamento numero di telefono utente: " + input_nome_utente;
+            messageLog = "Aggiornamento numero di telefono : " + nuovoNumeroTelefono +" per utente: " + input_nome_utente;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
         return;
@@ -700,6 +704,7 @@ public:
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Aggiornamento password.";
         statoRequisito statoReq = statoRequisito::Wait;
+        std::string messageLog = "";
 
 
         // Viene trovata la categoria dell'utente.
@@ -779,7 +784,8 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "ERROR", "La password attuale inserita non è corretta.", sessionID, nomeRequisito, statoReq);
+            messageLog = "La password inserita " + vecchiaPassw +"  non è corretta.";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             
             std::cout << "Errore: La password attuale inserita non è corretta" << std::endl;
             return;
@@ -798,7 +804,8 @@ public:
                 statoReq = statoRequisito::NotSuccess;
 
                 // Registra un errore nel log del database e stampa un messaggio di errore
-                InsertToLogDB(db1, "ERROR", "La nuova passowrd deve contenere almeno 8 caratteri.", sessionID, nomeRequisito, statoReq);
+                messageLog = "La nuova password inserita " + nuovaPassw + " deve contenere almeno 8 caratteri.";
+                InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
                 std::cout << "Errore: La nuova passowrd deve contenere almeno 8 caratteri." << std::endl;
 
                 return;
@@ -833,7 +840,8 @@ public:
                 std::cout << "La nuova password deve contenere almeno un carattere maiuscolo." << std::endl;
 
                 statoReq = statoRequisito::NotSuccess;
-                InsertToLogDB(db1, "ERROR", "La nuova passowrd deve contenere almeno un carattere maiuscolo.", sessionID, nomeRequisito, statoReq);
+                messageLog = "La nuova password inserita " + nuovaPassw + " deve contenere almeno un carattere maiuscolo.";
+                InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             }
 
             // Verifica se la password contiene almeno un numero
@@ -843,7 +851,8 @@ public:
                 std::cout << "La nuova password deve contenere almeno un numero." << std::endl;
 
                 statoReq = statoRequisito::NotSuccess;
-                InsertToLogDB(db1, "ERROR", "La nuova passowrd deve contenere almeno un numero.", sessionID, nomeRequisito, statoReq);
+                messageLog = "La nuova password inserita " + nuovaPassw + " deve contenere almeno un numero.";
+                InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             }
 
             if (!hasSpecialChar)
@@ -852,7 +861,8 @@ public:
                 std::cout << "La nuova password deve contenere almeno un carattere speciale." << std::endl;
 
                 statoReq = statoRequisito::NotSuccess;
-                InsertToLogDB(db1, "ERROR", "La nuova passowrd deve contenere almeno un carattere speciale.", sessionID, nomeRequisito, statoReq);
+                messageLog = "La nuova password inserita " + nuovaPassw + " deve contenere almeno un carattere speciale.";
+                InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             }
 
 
@@ -866,7 +876,8 @@ public:
 
                 // Log
                 statoReq = statoRequisito::Success;
-                InsertToLogDB(db1, "INFO", "Aggiornamento password.", sessionID, nomeRequisito, statoReq);
+                messageLog = "Aggiornamento password (nuova password inserita: " + nuovaPassw + " ) per utente: " + input_nome_utente;
+                InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
             }
             if (categoria == "UtenteFornitore")
             {
@@ -877,7 +888,8 @@ public:
 
                 // Log
                 statoReq = statoRequisito::Success;
-                InsertToLogDB(db1, "INFO", "Aggiornamento password.", sessionID, nomeRequisito, statoReq);
+                messageLog = "Aggiornamento password (nuova password inserita: " + nuovaPassw + " ) per utente: " + input_nome_utente;
+                InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
             }
             if (categoria == "UtenteTrasportatore")
             {
@@ -888,7 +900,8 @@ public:
 
                 // Log
                 statoReq = statoRequisito::Success;
-                InsertToLogDB(db1, "INFO", "Aggiornamento password.", sessionID, nomeRequisito, statoReq);
+                messageLog = "Aggiornamento password (nuova password inserita: " + nuovaPassw + " ) per utente: " + input_nome_utente;
+                InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
             }
         }
 

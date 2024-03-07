@@ -69,6 +69,7 @@ public:
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Registrazione utente compratore.";
         statoRequisito statoReq = statoRequisito::Wait;
+        std::string messageLog = "";
 
 
         // Controllo se il sessionID è univoco.
@@ -95,7 +96,8 @@ public:
         {   
             // Log dell'errore (password e conferma password diverse) e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1,"ERROR", "Le password non corrispondono", session_id, nomeRequisito, statoReq);
+            messageLog = "La password inserita " + in_password + " non corrisponde con la conferma della password " + in_conferma_password;
+            InsertToLogDB(db1,"ERROR", messageLog, session_id, nomeRequisito, statoReq);
             
             std::cout << "Errore: Le password non corrispondono." << std::endl;
             return;
@@ -134,7 +136,7 @@ public:
 
         // Log
         statoReq = statoRequisito::Success;
-        std::string messageLog = "Utente compratore " + in_nome_utente + " inserito";
+        messageLog = "Utente compratore " + in_nome_utente + " inserito";
         InsertToLogDB(db1,"INFO", messageLog , sessionID, nomeRequisito, statoReq);
 
         

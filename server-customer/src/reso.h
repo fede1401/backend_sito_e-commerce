@@ -72,7 +72,8 @@ public:
                     if (in_nome_utente_compratore != nome_utente_compratore)
                     {
                         // Log dell'errore e uscita dalla funzione
-                        InsertToLogDB(db1, "ERROR", "Utente che sta cercando di eliminare la recensione non corrisponde a quello dell ordine della recensione", sessionID, nomeRequisito, statoReq);
+                        messageLog = "Utente che sta cercando di effettuare il reso ( " + in_nome_utente_compratore + ") non corrisponde a quello dell ordine ( " + nome_utente_compratore+ ").";
+                        InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
                         return;
                     }
 
@@ -113,7 +114,8 @@ public:
 
                     // Log dell'errore e uscita dalla funzione
                     statoReq = statoRequisito::NotSuccess;
-                    InsertToLogDB(db1, "WARNING", "Ordine non trovato", sessionID, nomeRequisito, statoReq);
+                    messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non trovato";
+                    InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
                     return;
                 }
             }
@@ -125,7 +127,8 @@ public:
 
                 // Log dell'errore e uscita dalla funzione
                 statoReq = statoRequisito::NotSuccess;
-                InsertToLogDB(db1, "WARNING", "Ordine spedito, ma non arrivato, perciò non può essere effettuato il reso", sessionID, nomeRequisito, statoReq);
+                messageLog = "Ordine con codice " + std::to_string(idOrdine) + " spedito, ma non arrivato, perciò non può essere effettuato il reso";
+                InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
                 return;
             }
         }
@@ -137,7 +140,8 @@ public:
             std::cout << "L'ordine non è stato ancora spedito, perciò non può essere effettuato il reso!" << std::endl;
 
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "WARNING", "Ordine non spedito, non può essere effettuato il reso", sessionID, nomeRequisito, statoReq);
+            messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non spedito, non può essere effettuato il reso";
+            InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
     std::cout << "Reso effettuato" << std::endl;

@@ -151,7 +151,8 @@ public:
         if (in_nome_utenteCompratore != nome_utente_compratore){
 
           // Log
-          InsertToLogDB(db1, "ERROR", "Utente compratore ordine non corrisponde a chi vuole annullare ordine.", sessionID, nomeRequisito, statoReq);
+          messageLog = "L utente compratore di chi ha effettuato l ordine " + nome_utente_compratore + " non corrisponde a chi vuole annullare ordine: " + in_nome_utenteCompratore;
+          InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
           std::cout << "L'utente compratore dell'ordine non corrisponde a chi vuole annullare l'ordine" << std::endl;
           return;
@@ -197,7 +198,7 @@ public:
 
                   // Log
                   statoReq = statoRequisito::Success;
-                  messageLog = "Ordine annullato da parte dell utente Compratore " + in_nome_utenteCompratore;
+                  messageLog = "Ordine con codice "+ std::to_string(idOrdine) +" annullato da parte dell utente Compratore " + in_nome_utenteCompratore;
                   InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
               }
@@ -208,7 +209,8 @@ public:
 
                   // Log
                   statoReq = statoRequisito::NotSuccess;
-                  InsertToLogDB(db1, "WARNING", "Ordine non annullabile perchè già spedito o già annullato.", sessionID, nomeRequisito, statoReq);
+                  messageLog = "Ordine con codice "+ std::to_string(idOrdine) +" non annullabile perchè già spedito o già annullato. ";
+                  InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
                   return;
               }
               
@@ -219,7 +221,8 @@ public:
 
                 // Log
                 statoReq = statoRequisito::NotSuccess;
-                InsertToLogDB(db1, "ERROR", "Ordine non trovato.", sessionID, nomeRequisito, statoReq);
+                messageLog = "Ordine con codice "+ std::to_string(idOrdine) +" non trovato. ";
+                InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
                 return;
             }  
     return;

@@ -117,7 +117,7 @@ public:
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Visione del prodotto ricercato con codice" + std::to_string(codProdotto);
+            messageLog = "Visione del prodotto ricercato con codice" + std::to_string(codProdotto) + " da parte dell utente compratore " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
 
@@ -157,7 +157,7 @@ public:
             return ordine;
         }
 
-        // Verifica che il prodotto da rimuovere esista
+        // Verifica che il prodotto esista
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
@@ -168,7 +168,8 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "ERROR", "Il prodotto da eliminare non esiste", "", nomeRequisito, statoReq);
+            messageLog = "Il prodotto con codice " + std::to_string(codProdotto) + " da acquistare non esiste";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
 
             std::cout << "La riga da eliminare non esiste!" << std::endl;
 
@@ -190,11 +191,6 @@ public:
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
-            // Log
-            statoReq = statoRequisito::Success;
-            messageLog = "Utente " + nomeUtenteCompratore + " ha acquistato il prodotto, ordine inserito nel db ";
-            InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
-
             // Esegui una query SELECT per ottenere l'ultimo ID inserito nella tabella Ordine:
             // 1. Selezioniamo tutti gli idOrdine dalla tabella Ordine:
             sprintf(sqlcmd, "SELECT idOrdine FROM Ordine");
@@ -206,7 +202,7 @@ public:
             std::cout << "Id ordine: " << ordine.identificatore_ordine << std::endl;
 
             // Animo l'oggetto Ordine
-            ordine.codice_prodotto = cod_product;
+            ordine.codice_prodotto = codProdotto;
             ordine.nome_uteCompratore = nomeUtenteCompratore;
             ordine.data_ordine_effettuato = dataOrdineEffettuato;
             ordine.impostaStato(StatoOrdine::InElaborazione);
@@ -216,19 +212,27 @@ public:
             ordine.CAP_spedizione = CAP_spedizione;
 
 
+            // Log
+            statoReq = statoRequisito::Success;
+            messageLog = "Utente " + nomeUtenteCompratore + " ha acquistato il prodotto con codice " + std::to_string(codProdotto) + ", ordine inserito nel db ";
+            InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
+
+
+
             // Dobbiamo sottrarre di 1 il numero di copie disponibili del prodotto.
             sprintf(sqlcmd, "SELECT num_copie_dispo FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
 
-            // Se il numero di righe del risultato della query è diverso di 1 non c'è nessun prodotto con quel codice, perciò non può essere rimosso.
+            // Se il numero di righe del risultato della query è diverso di 1 non c'è nessun prodotto con quel codice, perciò non può essere acquistato.
             if (rows != 1) {
                 
                 PQclear(res);
 
                 // Log dell'errore e uscita dalla funzione
                 statoReq = statoRequisito::NotSuccess;
-                InsertToLogDB(db1, "ERROR", "Il prodotto da eliminare non esiste", "", nomeRequisito, statoReq);
+                messageLog = "Il prodotto com codice: " + std::to_string(codProdotto)  + " da acquistare non esiste";
+                InsertToLogDB(db1, "ERROR", messageLog , "", nomeRequisito, statoReq);
 
                 std::cout << "La riga da eliminare non esiste!" << std::endl;
 
