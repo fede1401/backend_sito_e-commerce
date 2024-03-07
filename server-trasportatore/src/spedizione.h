@@ -161,10 +161,19 @@ public:
                     InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                     // Animiamo l'oggetto Spedizione:
-                    spedizione.idOrdine = idOrdine;
-                    spedizione.nome_utente_trasportatore = nome_utente_trasportatore;
-                    spedizione.stato_spedizione = stato_spedizione;
-                    spedizione.ditta_spedizione = nome_ditta_spedizione;
+                    // Esegui una query SELECT per ottenere l'ultimo ID inserito nella tabella Spedizione:
+                    // 1. Selezioniamo tutti gli idSpedizione dalla tabella Spedizione:
+                    sprintf(sqlcmd, "SELECT idSpedizione FROM Spedizione");
+                    res = db1.ExecSQLtuples(sqlcmd);
+                    rows = PQntuples(res);
+                    // 2. Prendiamo l'ultimo id
+                    this->idSpedizione = atoi(PQgetvalue(res, rows - 1, 0));
+                    PQclear(res);
+                    
+                    this->idOrdine = idOrdine;
+                    this->nome_utente_trasportatore = nome_utente_trasportatore;
+                    this->stato_spedizione = stato_spedizione;
+                    this->ditta_spedizione = nome_ditta_spedizione;
                 }
 
                 // Se il numero di righe del risultato della query è < 1 allora non esistono ordini con stato "in elaborazione"

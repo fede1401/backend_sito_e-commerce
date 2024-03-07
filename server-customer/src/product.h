@@ -97,13 +97,13 @@ public:
         else
         {
             // Animo l'oggetto prodotto:
-            cod_product = codProdotto;
-            nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
-            categoria = PQgetvalue(res, 0, PQfnumber(res, "categoria"));
-            descrizione = PQgetvalue(res, 0, PQfnumber(res, "descrizione"));
-            prezzo_euro = atof(PQgetvalue(res, 0, PQfnumber(res, "prezzoEuro")));
-            azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
-            numero_copie_disponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
+            this->cod_product = codProdotto;
+            this->nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+            this->categoria = PQgetvalue(res, 0, PQfnumber(res, "categoria"));
+            this->descrizione = PQgetvalue(res, 0, PQfnumber(res, "descrizione"));
+            this->prezzo_euro = atof(PQgetvalue(res, 0, PQfnumber(res, "prezzoEuro")));
+            this->azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
+            this->numero_copie_disponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
 
             // Mostro le informazioni del Prodotto;
             std::cout << "Nome prodotto:" << nome << std::endl;

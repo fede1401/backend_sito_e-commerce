@@ -101,6 +101,20 @@ public:
                   res = db1.ExecSQLcmd(sqlcmd);
                   PQclear(res); 
 
+                  // Devo riempire l'oggetto Reso della classe:
+                  // Esegui una query SELECT per ottenere l'ultimo ID inserito nella tabella Reso:
+                  // 1. Selezioniamo tutti gli idReso dalla tabella Recensione:
+                  sprintf(sqlcmd, "SELECT idReso FROM Reso");
+                  res = db1.ExecSQLtuples(sqlcmd);
+                  rows = PQntuples(res);
+                  // 2. Prendiamo l'ultimo id
+                  this->idReso = atoi(PQgetvalue(res, rows - 1, 0));
+                  PQclear(res);
+
+                  this->nome_utente_compratore = in_nome_utente_compratore;
+                  this->idOrdine = idOrdine;
+                  this->motivazione_reso = motivazione_reso;
+
                   // Log 
                   statoReq = statoRequisito::Success;
                   messageLog = "Effettuata reso del prodotto da " + in_nome_utente_compratore;

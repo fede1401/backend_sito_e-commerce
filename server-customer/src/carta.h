@@ -82,9 +82,9 @@ public:
             PQclear(res); 
 
             // Riempio i campi della classe
-            nome_utente = in_nome_utente;
-            numero_carta = in_numeroCarta;
-            cvv = in_cvv;
+            this->nome_utente = in_nome_utente;
+            this->numero_carta = in_numeroCarta;
+            this-> cvv = in_cvv;
 
             // Log
             statoReq = statoRequisito::Success;

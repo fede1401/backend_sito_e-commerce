@@ -97,9 +97,9 @@ public:
                 InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                 // Anima l'oggetto:
-                nome_utente_compratore = in_nome_utente_compratore;
-                codice_prodotto = in_codProdotto;
-                quantitàProdotti = quantitàPrecedente;
+                this->nome_utente_compratore = in_nome_utente_compratore;
+                this->codice_prodotto = in_codProdotto;
+                this->quantitàProdotti = quantitàPrecedente;
 
             }
             break;
@@ -121,9 +121,9 @@ public:
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
             // Anima l'oggetto:
-            nome_utente_compratore = in_nome_utente_compratore;
-            codice_prodotto = in_codProdotto;
-            quantitàProdotti = 1;
+            this->nome_utente_compratore = in_nome_utente_compratore;
+            this->codice_prodotto = in_codProdotto;
+            this->quantitàProdotti = 1;
         }
            
     return;      

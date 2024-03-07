@@ -88,15 +88,13 @@ public:
 
       // Scorrimento dei risultati e visualizzazione degli ordini
       for (int i = 0; i < rows; ++i) {
-        Ordine ordine;
-        ordine.identificatore_ordine = atoi(PQgetvalue(res, i, PQfnumber(res, "idOrdine")));
-        ordine.codice_prodotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
-        ordine.nome_uteCompratore = PQgetvalue(res, i, PQfnumber(res, "nome_utente_compratore"));
-        ordine.data_ordine_effettuato =  PQgetvalue(res, i, PQfnumber(res, "dataOrdineEffettuato"));
-        //ordine.stato_ordine = PQgetvalue(res, i, PQfnumber(res, "statoOrdine"));
-        ordine.via_spedizione = PQgetvalue(res, i, PQfnumber(res, "viaSpedizione"));
+        this->identificatore_ordine = atoi(PQgetvalue(res, i, PQfnumber(res, "idOrdine")));
+        this->codice_prodotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
+        this->nome_uteCompratore = PQgetvalue(res, i, PQfnumber(res, "nome_utente_compratore"));
+        this->data_ordine_effettuato =  PQgetvalue(res, i, PQfnumber(res, "dataOrdineEffettuato"));
+        //this->stato_ordine = PQgetvalue(res, i, PQfnumber(res, "statoOrdine"));
+        this->via_spedizione = PQgetvalue(res, i, PQfnumber(res, "viaSpedizione"));
 
-        std::cout << ordine.identificatore_ordine << std::endl;
       }
       PQclear(res);
 

@@ -103,9 +103,9 @@ public:
 
 
                 // Anima l'oggetto
-                nome_utente_compratore = in_nome_utente_compratore;
-                codice_prodotto = in_cod_prodotto;
-                quantitàProdotti = quantitàPrecedente;
+                this->nome_utente_compratore = in_nome_utente_compratore;
+                this->codice_prodotto = in_cod_prodotto;
+                this->quantitàProdotti = quantitàPrecedente;
             }
             break;
         }
@@ -120,9 +120,9 @@ public:
             PQclear(res);   
 
             // Anima l'oggetto
-            nome_utente_compratore = in_nome_utente_compratore;
-            codice_prodotto = in_cod_prodotto;
-            quantitàProdotti = 1;
+            this->nome_utente_compratore = in_nome_utente_compratore;
+            this->codice_prodotto = in_cod_prodotto;
+            this->quantitàProdotti = 1;
 
             // Log 
             statoReq = statoRequisito::Success;
