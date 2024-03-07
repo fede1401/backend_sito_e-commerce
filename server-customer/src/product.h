@@ -43,7 +43,7 @@ public:
     }
 
     
-    // Funzione utilizzata per permettere ad un utente compratore di ricercare un prodotto
+    // Metodo utilizzato per permettere ad un utente compratore di ricercare un prodotto
     void ricerca_mostra_Prodotto(Con2DB db1, std::string in_nome_utente_compratore, int codProdotto)
     {
 
@@ -73,7 +73,7 @@ public:
         }
 
         // Effettuiamo la ricerca del prodotto nel database nella tabella Prodotto
-        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%s'", codProdotto);
+        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
 
@@ -186,7 +186,7 @@ public:
 
             // Inseriamo un record relativo all'ordine effettuato dall'utente compratore
             sprintf(sqlcmd, "INSERT INTO Ordine (idOrdine, codProdotto, nome_utente_compratore, dataOrdineEffettuato, statoOrdine, viaSpedizione, cittaSpedizione, numCivSpedizione, CAPSpedizione) VALUES (DEFAULT, '%d', '%s', '%s', '%s','%s','%s','%s', '%s' )",
-                    cod_product, nomeUtenteCompratore.c_str(), dataOrdineEffettuato.c_str(), statoOrdineStr.c_str(), via_spedizione.c_str(), città_spedizione.c_str(), numero_civico_spedizione.c_str(), CAP_spedizione.c_str());
+                    codProdotto, nomeUtenteCompratore.c_str(), dataOrdineEffettuato.c_str(), statoOrdineStr.c_str(), via_spedizione.c_str(), città_spedizione.c_str(), numero_civico_spedizione.c_str(), CAP_spedizione.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 

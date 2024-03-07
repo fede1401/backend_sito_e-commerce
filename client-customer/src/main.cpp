@@ -93,7 +93,7 @@ int main()
         };
 
 
-        std::string test2[38] ={
+        std::string test2[39] ={
                             "EFFETTUA REGISTRAZIONE COMPRATORE", 
                             "EFFETTUA REGISTRAZIONE COMPRATORE", 
                             "EFFETTUA REGISTRAZIONE COMPRATORE", 
@@ -113,15 +113,23 @@ int main()
                             "AGGIORNA PASSWORD COMPRATORE", 
 
 
-                            "AGGIUNGI PRODOTTO CARRELLO",
-                            "AGGIUNGI CARTA PAGAMENTO",
-                            "AGGIUNGI CARTA PAGAMENTO",
-                            "AGGIUNGI PRODOTTO LISTADESIDERI",
-                            "VISIONA ORDINI EFFETTUATI",
-                            "RIMUOVI CARTA PAGAMENTO",
-                            "AGGIUNGI PRODOTTO LISTADESIDERI",
-                            "RIMUOVI PRODOTTO LISTADESIDERI",
-                            "AGGIUNGI PRODOTTO CARRELLO",
+                            //"AGGIUNGI PRODOTTO CARRELLO",
+                            "ACQUISTA PRODOTTO", 
+                            //"AGGIUNGI CARTA PAGAMENTO",
+                            "ACQUISTA PRODOTTO", 
+                            //"AGGIUNGI CARTA PAGAMENTO",
+                            "ACQUISTA PRODOTTO", 
+                            //"AGGIUNGI PRODOTTO LISTADESIDERI",
+                            "ACQUISTA PRODOTTO", 
+                            //"VISIONA ORDINI EFFETTUATI",
+                            "ACQUISTA PRODOTTO", 
+                            //"RIMUOVI CARTA PAGAMENTO",
+                            "ACQUISTA PRODOTTO", 
+                            //"AGGIUNGI PRODOTTO LISTADESIDERI",
+                            "ACQUISTA PRODOTTO", 
+                            //"RIMUOVI PRODOTTO LISTADESIDERI",
+                            "ACQUISTA PRODOTTO", 
+                            //"AGGIUNGI PRODOTTO CARRELLO",
                             "AGGIUNGI PRODOTTO CARRELLO",
                             "AGGIUNGI PRODOTTO CARRELLO",
                             "AGGIUNGI PRODOTTO CARRELLO",
@@ -134,7 +142,7 @@ int main()
                             "RIMUOVI PRODOTTO CARRELLO",
 
                             "RICERCA PRODOTTO", 
-                            //"ACQUISTA PRODOTTO", 
+                            "ACQUISTA PRODOTTO", 
                             //"RICERCA PRODOTTO", 
                             //"ACQUISTA PRODOTTO", 
                             //"RICERCA PRODOTTO", 
@@ -303,7 +311,7 @@ int main()
         send_counter++;
 
         // Itero sulle azioni che può effettuare il client
-        for (i=0; i<21; i++){
+        for (i=0; i<39; i++){
 
             printf("\nValore della variabile i: %d \n", i);
 

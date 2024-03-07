@@ -56,7 +56,7 @@ int main()
     int codiceProdotto;
     char numeroCartaPagamento[100];
     char cvvCartaPagamento[100];
-    int idCarta;
+    //int idCarta;
     int idOrdine;
     char nuovaViaResidenza[100];
     char nuovoNumCiv[100];
@@ -67,7 +67,7 @@ int main()
     char numero_civico_spedizione[100];
     char CAP_spedizione[100];
     char descrizioneRecensione[100];
-    int voto_stella;
+    //int voto_stella;
     int idRecensione;
     char motivazione_reso[100];
     char nomeProdotto[100];
@@ -75,11 +75,11 @@ int main()
     char aziendaProduzione[100];
     char nuovaAziendaProduzione[100];
     char descrizioneProdotto[100];
-    int numeroCopieDisponibili;
+    //int numeroCopieDisponibili;
     char dittaSpedizione[100];
     char nuovaDittaSpedizione[100];
-    int idSpedizione;
-    float prezzoProdotto;
+    //int idSpedizione;
+    //float prezzoProdotto;
 
 
     char outputs[100];
@@ -296,11 +296,11 @@ int main()
                         strcpy(cvvCartaPagamento, fval);
                     }
 
-                    if (strcmp(fval, "idCarta") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        idCarta = atoi(fval);
-                    }
+                    // if (strcmp(fval, "idCarta") == 0)
+                    // {
+                    //     ReadStreamMsgVal(reply, k, i, h+1, fval);
+                    //     idCarta = atoi(fval);
+                    // }
                     
 
                     if (strcmp(fval, "nuovaViaResidenza") == 0)
@@ -361,11 +361,11 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(descrizioneRecensione, fval);
                     }
-                    if (strcmp(fval, "voto_stella") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        voto_stella = atoi(fval);
-                    }
+                    // if (strcmp(fval, "voto_stella") == 0)
+                    // {
+                    //     ReadStreamMsgVal(reply, k, i, h+1, fval);
+                    //     voto_stella = atoi(fval);
+                    // }
                     if (strcmp(fval, "idRecensione") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -401,16 +401,16 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(descrizioneProdotto, fval);
                     }
-                    if (strcmp(fval, "prezzoProdotto") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        prezzoProdotto = atof(fval);
-                    }
-                    if (strcmp(fval, "numeroCopieDisponibili") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        numeroCopieDisponibili = atoi(fval);
-                    }
+                    // if (strcmp(fval, "prezzoProdotto") == 0)
+                    // {
+                    //     ReadStreamMsgVal(reply, k, i, h+1, fval);
+                    //     prezzoProdotto = atof(fval);
+                    // }
+                    // if (strcmp(fval, "numeroCopieDisponibili") == 0)
+                    // {
+                    //     ReadStreamMsgVal(reply, k, i, h+1, fval);
+                    //     numeroCopieDisponibili = atoi(fval);
+                    // }
                     if (strcmp(fval, "dittaSpedizione") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -421,11 +421,11 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(nuovaDittaSpedizione, fval);
                     }
-                    if (strcmp(fval, "idSpedizione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        idSpedizione = atoi(fval);
-                    }
+                    // if (strcmp(fval, "idSpedizione") == 0)
+                    // {
+                    //     ReadStreamMsgVal(reply, k, i, h+1, fval);
+                    //     idSpedizione = atoi(fval);
+                    // }
 
                 }
                 //printf("main(): pid %d: user %s: sum = %d\n", pid, username, sum);

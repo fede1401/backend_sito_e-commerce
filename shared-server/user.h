@@ -557,46 +557,6 @@ public:
         }
 
 
-        // Viene resettato il sessionID associato all'utente poichè la sessione è finita dato che l'utente si discollega
-        nomeRequisito = "Aggiornamento sessionID.";
-
-        if (categoria == "UtenteCompratore")
-        {
-            // Aggiornamento del session id nella tabella dell'utente compratore
-            sprintf(sqlcmd, "UPDATE %s set session_id_c='' WHERE nome_utente_compratore = '%s'", categoria.c_str(), nomeUtenteDaEliminare.c_str());
-            res = db1.ExecSQLcmd(sqlcmd);
-            PQclear(res);
-
-            // Log
-            statoReq = statoRequisito::Success;
-            InsertToLogDB(db1, "INFO", "Aggiornamento sessionID", "", nomeRequisito, statoReq);
-        }
-
-        if (categoria == "UtenteFornitore")
-        {
-            // Aggiornamento del session id nella tabella dell'utente fornitore
-            sprintf(sqlcmd, "UPDATE %s set session_id_f='' WHERE nome_utente_fornitore = '%s'", categoria.c_str(), nomeUtenteDaEliminare.c_str());
-            res = db1.ExecSQLcmd(sqlcmd);
-            PQclear(res);
-
-            // Log
-            statoReq = statoRequisito::Success;
-            InsertToLogDB(db1, "INFO", "Aggiornamento sessionID", "", nomeRequisito, statoReq);
-        }
-
-        if (categoria == "UtenteTrasportatore")
-        {
-            // Aggiornamento del session id nella tabella dell'utente trasportatore
-            sprintf(sqlcmd, "UPDATE %s set session_id_t='' WHERE nome_utente_trasportatore = '%s'", categoria.c_str(), nomeUtenteDaEliminare.c_str());
-            res = db1.ExecSQLcmd(sqlcmd);
-            PQclear(res);
-
-            // Log
-            statoReq = statoRequisito::Success;
-            InsertToLogDB(db1, "INFO", "Aggiornamento sessionID", "", nomeRequisito, statoReq);
-        }
-
-
         // Viene effettuata l'eliminazione dell'utente a seconda della categoria
         if (categoria == "UtenteCompratore")
         {
