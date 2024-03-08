@@ -64,7 +64,7 @@ public:
                                std::string in_data_compleanno) 
     {
 
-        int stato = 0;
+        int stato = 1;
         
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Registrazione utente compratore.";
@@ -563,11 +563,18 @@ public:
         if (rows == 1) { sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c")); }
         PQclear(res);
 
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + input_nome_utente + " , poichè non è stato registrato, non può essere aggiornata la residenza .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }   
+
 
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiornata la residenza.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può essere aggiornata la residenza.", sessionID, nomeRequisito, statoReq);
             return;
         }
 

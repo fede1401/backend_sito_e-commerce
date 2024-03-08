@@ -88,6 +88,7 @@ int main()
     //UtenteFornitore fornitore;
     //UtenteTrasportatore trasportatore;
     Product prodotto;
+    Ordine ordine;
     /*  prg  */
 
 #if (DEBUG > 0)
@@ -842,7 +843,7 @@ int main()
 
                 if (std::string(action) == "ACQUISTA PRODOTTO"){
                     //Product prodotto;
-                    Ordine ordine = prodotto.acquistaProdotto(db1, nome_utente_compratore, codiceProdotto, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
+                    ordine = prodotto.acquistaProdotto(db1, nome_utente_compratore, codiceProdotto, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
 
                     strcpy(outputs, "Acquisto prodotto");
 

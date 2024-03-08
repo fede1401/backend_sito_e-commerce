@@ -617,7 +617,7 @@ int main()
                 sprintf(value6, numeri_civici[i30].c_str());
 
                 sprintf(key7, "CAP_spedizione");
-                sprintf(value7, CAP[i30].c_str());
+                sprintf(value7, CAP[i5].c_str());
 
         
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7);

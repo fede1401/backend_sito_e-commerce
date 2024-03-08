@@ -46,7 +46,7 @@ public:
                                 std:: string in_dittaSped
                                 ) {
 
-        int stato = 0;
+        int stato = 1;
         int disponibilità = 0;
 
         // Definizione di alcune variabili per il logging
@@ -55,7 +55,7 @@ public:
         std::string messageLog = "";
 
 
-        // controllo se il sessionID è univoco.
+        // Controllo se il sessionID è univoco.
         bool resultSession = check_sessionID(db1, nomeRequisito, statoReq, sessionID);
         if (resultSession==false){
             return;
@@ -497,10 +497,17 @@ public:
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));}
         PQclear(res);  
 
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + input_nome_utente + " , poichè non è stato registrato, non può essere aggiornata la ditta di spedizione .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }   
+
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiornata la ditta di spedizione.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può essere aggiornata la ditta di spedizione.", sessionID, nomeRequisito, statoReq);
             return;
         }
 

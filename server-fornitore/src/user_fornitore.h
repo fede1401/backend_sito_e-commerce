@@ -48,7 +48,7 @@ public:
                                 std:: string in_aziendaProd
                                 ) {
 
-        int stato = 0;
+        int stato = 1;
 
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Registrazione utente fornitore.";
@@ -56,7 +56,7 @@ public:
         std::string messageLog = "";
 
 
-        // controllo se il sessionID è univoco.
+        // Controllo se il sessionID è univoco.
         bool resultSession = check_sessionID(db1, nomeRequisito, statoReq, sessionID);
         if (resultSession==false){
             return;
@@ -502,10 +502,17 @@ public:
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));}  
         PQclear(res);
 
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + input_nome_utente + " , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }   
+
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiornato il nome dell azienda produttrice.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può essere aggiornato il nome dell azienda produttrice.", sessionID, nomeRequisito, statoReq);
             return;
         }
 

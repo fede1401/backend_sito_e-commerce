@@ -62,11 +62,18 @@ public:
         }
         PQclear(res);
 
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + in_nome_utente_fornitore + " , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }   
+
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == "")
         {
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può aggiungere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può aggiungere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
             return;
         }
 
@@ -177,11 +184,18 @@ public:
         }
         PQclear(res);
 
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + in_nome_utente_fornitore + " , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }   
+
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == "")
         {
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può rimuovere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può rimuovere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
             return;
         }
 

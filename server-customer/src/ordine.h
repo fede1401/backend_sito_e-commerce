@@ -71,12 +71,19 @@ public:
       res = db1.ExecSQLtuples(sqlcmd);
       rows = PQntuples(res);
       if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
-      PQclear(res);                 
+      PQclear(res);   
+
+      if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + nome_utente_compratore + " , poichè non è stato registrato, non può visionare gli ordini .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }               
 
       // Verifica se l'utente è loggato e ha una sessionID valida
       if (sessionID == ""){
           // Log dell'errore e uscita dalla funzione
-          InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può visionare gli ordini .", sessionID, nomeRequisito, statoReq);
+          InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può visionare gli ordini .", sessionID, nomeRequisito, statoReq);
           return;
       }
 
@@ -163,10 +170,18 @@ public:
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
         PQclear(res);   
 
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + in_nome_utenteCompratore + " , poichè non è stato registrato, non può essere annullato l ordine .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }               
+
+
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può annullare un ordine .", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può annullare un ordine .", sessionID, nomeRequisito, statoReq);
             return;
         }
 

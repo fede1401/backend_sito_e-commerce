@@ -87,6 +87,7 @@ int main()
     char outputs[100];
 
     UtenteTrasportatore trasportatore;
+    Spedizione spedizione;
     /*  prg  */
 
 #if (DEBUG > 0)
@@ -545,7 +546,7 @@ int main()
                 }
 
                 if (std::string(action) == "AVVISA SPEDIZIONE EFFETTUATA"){
-                    Spedizione spedizione;
+                    
                     spedizione.spedizioneConsegnata(db1, nome_utente_trasportatore, idSpedizione);
                     
                     strcpy(outputs, "Spedizione effettuata");
@@ -571,8 +572,6 @@ int main()
                 }
 
                 if (std::string(action) == "ASSEGNA ORDINE TRASPORTATORE"){
-
-                    Spedizione spedizione;
                     spedizione.assegnaOrdineTrasportatore(db1);
 
                     strcpy(outputs, "Spedizione assegnata");

@@ -365,12 +365,19 @@ public:
             if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));} 
         }
 
-        PQclear(res);                 
+        PQclear(res);   
+        
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + nomeUtenteLogout + " , poichè non è stato registrato, non si può effettuare il logout .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }                 
 
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può effettuare il logout .", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può effettuare il logout .", sessionID, nomeRequisito, statoReq);
             return;
         }
 
@@ -551,12 +558,19 @@ public:
             if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));} 
         }
 
-        PQclear(res);                 
+        PQclear(res); 
+
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + nomeUtenteDaEliminare + " , poichè non è stato registrato, non si può eliminare il profilo .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }                   
 
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere eliminato il profilo .", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può essere eliminato il profilo .", sessionID, nomeRequisito, statoReq);
             return;
         }
 
@@ -645,12 +659,19 @@ public:
             if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));} 
         }
 
-        PQclear(res);                 
+        PQclear(res);      
+
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + input_nome_utente + " , poichè non è stato registrato, non si può aggiornare il numero di telefono .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }               
 
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiornato il numero di telefono .", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può essere aggiornato il numero di telefono .", sessionID, nomeRequisito, statoReq);
             return;
         }
 
@@ -739,12 +760,19 @@ public:
             if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_t"));} 
         }
 
-        PQclear(res);                 
+        PQclear(res);          
+
+         if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + input_nome_utente + " , poichè non è stato registrato, non si può aggiornare la password .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }              
 
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non può essere aggiornata la password .", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può essere aggiornata la password .", sessionID, nomeRequisito, statoReq);
             return;
         }
 

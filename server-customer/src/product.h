@@ -64,11 +64,18 @@ public:
         }
         PQclear(res);
 
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere ricercato il prodotto .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }   
+
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == "")
         {
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può rimuovere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può rimuovere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
             return;
         }
 
@@ -143,17 +150,30 @@ public:
         sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtenteCompratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+
+        printf("Rows prima: %d", rows);
         if (rows == 1)
         {
             sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));
         }
         PQclear(res);
+        printf("Rows dopo PQclear: %d", rows);
+
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            messageLog = "Non esiste " + nomeUtenteCompratore + " , poichè non è stato registrato, non può essere acquistato il prodotto .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return ordine;
+        }   
+        
+
+
 
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == "")
         {
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato o non registrato, non si può acquistare un prodotto.", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può acquistare un prodotto.", sessionID, nomeRequisito, statoReq);
             return ordine;
         }
 
