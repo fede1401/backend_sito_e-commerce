@@ -10,81 +10,60 @@
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
 // Usage: ./streams <add count> <read count> [block time, default: 1]
 
-#define DEBUG 1000
+#define DEBUG 1000                              // Definizione di una costante per il debugging
 
-#define READ_STREAM_FORNITORE "stream3"
-#define WRITE_STREAM_FORNITORE "stream4"
+#define READ_STREAM_FORNITORE "stream3"         // Nome dello stream da cui leggere.
+#define WRITE_STREAM_FORNITORE "stream4"        // Nome dello stream su cui scrivere.
 
-using namespace std;
-
-
+using namespace std;        // Consente di utilizzare le funzioni e le classi standard del C++ senza doverle qualificare con std::.
 
 
 int main()
 {
 
     redisContext *c2r;
-    redisReply *reply;
-    redisReply *reply2;
-    int read_counter = 0;
-    int send_counter = 0;
-    int block = 1000000000;
-    int pid;
+    redisReply *reply;          // Inizializzazione risposta Redis
+    redisReply *reply2;         // Inizializzazione risposta2 Redis
+    int read_counter = 0;       // Contatore delle letture effettuate
+    int send_counter = 0;       // Contatore degli invii effettuati
+    int block = 1000000000;     // Tempo di blocco per la lettura da stream in nanosecondi
+    int pid;                    // ID del processo
     //unsigned seed;
     char username[100];
-    char key[100];
-    char value[100];
-    char streamname[100];
-    char msgid[100];
-    char fval[100];
-    int i, k, h;
-    char action[100];
-    char nome_utente_compratore[100];
+    char key[100];              // Buffer per la chiave da utilizzare in Redis
+    char value[100];            // Buffer per il valore da utilizzare in Redis
+    char streamname[100];       // Buffer per il nome dello stream Redis
+    char msgid[100];            // Buffer per l'ID del messaggio Redis
+    char fval[100];             // Buffer per il valore del campo del messaggio Redis
+    int i, k, h;                // Variabili di iterazione
+    char action[100];           // Buffer per l'azione da eseguire
+
+    // Inizializzazioni variabili per compiere le vari azioni dell'utente.
     char nome_utente_fornitore[100];
-    char nome_utente_trasportatore[100];
     char nome[100];
     char cognome[100];
+    char email[100];    
     char categoriaUtente[100];
+
     char password[100];
-    char nuovoNumeroTelefono[100];
+    char confermaPassword[100];
+
     char vecchiaPassw[100];
     char nuovaPassw[100];
+
     char numeroTelefono[100];
-    char email[100];
-    char viaResidenza[100];
-    char numeroCivico[100];
-    char cap[100];
-    char cittàResidenza[100];
-    char confermaPassword[100];
-    char dataCompleanno[100];
-    int codiceProdotto;
-    char numeroCartaPagamento[100];
-    char cvvCartaPagamento[100];
-    int idCarta;
-    int idOrdine;
-    char nuovaViaResidenza[100];
-    char nuovoNumCiv[100];
-    char nuovoCAP[100];
-    char nuovaCittaResidenza[100];
-    char via_spedizione[100];
-    char città_spedizione[100];
-    char numero_civico_spedizione[100];
-    char descrizioneRecensione[100];
-    int voto_stella;
-    int idRecensione;
-    char motivazione_reso[100];
+    char nuovoNumeroTelefono[100];
+    
     char nomeProdotto[100];
     char categoriaProdotto[100];
-    char aziendaProduzione[100];
-    char nuovaAziendaProduzione[100];
     char descrizioneProdotto[100];
     int numeroCopieDisponibili;
-    char dittaSpedizione[100];
-    char nuovaDittaSpedizione[100];
-    int idSpedizione;
     float prezzoProdotto;
-
-
+    int codiceProdotto;
+    
+    char aziendaProduzione[100];
+    char nuovaAziendaProduzione[100];
+    
     char outputs[100];
 
     UtenteFornitore fornitore;
@@ -96,64 +75,76 @@ int main()
     setvbuf(stderr, (char *)NULL, _IONBF, 0);
 #endif
 
+    // Imposta il nome utente.
     strcpy(username, "federico");
 
     // Ottenimento dell'identificatore del processo
     pid = getpid();
 
-    // Connessione a Redis
+    // Connessione a Redis utilizzando l'indirizzo "localhost" e la porta di default 6379
     printf("main(): pid %d: user %s: connecting to redis ...\n", pid, username);
     c2r = redisConnect("localhost", 6379);
+    // Controlla se la connessione è stata stabilita correttamente o se si è verificato un errore
     if (c2r == NULL || c2r->err) {
         if (c2r) {
+            // Stampa l'errore specifico
             printf("Errore di connessione: %s\n", c2r->errstr);
+            // Libera la risorsa redis
             redisFree(c2r);
         } else {
+            // Stampa un messaggio di errore generico
             printf("Errore di allocazione del contesto Redis\n");
         }
     // Gestisci l'errore e termina il programma o riprova la connessione
     }
+    // Stampa un messaggio di connessione riuscita.
     printf("main(): pid %d: user %s: connected to redis, %d\n", pid, username, c2r->err);
 
 
 
-    
-    // Eliminazione degli stream se esistono
+    // Eliminazione stream di lettura se esiste.
     reply = RedisCommand(c2r, "DEL %s", READ_STREAM_FORNITORE);
+    // Verifica la risposta del comando e termina il programma in caso di errore
     assertReply(c2r, reply);
+    // Stampa la risposta del comando
     dumpReply(reply, 0);
 
+    // Eliminazione stream di scrittura se esiste.
     reply = RedisCommand(c2r, "DEL %s", WRITE_STREAM_FORNITORE);
+    // Verifica la risposta del comando e termina il programma in caso di errore
     assertReply(c2r, reply);
+    // Stampa la risposta del comando
     dumpReply(reply, 0);
     
-    
 
-    //printf("Eliminazione vecchie streams!");
-
-
-    /* Create streams/groups */
+    // Inizializza gli stream/gruppi
     initStreams(c2r, READ_STREAM_FORNITORE);
     initStreams(c2r, WRITE_STREAM_FORNITORE);
 
     printf("Streams create!\n");
 
+    // Connessione al database.
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+    // Stampa un messaggio di conferma della connessione al database
     printf("Connessione al database avvenuta con successo");
 
     while (1)
     {
-        //  read
+        //  Lettura
         read_counter++;
 
         micro_sleep(7000000); // 7 secondi di attesa necessari per far sì che il client mandi tutte le richieste
 
-        // Imposto COUNT a -1 per leggere tutti i messaggi disponibili nello stream
+        // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+        //Imposto COUNT a -1 per leggere tutti i messaggi disponibili nello stream
         reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_FORNITORE);
 
         printf("\n\nmain(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_FORNITORE);
 
+        // Verifica la risposta del comando e termina il programma in caso di errore
         assertReply(c2r, reply);
+
+        // Stampa la risposta del comando
         dumpReply(reply, 0);
 
         printf("Effettuato il dump! \n");
@@ -168,18 +159,15 @@ int main()
             printf("Number of message about Stream = %d \n", numberMessageStream);
             
             // Scorro il numero di messaggi della Streams Redis
-            for (i = 0; i < ReadStreamNumMsg(reply, k); i++)  // Il problema dell'errore di segmentazione è qua!!!
+            for (i = 0; i < ReadStreamNumMsg(reply, k); i++)  
             {
                 printf("\n\n\n\nPROSSIMO MESSAGGIO NELLA STREAM.");
 
                 ReadStreamNumMsgID(reply, k, i, msgid); 
 
                 printf("Message number %d from Stream: %d\n", i, k );
+                printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
-                printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n",
-                       pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
-
-                
                 
                 // Scorro il numero di valori del messaggio della Streams Redis
                 // h deve partire da 0, altrimenti non troverà mai fval == "Action"
@@ -188,12 +176,9 @@ int main()
                     ReadStreamMsgVal(reply, k, i, h, fval);
 
                     printf("\nValue %d from message number %d from Stream: %d\n", h, i, k );
-
                     printf("main(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                    printf("Fval: %s\n", fval);
-
-                    // Qui bisogna estrapolare l'azione da effettuare:
+                    // Estrapoliamo l'azione da effettuare e la salvo nella variabile action:
                     if (strcmp(fval, "Action") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -205,22 +190,13 @@ int main()
                     }
 
 
-                    // una volta estrapolata selezionare tutti i parametri necessari per effettuarla
-                    if (strcmp(fval, "nome_utente_compratore") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nome_utente_compratore, fval);
-                    }
+                    // Una volta estrapolata l'azione selezioniamo tutti i parametri necessari per effettuarla
                     if (strcmp(fval, "nome_utente_fornitore") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(nome_utente_fornitore, fval);
                     }
-                    if (strcmp(fval, "nome_utente_trasportatore") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nome_utente_trasportatore, fval);
-                    }
+                    
                     if (strcmp(fval, "nome") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -266,123 +242,19 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(email, fval);
                     }
-                    if (strcmp(fval, "viaResidenza") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(viaResidenza, fval);
-                    }
-                    if (strcmp(fval, "numeroCivico") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(numeroCivico, fval);
-                    }
-                    if (strcmp(fval, "cap") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(cap, fval);
-                    }
-                    if (strcmp(fval, "cittàResidenza") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(cittàResidenza, fval);
-                    }
+                    
                     if (strcmp(fval, "confermaPassword") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(confermaPassword, fval);
                     }
-                    if (strcmp(fval, "dataCompleanno") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(dataCompleanno, fval);
-                    }
-                    if (strcmp(fval, "codiceProdotto") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        codiceProdotto = atoi(fval);
-                    }
-                    if (strcmp(fval, "numeroCartaPagamento") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(numeroCartaPagamento, fval);
-                    }
-                    if (strcmp(fval, "cvvCartaPagamento") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(cvvCartaPagamento, fval);
-                    }
-
-                    if (strcmp(fval, "idCarta") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        idCarta = atoi(fval);
-                    }
                     
-                    if (strcmp(fval, "idOrdine") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        idOrdine = atoi(fval);
-                    }
-                    if (strcmp(fval, "nuovaViaResidenza") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nuovaViaResidenza, fval);
-                    }
-                    if (strcmp(fval, "nuovoNumCiv") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nuovoNumCiv, fval);
-                    }
-                    if (strcmp(fval, "nuovoCAP") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nuovoCAP, fval);
-                    }
-                    if (strcmp(fval, "nuovaCittaResidenza") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nuovaCittaResidenza, fval);
-                    }
                     if (strcmp(fval, "nomeProdotto") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(nomeProdotto, fval);
                     }
-                    if (strcmp(fval, "via_spedizione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(via_spedizione, fval);
-                    }
-                    if (strcmp(fval, "città_spedizione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(città_spedizione, fval);
-                    }
-                    if (strcmp(fval, "numero_civico_spedizione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(numero_civico_spedizione, fval);
-                    }
-                    if (strcmp(fval, "descrizioneRecensione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(descrizioneRecensione, fval);
-                    }
-                    if (strcmp(fval, "voto_stella") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        voto_stella = atoi(fval);
-                    }
-                    if (strcmp(fval, "idRecensione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        idRecensione = atoi(fval);
-                    }
-                    if (strcmp(fval, "motivazione_reso") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(motivazione_reso, fval);
-                    }
+                    
                     if (strcmp(fval, "nomeProdotto") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -418,88 +290,18 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         numeroCopieDisponibili = atoi(fval);
                     }
-                    if (strcmp(fval, "dittaSpedizione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(dittaSpedizione, fval);
-                    }
-                    if (strcmp(fval, "nuovaDittaSpedizione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nuovaDittaSpedizione, fval);
-                    }
-                    if (strcmp(fval, "idSpedizione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        idSpedizione = atoi(fval);
-                    }
+                    
 
-                }
-                //printf("main(): pid %d: user %s: sum = %d\n", pid, username, sum);
-
-                printf("\nAction: %s\n", action);
-                printf("nome_utente_compratore: %s\n", nome_utente_compratore);
-                printf("nome_utente_fornitore: %s\n", nome_utente_fornitore);
-                printf("nome_utente_trasportatore: %s\n", nome_utente_trasportatore);
-                printf("nome: %s\n", nome);
-                printf("cognome: %s\n", cognome);
-                printf("categoriaUtente: %s\n", categoriaUtente);
-                printf("password: %s\n", password);
-                printf("nuovoNumeroTelefono: %s\n", nuovoNumeroTelefono);
-                printf("vecchiaPassw: %s\n", vecchiaPassw);
-                printf("nuovaPassw: %s\n", nuovaPassw);
-                printf("numeroTelefono: %s\n", numeroTelefono);
-                printf("email: %s\n", email);
-                printf("viaResidenza: %s\n", viaResidenza);
-                printf("numeroCivico: %s\n", numeroCivico);
-                printf("cap: %s\n", cap);
-                printf("cittàResidenza: %s\n", cittàResidenza);
-                printf("confermaPassword: %s\n", confermaPassword);
-                printf("dataCompleanno: %s\n", dataCompleanno);
-                printf("codiceProdotto: %d\n", codiceProdotto);
-                printf("numeroCartaPagamento: %s\n", numeroCartaPagamento);
-                printf("cvvCartaPagamento: %s\n", cvvCartaPagamento);
-                printf("idCarta: %d\n", idCarta);
-                printf("idOrdine: %d\n", idOrdine);
-                printf("nuovaViaResidenza: %s\n", nuovaViaResidenza);
-                printf("nuovoNumCiv: %s\n", nuovoNumCiv);
-                printf("nuovoCAP: %s\n", nuovoCAP);
-                printf("nuovaCittaResidenza: %s\n", nuovaCittaResidenza);
-                printf("via_spedizione: %s\n", via_spedizione);
-                printf("città_spedizione: %s\n", città_spedizione);
-                printf("numero_civico_spedizione: %s\n", numero_civico_spedizione);
-                printf("descrizioneRecensione: %s\n", descrizioneRecensione);
-                printf("voto_stella: %d\n", voto_stella);
-                printf("idRecensione: %d\n", idRecensione);
-                printf("motivazione_reso: %s\n", motivazione_reso);
-                printf("nomeProdotto: %s\n", nomeProdotto);
-                printf("categoriaProdotto: %s\n", categoriaProdotto);
-                printf("aziendaProduzione: %s\n", aziendaProduzione);
-                printf("nuovaAziendaProduzione: %s\n", nuovaAziendaProduzione);
-                printf("descrizioneProdotto: %s\n", descrizioneProdotto);
-                printf("prezzoProdotto: %.2f\n", prezzoProdotto); // Print float with 2 decimal places
-                printf("numeroCopieDisponibili: %d\n", numeroCopieDisponibili);
-                printf("dittaSpedizione: %s\n", dittaSpedizione);
-                printf("nuovaDittaSpedizione: %s\n", nuovaDittaSpedizione);
-                printf("idSpedizione: %d\n", idSpedizione);
-
-                // Qui bisogna svolgere l'azione:
+                }  // for dei valori dell'i-esimo messaggio dell'i-esima Stream.
                 
-
                 printf("Azione: %s\n", action);
 
-                // Utente fornitore
                 if (std::string(action) == "EFFETTUA REGISTRAZIONE FORNITORE"){
 
                     std::string sessionID = generateSessionID();
-
-                    //UtenteFornitore fornitore;
-                    fornitore.effettuaRegistrazione(db1, nome_utente_fornitore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword,
-                    aziendaProduzione);
+                    fornitore.effettuaRegistrazione(db1, nome_utente_fornitore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword, aziendaProduzione);
 
                     strcpy(outputs, "Registrazione utente fornitore avvenuta");
-
-                    //freeReplyObject(reply);
 
                     // send result to client
                     send_counter++;
@@ -514,20 +316,15 @@ int main()
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
                     freeReplyObject(reply2);
-
-                    /* sleep   */
-                    //micro_sleep(1000000);
                 }
 
+
                 if (std::string(action) == "AGGIORNA NOME AZIENDAPRODUZIONE"){
-                    //UtenteFornitore fornitore;
-                    std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
+                   
                     fornitore.aggiornaNomeAziendaProduttrice(db1, nome_utente_fornitore,nuovaAziendaProduzione);
 
                     strcpy(outputs, "Registrazione utente fornitore avvenuta");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -541,20 +338,16 @@ int main()
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
                     freeReplyObject(reply2);
-
-                    /* sleep   */
-                    //micro_sleep(5000000);
                     
                 }
 
+
                 if (std::string(action) == "AGGIUNGI PRODOTTO SITO"){
-                    //Product prodotto;
+
                     prodotto.add_new_product(db1, nome_utente_fornitore, nomeProdotto, categoriaProdotto, prezzoProdotto, descrizioneProdotto, aziendaProduzione, numeroCopieDisponibili);
 
                     strcpy(outputs, "Prodotto aggiunto al sito");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -569,9 +362,8 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
+
 
                 if (std::string(action) == "RIMUOVI PRODOTTO SITO"){
                     Product prodotto;
@@ -580,8 +372,6 @@ int main()
 
                     strcpy(outputs, "Prodotto rimosso dal sito");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -595,26 +385,17 @@ int main()
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
                     freeReplyObject(reply2);
-
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
-
                 
 
                 if (std::string(action) == "EFFETTUA LOGIN FORNITORE"){
-                    //UtenteFornitore fornitore;
 
                     std::string sessionID = generateSessionID();
-
-                    std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
 
                     fornitore.effettua_login(db1, nome_utente_fornitore, password, sessionID);
 
                     strcpy(outputs, "Login utente fornitore avvenuta");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -629,21 +410,15 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "EFFETTUA LOGOUT FORNITORE"){
-                    //UtenteFornitore fornitore;
 
-                    std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
+                if (std::string(action) == "EFFETTUA LOGOUT FORNITORE"){
 
                     fornitore.effettua_logout(db1, nome_utente_fornitore);
 
                     strcpy(outputs, "Logout utente fornitore avvenuta");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -657,22 +432,15 @@ int main()
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
                     freeReplyObject(reply2);
-
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "ELIMINA PROFILO FORNITORE"){
-                    //UtenteFornitore fornitore;
 
-                    std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
+                if (std::string(action) == "ELIMINA PROFILO FORNITORE"){
 
                     fornitore.elimina_profilo(db1, nome_utente_fornitore);
 
                     strcpy(outputs, "Eliminazione utente fornitore avvenuta");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -686,21 +454,14 @@ int main()
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
                     freeReplyObject(reply2);
-
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
 
-                if (std::string(action) == "AGGIORNA NUMERO TELEFONO FORNITORE"){
-                    //UtenteFornitore fornitore;
 
-                    std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
+                if (std::string(action) == "AGGIORNA NUMERO TELEFONO FORNITORE"){
 
                     fornitore.aggiornaNumeroDiTelefono(db1, nome_utente_fornitore, nuovoNumeroTelefono);
 
                     strcpy(outputs, "Aggiornamento numero di telefono fornitore");
-
-                    //freeReplyObject(reply);
 
                     // send result to client
                     send_counter++;
@@ -715,21 +476,14 @@ int main()
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
                     freeReplyObject(reply2);
-
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
 
+
                 if (std::string(action) == "AGGIORNA PASSWORD FORNITORE"){
-                    //UtenteFornitore fornitore;
-
-                    std::cout << "Nome utente fornitore: " << fornitore.nome_utente  << std::endl;
-
+                    
                     fornitore.aggiornaPassword(db1, nome_utente_fornitore, vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, "Aggiornamento password utente fornitore");
-
-                    //freeReplyObject(reply);
 
                     // send result to client
                     send_counter++;
@@ -745,41 +499,13 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
-            }
-        }
+
+            } // for del numero dei messaggi dell'i-esima Stream
+
+        } // for dell'iterazione delle varie Stream
 
         freeReplyObject(reply);
-
-        // send result to client
-                    // send_counter++;
-                    // sprintf(key, "Result");
-                    // sprintf(value, "%s", outputs);
-
-                    // printf("Result: %s \n", outputs);
-
-                    // reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
-                    // assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-                    // printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply->str);
-                    // freeReplyObject(reply);
-
-        // freeReplyObject(reply);
-
-
-        // // send result to client
-        // send_counter++;
-        // sprintf(key, "Result");
-        // sprintf(value, "%s", outputs);
-
-        // reply = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
-        // assertReplyType(c2r, reply, REDIS_REPLY_STRING);
-        // printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply->str);
-        // freeReplyObject(reply);
-
-        // /* sleep   */
-        // micro_sleep(5000000);
         
 
     } // while ()

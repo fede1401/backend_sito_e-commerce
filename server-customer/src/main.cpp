@@ -7,88 +7,84 @@
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
 // Usage: ./streams <add count> <read count> [block time, default: 1]
 
-#define DEBUG 1000
+#define DEBUG 1000                          // Definizione di una costante per il debugging
 
-#define READ_STREAM_CUSTOMER "stream1"
-#define WRITE_STREAM_CUSTOMER "stream2"
+#define READ_STREAM_CUSTOMER "stream1"      // Nome dello stream da cui leggere.
+#define WRITE_STREAM_CUSTOMER "stream2"     // Nome dello stream su cui scrivere.
 
-using namespace std;
-
+using namespace std;      // Consente di utilizzare le funzioni e le classi standard del C++ senza doverle qualificare con std::.
 
 
 int main()
 {
 
     redisContext *c2r;
-    redisReply *reply;
-    redisReply *reply2;
-    int read_counter = 0;
-    int send_counter = 0;
-    int block = 1000000000;
-    int pid;
+    redisReply *reply;          // Inizializzazione risposta Redis
+    redisReply *reply2;         // Inizializzazione risposta2 Redis
+    int read_counter = 0;       // Contatore delle letture effettuate
+    int send_counter = 0;       // Contatore degli invii effettuati
+    int block = 1000000000;     // Tempo di blocco per la lettura da stream in nanosecondi
+    int pid;                    // ID del processo
     //unsigned seed;
     char username[100];
-    char key[100];
-    char value[100];
-    char streamname[100];
-    char msgid[100];
-    char fval[100];
-    int i, k, h;
-    char action[100];
+    char key[100];              // Buffer per la chiave da utilizzare in Redis
+    char value[100];            // Buffer per il valore da utilizzare in Redis
+    char streamname[100];       // Buffer per il nome dello stream Redis
+    char msgid[100];            // Buffer per l'ID del messaggio Redis
+    char fval[100];             // Buffer per il valore del campo del messaggio Redis
+    int i, k, h;                // Variabili di iterazione
+    char action[100];           // Buffer per l'azione da eseguire
+
+    // Inizializzazioni variabili per compiere le vari azioni dell'utente.
     char nome_utente_compratore[100];
-    //char nome_utente_fornitore[100];
-    //char nome_utente_trasportatore[100];
     char nome[100];
     char cognome[100];
+    char email[100];
     char categoriaUtente[100];
+
     char password[100];
-    char nuovoNumeroTelefono[100];
+    char confermaPassword[100];
+
     char vecchiaPassw[100];
     char nuovaPassw[100];
+
     char numeroTelefono[100];
-    char email[100];
+    char nuovoNumeroTelefono[100];
+
     char viaResidenza[100];
     char numeroCivico[100];
     char cap[100];
     char cittàResidenza[100];
-    char confermaPassword[100];
-    char dataCompleanno[100];
-    int codiceProdotto;
-    char numeroCartaPagamento[100];
-    char cvvCartaPagamento[100];
-    //int idCarta;
-    int idOrdine;
+
     char nuovaViaResidenza[100];
     char nuovoNumCiv[100];
     char nuovoCAP[100];
     char nuovaCittaResidenza[100];
+
     char via_spedizione[100];
     char città_spedizione[100];
     char numero_civico_spedizione[100];
     char CAP_spedizione[100];
+    
+    char dataCompleanno[100];
+
+    char numeroCartaPagamento[100];
+    char cvvCartaPagamento[100];
+
+    int codiceProdotto;
+    
+    int idOrdine;
+    
     char descrizioneRecensione[100];
-    //int voto_stella;
     int idRecensione;
     char motivazione_reso[100];
-    char nomeProdotto[100];
-    char categoriaProdotto[100];
-    char aziendaProduzione[100];
-    char nuovaAziendaProduzione[100];
-    char descrizioneProdotto[100];
-    //int numeroCopieDisponibili;
-    char dittaSpedizione[100];
-    char nuovaDittaSpedizione[100];
-    //int idSpedizione;
-    //float prezzoProdotto;
-
 
     char outputs[100];
 
     UtenteCompratore compratore;
-    //UtenteFornitore fornitore;
-    //UtenteTrasportatore trasportatore;
     Product prodotto;
     Ordine ordine;
+
     /*  prg  */
 
 #if (DEBUG > 0)
@@ -96,64 +92,76 @@ int main()
     setvbuf(stderr, (char *)NULL, _IONBF, 0);
 #endif
 
-    strcpy(username, "federico");
+    // Imposta il nome utente.
+    strcpy(username, "federico");           
 
-    // Ottenimento dell'identificatore del processo
+    // Ottenimento dell'ID del processo corrente.
     pid = getpid();
 
-    // Connessione a Redis
+    // Connessione a Redis utilizzando l'indirizzo "localhost" e la porta di default 6379
     printf("main(): pid %d: user %s: connecting to redis ...\n", pid, username);
     c2r = redisConnect("localhost", 6379);
+    // Controlla se la connessione è stata stabilita correttamente o se si è verificato un errore
     if (c2r == NULL || c2r->err) {
         if (c2r) {
+            // Stampa l'errore specifico
             printf("Errore di connessione: %s\n", c2r->errstr);
+            // Libera la risorsa redis
             redisFree(c2r);
         } else {
+            // Stampa un messaggio di errore generico
             printf("Errore di allocazione del contesto Redis\n");
         }
     // Gestisci l'errore e termina il programma o riprova la connessione
     }
+    // Stampa un messaggio di connessione riuscita.
     printf("main(): pid %d: user %s: connected to redis, %d\n", pid, username, c2r->err);
 
 
-
-    
-    // Eliminazione degli stream se esistono
+    // Eliminazione stream di lettura se esiste.
     reply = RedisCommand(c2r, "DEL %s", READ_STREAM_CUSTOMER);
+    // Verifica la risposta del comando e termina il programma in caso di errore
     assertReply(c2r, reply);
+    // Stampa la risposta del comando
     dumpReply(reply, 0);
 
+    // Eliminazione stream di scrittura se esiste.
     reply = RedisCommand(c2r, "DEL %s", WRITE_STREAM_CUSTOMER);
+    // Verifica la risposta del comando e termina il programma in caso di errore
     assertReply(c2r, reply);
+    // Stampa la risposta del comando
     dumpReply(reply, 0);
     
-    
 
-    //printf("Eliminazione vecchie streams!");
-
-
-    /* Create streams/groups */
+    // Inizializza gli stream/gruppi
     initStreams(c2r, READ_STREAM_CUSTOMER);
     initStreams(c2r, WRITE_STREAM_CUSTOMER);
 
     printf("Streams create!\n");
 
+    // Connessione al database.
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
+    // Stampa un messaggio di conferma della connessione al database
     printf("Connessione al database avvenuta con successo");
+
 
     while (1)
     {
-        //  read
+        //  Lettura
         read_counter++;
 
         micro_sleep(7000000); // 7 secondi di attesa necessari per far sì che il client mandi tutte le richieste
 
+        // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
         // Imposto COUNT a -1 per leggere tutti i messaggi disponibili nello stream
         reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
         printf("\n\nmain(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
 
+        // Verifica la risposta del comando e termina il programma in caso di errore
         assertReply(c2r, reply);
+
+        // Stampa la risposta del comando
         dumpReply(reply, 0);
 
         printf("Effettuato il dump! \n");
@@ -168,18 +176,15 @@ int main()
             printf("Number of message about Stream = %d \n", numberMessageStream);
             
             // Scorro il numero di messaggi della Streams Redis
-            for (i = 0; i < ReadStreamNumMsg(reply, k); i++)  // Il problema dell'errore di segmentazione è qua!!!
+            for (i = 0; i < ReadStreamNumMsg(reply, k); i++)  
             {
                 printf("\n\n\n\nPROSSIMO MESSAGGIO NELLA STREAM.");
 
                 ReadStreamNumMsgID(reply, k, i, msgid); 
 
                 printf("Message number %d from Stream: %d\n", i, k );
+                printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
-                printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n",
-                       pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
-
-                
                 
                 // Scorro il numero di valori del messaggio della Streams Redis
                 // h deve partire da 0, altrimenti non troverà mai fval == "Action"
@@ -188,10 +193,8 @@ int main()
                     ReadStreamMsgVal(reply, k, i, h, fval);
 
                     printf("\nValue %d from message number %d from Stream: %d\n", h, i, k );
-
                     printf("main(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                    printf("Fval: %s\n", fval);
 
                     // Qui bisogna estrapolare l'azione da effettuare:
                     if (strcmp(fval, "Action") == 0)
@@ -205,7 +208,7 @@ int main()
                     }
 
 
-                    // una volta estrapolata selezionare tutti i parametri necessari per effettuarla
+                    // Una volta estrapolata l'azione seleziono tutti i parametri necessari per effettuarla.
                     if (strcmp(fval, "nome_utente_compratore") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -297,13 +300,6 @@ int main()
                         strcpy(cvvCartaPagamento, fval);
                     }
 
-                    // if (strcmp(fval, "idCarta") == 0)
-                    // {
-                    //     ReadStreamMsgVal(reply, k, i, h+1, fval);
-                    //     idCarta = atoi(fval);
-                    // }
-                    
-
                     if (strcmp(fval, "nuovaViaResidenza") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -323,11 +319,6 @@ int main()
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(nuovaCittaResidenza, fval);
-                    }
-                    if (strcmp(fval, "nomeProdotto") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nomeProdotto, fval);
                     }
                     if (strcmp(fval, "codiceProdotto") == 0)
                     {
@@ -356,17 +347,12 @@ int main()
                         strcpy(CAP_spedizione, fval);
                     }
 
-
                     if (strcmp(fval, "descrizioneRecensione") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(descrizioneRecensione, fval);
                     }
-                    // if (strcmp(fval, "voto_stella") == 0)
-                    // {
-                    //     ReadStreamMsgVal(reply, k, i, h+1, fval);
-                    //     voto_stella = atoi(fval);
-                    // }
+                    
                     if (strcmp(fval, "idRecensione") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -377,127 +363,24 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(motivazione_reso, fval);
                     }
-                    if (strcmp(fval, "nomeProdotto") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nomeProdotto, fval);
-                    }
-                    if (strcmp(fval, "categoriaProdotto") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(categoriaProdotto, fval);
-                    }
-                    if (strcmp(fval, "aziendaProduzione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(aziendaProduzione, fval);
-                    }
-                    if (strcmp(fval, "nuovaAziendaProduzione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nuovaAziendaProduzione, fval);
-                    }
-                    if (strcmp(fval, "descrizioneProdotto") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(descrizioneProdotto, fval);
-                    }
-                    // if (strcmp(fval, "prezzoProdotto") == 0)
-                    // {
-                    //     ReadStreamMsgVal(reply, k, i, h+1, fval);
-                    //     prezzoProdotto = atof(fval);
-                    // }
-                    // if (strcmp(fval, "numeroCopieDisponibili") == 0)
-                    // {
-                    //     ReadStreamMsgVal(reply, k, i, h+1, fval);
-                    //     numeroCopieDisponibili = atoi(fval);
-                    // }
-                    if (strcmp(fval, "dittaSpedizione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(dittaSpedizione, fval);
-                    }
-                    if (strcmp(fval, "nuovaDittaSpedizione") == 0)
-                    {
-                        ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nuovaDittaSpedizione, fval);
-                    }
-                    // if (strcmp(fval, "idSpedizione") == 0)
-                    // {
-                    //     ReadStreamMsgVal(reply, k, i, h+1, fval);
-                    //     idSpedizione = atoi(fval);
-                    // }
-
-                }
-                //printf("main(): pid %d: user %s: sum = %d\n", pid, username, sum);
-
-                printf("\nAction: %s\n", action);
-                // printf("nome_utente_compratore: %s\n", nome_utente_compratore);
-                // //printf("nome_utente_fornitore: %s\n", nome_utente_fornitore);
-                // //printf("nome_utente_trasportatore: %s\n", nome_utente_trasportatore);
-                // printf("nome: %s\n", nome);
-                // printf("cognome: %s\n", cognome);
-                // printf("categoriaUtente: %s\n", categoriaUtente);
-                // printf("password: %s\n", password);
-                // printf("nuovoNumeroTelefono: %s\n", nuovoNumeroTelefono);
-                // printf("vecchiaPassw: %s\n", vecchiaPassw);
-                // printf("nuovaPassw: %s\n", nuovaPassw);
-                // printf("numeroTelefono: %s\n", numeroTelefono);
-                // printf("email: %s\n", email);
-                // printf("viaResidenza: %s\n", viaResidenza);
-                // printf("numeroCivico: %s\n", numeroCivico);
-                // printf("cap: %s\n", cap);
-                // printf("cittàResidenza: %s\n", cittàResidenza);
-                // printf("confermaPassword: %s\n", confermaPassword);
-                // printf("dataCompleanno: %s\n", dataCompleanno);
-                // //printf("codiceProdotto: %d\n", codiceProdotto);
-                // printf("numeroCartaPagamento: %s\n", numeroCartaPagamento);
-                // printf("cvvCartaPagamento: %s\n", cvvCartaPagamento);
-                // printf("idCarta: %d\n", idCarta);
-                // //printf("idOrdine: %d\n", idOrdine);
-                // printf("nuovaViaResidenza: %s\n", nuovaViaResidenza);
-                // printf("nuovoNumCiv: %s\n", nuovoNumCiv);
-                // printf("nuovoCAP: %s\n", nuovoCAP);
-                // printf("nuovaCittaResidenza: %s\n", nuovaCittaResidenza);
-                // printf("via_spedizione: %s\n", via_spedizione);
-                // printf("città_spedizione: %s\n", città_spedizione);
-                // printf("numero_civico_spedizione: %s\n", numero_civico_spedizione);
-                // printf("descrizioneRecensione: %s\n", descrizioneRecensione);
-                // printf("voto_stella: %d\n", voto_stella);
-                // printf("idRecensione: %d\n", idRecensione);
-                // printf("motivazione_reso: %s\n", motivazione_reso);
-                // printf("nomeProdotto: %s\n", nomeProdotto);
-                // printf("categoriaProdotto: %s\n", categoriaProdotto);
-                // printf("aziendaProduzione: %s\n", aziendaProduzione);
-                // printf("nuovaAziendaProduzione: %s\n", nuovaAziendaProduzione);
-                // printf("descrizioneProdotto: %s\n", descrizioneProdotto);
-                // printf("prezzoProdotto: %.2f\n", prezzoProdotto); // Print float with 2 decimal places
-                // printf("numeroCopieDisponibili: %d\n", numeroCopieDisponibili);
-                // printf("dittaSpedizione: %s\n", dittaSpedizione);
-                // printf("nuovaDittaSpedizione: %s\n", nuovaDittaSpedizione);
-                // printf("idSpedizione: %d\n", idSpedizione);
-
-                // Qui bisogna svolgere l'azione:
                 
+
+                } // for dei valori dell'i-esimo messaggio dell'i-esima Stream.
+
 
                 printf("Azione: %s\n", action);
 
                 if (std::string(action) == "EFFETTUA REGISTRAZIONE COMPRATORE")
                 {
-                    //printf("Azione: %s\n", action);
-
                     std::string sessionID = generateSessionID();
-
                     compratore.effettuaRegistrazione(db1, nome_utente_compratore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, 
                                                     viaResidenza, numeroCivico, cap,
                                                     cittàResidenza, password, confermaPassword, dataCompleanno);
 
                     strcpy(outputs, "Registrazione utente compratore avvenuta");
 
-                    //freeReplyObject(reply); Cerchiamo di capire se è questo che crea l'errore di segmentazione
 
-                    // send result to client
-                    
+                    // send result to client                    
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
@@ -511,26 +394,17 @@ int main()
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
 
-                    freeReplyObject(reply2);
-                    
-
-                    /* sleep   */
-                    //micro_sleep(1000000);
-                    
+                    freeReplyObject(reply2);   
                 }
 
+
                 if (std::string(action) == "EFFETTUA LOGIN COMPRATORE"){
-                    //UtenteCompratore compratore;
 
                     std::string sessionID = generateSessionID();
-
-                    std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
                     compratore.effettua_login(db1, nome_utente_compratore, password, sessionID);
 
                     strcpy(outputs, "Login avvenuto");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -545,19 +419,14 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
 
+
                 if (std::string(action) == "EFFETTUA LOGOUT COMPRATORE"){
-                    //UtenteCompratore compratore;
-                    std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
                     compratore.effettua_logout(db1, nome_utente_compratore);
 
                     strcpy(outputs, "Logout avvenuto");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -572,19 +441,14 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
 
+
                 if (std::string(action) == "ELIMINA PROFILO COMPRATORE"){
-                    //UtenteCompratore compratore;
-                    std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
                     compratore.elimina_profilo(db1, nome_utente_compratore);
 
                     strcpy(outputs, "Eliminazione profilo avvenuta");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -599,19 +463,15 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
+
                 }
 
+
                 if (std::string(action) == "AGGIORNA NUMERO TELEFONO COMPRATORE"){
-                    //UtenteCompratore compratore;
-                    std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
                     compratore.aggiornaNumeroDiTelefono(db1, nome_utente_compratore, nuovoNumeroTelefono);
 
                     strcpy(outputs, "Aggiornamento numero telefono utente compratore");   
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -625,20 +485,15 @@ int main()
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
-
-                    /* sleep   */
-                    //micro_sleep(5000000);                 
+              
                 }
 
+
                 if (std::string(action) == "AGGIORNA PASSWORD COMPRATORE"){
-                    //UtenteCompratore compratore;
-                    std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
                     compratore.aggiornaPassword(db1, nome_utente_compratore ,vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, "Aggiornamento password utente compratore");  
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -652,20 +507,15 @@ int main()
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
-
-                    /* sleep   */
-                    //micro_sleep(5000000);     
+   
                 }
 
+
                 if (std::string(action) == "AGGIORNA RESIDENZA"){
-                    //UtenteCompratore compratore;
-                    std::cout << "Nome utente compratore: " << compratore.nome_utente  << std::endl;
                     compratore.aggiornaResidenza(db1, nome_utente_compratore, nuovaViaResidenza, nuovoNumCiv, nuovoCAP, nuovaCittaResidenza);
 
                     strcpy(outputs, "Aggiornamento residenza utente compratore");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -680,9 +530,9 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
+
                 }
+
 
                 if (std::string(action) == "AGGIUNGI CARTA PAGAMENTO"){
                     Carta carta;
@@ -690,8 +540,6 @@ int main()
 
                     strcpy(outputs, "Aggiornamento carta di pagamento");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -706,9 +554,8 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
+
 
                 if (std::string(action) == "RIMUOVI CARTA PAGAMENTO"){
                     Carta carta;
@@ -716,8 +563,6 @@ int main()
 
                     strcpy(outputs, "Rimozione carta di pagamento");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -732,9 +577,8 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
+
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO CARRELLO"){
                     Carrello carrello;
@@ -742,8 +586,6 @@ int main()
 
                     strcpy(outputs, "Aggiunta prodotto al carrello");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -758,9 +600,8 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
+
 
                 if (std::string(action) == "RIMUOVI PRODOTTO CARRELLO"){
                     Carrello carrello;
@@ -768,8 +609,6 @@ int main()
 
                     strcpy(outputs, "Rimozione prodotto dal carrello");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -784,9 +623,8 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
+
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO LISTADESIDERI"){
                     ListaDesideri listadesideri;
@@ -795,8 +633,6 @@ int main()
 
                     strcpy(outputs, "Aggiunta prodotto lista desideri");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -811,9 +647,8 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
+
 
                 if (std::string(action) == "RIMUOVI PRODOTTO LISTADESIDERI"){
                     ListaDesideri listadesideri;
@@ -821,8 +656,6 @@ int main()
 
                     strcpy(outputs, "Rimozione prodotto lista desideri");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -837,17 +670,13 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
 
+
                 if (std::string(action) == "ACQUISTA PRODOTTO"){
-                    //Product prodotto;
                     ordine = prodotto.acquistaProdotto(db1, nome_utente_compratore, codiceProdotto, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
 
                     strcpy(outputs, "Acquisto prodotto");
-
-                    //freeReplyObject(reply);
 
                     // send result to client
                     send_counter++;
@@ -864,17 +693,15 @@ int main()
                     freeReplyObject(reply2);
                     printf("Effettuata la freeReply della Reply2.\n");
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
+
                 }
+
 
                 if (std::string(action) == "RICERCA PRODOTTO"){
                     Product prodotto;
                     prodotto.ricerca_mostra_Prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Ricerca prodotto");
-
-                    //freeReplyObject(reply);
 
                     // send result to client
                     send_counter++;
@@ -890,9 +717,8 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
+
 
                 if (std::string(action) == "VISIONA ORDINI EFFETTUATI"){
 
@@ -901,8 +727,6 @@ int main()
 
                     strcpy(outputs, "Visione ordini effettuata con successo");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -916,8 +740,6 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
 
                 }
 
@@ -929,8 +751,6 @@ int main()
 
                     strcpy(outputs, "Ordine annullato");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -944,11 +764,9 @@ int main()
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
-
-                    /* sleep   */
-                    //micro_sleep(5000000);
                     
                 }
+
 
                 if (std::string(action) == "EFFETTUA RESO"){
 
@@ -961,8 +779,6 @@ int main()
 
                     strcpy(outputs, "Effettuamento reso");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -977,8 +793,6 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
 
 
@@ -990,8 +804,6 @@ int main()
                     recensione.effettuaRecensione(db1, nome_utente_compratore, idOrdine, descrizioneRecensione, votoStelle::Cinque);
                     strcpy(outputs, "Effettuamento recensione");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -1006,8 +818,6 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
 
 
@@ -1019,8 +829,6 @@ int main()
 
                     strcpy(outputs, "Recensione rimossa");
 
-                    //freeReplyObject(reply);
-
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
@@ -1035,15 +843,13 @@ int main()
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key, value, reply2->str);
                     freeReplyObject(reply2);
 
-                    /* sleep   */
-                    //micro_sleep(5000000);
                 }
 
-            }
-        }
+            } // for del numero dei messaggi dell'i-esima Stream
+
+        } // for dell'iterazione delle varie Stream
 
         freeReplyObject(reply);
-        printf("Effettuata anche la reply 1;\n");
     
 
     } // while ()
