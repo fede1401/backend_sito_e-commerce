@@ -296,8 +296,8 @@ int main()
                 
                 printf("Azione: %s\n", action);
 
-                if (std::string(action) == "EFFETTUA REGISTRAZIONE FORNITORE"){
-
+                if (std::string(action) == "EFFETTUA REGISTRAZIONE FORNITORE")
+                {
                     std::string sessionID = generateSessionID();
                     fornitore.effettuaRegistrazione(db1, nome_utente_fornitore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword, aziendaProduzione);
 
@@ -319,8 +319,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "AGGIORNA NOME AZIENDAPRODUZIONE"){
-                   
+                if (std::string(action) == "AGGIORNA NOME AZIENDAPRODUZIONE")
+                {   
                     fornitore.aggiornaNomeAziendaProduttrice(db1, nome_utente_fornitore,nuovaAziendaProduzione);
 
                     strcpy(outputs, "Registrazione utente fornitore avvenuta");
@@ -342,8 +342,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "AGGIUNGI PRODOTTO SITO"){
-
+                if (std::string(action) == "AGGIUNGI PRODOTTO SITO")
+                {
                     prodotto.add_new_product(db1, nome_utente_fornitore, nomeProdotto, categoriaProdotto, prezzoProdotto, descrizioneProdotto, aziendaProduzione, numeroCopieDisponibili);
 
                     strcpy(outputs, "Prodotto aggiunto al sito");
@@ -365,9 +365,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "RIMUOVI PRODOTTO SITO"){
-                    Product prodotto;
-
+                if (std::string(action) == "RIMUOVI PRODOTTO SITO")
+                {
                     prodotto.remove_prodotto(db1, nome_utente_fornitore, codiceProdotto);
 
                     strcpy(outputs, "Prodotto rimosso dal sito");
@@ -388,8 +387,8 @@ int main()
                 }
                 
 
-                if (std::string(action) == "EFFETTUA LOGIN FORNITORE"){
-
+                if (std::string(action) == "EFFETTUA LOGIN FORNITORE")
+                {
                     std::string sessionID = generateSessionID();
 
                     fornitore.effettua_login(db1, nome_utente_fornitore, password, sessionID);
@@ -413,8 +412,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "EFFETTUA LOGOUT FORNITORE"){
-
+                if (std::string(action) == "EFFETTUA LOGOUT FORNITORE")
+                {
                     fornitore.effettua_logout(db1, nome_utente_fornitore);
 
                     strcpy(outputs, "Logout utente fornitore avvenuta");
@@ -435,8 +434,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "ELIMINA PROFILO FORNITORE"){
-
+                if (std::string(action) == "ELIMINA PROFILO FORNITORE")
+                {
                     fornitore.elimina_profilo(db1, nome_utente_fornitore);
 
                     strcpy(outputs, "Eliminazione utente fornitore avvenuta");
@@ -457,8 +456,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "AGGIORNA NUMERO TELEFONO FORNITORE"){
-
+                if (std::string(action) == "AGGIORNA NUMERO TELEFONO FORNITORE")
+                {
                     fornitore.aggiornaNumeroDiTelefono(db1, nome_utente_fornitore, nuovoNumeroTelefono);
 
                     strcpy(outputs, "Aggiornamento numero di telefono fornitore");
@@ -479,8 +478,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "AGGIORNA PASSWORD FORNITORE"){
-                    
+                if (std::string(action) == "AGGIORNA PASSWORD FORNITORE")
+                {    
                     fornitore.aggiornaPassword(db1, nome_utente_fornitore, vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, "Aggiornamento password utente fornitore");

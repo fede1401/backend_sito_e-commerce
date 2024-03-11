@@ -7,22 +7,22 @@
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
 // Usage: ./streams <add count> <read count> [block time, default: 1]
 
-#define DEBUG 1000
+#define DEBUG 1000                              // Definisci una costante per abilitare il debug
 
-#define READ_STREAM_FORNITORE "stream4"
-#define WRITE_STREAM_FORNITORE "stream3"
+#define READ_STREAM_FORNITORE "stream4"         // Nome dello stream da cui leggere.
+#define WRITE_STREAM_FORNITORE "stream3"        // Nome dello stream su cui scrivere.
 
-using namespace std;
+using namespace std;        // Consente di utilizzare le funzioni e le classi standard del C++ senza doverle qualificare con std::.
 
 int main()
 {
 
     redisContext *c2r;
-    redisReply *reply;
-    int read_counter = 0;
-    int send_counter = 0;
-    int block = 1000000000;
-    int pid;
+    redisReply *reply;              // Inizializzazione risposta Redis
+    int read_counter = 0;           // Contatore delle letture effettuate
+    int send_counter = 0;           // Contatore degli invii effettuati
+    int block = 1000000000;         // Tempo di blocco per la lettura da stream in nanosecondi
+    int pid;                        // ID del processo
     //unsigned seed;
     char username[100];
     char key1[100];
@@ -46,10 +46,11 @@ int main()
     char key10[100];
     char value10[100];
     
-    char streamname[100];
-    char msgid[100];
-    char fval[100];
-    int i, k, h;
+    char streamname[100];           // Buffer per il nome dello stream Redis
+    char msgid[100];                // Buffer per l'ID del messaggio Redis
+    char fval[100];                 // Buffer per il valore del campo del messaggio Redis
+    int i, k, h;                    // Variabili di iterazione
+
     std::string test1[9] = {"EFFETTUA REGISTRAZIONE FORNITORE", "EFFETTUA LOGIN FORNITORE", "AGGIORNA NUMERO TELEFONO FORNITORE", 
                             "AGGIORNA PASSWORD FORNITORE", "AGGIORNA NOME AZIENDAPRODUZIONE", "AGGIUNGI PRODOTTO SITO", //"RIMUOVI PRODOTTO SITO", //"EFFETTUA LOGOUT FORNITORE",  //"ELIMINA PROFILO FORNITORE" 
                             };
@@ -162,30 +163,30 @@ int main()
     setvbuf(stderr, (char *)NULL, _IONBF, 0);
 #endif
 
-    // Inizializzazione del seme per i numeri casuali
-    //seed = (unsigned)time(NULL);
-    //srand(seed);
-
-    // Generazione del nome utente basato su un numero casuale
-    //sprintf(username, "%u", rand());
-
+    // Imposta il nome utente.
     strcpy(username, "federico");
 
-    // Ottenimento dell'identificatore del processo
+    // Ottenimento dell'ID del processo corrente
     pid = getpid();
 
     // Connessione a Redis
     printf("main(): pid %d: user %s: connecting to redis ...\n", pid, username);
     c2r = redisConnect("localhost", 6379);
+    // Stampa un messaggio di connessione riuscita.
     printf("main(): pid %d: user %s: connected to redis\n", pid, username);
 
     // Eliminazione degli stream se esistono
     reply = RedisCommand(c2r, "DEL %s", READ_STREAM_FORNITORE);
+    // Verifica la risposta del comando e termina il programma in caso di errore
     assertReply(c2r, reply);
+    // Stampa la risposta del comando
     dumpReply(reply, 0);
 
+    // Eliminazione stream di scrittura se esiste.
     reply = RedisCommand(c2r, "DEL %s", WRITE_STREAM_FORNITORE);
+    // Verifica la risposta del comando e termina il programma in caso di errore
     assertReply(c2r, reply);
+    // Stampa la risposta del comando
     dumpReply(reply, 0);
 
 
@@ -222,7 +223,10 @@ int main()
             sprintf(value1, test2[i].c_str());
 
             
-            if (test2[i]== "EFFETTUA REGISTRAZIONE FORNITORE"){
+            if (test2[i]== "EFFETTUA REGISTRAZIONE FORNITORE")
+            {
+                // Impostazioni chiavi e valori per il comando Redis:
+
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, nomi_utente[i30].c_str());
 
@@ -250,10 +254,11 @@ int main()
                 sprintf(key10, "aziendaProduzione");
                 sprintf(value10, nomi_aziende_produttrici[i5].c_str());
 
-
+                // Effettuo un comando di scrittura relativo alla registrazione dell'utente fornitore
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
                                         WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
                                         key9, value9, key10, value10);
+                // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
@@ -263,28 +268,39 @@ int main()
                                         key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
                                         key9, value9, key10, value10, reply->str);
 
+                // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
 
 
-            if (test2[i] == "AGGIORNA NOME AZIENDAPRODUZIONE"){
+            if (test2[i] == "AGGIORNA NOME AZIENDAPRODUZIONE")
+            {
+                // Impostazioni chiavi e valori per il comando Redis:
+
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "nuovaAziendaProduzione");
                 sprintf(value3, nomi_aziende_produttrici[i5].c_str());
 
+                // Effettuo un comando di scrittura relativo all'aggiornamento dell'azienda di produzione.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+                // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
 
+                // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
 
 
-            if (test2[i]== "AGGIUNGI PRODOTTO SITO"){
+            if (test2[i]== "AGGIUNGI PRODOTTO SITO")
+            {
+                // Impostazioni chiavi e valori per il comando Redis:
+
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, nomi_utente[i30].c_str());
                 
@@ -306,8 +322,11 @@ int main()
                 sprintf(key8, "numeroCopieDisponibili");
                 sprintf(value8, prezzo_copie_disponibili[i30].c_str());
 
+                // Effettuo un comando di scrittura relativo all'aggiunta di un prodotto da parte dell'utente fornitore.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
                                         WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8);
+
+                // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
@@ -315,11 +334,15 @@ int main()
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, 
                                         key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7,key8, value8, reply->str);
 
+                // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
 
 
-            if (test2[i] == "RIMUOVI PRODOTTO SITO"){
+            if (test2[i] == "RIMUOVI PRODOTTO SITO")
+            {
+                // Impostazioni chiavi e valori per il comando Redis:
+
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, nomi_utente[i30].c_str());
                 
@@ -327,30 +350,41 @@ int main()
                 std::string codiceProdotto = std::to_string(rand()%30);
                 sprintf(value3, codiceProdotto.c_str());
 
+                // Effettuo un comando di scrittura relativo alla rimozione del prodotto dell'utente fornitore.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+                // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
 
+                // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
 
 
 
-            if (test2[i] == "EFFETTUA LOGIN FORNITORE"){
+            if (test2[i] == "EFFETTUA LOGIN FORNITORE")
+            {
+                // Impostazioni chiavi e valori per il comando Redis:
+
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "password");
                 sprintf(value3, password[i30].c_str());
 
+                // Effettuo un comando di scrittura relativo all'effettuazione del login dell'utente fornitore.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+                // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
 
+                // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
 
@@ -360,12 +394,16 @@ int main()
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, nomi_utente[i30].c_str());
 
+                // Effettuo un comando di scrittura relativo al logout dell'utente fornitore.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+
+                // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("XADD %s * %s %s %s %s\n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
 
+                // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
 
@@ -375,32 +413,46 @@ int main()
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, nomi_utente[i30].c_str());
 
+                // Effettuo un comando di scrittura relativo all'eliminazione dell'utente fornitore.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+
+                // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("XADD %s * %s %s %s %s\n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
 
+                // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
 
-            if (test2[i] == "AGGIORNA NUMERO TELEFONO FORNITORE"){
+            if (test2[i] == "AGGIORNA NUMERO TELEFONO FORNITORE")
+            {
+                // Impostazioni chiavi e valori per il comando Redis:
+
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "nuovoNumeroTelefono");
                 sprintf(value3, numeri_telefono[i100].c_str());
 
+                // Effettuo un comando di scrittura relativo all'aggiornamento di numero telefono dell'utente fornitore.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+                // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
 
+                // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
 
-            if (test2[i] == "AGGIORNA PASSWORD FORNITORE"){
+            if (test2[i] == "AGGIORNA PASSWORD FORNITORE")
+            {
+                // Impostazioni chiavi e valori per il comando Redis:
+
                 sprintf(key2, "nome_utente_fornitore");
                 sprintf(value2, nomi_utente[i30].c_str());
 
@@ -410,12 +462,16 @@ int main()
                 sprintf(key4, "nuovaPassw");
                 sprintf(value4, password[i30].c_str());
 
+                // Effettuo un comando di scrittura relativo all'aggiornamento di password dell'utente fornitore.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+                
+                // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf( "XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
                 printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
 
+                // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
 
@@ -424,15 +480,20 @@ int main()
 
         printf("\n\nOra di leggere i risultati dal server. \n");
 
-        //  read result from server
+        //  Lettura dei risultati dal server
         read_counter++;
+
+        // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
         reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_FORNITORE);
 
         printf("Effettuato comando per leggere i messaggi della Streams. \n");
 
         printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_FORNITORE);
 
+        // Verifica la risposta del comando e termina il programma in caso di errore
         assertReply(c2r, reply);
+        
+        // Stampa la risposta del comando
         dumpReply(reply, 0);
 
         // Scorro il numero di Streams nella connessione Redis
@@ -464,6 +525,7 @@ int main()
             }
         }
 
+        // Libera la risorsa della risposta
         freeReplyObject(reply);
 
         /* sleep   */

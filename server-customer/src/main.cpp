@@ -84,6 +84,16 @@ int main()
     UtenteCompratore compratore;
     Product prodotto;
     Ordine ordine;
+    Carta carta;
+    Carrello carrello;
+    ListaDesideri listadesideri;
+    Reso reso;
+    Recensione recensione;
+
+
+    // Utilizzo di un std::unordered_map per associare il session ID all'oggetto UtenteCompratore;
+    std::unordered_map<std::string, UtenteCompratore> sessionMapIDUtenteCompratore;
+
 
     /*  prg  */
 
@@ -377,6 +387,8 @@ int main()
                                                     viaResidenza, numeroCivico, cap,
                                                     cittàResidenza, password, confermaPassword, dataCompleanno);
 
+                    sessionMapIDUtenteCompratore[sessionID] = compratore;
+
                     strcpy(outputs, "Registrazione utente compratore avvenuta");
 
 
@@ -398,8 +410,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "EFFETTUA LOGIN COMPRATORE"){
-
+                if (std::string(action) == "EFFETTUA LOGIN COMPRATORE")
+                {
                     std::string sessionID = generateSessionID();
                     compratore.effettua_login(db1, nome_utente_compratore, password, sessionID);
 
@@ -422,7 +434,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "EFFETTUA LOGOUT COMPRATORE"){
+                if (std::string(action) == "EFFETTUA LOGOUT COMPRATORE")
+                {
                     compratore.effettua_logout(db1, nome_utente_compratore);
 
                     strcpy(outputs, "Logout avvenuto");
@@ -444,7 +457,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "ELIMINA PROFILO COMPRATORE"){
+                if (std::string(action) == "ELIMINA PROFILO COMPRATORE")
+                {
                     compratore.elimina_profilo(db1, nome_utente_compratore);
 
                     strcpy(outputs, "Eliminazione profilo avvenuta");
@@ -467,7 +481,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "AGGIORNA NUMERO TELEFONO COMPRATORE"){
+                if (std::string(action) == "AGGIORNA NUMERO TELEFONO COMPRATORE")
+                {
                     compratore.aggiornaNumeroDiTelefono(db1, nome_utente_compratore, nuovoNumeroTelefono);
 
                     strcpy(outputs, "Aggiornamento numero telefono utente compratore");   
@@ -489,7 +504,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "AGGIORNA PASSWORD COMPRATORE"){
+                if (std::string(action) == "AGGIORNA PASSWORD COMPRATORE")
+                {
                     compratore.aggiornaPassword(db1, nome_utente_compratore ,vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, "Aggiornamento password utente compratore");  
@@ -511,7 +527,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "AGGIORNA RESIDENZA"){
+                if (std::string(action) == "AGGIORNA RESIDENZA")
+                {
                     compratore.aggiornaResidenza(db1, nome_utente_compratore, nuovaViaResidenza, nuovoNumCiv, nuovoCAP, nuovaCittaResidenza);
 
                     strcpy(outputs, "Aggiornamento residenza utente compratore");
@@ -534,8 +551,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "AGGIUNGI CARTA PAGAMENTO"){
-                    Carta carta;
+                if (std::string(action) == "AGGIUNGI CARTA PAGAMENTO")
+                {    
                     carta.aggiungi_carta(db1, nome_utente_compratore, numeroCartaPagamento, cvvCartaPagamento);
 
                     strcpy(outputs, "Aggiornamento carta di pagamento");
@@ -557,8 +574,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "RIMUOVI CARTA PAGAMENTO"){
-                    Carta carta;
+                if (std::string(action) == "RIMUOVI CARTA PAGAMENTO")
+                {
                     carta.remove_carta(db1, nome_utente_compratore, numeroCartaPagamento);
 
                     strcpy(outputs, "Rimozione carta di pagamento");
@@ -580,8 +597,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "AGGIUNGI PRODOTTO CARRELLO"){
-                    Carrello carrello;
+                if (std::string(action) == "AGGIUNGI PRODOTTO CARRELLO")
+                {
                     carrello.add_prodotto(db1, nome_utente_compratore, codiceProdotto );
 
                     strcpy(outputs, "Aggiunta prodotto al carrello");
@@ -603,8 +620,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "RIMUOVI PRODOTTO CARRELLO"){
-                    Carrello carrello;
+                if (std::string(action) == "RIMUOVI PRODOTTO CARRELLO")
+                {
                     carrello.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Rimozione prodotto dal carrello");
@@ -626,9 +643,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "AGGIUNGI PRODOTTO LISTADESIDERI"){
-                    ListaDesideri listadesideri;
-                    //printf("NOME PRODOTTO: %s", nomeProdotto);
+                if (std::string(action) == "AGGIUNGI PRODOTTO LISTADESIDERI")
+                {
                     listadesideri.add_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Aggiunta prodotto lista desideri");
@@ -650,8 +666,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "RIMUOVI PRODOTTO LISTADESIDERI"){
-                    ListaDesideri listadesideri;
+                if (std::string(action) == "RIMUOVI PRODOTTO LISTADESIDERI")
+                {
                     listadesideri.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Rimozione prodotto lista desideri");
@@ -673,7 +689,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "ACQUISTA PRODOTTO"){
+                if (std::string(action) == "ACQUISTA PRODOTTO")
+                {
                     ordine = prodotto.acquistaProdotto(db1, nome_utente_compratore, codiceProdotto, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
 
                     strcpy(outputs, "Acquisto prodotto");
@@ -697,8 +714,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "RICERCA PRODOTTO"){
-                    Product prodotto;
+                if (std::string(action) == "RICERCA PRODOTTO")
+                {
                     prodotto.ricerca_mostra_Prodotto(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, "Ricerca prodotto");
@@ -720,9 +737,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "VISIONA ORDINI EFFETTUATI"){
-
-                    Ordine ordine;
+                if (std::string(action) == "VISIONA ORDINI EFFETTUATI")
+                {
                     ordine.visione_ordini_effettuati(db1, nome_utente_compratore);
 
                     strcpy(outputs, "Visione ordini effettuata con successo");
@@ -744,9 +760,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "ANNULLA ORDINE"){
-                    
-                    Ordine ordine;
+                if (std::string(action) == "ANNULLA ORDINE")
+                {    
                     ordine.annulla_ordine(db1, nome_utente_compratore, idOrdine);
 
                     strcpy(outputs, "Ordine annullato");
@@ -768,10 +783,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "EFFETTUA RESO"){
-
-                    Reso reso;
-                    
+                if (std::string(action) == "EFFETTUA RESO")
+                {    
                     // Modificare
                     //if motivazione_reso == "";
                     
@@ -796,9 +809,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "EFFETTUA RECENSIONE"){
-
-                    Recensione recensione;
+                if (std::string(action) == "EFFETTUA RECENSIONE")
+                {
                     // Modificare
                     //if motivazione_reso == "";
                     recensione.effettuaRecensione(db1, nome_utente_compratore, idOrdine, descrizioneRecensione, votoStelle::Cinque);
@@ -821,10 +833,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "RIMUOVI RECENSIONE"){
-
-                    Recensione recensione;
-
+                if (std::string(action) == "RIMUOVI RECENSIONE")
+                {
                     recensione.remove_recensione(db1, nome_utente_compratore, idRecensione);
 
                     strcpy(outputs, "Recensione rimossa");

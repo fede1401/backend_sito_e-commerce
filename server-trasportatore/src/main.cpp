@@ -336,7 +336,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "ASSEGNA ORDINE TRASPORTATORE"){
+                if (std::string(action) == "ASSEGNA ORDINE TRASPORTATORE")
+                {
                     spedizione.assegnaOrdineTrasportatore(db1);
 
                     strcpy(outputs, "Spedizione assegnata");
@@ -403,8 +404,8 @@ int main()
                 }
 
 
-                if (std::string(action) == "ELIMINA PROFILO TRASPORTATORE"){
-
+                if (std::string(action) == "ELIMINA PROFILO TRASPORTATORE")
+                {
                     trasportatore.elimina_profilo(db1, nome_utente_trasportatore);
 
                     strcpy(outputs, "Eliminazione utente trasportatore avvenuta");
