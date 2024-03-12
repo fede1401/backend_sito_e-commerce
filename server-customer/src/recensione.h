@@ -158,11 +158,11 @@ public:
         else
         {   
             // Log dell'errore e uscita dalla funzione
-            std::cout << "L'ordine non è stato ancora spedito, perciò non può essere effettuata la recensione!" << std::endl;
+            std::cout << "L'ordine non è stato trovato!" << std::endl;
 
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non spedito, non può essere effettuata la recensione";
-            InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
+            messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non trovato";
+            InsertToLogDB(db1, "WARNING", messageLog , sessionID, nomeRequisito, statoReq);
             return;
         }
     std::cout << "Recensione effettuata" << std::endl;

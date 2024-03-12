@@ -77,55 +77,55 @@ public:
                         return;
                     }
 
-                  // Caricamento del sessionID.
-                  sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
-                  res = db1.ExecSQLtuples(sqlcmd);
-                  rows = PQntuples(res);
-                  if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
-                  PQclear(res);     
+                    // Caricamento del sessionID.
+                    sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
+                    res = db1.ExecSQLtuples(sqlcmd);
+                    rows = PQntuples(res);
+                    if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+                    PQclear(res);     
 
-                  if (rows != 1){
-                    // Log dell'errore e uscita dalla funzione
-                    messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere effettuato il reso .";
-                    InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-                    return;
-                }   
+                    if (rows != 1){
+                        // Log dell'errore e uscita dalla funzione
+                        messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere effettuato il reso .";
+                        InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+                        return;
+                        }   
 
-                  // Verifica se l'utente è loggato e ha una sessionID valida
-                  if (sessionID == ""){
-                    // Log dell'errore e uscita dalla funzione
-                    InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può effettuare un reso .", sessionID, nomeRequisito, statoReq);
-                    return;
-                 }
+                    // Verifica se l'utente è loggato e ha una sessionID valida
+                    if (sessionID == ""){
+                        // Log dell'errore e uscita dalla funzione
+                        InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può effettuare un reso .", sessionID, nomeRequisito, statoReq);
+                        return;
+                    }
 
-                  // Rendiamo la motivazione del reso in stringa così che posso aggiungerlo al database.
-                  std::string motivazione_resoStr = statoMotivazioneResoToString(motivazione_reso);
+                    // Rendiamo la motivazione del reso in stringa così che posso aggiungerlo al database.
+                    std::string motivazione_resoStr = statoMotivazioneResoToString(motivazione_reso);
 
 
-                  // Inserisco nel database una riga corrispondente al reso.  
-                  sprintf(sqlcmd, "INSERT INTO Reso (idReso, nome_utente_compratore, idOrdine, motivazioneReso) VALUES (DEFAULT, '%s', '%d', '%s')", 
-                  nome_utente_compratore.c_str(), idOrdine, motivazione_resoStr.c_str());
-                  res = db1.ExecSQLcmd(sqlcmd);
-                  PQclear(res); 
+                    // Inserisco nel database una riga corrispondente al reso.  
+                    sprintf(sqlcmd, "INSERT INTO Reso (idReso, nome_utente_compratore, idOrdine, motivazioneReso) VALUES (DEFAULT, '%s', '%d', '%s')", 
+                    nome_utente_compratore.c_str(), idOrdine, motivazione_resoStr.c_str());
+                    res = db1.ExecSQLcmd(sqlcmd);
+                    PQclear(res); 
 
-                  // Devo riempire l'oggetto Reso della classe:
-                  // Esegui una query SELECT per ottenere l'ultimo ID inserito nella tabella Reso:
-                  // 1. Selezioniamo tutti gli idReso dalla tabella Recensione:
-                  sprintf(sqlcmd, "SELECT idReso FROM Reso");
-                  res = db1.ExecSQLtuples(sqlcmd);
-                  rows = PQntuples(res);
-                  // 2. Prendiamo l'ultimo id
-                  this->idReso = atoi(PQgetvalue(res, rows - 1, 0));
-                  PQclear(res);
+                    // Devo riempire l'oggetto Reso della classe:
+                    // Esegui una query SELECT per ottenere l'ultimo ID inserito nella tabella Reso:
+                    // 1. Selezioniamo tutti gli idReso dalla tabella Recensione:
+                    sprintf(sqlcmd, "SELECT idReso FROM Reso");
+                    res = db1.ExecSQLtuples(sqlcmd);
+                    rows = PQntuples(res);
+                    // 2. Prendiamo l'ultimo id
+                    this->idReso = atoi(PQgetvalue(res, rows - 1, 0));
+                    PQclear(res);
 
-                  this->nome_utente_compratore = in_nome_utente_compratore;
-                  this->idOrdine = idOrdine;
-                  this->motivazione_reso = motivazione_reso;
+                    this->nome_utente_compratore = in_nome_utente_compratore;
+                    this->idOrdine = idOrdine;
+                    this->motivazione_reso = motivazione_reso;
 
-                  // Log 
-                  statoReq = statoRequisito::Success;
-                  messageLog = "Effettuata reso del prodotto da " + in_nome_utente_compratore;
-                  InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
+                    // Log 
+                    statoReq = statoRequisito::Success;
+                    messageLog = "Effettuata reso del prodotto da " + in_nome_utente_compratore;
+                    InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                 }
 
@@ -140,7 +140,6 @@ public:
                     return;
                 }
             }
-
 
             // Se lo stato della spedizione non è stato ancora "consegnato" allora il reso non può essere effettuato
             else{
@@ -157,13 +156,14 @@ public:
         // Se il numero delle righe del risultato delle query è diverso da 1, allora l'ordine non è stato trovato
         else{
 
-            // Log dell'errore e uscita dalla funzione
-            std::cout << "L'ordine non è stato ancora spedito, perciò non può essere effettuato il reso!" << std::endl;
+            std::cout << "L'ordine non è stato trovato!" << std::endl;
 
+            // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non spedito, non può essere effettuato il reso";
+            messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non trovato";
             InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
             return;
+
         }
     std::cout << "Reso effettuato" << std::endl;
     return;
