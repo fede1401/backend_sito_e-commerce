@@ -176,6 +176,283 @@ int main()
     srand((unsigned)time(NULL));
 
 
+    // Apre il file in modalità di lettura
+    std::ifstream file("../test/test.txt"); 
+    if (!file.is_open()) {
+        std::cerr << "Impossibile aprire il file!" << std::endl;
+        return 1;
+    }
+
+
+    std::string line;
+    while (std::getline(file, line))    // Legge una riga per volta
+    { 
+        
+        if (line == "EFFETTUA REGISTRAZIONE TRASPORTATORE")
+        {
+            sprintf(key1, "Action");
+            sprintf(value1, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key2, "nome_utente_trasportatore");
+            sprintf(value2, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key3, "categoriaUtente");
+            sprintf(value3, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key4, "nome");
+            sprintf(value4, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key5, "cognome");
+            sprintf(value5, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key6, "numeroTelefono");
+            sprintf(value6, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key7, "email");
+            sprintf(value7, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key8, "password");
+            sprintf(value8, line.c_str());
+               
+            std::getline(file, line); // Passa alla riga successiva 
+            sprintf(key9, "confermaPassword");
+            sprintf(value9, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key10, "dittaSpedizione");
+            sprintf(value10, line.c_str());
+
+            // Effettuo un comando di scrittura relativo alla registrazione dell'utente trasportatore
+            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
+                            WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                            key9, value9, key10, value10);
+                
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+            printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                        WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                        key9, value9, key10, value10);
+
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, 
+                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                        key9, value9, key10, value10, reply->str);
+
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+        }
+
+        if (line == "EFFETTUA LOGIN TRASPORTATORE")
+        {
+            sprintf(key1, "Action");
+            sprintf(value1, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key2, "nome_utente_trasportatore");
+            sprintf(value2, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key3, "password");
+            sprintf(value3, line.c_str());
+
+            // Effettuo un comando di scrittura relativo al login dell'utente trasportatore.
+            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
+                
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, reply->str);
+
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+        }
+
+
+        if (line == "EFFETTUA LOGOUT TRASPORTATORE")
+        {
+            sprintf(key1, "Action");
+            sprintf(value1, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key2, "nome_utente_trasportatore");
+            sprintf(value2, line.c_str());
+
+            // Effettuo un comando di scrittura relativo al logout dell'utente trasportatore.
+            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+            printf("XADD %s * %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2);
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, reply->str);
+
+            freeReplyObject(reply);
+        }
+
+
+        if (line == "ELIMINA PROFILO TRASPORTATORE")
+        {
+            sprintf(key1, "Action");
+            sprintf(value1, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key2, "nome_utente_trasportatore");
+            sprintf(value2, line.c_str());
+
+            // Effettuo un comando di scrittura relativo all'eliminazione dell'utente trasportatore.
+            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+            printf("XADD %s * %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2);
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, reply->str);
+
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+        }
+
+
+        if (line == "AGGIORNA NUMERO TELEFONO TRASPORTATORE")
+        {
+            sprintf(key1, "Action");
+            sprintf(value1, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key2, "nome_utente_trasportatore");
+            sprintf(value2, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key3, "nuovoNumeroTelefono");
+            sprintf(value3, line.c_str());
+
+            // Effettuo un comando di scrittura relativo all'aggiornamento del numero di telefono dell'utente trasportatore.
+            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2,key3, value3, reply->str);
+
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+        }
+
+
+        if (line == "AGGIORNA PASSWORD TRASPORTATORE")
+        {
+            sprintf(key1, "Action");
+            sprintf(value1, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key2, "nome_utente_trasportatore");
+            sprintf(value2, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key3, "vecchiaPassw");
+            sprintf(value3, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key4, "nuovaPassw");
+            sprintf(value4, line.c_str());
+
+            // Effettuo un comando di scrittura relativo all'aggiornamento della password dell'utente trasportatore.
+            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4);
+                
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+            printf("XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4);
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+        }
+
+
+        if (line == "AGGIORNA NOME DITTASPEDIZIONE")
+        {
+            sprintf(key1, "Action");
+            sprintf(value1, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key2, "nome_utente_trasportatore");
+            sprintf(value2, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key3, "nuovaDittaSpedizione");
+            sprintf(value3, line.c_str());
+
+            // Effettuo un comando di scrittura relativo all'aggiornamento della ditta di spedizione dell'utente trasportatore.
+            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
+                
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, reply->str);
+
+            freeReplyObject(reply);
+        }
+
+
+        if (line == "AVVISA SPEDIZIONE EFFETTUATA")
+        {
+            sprintf(key1, "Action");
+            sprintf(value1, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key2, "nome_utente_trasportatore");
+            sprintf(value2, line.c_str());
+
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key3, "idSpedizione");
+            sprintf(value3, line.c_str());
+
+            // Effettuo un comando di scrittura relativo all'avviso della spedizione dell'utente trasportatore.
+            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key3, value3, reply->str);
+
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+        }
+
+
+        if (line == "ASSEGNA ORDINE TRASPORTATORE"){
+
+        }
+    
+
+    
+    }
+
+
+    file.close(); // Chiude il file
+
+
+
+
+
+
+
+
+
+
     while (1)
     {
         // send arguments to server
