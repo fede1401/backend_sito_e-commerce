@@ -199,6 +199,1516 @@ int main()
      /* init random number generator  */
     srand((unsigned)time(NULL));
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Esegui test registrazioneUtenteFornitoreSenzaErrori.txt
+
+
+    // Apre il file in modalità di lettura
+    std::ifstream file("../test/registrazioneUtenteFornitoreSenzaErrori.txt"); 
+    if (!file.is_open()) {
+        std::cerr << "Impossibile aprire il file!" << std::endl;
+        return 1;
+    }
+
+    std::string line;
+    std::getline(file, line);
+
+    if (line == "EFFETTUA REGISTRAZIONE FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file, line); // Passa alla riga successiva
+        sprintf(key3, "categoriaUtente");
+        sprintf(value3, line.c_str());
+
+        std::getline(file, line); // Passa alla riga successiva
+        sprintf(key4, "nome");
+        sprintf(value4, line.c_str());
+
+        std::getline(file, line); // Passa alla riga successiva
+        sprintf(key5, "cognome");
+        sprintf(value5, line.c_str());
+
+        std::getline(file, line); // Passa alla riga successiva
+        sprintf(key6, "numeroTelefono");
+        sprintf(value6, line.c_str());
+
+        std::getline(file, line); // Passa alla riga successiva
+        sprintf(key7, "email");
+        sprintf(value7, line.c_str());
+
+
+        std::getline(file, line); // Passa alla riga successiva
+        sprintf(key8, "password");
+        sprintf(value8, line.c_str());
+
+
+        std::getline(file, line); // Passa alla riga successiva
+        sprintf(key9, "confermaPassword");
+        sprintf(value9, line.c_str());
+
+        std::getline(file, line); // Passa alla riga successiva
+        sprintf(key10, "aziendaProduzione");
+        sprintf(value10, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo alla registrazione dell'utente fornitore
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
+        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, 
+                                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file.close(); // Chiude il file
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test registrazioneUtenteFornitoreErroreEmail.txt
+
+
+    // Apre il file2 in modalità di lettura
+    std::ifstream file2("../test/registrazioneUtenteFornitoreErroreEmail.txt"); 
+    if (!file2.is_open()) {
+        std::cerr << "Impossibile aprire il file2!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file2, line);
+
+    if (line == "EFFETTUA REGISTRAZIONE FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file2, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file2, line); // Passa alla riga successiva
+        sprintf(key3, "categoriaUtente");
+        sprintf(value3, line.c_str());
+
+        std::getline(file2, line); // Passa alla riga successiva
+        sprintf(key4, "nome");
+        sprintf(value4, line.c_str());
+
+        std::getline(file2, line); // Passa alla riga successiva
+        sprintf(key5, "cognome");
+        sprintf(value5, line.c_str());
+
+        std::getline(file2, line); // Passa alla riga successiva
+        sprintf(key6, "numeroTelefono");
+        sprintf(value6, line.c_str());
+
+        std::getline(file2, line); // Passa alla riga successiva
+        sprintf(key7, "email");
+        sprintf(value7, line.c_str());
+
+
+        std::getline(file2, line); // Passa alla riga successiva
+        sprintf(key8, "password");
+        sprintf(value8, line.c_str());
+
+
+        std::getline(file2, line); // Passa alla riga successiva
+        sprintf(key9, "confermaPassword");
+        sprintf(value9, line.c_str());
+
+        std::getline(file2, line); // Passa alla riga successiva
+        sprintf(key10, "aziendaProduzione");
+        sprintf(value10, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo alla registrazione dell'utente fornitore
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
+        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, 
+                                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file2.close(); // Chiude il file2
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test registrazioneUtenteFornitoreErrorePasswordCorta.txt
+
+
+    // Apre il file3 in modalità di lettura
+    std::ifstream file3("../test/registrazioneUtenteFornitoreErrorePasswordCorta.txt"); 
+    if (!file3.is_open()) {
+        std::cerr << "Impossibile aprire il file3!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file3, line);
+
+    if (line == "EFFETTUA REGISTRAZIONE FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file3, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file3, line); // Passa alla riga successiva
+        sprintf(key3, "categoriaUtente");
+        sprintf(value3, line.c_str());
+
+        std::getline(file3, line); // Passa alla riga successiva
+        sprintf(key4, "nome");
+        sprintf(value4, line.c_str());
+
+        std::getline(file3, line); // Passa alla riga successiva
+        sprintf(key5, "cognome");
+        sprintf(value5, line.c_str());
+
+        std::getline(file3, line); // Passa alla riga successiva
+        sprintf(key6, "numeroTelefono");
+        sprintf(value6, line.c_str());
+
+        std::getline(file3, line); // Passa alla riga successiva
+        sprintf(key7, "email");
+        sprintf(value7, line.c_str());
+
+
+        std::getline(file3, line); // Passa alla riga successiva
+        sprintf(key8, "password");
+        sprintf(value8, line.c_str());
+
+
+        std::getline(file3, line); // Passa alla riga successiva
+        sprintf(key9, "confermaPassword");
+        sprintf(value9, line.c_str());
+
+        std::getline(file3, line); // Passa alla riga successiva
+        sprintf(key10, "aziendaProduzione");
+        sprintf(value10, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo alla registrazione dell'utente fornitore
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
+        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, 
+                                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file3.close(); // Chiude il file3
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test registrazioneUtenteFornitoreErrorePasswordSenzaCarSpec.txt
+
+
+    // Apre il file4 in modalità di lettura
+    std::ifstream file4("../test/registrazioneUtenteFornitoreErrorePasswordSenzaCarSpec.txt"); 
+    if (!file4.is_open()) {
+        std::cerr << "Impossibile aprire il file4!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file4, line);
+
+    if (line == "EFFETTUA REGISTRAZIONE FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file4, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file4, line); // Passa alla riga successiva
+        sprintf(key3, "categoriaUtente");
+        sprintf(value3, line.c_str());
+
+        std::getline(file4, line); // Passa alla riga successiva
+        sprintf(key4, "nome");
+        sprintf(value4, line.c_str());
+
+        std::getline(file4, line); // Passa alla riga successiva
+        sprintf(key5, "cognome");
+        sprintf(value5, line.c_str());
+
+        std::getline(file4, line); // Passa alla riga successiva
+        sprintf(key6, "numeroTelefono");
+        sprintf(value6, line.c_str());
+
+        std::getline(file4, line); // Passa alla riga successiva
+        sprintf(key7, "email");
+        sprintf(value7, line.c_str());
+
+
+        std::getline(file4, line); // Passa alla riga successiva
+        sprintf(key8, "password");
+        sprintf(value8, line.c_str());
+
+
+        std::getline(file4, line); // Passa alla riga successiva
+        sprintf(key9, "confermaPassword");
+        sprintf(value9, line.c_str());
+
+        std::getline(file4, line); // Passa alla riga successiva
+        sprintf(key10, "aziendaProduzione");
+        sprintf(value10, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo alla registrazione dell'utente fornitore
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
+        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, 
+                                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file4.close(); // Chiude il file4
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test registrazioneUtenteFornitoreErrorePasswordSenzaNumero.txt
+
+
+    // Apre il file5 in modalità di lettura
+    std::ifstream file5("../test/registrazioneUtenteFornitoreErrorePasswordSenzaNumero.txt"); 
+    if (!file5.is_open()) {
+        std::cerr << "Impossibile aprire il file5!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file5, line);
+
+    if (line == "EFFETTUA REGISTRAZIONE FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file5, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file5, line); // Passa alla riga successiva
+        sprintf(key3, "categoriaUtente");
+        sprintf(value3, line.c_str());
+
+        std::getline(file5, line); // Passa alla riga successiva
+        sprintf(key4, "nome");
+        sprintf(value4, line.c_str());
+
+        std::getline(file5, line); // Passa alla riga successiva
+        sprintf(key5, "cognome");
+        sprintf(value5, line.c_str());
+
+        std::getline(file5, line); // Passa alla riga successiva
+        sprintf(key6, "numeroTelefono");
+        sprintf(value6, line.c_str());
+
+        std::getline(file5, line); // Passa alla riga successiva
+        sprintf(key7, "email");
+        sprintf(value7, line.c_str());
+
+
+        std::getline(file5, line); // Passa alla riga successiva
+        sprintf(key8, "password");
+        sprintf(value8, line.c_str());
+
+
+        std::getline(file5, line); // Passa alla riga successiva
+        sprintf(key9, "confermaPassword");
+        sprintf(value9, line.c_str());
+
+        std::getline(file5, line); // Passa alla riga successiva
+        sprintf(key10, "aziendaProduzione");
+        sprintf(value10, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo alla registrazione dell'utente fornitore
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
+        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, 
+                                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file5.close(); // Chiude il file5
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test registrazioneUtenteFornitoreErrorePassworddiversaConfermaPassowrd.txt
+
+
+    // Apre il file6 in modalità di lettura
+    std::ifstream file6("../test/registrazioneUtenteFornitoreErrorePassworddiversaConfermaPassowrd.txt"); 
+    if (!file6.is_open()) {
+        std::cerr << "Impossibile aprire il file6!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file6, line);
+
+    if (line == "EFFETTUA REGISTRAZIONE FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file6, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file6, line); // Passa alla riga successiva
+        sprintf(key3, "categoriaUtente");
+        sprintf(value3, line.c_str());
+
+        std::getline(file6, line); // Passa alla riga successiva
+        sprintf(key4, "nome");
+        sprintf(value4, line.c_str());
+
+        std::getline(file6, line); // Passa alla riga successiva
+        sprintf(key5, "cognome");
+        sprintf(value5, line.c_str());
+
+        std::getline(file6, line); // Passa alla riga successiva
+        sprintf(key6, "numeroTelefono");
+        sprintf(value6, line.c_str());
+
+        std::getline(file6, line); // Passa alla riga successiva
+        sprintf(key7, "email");
+        sprintf(value7, line.c_str());
+
+
+        std::getline(file6, line); // Passa alla riga successiva
+        sprintf(key8, "password");
+        sprintf(value8, line.c_str());
+
+
+        std::getline(file6, line); // Passa alla riga successiva
+        sprintf(key9, "confermaPassword");
+        sprintf(value9, line.c_str());
+
+        std::getline(file6, line); // Passa alla riga successiva
+        sprintf(key10, "aziendaProduzione");
+        sprintf(value10, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo alla registrazione dell'utente fornitore
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
+        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, 
+                                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file6.close(); // Chiude il file6
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test registrazioneUtenteFornitoreNomeUtenteEsistente.txt
+
+
+    // Apre il file7 in modalità di lettura
+    std::ifstream file7("../test/registrazioneUtenteFornitoreNomeUtenteEsistente.txt"); 
+    if (!file7.is_open()) {
+        std::cerr << "Impossibile aprire il file7!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file7, line);
+
+    if (line == "EFFETTUA REGISTRAZIONE FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file7, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file7, line); // Passa alla riga successiva
+        sprintf(key3, "categoriaUtente");
+        sprintf(value3, line.c_str());
+
+        std::getline(file7, line); // Passa alla riga successiva
+        sprintf(key4, "nome");
+        sprintf(value4, line.c_str());
+
+        std::getline(file7, line); // Passa alla riga successiva
+        sprintf(key5, "cognome");
+        sprintf(value5, line.c_str());
+
+        std::getline(file7, line); // Passa alla riga successiva
+        sprintf(key6, "numeroTelefono");
+        sprintf(value6, line.c_str());
+
+        std::getline(file7, line); // Passa alla riga successiva
+        sprintf(key7, "email");
+        sprintf(value7, line.c_str());
+
+
+        std::getline(file7, line); // Passa alla riga successiva
+        sprintf(key8, "password");
+        sprintf(value8, line.c_str());
+
+
+        std::getline(file7, line); // Passa alla riga successiva
+        sprintf(key9, "confermaPassword");
+        sprintf(value9, line.c_str());
+
+        std::getline(file7, line); // Passa alla riga successiva
+        sprintf(key10, "aziendaProduzione");
+        sprintf(value10, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo alla registrazione dell'utente fornitore
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
+        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, 
+                                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file7.close(); // Chiude il file7
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test registrazioneUtenteFornitoreEmailUtenteEsistente.txt
+
+
+    // Apre il file8 in modalità di lettura
+    std::ifstream file8("../test/registrazioneUtenteFornitoreEmailUtenteEsistente.txt"); 
+    if (!file8.is_open()) {
+        std::cerr << "Impossibile aprire il file8!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file8, line);
+
+    if (line == "EFFETTUA REGISTRAZIONE FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file8, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file8, line); // Passa alla riga successiva
+        sprintf(key3, "categoriaUtente");
+        sprintf(value3, line.c_str());
+
+        std::getline(file8, line); // Passa alla riga successiva
+        sprintf(key4, "nome");
+        sprintf(value4, line.c_str());
+
+        std::getline(file8, line); // Passa alla riga successiva
+        sprintf(key5, "cognome");
+        sprintf(value5, line.c_str());
+
+        std::getline(file8, line); // Passa alla riga successiva
+        sprintf(key6, "numeroTelefono");
+        sprintf(value6, line.c_str());
+
+        std::getline(file8, line); // Passa alla riga successiva
+        sprintf(key7, "email");
+        sprintf(value7, line.c_str());
+
+
+        std::getline(file8, line); // Passa alla riga successiva
+        sprintf(key8, "password");
+        sprintf(value8, line.c_str());
+
+
+        std::getline(file8, line); // Passa alla riga successiva
+        sprintf(key9, "confermaPassword");
+        sprintf(value9, line.c_str());
+
+        std::getline(file8, line); // Passa alla riga successiva
+        sprintf(key10, "aziendaProduzione");
+        sprintf(value10, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo alla registrazione dell'utente fornitore
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
+        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+                                        WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, 
+                                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                        key9, value9, key10, value10, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file8.close(); // Chiude il file8
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test effettuaLogoutSenzaErrori.txt
+
+
+    // Apre il file9 in modalità di lettura
+    std::ifstream file9("../test/effettuaLogoutSenzaErrori.txt"); 
+    if (!file9.is_open()) {
+        std::cerr << "Impossibile aprire il file9!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file9, line);
+
+    if (line == "EFFETTUA LOGOUT FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file9, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo al logout dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s\n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file9.close(); // Chiude il file9
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test effettuaLogoutUtenteNonAttivo.txt
+
+
+    // Apre il file10 in modalità di lettura
+    std::ifstream file10("../test/effettuaLogoutUtenteNonAttivo.txt"); 
+    if (!file10.is_open()) {
+        std::cerr << "Impossibile aprire il file10!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file10, line);
+
+    if (line == "EFFETTUA LOGOUT FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file10, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo al logout dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s\n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file10.close(); // Chiude il file10
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test effettuaLogoutUtenteNonRegistrato.txt
+
+
+    // Apre il file11 in modalità di lettura
+    std::ifstream file11("../test/effettuaLogoutUtenteNonRegistrato.txt"); 
+    if (!file11.is_open()) {
+        std::cerr << "Impossibile aprire il file11!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file11, line);
+
+    if (line == "EFFETTUA LOGOUT FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file11, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo al logout dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s\n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file11.close(); // Chiude il file11
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test effettuaLoginFornitoreSenzaErrori.txt
+
+
+    // Apre il file12 in modalità di lettura
+    std::ifstream file12("../test/effettuaLoginFornitoreSenzaErrori.txt"); 
+    if (!file12.is_open()) {
+        std::cerr << "Impossibile aprire il file12!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file12, line);
+
+    if (line == "EFFETTUA LOGIN FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file12, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file12, line); // Passa alla riga successiva
+        sprintf(key3, "password");
+        sprintf(value3, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'effettuazione del login dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file12.close(); // Chiude il file11
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test effettuaLoginFornitoreUtenteNonEsistente.txt
+
+
+    // Apre il file13 in modalità di lettura
+    std::ifstream file13("../test/effettuaLoginFornitoreUtenteNonEsistente.txt"); 
+    if (!file13.is_open()) {
+        std::cerr << "Impossibile aprire il file13!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file13, line);
+
+    if (line == "EFFETTUA LOGIN FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file13, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file13, line); // Passa alla riga successiva
+        sprintf(key3, "password");
+        sprintf(value3, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'effettuazione del login dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file13.close(); // Chiude il file13
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test effettuaLoginFornitorePasswordErrata.txt
+
+
+    // Apre il file14 in modalità di lettura
+    std::ifstream file14("../test/effettuaLoginFornitorePasswordErrata.txt"); 
+    if (!file14.is_open()) {
+        std::cerr << "Impossibile aprire il file14!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file14, line);
+
+    if (line == "EFFETTUA LOGIN FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file14, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file14, line); // Passa alla riga successiva
+        sprintf(key3, "password");
+        sprintf(value3, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'effettuazione del login dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file14.close(); // Chiude il file14
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test effettuaLoginUtenteAttivo.txt
+
+
+    // Apre il file15 in modalità di lettura
+    std::ifstream file15("../test/effettuaLoginUtenteAttivo.txt"); 
+    if (!file15.is_open()) {
+        std::cerr << "Impossibile aprire il file15!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file15, line);
+
+    if (line == "EFFETTUA LOGIN FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file15, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file15, line); // Passa alla riga successiva
+        sprintf(key3, "password");
+        sprintf(value3, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'effettuazione del login dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file15.close(); // Chiude il file15
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test aggiornaNumeroTelefonoFornitoreSenzaErrori.txt
+
+
+    // Apre il file16 in modalità di lettura
+    std::ifstream file16("../test/aggiornaNumeroTelefonoFornitoreSenzaErrori.txt"); 
+    if (!file16.is_open()) {
+        std::cerr << "Impossibile aprire il file16!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file16, line);
+
+    if (line == "AGGIORNA NUMERO TELEFONO FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file16, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file16, line); // Passa alla riga successiva
+        sprintf(key3, "nuovoNumeroTelefono");
+        sprintf(value3, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'effettuazione del login dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file16.close(); // Chiude il file16
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test aggiornaNumeroTelefonoFornitoreNonRegistrato.txt
+
+
+    // Apre il file17 in modalità di lettura
+    std::ifstream file17("../test/aggiornaNumeroTelefonoFornitoreNonRegistrato.txt"); 
+    if (!file17.is_open()) {
+        std::cerr << "Impossibile aprire il file17!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file17, line);
+
+    if (line == "AGGIORNA NUMERO TELEFONO FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file17, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file17, line); // Passa alla riga successiva
+        sprintf(key3, "nuovoNumeroTelefono");
+        sprintf(value3, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'effettuazione del login dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file17.close(); // Chiude il file17
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test aggiornaNomeAziendaProduzioneSenzaErrori.txt
+
+
+    // Apre il file18 in modalità di lettura
+    std::ifstream file18("../test/aggiornaNomeAziendaProduzioneSenzaErrori.txt"); 
+    if (!file18.is_open()) {
+        std::cerr << "Impossibile aprire il file18!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file18, line);
+
+    if (line == "AGGIORNA NOME AZIENDAPRODUZIONE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file18, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file18, line); // Passa alla riga successiva
+        sprintf(key3, "nuovaAziendaProduzione");
+        sprintf(value3, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'effettuazione del login dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file18.close(); // Chiude il file18
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test aggiornaNomeAziendaProduzioneUtenteNonRegistrato.txt
+
+
+    // Apre il file19 in modalità di lettura
+    std::ifstream file19("../test/aggiornaNomeAziendaProduzioneUtenteNonRegistrato.txt"); 
+    if (!file19.is_open()) {
+        std::cerr << "Impossibile aprire il file19!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file19, line);
+
+    if (line == "AGGIORNA NOME AZIENDAPRODUZIONE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file19, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file19, line); // Passa alla riga successiva
+        sprintf(key3, "nuovaAziendaProduzione");
+        sprintf(value3, line.c_str());
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'effettuazione del login dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file19.close(); // Chiude il file19
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test aggiornaPasswordUtenteFornitoreSenzaErrori.txt
+
+
+    // Apre il file20 in modalità di lettura
+    std::ifstream file20("../test/aggiornaPasswordUtenteFornitoreSenzaErrori.txt"); 
+    if (!file20.is_open()) {
+        std::cerr << "Impossibile aprire il file20!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file20, line);
+
+    if (line == "AGGIORNA PASSWORD FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file20, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file20, line); // Passa alla riga successiva
+        sprintf(key3, "vecchiaPassw");
+        sprintf(value3, line.c_str());
+
+        std::getline(file20, line); // Passa alla riga successiva
+        sprintf(key4, "nuovaPassw");
+        sprintf(value4, line.c_str());
+
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'aggiornamento di password dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf( "XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file20.close(); // Chiude il file20
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test aggiornaPasswordUtenteFornitoreNonRegistrato.txt
+
+
+    // Apre il file21 in modalità di lettura
+    std::ifstream file21("../test/aggiornaPasswordUtenteFornitoreNonRegistrato.txt"); 
+    if (!file21.is_open()) {
+        std::cerr << "Impossibile aprire il file21!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file21, line);
+
+    if (line == "AGGIORNA PASSWORD FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file21, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file21, line); // Passa alla riga successiva
+        sprintf(key3, "vecchiaPassw");
+        sprintf(value3, line.c_str());
+
+        std::getline(file21, line); // Passa alla riga successiva
+        sprintf(key4, "nuovaPassw");
+        sprintf(value4, line.c_str());
+
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'aggiornamento di password dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf( "XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file21.close(); // Chiude il file21
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test aggiornaPasswordUtenteFornitoreVecchiaPasswordDiversa.txt
+
+
+    // Apre il file22 in modalità di lettura
+    std::ifstream file22("../test/aggiornaPasswordUtenteFornitoreVecchiaPasswordDiversa.txt"); 
+    if (!file22.is_open()) {
+        std::cerr << "Impossibile aprire il file22!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file22, line);
+
+    if (line == "AGGIORNA PASSWORD FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file22, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file22, line); // Passa alla riga successiva
+        sprintf(key3, "vecchiaPassw");
+        sprintf(value3, line.c_str());
+
+        std::getline(file22, line); // Passa alla riga successiva
+        sprintf(key4, "nuovaPassw");
+        sprintf(value4, line.c_str());
+
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'aggiornamento di password dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf( "XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file22.close(); // Chiude il file22
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test aggiornaPasswordUtenteFornitoreNuovaPasswordLunCorta.txt
+
+
+    // Apre il file23 in modalità di lettura
+    std::ifstream file23("../test/aggiornaPasswordUtenteFornitoreNuovaPasswordLunCorta.txt"); 
+    if (!file23.is_open()) {
+        std::cerr << "Impossibile aprire il file23!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file23, line);
+
+    if (line == "AGGIORNA PASSWORD FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file23, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file23, line); // Passa alla riga successiva
+        sprintf(key3, "vecchiaPassw");
+        sprintf(value3, line.c_str());
+
+        std::getline(file23, line); // Passa alla riga successiva
+        sprintf(key4, "nuovaPassw");
+        sprintf(value4, line.c_str());
+
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'aggiornamento di password dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf( "XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file23.close(); // Chiude il file23
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test aggiornaPasswordUtenteFornitoreNuovaPasswordSenzaCarSpeciale.txt
+
+
+    // Apre il file24 in modalità di lettura
+    std::ifstream file24("../test/aggiornaPasswordUtenteFornitoreNuovaPasswordSenzaCarSpeciale.txt"); 
+    if (!file24.is_open()) {
+        std::cerr << "Impossibile aprire il file24!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file24, line);
+
+    if (line == "AGGIORNA PASSWORD FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file24, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file24, line); // Passa alla riga successiva
+        sprintf(key3, "vecchiaPassw");
+        sprintf(value3, line.c_str());
+
+        std::getline(file24, line); // Passa alla riga successiva
+        sprintf(key4, "nuovaPassw");
+        sprintf(value4, line.c_str());
+
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'aggiornamento di password dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf( "XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file24.close(); // Chiude il file24
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Esegui test aggiornaPasswordUtenteFornitoreNuovaPasswordSenzaNumero.txt
+
+
+    // Apre il file25 in modalità di lettura
+    std::ifstream file25("../test/aggiornaPasswordUtenteFornitoreNuovaPasswordSenzaNumero.txt"); 
+    if (!file25.is_open()) {
+        std::cerr << "Impossibile aprire il file25!" << std::endl;
+        return 1;
+    }
+
+    line;
+    std::getline(file25, line);
+
+    if (line == "AGGIORNA PASSWORD FORNITORE")
+    {
+        sprintf(key1, "Action");
+        sprintf(value1, line.c_str());
+
+        std::getline(file25, line); // Passa alla riga successiva
+        sprintf(key2, "nome_utente_fornitore");
+        sprintf(value2, line.c_str());
+
+        std::getline(file25, line); // Passa alla riga successiva
+        sprintf(key3, "vecchiaPassw");
+        sprintf(value3, line.c_str());
+
+        std::getline(file25, line); // Passa alla riga successiva
+        sprintf(key4, "nuovaPassw");
+        sprintf(value4, line.c_str());
+
+    }
+
+    
+    // Effettuo un comando di scrittura relativo all'aggiornamento di password dell'utente fornitore.
+    reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+                
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReplyType(c2r, reply, REDIS_REPLY_STRING);
+
+    printf( "XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4);
+    printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+    file25.close(); // Chiude il file25
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     while (1)
     {
         // send arguments to server
