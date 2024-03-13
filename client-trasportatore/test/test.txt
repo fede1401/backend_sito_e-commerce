@@ -9,10 +9,8 @@ Eoreiorioeir2!.
 Eoreiorioeir2!.
 FedEx
 
-
 EFFETTUA LOGOUT TRASPORTATORE
 ciccio1
-
 
 EFFETTUA LOGIN TRASPORTATORE
 ciccio1
@@ -21,7 +19,10 @@ Eoreiorioeir2!.
 AGGIORNA PASSWORD TRASPORTATORE
 ciccio1
 Eoreiorioeir2!.
-oryroypyiryirpo2345!.
+Oryroypyiryirpo2345!.
+
+PRENDI IN CARICO SPEDIZIONE
+ciccio1
 
 AGGIORNA NOME DITTASPEDIZIONE
 ciccio1

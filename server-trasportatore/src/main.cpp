@@ -336,11 +336,10 @@ int main()
                 }
 
 
-                if (std::string(action) == "ASSEGNA ORDINE TRASPORTATORE")
+                if (std::string(action) == "PRENDI IN CARICO SPEDIZIONE")
                 {
-                    spedizione.assegnaOrdineTrasportatore(db1);
-
-                    strcpy(outputs, "Spedizione assegnata");
+                    spedizione.prendiInCaricoSpedizione(db1, nome_utente_trasportatore);
+                    strcpy(outputs, "Spedizione presa in carico");
 
                     // send result to client
                     send_counter++;
