@@ -1,0 +1,35 @@
+EFFETTUA REGISTRAZIONE FORNITORE
+lollo1
+UtenteFornitore
+Lorenzo
+Tatto
+3333333333
+lorenzo.tatto@gmail.com
+Eoreiorioeir2!.
+Eoreiorioeir2!.
+Microsoft
+
+AGGIORNA NOME AZIENDAPRODUZIONE
+lollo1
+Apple
+
+AGGIUNGI PRODOTTO SITO
+lollo1
+Iphone15
+Telefonia
+900
+Iphone15, colorazione verde, 256GB RAM
+Apple
+190
+
+AGGIUNGI PRODOTTO SITO
+lollo1
+Iphone15
+Telefonia
+900
+Iphone15, colorazione verde, 256GB RAM
+Apple
+190
+
+EFFETTUA LOGOUT FORNITORE
+lollo1

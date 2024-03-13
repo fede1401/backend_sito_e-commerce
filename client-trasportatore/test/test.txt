@@ -1,0 +1,31 @@
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+ciccio1
+UtenteFornitore
+Ciccio
+Litto
+3333333333
+ciccio.litto@gmail.com
+Eoreiorioeir2!.
+Eoreiorioeir2!.
+FedEx
+
+
+EFFETTUA LOGOUT TRASPORTATORE
+ciccio1
+
+
+EFFETTUA LOGIN TRASPORTATORE
+ciccio1
+Eoreiorioeir2!.
+
+AGGIORNA PASSWORD TRASPORTATORE
+ciccio1
+Eoreiorioeir2!.
+oryroypyiryirpo2345!.
+
+AGGIORNA NOME DITTASPEDIZIONE
+ciccio1
+Bartolini
+
+ELIMINA PROFILO TRASPORTATORE
+ciccio1

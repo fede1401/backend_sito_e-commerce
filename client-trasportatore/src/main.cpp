@@ -3,27 +3,28 @@
 #include <array>
 #include <string>
 #include <string.h>
+#include <fstream>
 
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
 // Usage: ./streams <add count> <read count> [block time, default: 1]
 
-#define DEBUG 1000                                  // Definisci una costante per abilitare il debug
+#define DEBUG 1000 // Definisci una costante per abilitare il debug
 
-#define READ_STREAM_TRASPORTATORE "stream6"         // Nome dello stream da cui leggere.
-#define WRITE_STREAM_TRASPORTATORE "stream5"        // Nome dello stream su cui scrivere.
+#define READ_STREAM_TRASPORTATORE "stream6"  // Nome dello stream da cui leggere.
+#define WRITE_STREAM_TRASPORTATORE "stream5" // Nome dello stream su cui scrivere.
 
-using namespace std;                                // Consente di utilizzare le funzioni e le classi standard del C++ senza doverle qualificare con std::.
+using namespace std; // Consente di utilizzare le funzioni e le classi standard del C++ senza doverle qualificare con std::.
 
 int main()
 {
 
     redisContext *c2r;
-    redisReply *reply;                  // Inizializzazione risposta Redis
-    int read_counter = 0;               // Contatore delle letture effettuate
-    int send_counter = 0;               // Contatore degli invii effettuati
-    int block = 1000000000;             // Tempo di blocco per la lettura da stream in nanosecondi
-    int pid;                            // ID del processo
-    //unsigned seed;
+    redisReply *reply;      // Inizializzazione risposta Redis
+    int read_counter = 0;   // Contatore delle letture effettuate
+    int send_counter = 0;   // Contatore degli invii effettuati
+    int block = 1000000000; // Tempo di blocco per la lettura da stream in nanosecondi
+    int pid;                // ID del processo
+    // unsigned seed;
     char username[100];
     char key1[100];
     char value1[100];
@@ -45,33 +46,32 @@ int main()
     char value9[100];
     char key10[100];
     char value10[100];
-    
-    char streamname[100];           // Buffer per il nome dello stream Redis
-    char msgid[100];                // Buffer per l'ID del messaggio Redis
-    char fval[100];                 // Buffer per il valore del campo del messaggio Redis
-    int i, k, h;                    // Variabili di iterazione
+
+    char streamname[100]; // Buffer per il nome dello stream Redis
+    char msgid[100];      // Buffer per l'ID del messaggio Redis
+    char fval[100];       // Buffer per il valore del campo del messaggio Redis
+    int i, k, h;          // Variabili di iterazione
 
     std::string test1[9] = {
-        
-                                    "EFFETTUA REGISTRAZIONE TRASPORTATORE", 
 
-                                    "EFFETTUA LOGIN TRASPORTATORE", 
+        "EFFETTUA REGISTRAZIONE TRASPORTATORE",
 
-                                    "AGGIORNA NUMERO TELEFONO TRASPORTATORE", 
+        "EFFETTUA LOGIN TRASPORTATORE",
 
-                                    "AGGIORNA PASSWORD TRASPORTATORE",
+        "AGGIORNA NUMERO TELEFONO TRASPORTATORE",
 
-                                    "AGGIORNA NOME DITTASPEDIZIONE", 
+        "AGGIORNA PASSWORD TRASPORTATORE",
 
-                                    //"ASSEGNA ORDINE TRASPORTATORE",
+        "AGGIORNA NOME DITTASPEDIZIONE",
 
-                                    //"AVVISA SPEDIZIONE EFFETTUATA", 
+        //"ASSEGNA ORDINE TRASPORTATORE",
 
-                                    //"EFFETTUA LOGOUT TRASPORTATORE", 
+        //"AVVISA SPEDIZIONE EFFETTUATA",
 
-                                    //"ELIMINA PROFILO TRASPORTATORE"
-        };
+        //"EFFETTUA LOGOUT TRASPORTATORE",
 
+        //"ELIMINA PROFILO TRASPORTATORE"
+    };
 
     std::string test2[10] = {
 
@@ -79,21 +79,20 @@ int main()
         "EFFETTUA REGISTRAZIONE TRASPORTATORE",
         "EFFETTUA REGISTRAZIONE TRASPORTATORE",
 
-        "EFFETTUA LOGIN TRASPORTATORE", 
-        "EFFETTUA LOGIN TRASPORTATORE", 
-        "EFFETTUA LOGIN TRASPORTATORE", 
+        "EFFETTUA LOGIN TRASPORTATORE",
+        "EFFETTUA LOGIN TRASPORTATORE",
+        "EFFETTUA LOGIN TRASPORTATORE",
 
         "ASSEGNA ORDINE TRASPORTATORE",
         "ASSEGNA ORDINE TRASPORTATORE",
 
         "AVVISA SPEDIZIONE EFFETTUATA",
-        "EFFETTUA LOGOUT TRASPORTATORE"
-        };
+        "EFFETTUA LOGOUT TRASPORTATORE"};
 
-    
     // Array di nomi utente
     std::array<std::string, 30> nomi_utente;
-    for (int i = 0; i < 30; ++i) {
+    for (int i = 0; i < 30; ++i)
+    {
         nomi_utente[i] = "Utente" + std::to_string(i + 1);
     }
 
@@ -126,11 +125,6 @@ int main()
 
     // Array di nomi aziende produttrici
     std::array<std::string, 5> nomi_ditte_spedizione = {"Ditta1", "Ditta2", "Ditta3", "Ditta4", "Ditta5"};
-
-
-
-
-
 
     /*  prg  */
 
@@ -165,7 +159,6 @@ int main()
     // Stampa la risposta del comando
     dumpReply(reply, 0);
 
-
     // Creazione degli stream/gruppi
     initStreams(c2r, READ_STREAM_TRASPORTATORE);
     initStreams(c2r, WRITE_STREAM_TRASPORTATORE);
@@ -175,19 +168,18 @@ int main()
     /* init random number generator  */
     srand((unsigned)time(NULL));
 
-
     // Apre il file in modalità di lettura
-    std::ifstream file("../test/test.txt"); 
-    if (!file.is_open()) {
+    std::ifstream file("../test/test.txt");
+    if (!file.is_open())
+    {
         std::cerr << "Impossibile aprire il file!" << std::endl;
         return 1;
     }
 
-
     std::string line;
-    while (std::getline(file, line))    // Legge una riga per volta
-    { 
-        
+    while (std::getline(file, line)) // Legge una riga per volta
+    {
+
         if (line == "EFFETTUA REGISTRAZIONE TRASPORTATORE")
         {
             sprintf(key1, "Action");
@@ -220,8 +212,8 @@ int main()
             std::getline(file, line); // Passa alla riga successiva
             sprintf(key8, "password");
             sprintf(value8, line.c_str());
-               
-            std::getline(file, line); // Passa alla riga successiva 
+
+            std::getline(file, line); // Passa alla riga successiva
             sprintf(key9, "confermaPassword");
             sprintf(value9, line.c_str());
 
@@ -230,20 +222,20 @@ int main()
             sprintf(value10, line.c_str());
 
             // Effettuo un comando di scrittura relativo alla registrazione dell'utente trasportatore
-            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
-                            WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
-                            key9, value9, key10, value10);
-                
+            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s",
+                                 WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                 key9, value9, key10, value10);
+
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
-                        WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
-                        key9, value9, key10, value10);
+            printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n",
+                   WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                   key9, value9, key10, value10);
 
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, 
-                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
-                        key9, value9, key10, value10, reply->str);
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE,
+                   key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                   key9, value9, key10, value10, reply->str);
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -264,7 +256,7 @@ int main()
 
             // Effettuo un comando di scrittura relativo al login dell'utente trasportatore.
             reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
-                
+
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
@@ -274,7 +266,6 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
         }
-
 
         if (line == "EFFETTUA LOGOUT TRASPORTATORE")
         {
@@ -296,7 +287,6 @@ int main()
 
             freeReplyObject(reply);
         }
-
 
         if (line == "ELIMINA PROFILO TRASPORTATORE")
         {
@@ -320,7 +310,6 @@ int main()
             freeReplyObject(reply);
         }
 
-
         if (line == "AGGIORNA NUMERO TELEFONO TRASPORTATORE")
         {
             sprintf(key1, "Action");
@@ -341,13 +330,11 @@ int main()
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
             printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2,key3, value3, reply->str);
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, reply->str);
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
-
         }
-
 
         if (line == "AGGIORNA PASSWORD TRASPORTATORE")
         {
@@ -368,7 +355,7 @@ int main()
 
             // Effettuo un comando di scrittura relativo all'aggiornamento della password dell'utente trasportatore.
             reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4);
-                
+
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
@@ -378,7 +365,6 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
         }
-
 
         if (line == "AGGIORNA NOME DITTASPEDIZIONE")
         {
@@ -395,7 +381,7 @@ int main()
 
             // Effettuo un comando di scrittura relativo all'aggiornamento della ditta di spedizione dell'utente trasportatore.
             reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
-                
+
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
@@ -404,7 +390,6 @@ int main()
 
             freeReplyObject(reply);
         }
-
 
         if (line == "AVVISA SPEDIZIONE EFFETTUATA")
         {
@@ -432,48 +417,86 @@ int main()
             freeReplyObject(reply);
         }
 
-
-        if (line == "ASSEGNA ORDINE TRASPORTATORE"){
-
+        if (line == "ASSEGNA ORDINE TRASPORTATORE")
+        {
         }
-    
 
-    
-    }
-
+    } // while scorrimento linee file
 
     file.close(); // Chiude il file
 
+    printf("\n\nOra di leggere i risultati dal server. \n");
 
+    //  Lettura dei risultati dal server
+    read_counter++;
 
+    // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+    reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_TRASPORTATORE);
 
+    printf("Effettuato comando per leggere i messaggi della Streams. \n");
 
+    printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_TRASPORTATORE);
 
+    // Verifica la risposta del comando e termina il programma in caso di errore
+    assertReply(c2r, reply);
 
+    // Stampa la risposta del comando
+    dumpReply(reply, 0);
 
+    // Scorro il numero di Streams nella connessione Redis
+    for (k = 0; k < ReadNumStreams(reply); k++)
+    {
+        ReadStreamName(reply, streamname, k);
 
+        printf("Numero stream: %d\n", k);
 
+        // Scorro il numero di messaggi della Streams Redis
+        for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+        {
+            ReadStreamNumMsgID(reply, k, i, msgid);
+
+            printf("Numero messaggio: %d della Stream %d\n", i, k);
+
+            printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n",
+                   pid, username, streamname,
+                   k, i, msgid,
+                   ReadStreamMsgNumVal(reply, k, i));
+
+            // Scorro il numero di valori del messaggio della Streams Redis
+            for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+            {
+                ReadStreamMsgVal(reply, k, i, h, fval);
+                printf("main(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n",
+                       pid, username, k, i, msgid, h, fval);
+            }
+        }
+    }
+
+    // Libera la risorsa della risposta
+    freeReplyObject(reply);
+
+#if (DEBUG < 0)
     while (1)
     {
         // send arguments to server
         send_counter++;
 
         // Itero sulle azioni che può effettuare il client
-        for (i=0; i<9; i++){
+        for (i = 0; i < 9; i++)
+        {
 
             printf("\nValore della variabile i: %d \n", i);
 
             // Definisco 3 indici casuali
-            int i5 = rand()%5;
-            int i10 = rand()%10;
-            int i100 = rand()%100;
-            int i30 = rand()%30;
+            int i5 = rand() % 5;
+            int i10 = rand() % 10;
+            int i100 = rand() % 100;
+            int i30 = rand() % 30;
 
             sprintf(key1, "Action");
             sprintf(value1, test2[i].c_str());
 
-        
-            if (test2[i]== "EFFETTUA REGISTRAZIONE TRASPORTATORE")
+            if (test2[i] == "EFFETTUA REGISTRAZIONE TRASPORTATORE")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -497,7 +520,7 @@ int main()
 
                 sprintf(key8, "password");
                 sprintf(value8, password[i30].c_str());
-                
+
                 sprintf(key9, "confermaPassword");
                 sprintf(value9, password[i30].c_str());
 
@@ -505,20 +528,20 @@ int main()
                 sprintf(value10, nomi_ditte_spedizione[i5].c_str());
 
                 // Effettuo un comando di scrittura relativo alla registrazione dell'utente trasportatore
-                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s", 
-                                        WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
-                                        key9, value9, key10, value10);
-                
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s",
+                                     WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                                     key9, value9, key10, value10);
+
                 // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
-                                        WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
-                                        key9, value9, key10, value10);
+                printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n",
+                       WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                       key9, value9, key10, value10);
 
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, 
-                                        key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
-                                        key9, value9, key10, value10, reply->str);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE,
+                       key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
+                       key9, value9, key10, value10, reply->str);
 
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
@@ -536,7 +559,7 @@ int main()
 
                 // Effettuo un comando di scrittura relativo all'aggiornamento della ditta di spedizione dell'utente trasportatore.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
-                
+
                 // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
@@ -545,7 +568,6 @@ int main()
 
                 freeReplyObject(reply);
             }
-
 
             if (test2[i] == "AVVISA SPEDIZIONE EFFETTUATA")
             {
@@ -586,8 +608,6 @@ int main()
                 freeReplyObject(reply);
             }
 
-
-
             if (test2[i] == "EFFETTUA LOGIN TRASPORTATORE")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
@@ -600,7 +620,7 @@ int main()
 
                 // Effettuo un comando di scrittura relativo al login dell'utente trasportatore.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
-                
+
                 // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
@@ -610,7 +630,6 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
-
 
             if (test2[i] == "EFFETTUA LOGOUT TRASPORTATORE")
             {
@@ -630,7 +649,6 @@ int main()
 
                 freeReplyObject(reply);
             }
-
 
             if (test2[i] == "ELIMINA PROFILO TRASPORTATORE")
             {
@@ -669,7 +687,7 @@ int main()
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
-                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2,key3, value3, reply->str);
+                printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, reply->str);
 
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
@@ -690,7 +708,7 @@ int main()
 
                 // Effettuo un comando di scrittura relativo all'aggiornamento della password dell'utente trasportatore.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3, key4, value4);
-                
+
                 // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
@@ -700,7 +718,6 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
-
         }
 
         printf("\n\nOra di leggere i risultati dal server. \n");
@@ -744,8 +761,8 @@ int main()
                 for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                 {
                     ReadStreamMsgVal(reply, k, i, h, fval);
-                    printf("main(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", 
-                    pid, username, k, i, msgid, h, fval);
+                    printf("main(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n",
+                           pid, username, k, i, msgid, h, fval);
                 }
             }
         }
@@ -755,7 +772,8 @@ int main()
 
         /* sleep   */
         micro_sleep(10000000); // 10 secondi di attesa
-    } // while ()
+    }                          // while ()
+#endif
 
     redisFree(c2r);
 }
