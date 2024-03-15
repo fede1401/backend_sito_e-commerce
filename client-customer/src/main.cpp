@@ -952,7 +952,7 @@ int main()
     freeReplyObject(reply);
 
 
-#if (DEBUG < 0)
+//#if (DEBUG < 0)
     // Test randomici.
     while (1)
     {
@@ -1566,6 +1566,6 @@ int main()
         micro_sleep(10000000); // 10 secondi di attesa
 
     } // while ()
-#endif
+//#endif
     redisFree(c2r);
 }

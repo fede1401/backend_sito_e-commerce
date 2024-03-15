@@ -187,7 +187,7 @@ public:
         else{
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "L utente " + in_nome_utente_trasportatore + " è occupato già nella spedizione di altri ordini, perciò non può prendere in carico l'ordine " + std::to_string(idOrdine);
+            messageLog = "L utente " + in_nome_utente_trasportatore + " è occupato già nella spedizione di altri ordini, perciò non può prendere in carico l ordine " + std::to_string(idOrdine);
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
