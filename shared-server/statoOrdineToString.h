@@ -2,7 +2,14 @@
 #define STATOORDINETOSTRING_H
 
 #include "../server-customer/src/main.h"
-#include "../server-customer/src/ordine.h"
+//#include "../server-customer/src/ordine.h"
+
+
+enum class StatoOrdine {
+    InElaborazione,
+    Spedito,
+    Annullato
+    };
 
 
 // Metodo che prende un tipo enumerativo StatoOrdine come input e restituisce una stringa che rappresenta quel particolare stato.

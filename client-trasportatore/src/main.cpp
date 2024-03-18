@@ -160,7 +160,7 @@ int main()
     /* init random number generator  */
     srand((unsigned)time(NULL));
 
-    // Apre il file in modalità di lettura
+    // Apre il file corrispondente al test da effettuare in modalità di lettura
     std::ifstream file("../test/test.txt");
     if (!file.is_open())
     {
@@ -168,6 +168,7 @@ int main()
         return 1;
     }
 
+    // Leggiamo una riga per volta e se si trova una linea corrispondente all'azione da effettuare , prendiamo tutti i parametri necessari nelle righe seguenti e inviamo la richiesta al server.
     std::string line;
     while (std::getline(file, line)) // Legge una riga per volta
     {

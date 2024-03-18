@@ -18,55 +18,52 @@ CREATE TYPE statoRequisito AS ENUM ('SUCCESS', 'NOT SUCCESS', 'WAIT');
 
 
 
+CREATE TABLE IF NOT EXISTS Utente (
+  nome_utente  VARCHAR(50) NOT NULL UNIQUE,
+  session_id VARCHAR(50),
+  categoriaUtente VARCHAR(50) NOT NULL,
+  nome VARCHAR(50) NOT NULL,
+  cognome VARCHAR(50) NOT NULL,
+  indirizzo_mail VARCHAR(100) NOT NULL UNIQUE,
+  numero_di_telefono VARCHAR(20),
+  password VARCHAR(100) NOT NULL,
+  stato INTEGER,
+  PRIMARY KEY(nome_utente)
+);
+
 
 CREATE TABLE IF NOT EXISTS UtenteCompratore (
     nome_utente_compratore VARCHAR(50) NOT NULL UNIQUE,
-    session_id_c VARCHAR(50),
-    categoriaUtente VARCHAR(50) NOT NULL,
-    nome VARCHAR(50) NOT NULL,
-    cognome VARCHAR(50) NOT NULL,
-    indirizzo_mail VARCHAR(100) NOT NULL UNIQUE,
-    numero_di_telefono VARCHAR(20),
-    password VARCHAR(100) NOT NULL,
     data_compleanno DATE,
     via_di_residenza VARCHAR(100),
     numero_civico VARCHAR(10),
     CAP VARCHAR(10),
     citta_di_residenza VARCHAR(50),
-    stato INTEGER,
-    PRIMARY KEY(nome_utente_compratore)
+    CONSTRAINT fk_nome_utente_compratore
+      FOREIGN KEY(nome_utente_compratore)
+      REFERENCES Utente(nome_utente)
+      ON DELETE CASCADE
 );
-
 
 
 CREATE TABLE IF NOT EXISTS UtenteFornitore (
     nome_utente_fornitore VARCHAR(50) NOT NULL UNIQUE,
-    session_id_f VARCHAR(50),
-    categoriaUtente VARCHAR(50) NOT NULL,
-    nome VARCHAR(50) NOT NULL,
-    cognome VARCHAR(50) NOT NULL,
-    indirizzo_mail VARCHAR(100) NOT NULL UNIQUE,
-    numero_di_telefono VARCHAR(20),
-    password VARCHAR(100) NOT NULL,
     nome_AziendaProduttrice VARCHAR(50) NOT NULL,
-    stato INTEGER,
-    PRIMARY KEY(nome_utente_fornitore)
+    CONSTRAINT fk_nome_utente_fornitore
+      FOREIGN KEY(nome_utente_fornitore)
+      REFERENCES Utente(nome_utente)
+      ON DELETE CASCADE
 );
 
 
 CREATE TABLE IF NOT EXISTS UtenteTrasportatore (
     nome_utente_trasportatore VARCHAR(50) NOT NULL UNIQUE,
-    session_id_t VARCHAR(50),
-    categoriaUtente VARCHAR(50) NOT NULL,
-    nome VARCHAR(50) NOT NULL,
-    cognome VARCHAR(50) NOT NULL,
-    indirizzo_mail VARCHAR(100) NOT NULL UNIQUE,
-    numero_di_telefono VARCHAR(20),
-    password VARCHAR(100) NOT NULL,
     nome_DittaSpedizione VARCHAR(50) NOT NULL,
-    stato INTEGER,
     dispo INTEGER,
-    PRIMARY KEY(nome_utente_trasportatore)
+    CONSTRAINT fk_nome_utente_trasportatore
+      FOREIGN KEY(nome_utente_trasportatore)
+      REFERENCES Utente(nome_utente)
+      ON DELETE CASCADE
 );
 
 

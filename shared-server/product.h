@@ -5,7 +5,7 @@
 #include "../server-customer/src/main.h"
 #include "../server-customer/src/ordine.h"
 #include "getCurrentDateAsString.h"          // Migliore separazione delle responsabilità
-#include "statoOrdineToString.h"
+//#include "statoOrdineToString.h"
 
 
 class Product
@@ -42,10 +42,9 @@ public:
         std::cout << "Numero copie disponibili: " << numero_copie_disponibili << std::endl;
     }
 
-    // Funzione utilizzata per permettere ad un utente fornitore di aggiungere un prodotto al backend.
+    // Metodo utilizzato per permettere ad un utente fornitore di aggiungere un prodotto al backend.
     void add_new_product(Con2DB db1, std::string in_nome_utente_fornitore, std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili)
     {
-
         std::string sessionID = "";
 
         // Definizione di alcune variabili per il logging
@@ -54,17 +53,19 @@ public:
         std::string messageLog = "";
 
         // Caricamento del sessionID.
-        sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente_fornitore.c_str());
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_fornitore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
         if (rows == 1)
         {
-            sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));
+            sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));
         }
         PQclear(res);
 
         if (rows != 1){
             // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_fornitore + " , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
@@ -74,9 +75,30 @@ public:
         if (sessionID == "")
         {
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può aggiungere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_fornitore + ", utente non loggato, non può essere aggiunto il prodotto al sito";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
+
+
+        // Verifichiamo che l'utente si tratti di un utente fornitore:
+        std::string categoriaUtente = "";
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente_fornitore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
+        if (rows==1){ categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));}  
+        PQclear(res);
+
+        if (categoriaUtente != "UtenteFornitore"){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "L utente " + in_nome_utente_fornitore + " non è un utente fornitore, perciò non può essere aggiunto il prodotto nel sito.";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
+            return;
+        }
+
 
         // Controlliamo se il prodotto che l'utente fornitore vuole inserire nel database è già presente o meno.
         // Se il prodotto è già presente dobbiamo solamente incrementare la quantità di copie, altrimenti dovremo inserirlo per la prima volta
@@ -101,7 +123,8 @@ public:
                     in_nome.c_str(), in_categoria.c_str(), in_descrizione.c_str(), in_prezzo_euro, in_azienda_produzione.c_str());
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
-
+        
+            // Se il numero di righe del risultato della query è 1, allora può essere recuperato il numero di copie disponibili.
             if (rows == 1)
             {
                 numCopieDisponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
@@ -148,10 +171,11 @@ public:
         return;
     }
 
-    // Funzione utilizzata per permettere ad un utente fornitore di rimuovere un prodotto
+
+
+    // Metodo utilizzato per permettere ad un utente fornitore di rimuovere un prodotto dal backend.
     void remove_prodotto(Con2DB db1, std::string in_nome_utente_fornitore, int codProdotto)
     {
-
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione prodotto dal sito.";
         statoRequisito statoReq = statoRequisito::Wait;
@@ -159,34 +183,21 @@ public:
 
         std::string sessionID = "";
 
-        // Verifica se l'utente che vuole rimuovere il prodotto dal sito è effettivamente un utente fornitore:
-        sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente_fornitore);
-        res = db1.ExecSQLtuples(sqlcmd);
-        rows = PQntuples(res);
-        PQclear(res);
-
-        // Se il numero di righe del risultato della query è diverso da 1 non c'è nessun utente fornitore con quel nome utente.
-        if (rows != 1)
-        {
-            // Log dell'errore e uscita dalla funzione.
-            messageLog = "Utente fornitore " + in_nome_utente_fornitore + " non trovato";
-            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-
-            return;
-        }
-
         // Caricamento del sessionID.
-        sprintf(sqlcmd, "SELECT session_id_f FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", in_nome_utente_fornitore.c_str());
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_fornitore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
         if (rows == 1)
         {
-            sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));
+            //sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_f"));
+            sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));
         }
         PQclear(res);
 
         if (rows != 1){
             // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_fornitore + " , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
@@ -196,9 +207,29 @@ public:
         if (sessionID == "")
         {
             // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_fornitore + ", utente non loggato, non può essere rimosso il prodotto dal sito";
             InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può rimuovere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
             return;
         }
+
+        // Verifichiamo che l'utente si tratti di un utente fornitore:
+        std::string categoriaUtente = "";
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente_fornitore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
+        if (rows==1){ categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));}  
+        PQclear(res);
+
+        if (categoriaUtente != "UtenteFornitore"){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "L utente " + in_nome_utente_fornitore + " non è un utente fornitore, perciò non può essere rimosso il prodotto nel sito.";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
+            return;
+        }
+
 
         // Verifica che il prodotto da rimuovere esista
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
@@ -249,17 +280,19 @@ public:
         std::string messageLog = "";
 
         // Caricamento del sessionID.
-        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
         if (rows == 1)
         {
-            sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));
+            sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));
         }
         PQclear(res);
 
         if (rows != 1){
             // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere ricercato il prodotto .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
@@ -269,9 +302,31 @@ public:
         if (sessionID == "")
         {
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può rimuovere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere ricercato il prodotto";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
+
+
+        // Verifichiamo che l'utente si tratti di un utente compratore:
+        std::string categoriaUtente = "";
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
+        if (rows==1){ categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));}  
+        PQclear(res);
+
+        if (categoriaUtente != "UtenteCompratore"){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere ricercato il prodotto.";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
+            return;
+        }
+
+
 
         // Effettuiamo la ricerca del prodotto nel database nella tabella Prodotto
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
@@ -325,6 +380,8 @@ public:
         return;
     }
 
+
+
     // Metodo utilizzato per permettere a un utente compratore di acquistare un prodotto specificando il codice del prodotto e le informazioni per la spedizione.
     Ordine acquistaProdotto(Con2DB db1, std::string nomeUtenteCompratore, int codProdotto, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione, std::string CAP_spedizione)
     {
@@ -341,34 +398,50 @@ public:
 
         // Caricamento del sessionID.
         std::string sessionID = "";
-        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nomeUtenteCompratore.c_str());
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", nomeUtenteCompratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-
-        printf("Rows prima: %d", rows);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
         if (rows == 1)
         {
-            sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));
+            sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));
         }
         PQclear(res);
-        printf("Rows dopo PQclear: %d", rows);
 
         if (rows != 1){
             // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + nomeUtenteCompratore + " , poichè non è stato registrato, non può essere acquistato il prodotto .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return ordine;
         }   
         
 
-
-
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == "")
         {
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può acquistare un prodotto.", sessionID, nomeRequisito, statoReq);
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste una sessionID per " + nomeUtenteCompratore + ", utente non loggato, non può essere acquistato il prodotto .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return ordine;
+        }
+
+        // Verifichiamo che l'utente si tratti di un utente compratore:
+        std::string categoriaUtente = "";
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", nomeUtenteCompratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
+        if (rows==1){ categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));}  
+        PQclear(res);
+
+        if (categoriaUtente != "UtenteCompratore"){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "L utente " + nomeUtenteCompratore + " non è un utente compratore, perciò non può essere acquistato il prodotto.";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
+            return;
         }
 
         // Verifica che il prodotto esista
@@ -467,8 +540,8 @@ public:
                 // Log
                 std::string nomeRequisito = "Aggiornamento numero copie disponibili prodotto.";
                 statoReq = statoRequisito::Success;
-                messageLog = "Aggiornata numero copie disponibili prodotto con codice " + codProdotto;
-                InsertToLogDB(db1,"INFO", messageLog, sessionID, nomeRequisito, statoReq);                
+                messageLog = "Aggiornata numero copie disponibili prodotto con codice " + std::to_string(codProdotto) + " dopo l acquisto dell utente " + nomeUtenteCompratore;
+                InsertToLogDB(db1,"INFO", messageLog, "", nomeRequisito, statoReq);                
             }
 
         }

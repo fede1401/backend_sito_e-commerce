@@ -1,6 +1,6 @@
 EFFETTUA REGISTRAZIONE TRASPORTATORE
 ciccio1
-UtenteFornitore
+UtenteTrasportatore
 Ciccio
 Litto
 3333333333

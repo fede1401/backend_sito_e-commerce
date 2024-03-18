@@ -19,7 +19,7 @@ public:
     Carrello(): nome_utente_compratore(""), codice_prodotto(-1), quantitàProdotti(-1){}
 
 
-    // Funzione per aggiungere un prodotto al carrello  dato il nome dell'utente e il codice prodotto
+    // Metodo per aggiungere un prodotto al carrello dato il nome dell'utente e il codice prodotto.
     void add_prodotto(Con2DB db1,std::string in_nome_utente_compratore, int in_cod_prodotto){
         
         // Definizione di alcune variabili per il logging
@@ -30,14 +30,16 @@ public:
 
         // Caricamento del sessionID.
         std::string sessionID = "";
-        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));}  
         PQclear(res);
 
         if (rows != 1){
             // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere aggiunto il prodotto al carrello";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
@@ -47,11 +49,29 @@ public:
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere aggiunto il prodotto al carrello";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
 
+
+        // Verifichiamo che l'utente si tratti di un utente compratore:
+        std::string categoriaUtente = "";
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
+        if (rows==1){ categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));}  
+        PQclear(res);
+
+        if (categoriaUtente != "UtenteCompratore"){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere aggiunto il prodotto al carrello";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
+            return;
+        }
 
         // Controllo se il codice del prodotto da inserire nel carrello esiste nel database
         sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", in_cod_prodotto);
@@ -59,6 +79,7 @@ public:
         rows = PQntuples(res);
         PQclear(res);
 
+        // Se il numero di righe del risultato della query è < 1, allora non esiste il prodotto con quel codice.
         if (rows < 1){
             // Log dell'errore e uscita dalla funzione
             std::cout << "Il prodotto non esiste!" << std::endl;
@@ -113,11 +134,13 @@ public:
                 this->nome_utente_compratore = in_nome_utente_compratore;
                 this->codice_prodotto = in_cod_prodotto;
                 this->quantitàProdotti = quantitàPrecedente;
+
+                // Interrompi il loop dopo aver aggiornato il prodotto
+                break;
             }
-            break;
+            //break;
         }
-        //PQclear(res);
-         
+     
 
         // Controlliamo se il prodotto non è nel carrello e dobbiamo inserirlo lo inseriamo per la prima volta 
         if (trovato == false){
@@ -141,7 +164,7 @@ public:
     }
 
 
-    // Funzione per rimuovere un prodotto dal carrello dato il nome dell'utente e il codice prodotto
+    // Metodo per rimuovere un prodotto dal carrello dato il nome dell'utente e il codice del prodotto.
     void remove_prodotto(Con2DB db1,std::string in_nome_utente_compratore, int codProdotto){
         
         // Definizione di alcune variabili per il logging
@@ -152,14 +175,16 @@ public:
 
         // Caricamento del sessionID.
         std::string sessionID = "";
-        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));}  
         PQclear(res);
 
         if (rows != 1){
             // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimosso il prodotto dal carrello";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
@@ -168,7 +193,27 @@ public:
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può essere rimosso il prodotto dal carrello.", sessionID, nomeRequisito, statoReq);
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere rimosotto il prodotto dal carrello.";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }
+
+
+        // Verifichiamo che l'utente si tratti di un utente compratore:
+        std::string categoriaUtente = "";
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
+        if (rows==1){ categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));}  
+        PQclear(res);
+
+        if (categoriaUtente != "UtenteCompratore"){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere aggiunto il prodotto al carrello";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
             return;
         }
 
@@ -179,6 +224,7 @@ public:
         rows = PQntuples(res);
         PQclear(res);
 
+        // Se il numero di righe del risultato della query è < 1, allora non esiste il prodotto da eliminare.
         if (rows < 1){
             // Log dell'errore (il prodotto non esiste nel carrello dell'utente) e uscita dalla funzione
             std::cout << "La riga da eliminare non esiste!" << std::endl;
@@ -190,6 +236,8 @@ public:
             
             return;
         }
+
+        // Se il numero di righe del risultato della query è > 1, allora esiste il prodotto da eliminare e lo eliminiamo
         else{
             // Eliminazione del prodotto dal carrello dell'utente compratore.
             sprintf(sqlcmd, "DELETE FROM Carrello WHERE nome_utente_compratore='%s' AND codProdotto='%d'", in_nome_utente_compratore.c_str(), codProdotto);

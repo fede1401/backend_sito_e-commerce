@@ -32,37 +32,79 @@ public:
     }
 
 
-    // Funzione utilizzata per permettere ad un utente compratore di effettuare una recensione di un ordine. 
+    // Metodo utilizzato per permettere ad un utente compratore di effettuare una recensione di un ordine. 
     void effettuaRecensione(Con2DB db1, std::string in_nome_utente_compratore, int idOrdine, std::string descrizione, votoStelle voto_stella)
     {
         std::string sessionID = "";
         std::string stato_spedizione;
-
 
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Effettuazione recensione.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
 
+        // Caricamento del sessionID.
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
+        if (rows == 1){  sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id")); }
+        PQclear(res);
+
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere effettuata la recensione .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }   
+
+        // Verifica se l'utente è loggato e ha una sessionID valida
+        if (sessionID == "") {
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere effettuata la recensione.";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }
+
+        // Verifichiamo che l'utente si tratti di un utente compratore:
+        std::string categoriaUtente = "";
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
+        if (rows==1){ categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));}  
+        PQclear(res);
+
+        if (categoriaUtente != "UtenteCompratore"){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere effettuata la recensione.";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
+            return;
+        }
+
 
         // Recupero dello stato della spedizione dell'ordine tramite il suo id per verificare se l'ordine è stato spedito e arrivato correttamente.
         sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", idOrdine);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare lo stato della spedizione.
         if (rows == 1)
         {
             stato_spedizione = PQgetvalue(res, 0, PQfnumber(res, "statoSpedizione"));
             PQclear(res);
 
-            // Se lo stato della spedizione è "consegnato"
+            // Se lo stato della spedizione è "consegnato" possiamo procedere nel metodo effettuaRecensione.
             if (stato_spedizione == "consegnato")
             {
-
                 // Selezioniamo il nome del'utente compratore che ha effettuato l'ordine tramite il suo id.
                 std::string nome_utente_compratore;
                 sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", idOrdine);
                 res = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res);
+                // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il nome dell'utente compratore.
                 if (rows == 1)
                 {
                     nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
@@ -72,29 +114,9 @@ public:
                     if (in_nome_utente_compratore != nome_utente_compratore)
                     {
                         // Log dell'errore e uscita dalla funzione
+                        statoReq = statoRequisito::NotSuccess;
                         messageLog = "Utente che sta cercando di effettuare la recensione ( " + in_nome_utente_compratore + ") non corrisponde a quello dell ordine della recensione ( " + nome_utente_compratore+ ").";
                         InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-                        return;
-                    }
-
-                    // Caricamento del sessionID.
-                    sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
-                    res = db1.ExecSQLtuples(sqlcmd);
-                    rows = PQntuples(res);
-                    if (rows == 1){  sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c")); }
-                    PQclear(res);
-
-                    if (rows != 1){
-                        // Log dell'errore e uscita dalla funzione
-                        messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere effettuata la recensione .";
-                        InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-                        return;
-                    }   
-
-                    // Verifica se l'utente è loggato e ha una sessionID valida
-                    if (sessionID == "") {
-                        // Log dell'errore e uscita dalla funzione
-                        InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato , non si può effettuare una recensione .", sessionID, nomeRequisito, statoReq);
                         return;
                     }
 
@@ -182,11 +204,55 @@ public:
         std::string messageLog = "";
 
 
+        // Caricamento del sessionID.
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
+        if (rows == 1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id")); }
+        PQclear(res);
+
+        if (rows != 1){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimossa la recensione .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }   
+
+        // Verifica se l'utente è loggato e ha una sessionID valida
+        if (sessionID == "")
+        {
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere rimossa la recensione.";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }
+
+        // Verifichiamo che l'utente si tratti di un utente compratore:
+        std::string categoriaUtente = "";
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
+        if (rows==1){ categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));}  
+        PQclear(res);
+
+        if (categoriaUtente != "UtenteCompratore"){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere rimossa la recensione.";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
+            return;
+        }
+
         // Recupero del nome dell'utente compratore che desidera rimuovere la recensione effettuata
         std::string nome_utente_compratore;
         sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Recensione WHERE idRec = '%d'", idRecensione);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il nome dell'utente compratore che ha effettuato la recensione.
         if (rows == 1)
         {
             nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
@@ -198,33 +264,13 @@ public:
         if (in_nome_utente_compratore != nome_utente_compratore)
         {
             // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
             messageLog = "Utente che sta cercando di effettuare la recensione ( " + in_nome_utente_compratore + ") non corrisponde a quello dell ordine della recensione ( " + nome_utente_compratore+ ").";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
 
-        // Caricamento del sessionID.
-        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", nome_utente_compratore.c_str());
-        res = db1.ExecSQLtuples(sqlcmd);
-        rows = PQntuples(res);
-        if (rows == 1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c")); }
-        PQclear(res);
-
-        if (rows != 1){
-            // Log dell'errore e uscita dalla funzione
-            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimossa la recensione .";
-            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
-        }   
-
-        // Verifica se l'utente è loggato e ha una sessionID valida
-        if (sessionID == "")
-        {
-            // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può rimuovere una recensione .", sessionID, nomeRequisito, statoReq);
-            return;
-        }
-
+        
         // Verifico che la recensione esista tramite il suo recupero.
         sprintf(sqlcmd, "SELECT * FROM Recensione WHERE idRec = '%d'", idRecensione);
         res = db1.ExecSQLtuples(sqlcmd);

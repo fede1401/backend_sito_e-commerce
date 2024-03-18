@@ -36,15 +36,17 @@ public:
 
         // Caricamento del sessionID.
         std::string sessionID = "";
-        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
 
-        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));}  
+        // Se il numero di righe del risultato della query è 1, si può recuperare il sessionID.
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));}  
         PQclear(res);   
 
         if (rows != 1){
             // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente + " , poichè non è stato registrato, non può essere aggiunta la carta di pagamento";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
@@ -53,62 +55,59 @@ public:
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può essere aggiunta la carta di pagamento.", sessionID, nomeRequisito, statoReq);
-            return;
-        }
-
-
-        // Controllo se il nome utente in input è di un utente compratore:
-        sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente.c_str());
-        res = db1.ExecSQLtuples(sqlcmd);
-        rows = PQntuples(res);
-        PQclear(res);
-
-        // Se il numero di righe della query è uguale a 1, allora il nome utente in input è di un utente compratore
-        if (rows == 1){
-            
-            // Verifichiamo che il numero carta sia univoco:
-            sprintf(sqlcmd, "SELECT * FROM Carta WHERE numeroCarta = '%s'", in_numeroCarta.c_str());
-            res = db1.ExecSQLtuples(sqlcmd);
-            rows = PQntuples(res);
-
-            // Se il numero di righe della quer è maggiore o uguale di 1, allora già esistono delle carte di pagamento con il numero univoco
-            if (rows >= 1){
-                // Log dell'errore e uscita dalla funzione
-
-                messageLog = "La carta con il numero " + in_numeroCarta + " non può essere inserita poichè già esiste!";
-                InsertToLogDB(db1, "INFO", messageLog , sessionID, nomeRequisito, statoReq);
-
-                return;
-            }
-
-            // Il nome utente è di un utente compratore e il numero della carta in input è univoco: 
-            // Per questo ppossiamo aggiungere la carta di pagamento al database:
-            sprintf(sqlcmd, "INSERT INTO Carta (idCarta, nome_utente_compratore, numeroCarta, cvv) VALUES (DEFAULT, '%s', '%s', '%s')", in_nome_utente.c_str(), in_numeroCarta.c_str(), in_cvv.c_str());
-            res = db1.ExecSQLcmd(sqlcmd);
-            PQclear(res); 
-
-            // Riempio i campi della classe
-            this->nome_utente = in_nome_utente;
-            this->numero_carta = in_numeroCarta;
-            this-> cvv = in_cvv;
-
-            // Log
-            statoReq = statoRequisito::Success;
-            messageLog = "Inserimento carta di pagamento con il numero " + in_numeroCarta + " per utente compratore " + in_nome_utente;
-            InsertToLogDB(db1, "INFO", messageLog , sessionID, nomeRequisito, statoReq);
-        } 
-        else{
-            // Il nome utente non è di un utente compratore oppure non è stato ancora registrato
-            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-
-            // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Utente " + in_nome_utente + " non trovato.";
+            messageLog = "Non esiste una sessionID per " + in_nome_utente + ", utente non loggato, non può essere aggiunta la carta di pagamento.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
 
+
+        // Verifichiamo che l'utente si tratti di un utente compratore:
+        std::string categoriaUtente = "";
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, si può recuperare la categoria dell'utente.
+        if (rows==1){ categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));}  
+        PQclear(res);
+
+        if (categoriaUtente != "UtenteCompratore"){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "L utente " + in_nome_utente + " non è un utente compratore, perciò non può essere aggiunta la carta di pagamento";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
+            return;
+        }
+
+        // Verifichiamo che il numero di carta sia univoco:
+        sprintf(sqlcmd, "SELECT * FROM Carta WHERE numeroCarta = '%s'", in_numeroCarta.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        // Se il numero di righe della query è maggiore o uguale di 1, allora già esistono delle carte di pagamento con il numero univoco
+        if (rows >= 1){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "La carta con il numero " + in_numeroCarta + " non può essere inserita poichè già esiste!";
+            InsertToLogDB(db1, "INFO", messageLog , sessionID, nomeRequisito, statoReq);
+            return;
+        }
+
+        // Il nome utente è di un utente compratore e il numero della carta in input è univoco --> possiamo aggiungere la carta di pagamento al database:
+        sprintf(sqlcmd, "INSERT INTO Carta (idCarta, nome_utente_compratore, numeroCarta, cvv) VALUES (DEFAULT, '%s', '%s', '%s')", in_nome_utente.c_str(), in_numeroCarta.c_str(), in_cvv.c_str());
+        res = db1.ExecSQLcmd(sqlcmd);
+        PQclear(res); 
+
+        // Riempio i campi della classe
+        this->nome_utente = in_nome_utente;
+        this->numero_carta = in_numeroCarta;
+        this-> cvv = in_cvv;
+
+        // Log
+        statoReq = statoRequisito::Success;
+        messageLog = "Inserimento carta di pagamento con il numero " + in_numeroCarta + " per utente compratore " + in_nome_utente;
+        InsertToLogDB(db1, "INFO", messageLog , sessionID, nomeRequisito, statoReq);
+        
     return;
     }
 
@@ -125,15 +124,16 @@ public:
         // Caricamento del sessionID.
         std::string sessionID = "";
         // Ottieni il sessionID dall'utente compratore nel database
-        sprintf(sqlcmd, "SELECT session_id_c FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", in_nome_utente_compratore.c_str());
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
-        // Se esiste, assegnalo a sessionID
-        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));} 
+        // Se il numero di righe del risultato della query è 1, possiamo recuperare il sessionID.
+        if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));} 
         PQclear(res);  
 
         if (rows != 1){
             // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimossa la carta di pagamento";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
@@ -142,7 +142,27 @@ public:
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può essere rimossa la carta di pagamento.", sessionID, nomeRequisito, statoReq);
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere rimossa la carta di pagamento.";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }
+
+
+        // Verifichiamo che l'utente si tratti di un utente compratore:
+        std::string categoriaUtente = "";
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, possiamo recuperare la categoria dell'utente.
+        if (rows==1){ categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));}  
+        PQclear(res);
+
+        if (categoriaUtente != "UtenteCompratore"){
+            // Log dell'errore e uscita dalla funzione
+             statoReq = statoRequisito::NotSuccess;
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere rimossa la carta di pagamento";
+            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
             return;
         }
 

@@ -6,7 +6,7 @@
 -- user already exists
 GRANT ALL PRIVILEGES ON DATABASE :dbname to :username ;
 
-
+ALTER TABLE Utente OWNER TO :username ;
 ALTER TABLE UtenteCompratore OWNER TO :username ;
 ALTER TABLE UtenteFornitore OWNER TO :username ;
 ALTER TABLE UtenteTrasportatore OWNER TO :username ;
