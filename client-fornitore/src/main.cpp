@@ -193,7 +193,7 @@ int main()
     srand((unsigned)time(NULL));
 
     // Apre il file corrispondente al test da effettuare in modalità di lettura
-    std::ifstream file("../test/test.txt");
+    std::ifstream file("../test/AggiuntaProdottoSito.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
@@ -274,14 +274,18 @@ int main()
             sprintf(key2, "nome_utente_fornitore");
             sprintf(value2, line.c_str());
 
-            // Effettuo un comando di scrittura relativo al logout dell'utente fornitore.
-            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key3, "password");
+            sprintf(value3, line.c_str());
+
+            // Effettuo un comando di scrittura relativo al login dell'utente fornitore.
+            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
 
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s\n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
+            printf("XADD %s * %s %s %s %s %s %s\n", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);

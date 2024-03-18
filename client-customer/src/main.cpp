@@ -288,7 +288,7 @@ int main()
     srand((unsigned)time(NULL));
 
     // Apre il file corrispondente al test da effettuare in modalità di lettura
-    std::ifstream file("../test/test.txt");
+    std::ifstream file("../test/visioneOrdiniEffettuati.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
@@ -387,14 +387,18 @@ int main()
             sprintf(key2, "nome_utente_compratore");
             sprintf(value2, line.c_str());
 
+            std::getline(file, line); // Passa alla riga successiva
+            sprintf(key3, "password");
+            sprintf(value3, line.c_str());
+
             // Effettuo un comando di scrittura relativo al logout dell'utente compratore.
-            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
+            reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
 
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s\n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, reply->str);
+            printf("XADD %s * %s %s %s %s %s %s\n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
+            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -822,7 +826,7 @@ int main()
             sprintf(value2, line.c_str());
 
             std::getline(file, line); // Passa alla riga successiva
-            sprintf(key3, "codiceProdotto");
+            sprintf(key3, "motivazioneReso");
             sprintf(value3, line.c_str());
 
             // Effettuo un comando di scrittura relativo all'effettuazione del reso.
@@ -1444,8 +1448,8 @@ int main()
                 sprintf(value2, "1");
 
                 // Modificare motivazioneReso
-                sprintf(key3, "codiceProdotto");
-                sprintf(value3, "1");
+                sprintf(key3, "motivazioneReso");
+                sprintf(value3, "difettoso");
 
                 // Effettuo un comando di scrittura relativo all'effettuazione del reso.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);

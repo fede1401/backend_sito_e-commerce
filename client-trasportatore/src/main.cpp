@@ -161,7 +161,7 @@ int main()
     srand((unsigned)time(NULL));
 
     // Apre il file corrispondente al test da effettuare in modalità di lettura
-    std::ifstream file("../test/test.txt");
+    std::ifstream file("../test/SpedisciOrdine.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
