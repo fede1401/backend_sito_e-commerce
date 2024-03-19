@@ -1,0 +1,17 @@
+EFFETTUA REGISTRAZIONE COMPRATORE
+mario1
+UtenteCompratore
+Mario
+Rossi
+3333333333
+mario.rossi@gmail.com
+Via delle vie
+10
+01000
+Roma
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+01/01/1910
+
+EFFETTUA LOGOUT COMPRATORE
+mario1

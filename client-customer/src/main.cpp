@@ -288,7 +288,7 @@ int main()
     srand((unsigned)time(NULL));
 
     // Apre il file corrispondente al test da effettuare in modalità di lettura
-    std::ifstream file("../test/visioneOrdiniEffettuati.txt");
+    std::ifstream file("../test/login.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
@@ -957,7 +957,7 @@ int main()
     freeReplyObject(reply);
 
 
-//#if (DEBUG < 0)
+#if (DEBUG < 0)
     // Test randomici.
     while (1)
     {
@@ -1571,6 +1571,6 @@ int main()
         micro_sleep(10000000); // 10 secondi di attesa
 
     } // while ()
-//#endif
+#endif
     redisFree(c2r);
 }

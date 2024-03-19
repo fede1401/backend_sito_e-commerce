@@ -66,11 +66,11 @@ public:
         std::string messageLog = "";
 
         // Controllo se il sessionID è univoco.
-        bool resultSession = check_sessionID(db1, nomeRequisito, statoReq, sessionID);
-        if (resultSession == false)
-        {
-            return;
-        }
+        // bool resultSession = check_sessionID(db1, nomeRequisito, statoReq, sessionID);
+        // if (resultSession == false)
+        // {
+        //     return;
+        // }
 
         // Controllo che il nome utente sia univoco con gli altri utenti.
         bool resultUsername = check_nome_utente_univoco(db1, in_nome_utente, nomeRequisito, statoReq, sessionID);
@@ -361,70 +361,6 @@ public:
         return formatted_date;
     }
 
-    // Metodo per verificare se un sessionID è univoco tra gli utenti compratori, fornitori e trasportatori
-    bool check_sessionID(Con2DB db1, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID)
-    {
-
-        bool result = true;
-
-        // Verifico se il sessionID è già presente nella tabella UtenteCompratore
-        sprintf(sqlcmd, "SELECT * FROM Utente WHERE session_id = '%s'", sessionID.c_str());
-        res = db1.ExecSQLtuples(sqlcmd);
-        rows = PQntuples(res);
-        PQclear(res);
-
-        // Se il numero di righe dal risultato della query è maggiore di 0, il sessionID già esiste nel database, ed è stato assegnato ad un altro utente compratore.
-        if (rows > 0)
-        {
-            // Log dell'errore e uscita dalla funzione
-            statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "ERROR", "Il session ID è già in uso da utenti.", sessionID, nomeRequisito, statoReq);
-
-            std::cout << "Errore: Il session ID è già in uso da utenti." << std::endl;
-            return false;
-        }
-
-        // Restituiamo true se il sessionID è univoco tra tutti gli utenti
-        return result;
-    }
-
-
-    UtenteCompratore anima_oggetto(Con2DB db1, std::string categoriaUtenteLogin, std::string input_nome_utente, std::string input_passw)
-    {
-
-        // Creo il costruttore della classe utente compratore dopo il login:
-        UtenteCompratore compratore;
-        sprintf(sqlcmd, "SELECT * FROM %s WHERE nome_utente_compratore = '%s'", categoriaUtenteLogin.c_str(), input_nome_utente.c_str());
-
-        res = db1.ExecSQLtuples(sqlcmd);
-        rows = PQntuples(res);
-        PQclear(res);
-        if (rows == 1)
-        {
-            compratore.nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
-            compratore.session_id = PQgetvalue(res, 0, PQfnumber(res, "session_id_c"));
-            compratore.categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
-            compratore.nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
-            compratore.cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
-            compratore.email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
-            compratore.numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
-            compratore.password = PQgetvalue(res, 0, PQfnumber(res, "password"));
-            compratore.data_compleanno = PQgetvalue(res, 0, PQfnumber(res, "data_compleanno"));
-            compratore.via_residenza = PQgetvalue(res, 0, PQfnumber(res, "via_di_residenza"));
-            compratore.numero_civico = PQgetvalue(res, 0, PQfnumber(res, "numero_civico"));
-            compratore.CAP = PQgetvalue(res, 0, PQfnumber(res, "CAP"));
-            compratore.città_residenza = PQgetvalue(res, 0, PQfnumber(res, "citta_di_residenza"));
-            compratore.stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-        }
-        else
-        {
-            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-            return compratore;
-        }
-        std::cout << "Nessun errore in anima oggetto!" << std::endl;
-        return compratore;
-    }
-
     // Metodo utilizzato per aggiornare l'indirizzo di residenza di un utente compratore nel database
     void aggiornaResidenza(Con2DB db1, std::string input_nome_utente, std::string nuovaViaResidenza, std::string nuovoNumCiv, std::string nuovoCAP, std::string nuovaCittaResidenza)
     {
@@ -500,48 +436,55 @@ public:
     // Metodo utilizzato per effettuare il login di un utente dato il suo nome utente, la sua password e il sessionID che sarà creato dal server.
     void effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw, std::string sessionID) override
     {
-        // Chiamata al metodo della classe base
-        Utente::effettua_login(db1, input_nome_utente, input_passw, sessionID);
-
-        // Definizione di alcune variabili per il logging
-        std::string nomeRequisito = "Login utente compratore.";
-        statoRequisito statoReq = statoRequisito::Wait;
-        std::string messageLog = "";
-
-        printf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", input_nome_utente.c_str());
-        res = db1.ExecSQLtuples(sqlcmd);
-        rows = PQntuples(res);
-
-        if (rows == 1)
+        try
         {
-             std::string data_compleanno = PQgetvalue(res, 0, PQfnumber(res, "data_compleanno"));
-             std::string via_residenza = PQgetvalue(res, 0, PQfnumber(res, "via_di_residenza"));
-             std::string numero_civico = PQgetvalue(res, 0, PQfnumber(res, "numero_civico"));
-             std::string CAP = PQgetvalue(res, 0, PQfnumber(res, "CAP"));
-             std::string città_residenza = PQgetvalue(res, 0, PQfnumber(res, "citta_di_residenza"));
+            // Chiamata al metodo della classe base
+            Utente::effettua_login(db1, input_nome_utente, input_passw, sessionID);
 
-             this->data_compleanno = data_compleanno;
-             this->via_residenza = via_residenza;
-             this->numero_civico = numero_civico;
-             this->CAP = CAP;
-             this->città_residenza = città_residenza;
+            // Definizione di alcune variabili per il logging
+            std::string nomeRequisito = "Login utente compratore.";
+            statoRequisito statoReq = statoRequisito::Wait;
+            std::string messageLog = "";
 
-             // Aggiorniamo l'oggetto chiamante con i dettagli dell'utente trovato
-             //*this = UtenteCompratore(nome_utente, "UtenteCompratore", nome, cognome, numero_telefono, password, email, session_id, data_compleanno, via_residenza, numero_civico, CAP, città_residenza, stato);
-         }
-         else
-         {
-             // Log dell'errore e uscita dalla funzione
-            statoReq = statoRequisito::NotSuccess;
-            messageLog = "Utente " + input_nome_utente + " non trovato.";
-            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", input_nome_utente.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+
+            if (rows == 1)
+            {
+                std::string data_compleanno = PQgetvalue(res, 0, PQfnumber(res, "data_compleanno"));
+                std::string via_residenza = PQgetvalue(res, 0, PQfnumber(res, "via_di_residenza"));
+                std::string numero_civico = PQgetvalue(res, 0, PQfnumber(res, "numero_civico"));
+                std::string CAP = PQgetvalue(res, 0, PQfnumber(res, "CAP"));
+                std::string città_residenza = PQgetvalue(res, 0, PQfnumber(res, "citta_di_residenza"));
+
+                this->data_compleanno = data_compleanno;
+                this->via_residenza = via_residenza;
+                this->numero_civico = numero_civico;
+                this->CAP = CAP;
+                this->città_residenza = città_residenza;
+            }
+            else
+            {
+                // Log dell'errore e uscita dalla funzione
+                statoReq = statoRequisito::NotSuccess;
+                messageLog = "Utente " + input_nome_utente + " non trovato.";
+                InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+                return;
+            }
+
+            PQclear(res);
             return;
-         }
+        }
 
-        PQclear(res);
-
-        return;
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+            return;
+        }
     }
+
+
 };
 
 #endif // USER_COMPRATORE_H

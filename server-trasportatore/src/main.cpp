@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "../../shared-server/generateSessionID.h"      // Migliore separazione delle responsabilità
+#include "../../shared-server/checkSessionID.h"
 
 
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
@@ -270,7 +271,22 @@ int main()
 
                 if (std::string(action) == "EFFETTUA REGISTRAZIONE TRASPORTATORE")
                 {
+                    // Genero il sessionID
                     std::string sessionID = generateSessionID();
+
+                    // Controllo se il sessionID generato dal server-customer sia univcoco nella tabella dell'Utente
+                    bool resultSession = check_sessionID(db1, "creazione sessionID per utente trasportatore", statoRequisito::Wait, sessionID);
+                    
+                    // Se il risultato è false il sessionID già esiste nel database, ed è stato assegnato ad un altro utente, dobbiamo generarlo un'altro finchè non ne abbiamo uno univoco
+                    if (resultSession == false)
+                    {
+                        while (resultSession == false){
+                            printf("Nuova generazione sessionID perchè già esistente\n\n\n\n");
+                            sessionID = generateSessionID();
+                            resultSession = check_sessionID(db1, "creazione sessionID per utente trasportatore", statoRequisito::Wait, sessionID);
+                        }
+                    }
+
                     trasportatore.effettuaRegistrazione(db1, nome_utente_trasportatore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword, dittaSpedizione);
 
                     strcpy(outputs, "Effettuata registrazione trasportatore");
@@ -359,7 +375,20 @@ int main()
 
                 if (std::string(action) == "EFFETTUA LOGIN TRASPORTATORE")
                 {
+                    // Genero il sessionID
                     std::string sessionID = generateSessionID();
+
+                    // Controllo se il sessionID generato dal server-customer sia univcoco nella tabella dell'Utente
+                    bool resultSession = check_sessionID(db1, "creazione sessionID per utente trasportatore", statoRequisito::Wait, sessionID);
+                    
+                    // Se il risultato è false il sessionID già esiste nel database, ed è stato assegnato ad un altro utente, dobbiamo generarlo un'altro finchè non ne abbiamo uno univoco
+                    if (resultSession == false)
+                    {
+                        while (resultSession == false){
+                            sessionID = generateSessionID();
+                            resultSession = check_sessionID(db1, "creazione sessionID per utente trasportatore", statoRequisito::Wait, sessionID);
+                        }
+                    }
 
                     trasportatore.effettua_login(db1, nome_utente_trasportatore, password, sessionID);
 

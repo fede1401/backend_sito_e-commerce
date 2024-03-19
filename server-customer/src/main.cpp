@@ -3,6 +3,8 @@
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/src/con2redis.h"
 #include <string.h>
 #include "../../shared-server/generateSessionID.h"          // Migliore separazione delle responsabilità
+#include "../../shared-server/checkSessionID.h"
+
 
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
 // Usage: ./streams <add count> <read count> [block time, default: 1]
@@ -382,7 +384,22 @@ int main()
 
                 if (std::string(action) == "EFFETTUA REGISTRAZIONE COMPRATORE")
                 {
+
+                    // Genero il sessionID
                     std::string sessionID = generateSessionID();
+
+                    // Controllo se il sessionID generato dal server-customer sia univcoco nella tabella dell'Utente
+                    bool resultSession = check_sessionID(db1, "creazione sessionID per utente compratore", statoRequisito::Wait, sessionID);
+                    
+                    // Se il risultato è false il sessionID già esiste nel database, ed è stato assegnato ad un altro utente, dobbiamo generarlo un'altro finchè non ne abbiamo uno univoco
+                    if (resultSession == false)
+                    {
+                        while (resultSession == false){
+                            sessionID = generateSessionID();
+                            resultSession = check_sessionID(db1, "creazione sessionID per utente compratore", statoRequisito::Wait, sessionID);
+                        }
+                    }
+
                     compratore.effettuaRegistrazione(db1, nome_utente_compratore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, 
                                                     viaResidenza, numeroCivico, cap,
                                                     cittàResidenza, password, confermaPassword, dataCompleanno);
@@ -412,7 +429,21 @@ int main()
 
                 if (std::string(action) == "EFFETTUA LOGIN COMPRATORE")
                 {
+                    // Genero il sessionID
                     std::string sessionID = generateSessionID();
+
+                    // Controllo se il sessionID generato dal server-customer sia univcoco nella tabella dell'Utente
+                    bool resultSession = check_sessionID(db1, "creazione sessionID per utente compratore", statoRequisito::Wait, sessionID);
+                    
+                    // Se il risultato è false il sessionID già esiste nel database, ed è stato assegnato ad un altro utente, dobbiamo generarlo un'altro finchè non ne abbiamo uno univoco
+                    if (resultSession == false)
+                    {
+                        while (resultSession == false){
+                            sessionID = generateSessionID();
+                            resultSession = check_sessionID(db1, "creazione sessionID per utente compratore", statoRequisito::Wait, sessionID);
+                        }
+                    }
+                    
                     compratore.effettua_login(db1, nome_utente_compratore, password, sessionID);
 
                     strcpy(outputs, "Login avvenuto");

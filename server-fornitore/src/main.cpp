@@ -5,6 +5,7 @@
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/src/con2redis.h"
 #include <string.h>
 #include "../../shared-server/generateSessionID.h"          // Migliore separazione delle responsabilità
+#include "../../shared-server/checkSessionID.h"
 
 
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
@@ -298,7 +299,21 @@ int main()
 
                 if (std::string(action) == "EFFETTUA REGISTRAZIONE FORNITORE")
                 {
+                    // Genero il sessionID
                     std::string sessionID = generateSessionID();
+
+                    // Controllo se il sessionID generato dal server-customer sia univcoco nella tabella dell'Utente
+                    bool resultSession = check_sessionID(db1, "creazione sessionID per utente fornitore", statoRequisito::Wait, sessionID);
+                    
+                    // Se il risultato è false il sessionID già esiste nel database, ed è stato assegnato ad un altro utente, dobbiamo generarlo un'altro finchè non ne abbiamo uno univoco
+                    if (resultSession == false)
+                    {
+                        while (resultSession == false){
+                            sessionID = generateSessionID();
+                            resultSession = check_sessionID(db1, "creazione sessionID per utente fornitore", statoRequisito::Wait, sessionID);
+                        }
+                    }
+                    
                     fornitore.effettuaRegistrazione(db1, nome_utente_fornitore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword, aziendaProduzione);
 
                     strcpy(outputs, "Registrazione utente fornitore avvenuta");
@@ -389,7 +404,20 @@ int main()
 
                 if (std::string(action) == "EFFETTUA LOGIN FORNITORE")
                 {
+                    // Genero il sessionID
                     std::string sessionID = generateSessionID();
+
+                    // Controllo se il sessionID generato dal server-customer sia univcoco nella tabella dell'Utente
+                    bool resultSession = check_sessionID(db1, "creazione sessionID per utente fornitore", statoRequisito::Wait, sessionID);
+                    
+                    // Se il risultato è false il sessionID già esiste nel database, ed è stato assegnato ad un altro utente, dobbiamo generarlo un'altro finchè non ne abbiamo uno univoco
+                    if (resultSession == false)
+                    {
+                        while (resultSession == false){
+                            sessionID = generateSessionID();
+                            resultSession = check_sessionID(db1, "creazione sessionID per utente fornitore", statoRequisito::Wait, sessionID);
+                        }
+                    }
 
                     fornitore.effettua_login(db1, nome_utente_fornitore, password, sessionID);
 
