@@ -8,6 +8,7 @@
 class Reso
 {
 public:
+    // Attributi per la classe Reso.
     int idReso;
     std::string nome_utente_compratore;
     int idOrdine;

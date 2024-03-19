@@ -9,6 +9,7 @@
 
 class Ordine {
 public:
+    // Attributi per la classe Ordine.
     int identificatore_ordine;
     int codice_prodotto;
     std::string nome_uteCompratore;

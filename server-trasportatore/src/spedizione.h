@@ -9,6 +9,7 @@
 class Spedizione
 {
 public:
+    // Attributi per la classe Spedizione.
     int idSpedizione;
     int idOrdine;
     std::string nome_utente_trasportatore;
@@ -486,18 +487,6 @@ public:
             return;
         }
 
-        // Aggiorno lo stato della spedizione nella tabella Spedizione:
-        sprintf(sqlcmd, "UPDATE Spedizione set statoSpedizione='consegnato' WHERE idSpedizione = '%d'", idSpedizione);
-        res = db1.ExecSQLcmd(sqlcmd);
-        PQclear(res);
-
-        // Log
-        statoReq = statoRequisito::Success;
-        messageLog = "Ordine consegnato da " + in_nome_utente_trasportatore;
-        InsertToLogDB(db1, "INFO", "Ordine consegnato", sessionID, nomeRequisito, statoReq);
-
-        // Aggiorno la disponibilità dell'utente Trasportatore , il quale può effettuare una nuova consegna:
-
         // Recupero il nome dell'utente trasportatore associato all'id della spedizione
         std::string nome_utente_trasportatore;
         sprintf(sqlcmd, "SELECT nome_utente_trasportatore FROM Spedizione WHERE idSpedizione = '%d'", idSpedizione);
@@ -518,6 +507,18 @@ public:
                 InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
                 return;
             }
+
+            // Aggiorno lo stato della spedizione nella tabella Spedizione:
+            sprintf(sqlcmd, "UPDATE Spedizione set statoSpedizione='consegnato' WHERE idSpedizione = '%d'", idSpedizione);
+            res = db1.ExecSQLcmd(sqlcmd);
+            PQclear(res);
+
+            // Log
+            statoReq = statoRequisito::Success;
+            messageLog = "Ordine consegnato da " + in_nome_utente_trasportatore;
+            InsertToLogDB(db1, "INFO", "Ordine consegnato", sessionID, nomeRequisito, statoReq);
+
+            // Aggiorno la disponibilità dell'utente Trasportatore , il quale può effettuare una nuova consegna:
 
             // A questo punto l'utente trasportatore può prendere nuove consegne, perciò aggiorniamo la sua disponibilità.
             sprintf(sqlcmd, "UPDATE UtenteTrasportatore set dispo='0' WHERE nome_utente_trasportatore = '%s'", nome_utente_trasportatore.c_str());

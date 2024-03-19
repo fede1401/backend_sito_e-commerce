@@ -7,6 +7,7 @@
 
 class Carta {
 public:
+    // Attributi per la classe Carta.
     std::string nome_utente;
     std::string numero_carta;
     std::string cvv;

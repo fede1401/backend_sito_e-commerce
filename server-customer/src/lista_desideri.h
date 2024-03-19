@@ -7,6 +7,7 @@
 
 class ListaDesideri {
 public:
+    // Attributi per la classe ListaDesideri.
     std::string nome_utente_compratore;
     int codice_prodotto;
     int quantitàProdotti;

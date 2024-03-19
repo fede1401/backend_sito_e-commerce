@@ -9,6 +9,7 @@
 class Recensione
 {
 public:
+    // Attributi per la classe Recensione.
     int idRecensione;
     std::string nome_utente_compratore;
     int idOrdine;

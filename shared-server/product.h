@@ -11,6 +11,7 @@
 class Product
 {
 public:
+    // Attributi per la classe Prodotto.
     int cod_product;
     std::string nome;
     std::string categoria;

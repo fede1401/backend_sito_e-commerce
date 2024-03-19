@@ -7,6 +7,7 @@
 
 class Carrello {
 public:
+    // Attributi per la classe Carrello.
     std::string nome_utente_compratore;
     int codice_prodotto;
     int quantitàProdotti;
