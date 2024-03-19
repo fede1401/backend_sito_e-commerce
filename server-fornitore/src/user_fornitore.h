@@ -4,7 +4,6 @@
 #include "../../shared-server/user.h"
 #include "../../shared-server/isSpecialCharacter.h"
 
-
 class UtenteFornitore : public Utente
 {
 public:
@@ -13,16 +12,17 @@ public:
 
     // Costruttore di UtenteFornitore
 
-    UtenteFornitore() : Utente("", "", "", "", "", "", "","", -1),
+    UtenteFornitore() : Utente("", "", "", "", "", "", "", "", -1),
                         azienda_produzione("")
-                        {}
+    {
+    }
 
     UtenteFornitore(
-         std::string nome_utente, std::string session_id, std::string categoria, std::string nome, std::string cognome,
+        std::string nome_utente, std::string session_id, std::string categoria, std::string nome, std::string cognome,
         std::string numero_telefono, std::string password, std::string email, int stato,
         std::string azienda_produzione)
 
-        : Utente(nome_utente,session_id ,categoria, nome, cognome, numero_telefono, password, email, stato), azienda_produzione(azienda_produzione)
+        : Utente(nome_utente, session_id, categoria, nome, cognome, numero_telefono, password, email, stato), azienda_produzione(azienda_produzione)
     {
     }
 
@@ -98,7 +98,6 @@ public:
             return;
         }
 
-
         // Se tutti i check hanno dato buoni risultati, possiamo aggiungere l'utente al database:
 
         // Inserisco nel database una riga corrispettiva al nuovo utente con tutti i campi presi in input dal metodo:
@@ -123,7 +122,7 @@ public:
         InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
         // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
-        *this = UtenteFornitore(in_nome_utente, session_id,in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, stato, in_aziendaProd);
+        *this = UtenteFornitore(in_nome_utente, session_id, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, stato, in_aziendaProd);
 
         printf("Registrazione avvenuta con successo.\n");
 
@@ -349,7 +348,6 @@ public:
         return result;
     }
 
-
     // Metodo per verificare se un sessionID è univoco tra gli utenti compratori, fornitori e trasportatori
     bool check_sessionID(Con2DB db1, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID)
     {
@@ -375,204 +373,6 @@ public:
 
         // Restituiamo true se il sessionID è univoco tra tutti gli utenti
         return result;
-    }
-
-    // Metodo utilizzato per effettuare il login di un utente dato il suo nome utente, la sua password e il sessionID che sarà creato dal server.
-    void effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw, std::string sessionID)
-    {
-        // Definizione di alcune variabili per il logging
-        std::string nomeRequisito = "Login utente.";
-        statoRequisito statoReq = statoRequisito::Wait;
-        std::string messageLog = "";
-
-        // Controlliamo se l'utente è già loggato, che varia a seconda del valore dell'attributo "stato" all'interno del db.
-        int stato_utente;
-
-        // Viene recuperato il valore dell'attributo "stato".
-
-        sprintf(sqlcmd, "SELECT stato FROM Utente WHERE nome_utente = '%s'", input_nome_utente.c_str());
-        res = db1.ExecSQLtuples(sqlcmd);
-        rows = PQntuples(res);
-
-        // Se il numero di righe del risultato della query è uguale a 1, si può recuperare il valore dell'attributo "stato".
-        if (rows == 1)
-        {
-            stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-
-            // Se il valore dell'attributo "stato" è uguale a 1, allora l'utente è già connesso.
-            if (stato_utente == 1)
-            {
-                std::cout << "L'utente è già connesso." << std::endl;
-
-                // Caricamento del sessionID (a seconda della categoria dell'utente) per inserirlo nel log.
-                sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                res = db1.ExecSQLtuples(sqlcmd);
-                rows = PQntuples(res);
-                if (rows == 1)
-                {
-                    sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));
-                }
-
-                // Log del warning e uscita dalla funzione
-                statoReq = statoRequisito::NotSuccess;
-                messageLog = "Utente " + input_nome_utente + " già connesso";
-                InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
-
-                return;
-            }
-
-            // Se il valore dell'attributo "stato" è uguale a 0, allora l'utente NON è connesso e dobbiamo effettuare il login
-            else
-            {
-                // Aggiorniamo lo stato dell'utente: da disconnesso a connesso:
-
-                // controllo se il sessionID generato dal server-fornitore è univoco.
-                bool resultSession = check_sessionID(db1, nomeRequisito, statoReq, sessionID);
-                if (resultSession == false)
-                {
-                    return;
-                }
-                
-                // Viene effettuata la verifica delle password: confrontiamo la password data in input dall'utente che vuole effettuare il login e la password che si trova nel db dell'utente.
-                std::string password_utente;
-                char *password_u;
-
-                // Viene recuperata la password nel database a seconda della categoria di utente:
-                sprintf(sqlcmd, "SELECT password FROM Utente WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                res = db1.ExecSQLtuples(sqlcmd);
-                rows = PQntuples(res);
-
-                // Se il numero di righe del risultato delle query è uguale a 1, la password può essere assegnata a una variabile.
-                if (rows == 1)
-                {
-                    password_u = PQgetvalue(res, 0, PQfnumber(res, "password"));
-                    password_utente.assign(password_u);
-                }
-
-                // Se il numero di righe del risultato delle query è diverso da 1 l'utente non è stato trovato
-                else
-                {
-                    // Log dell'errore e uscita dalla funzione
-                    statoReq = statoRequisito::NotSuccess;
-                    messageLog = "Utente " + input_nome_utente + " non trovato";
-                    InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-
-                    std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                    return;
-                }
-
-                PQclear(res);
-
-                // Viene effettuato il confronto della password data in input dall'utente e quella segnata nel database:
-                // Se le passowrd non corrispondono allora l'utente non può collegarsi.
-                if (input_passw != password_utente)
-                {
-                    // Log dell'errore e uscita dalla funzione
-                    statoReq = statoRequisito::NotSuccess;
-                    messageLog = "Password " + input_passw + " non corretta.";
-                    InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-
-                    std::cout << "Errore: La passowrd non è corretta, riprovare." << std::endl;
-                    return;
-                }
-
-                // Se le password corrispondono, l'utente può collegarsi.
-                else
-                {
-                    std::cout << "La passowrd inserita: " << password_utente << "è corretta." << std::endl;
-
-                    // Aggiornamento del session id nella tabella dell'utente fornitore
-                    sprintf(sqlcmd, "UPDATE Utente set session_id='%s' WHERE nome_utente = '%s'", sessionID.c_str(), input_nome_utente.c_str());
-                    res = db1.ExecSQLcmd(sqlcmd);
-                    PQclear(res);
-
-                    // Log
-                    statoReq = statoRequisito::Wait;
-                    messageLog = "Aggiornamento sessionID per utente " + input_nome_utente;
-                    InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
-
-
-                    // Viene effettuato l'aggiornamento dello stato.
-                    // Aggiornamento "stato" UtenteFornitore
-                    sprintf(sqlcmd, "UPDATE Utente set stato = 1 WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                    res = db1.ExecSQLcmd(sqlcmd);
-                    PQclear(res);
-
-                    // Log
-                    statoReq = statoRequisito::Success;
-                    messageLog = "Aggiornamento stato per utente " + input_nome_utente;
-                    InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
-
-
-                    // Animo l'oggetto UtenteFornitore
-                    sprintf(sqlcmd, "SELECT * FROM Utente WHERE nome_utente = '%s'", input_nome_utente.c_str());
-                    res = db1.ExecSQLtuples(sqlcmd);
-                    rows = PQntuples(res);
-
-                    if (rows == 1)
-                    {
-                        std::string nome_utente = PQgetvalue(res, 0, PQfnumber(res, "nome_utente"));
-                        std::string session_id = PQgetvalue(res, 0, PQfnumber(res, "session_id"));
-                        std::string categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
-                        std::string nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
-                        std::string cognome = PQgetvalue(res, 0, PQfnumber(res, "cognome"));
-                        std::string email = PQgetvalue(res, 0, PQfnumber(res, "indirizzo_mail"));
-                        std::string numero_telefono = PQgetvalue(res, 0, PQfnumber(res, "numero_di_telefono"));
-                        std::string password = PQgetvalue(res, 0, PQfnumber(res, "password"));
-                        int stato = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
-
-                        // Aggiorniamo l'oggetto chiamante con i dettagli dell'utente trovato
-                        this->nome_utente = nome_utente;
-                        this->session_id = session_id;
-                        this->nome = nome;
-                        this->cognome = cognome;
-                        this->email = email;
-                        this->numero_telefono = numero_telefono;
-                        this->password = password;
-                        this->stato = stato;
-                    }
-                    else
-                    {
-                        std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                    }
-
-                    PQclear(res);
-
-
-                    sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", input_nome_utente.c_str());
-                    res = db1.ExecSQLtuples(sqlcmd);
-                    rows = PQntuples(res);
-
-                    if (rows == 1)
-                    {
-                        std::string azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
-                        this->azienda_produzione = azienda_produzione;
-
-                        // Aggiorniamo l'oggetto chiamante con i dettagli dell'utente trovato
-                        //*this = UtenteCompratore(nome_utente, "UtenteCompratore", nome, cognome, numero_telefono, password, email, session_id, data_compleanno, via_residenza, numero_civico, CAP, città_residenza, stato);
-                    }
-                    else
-                    {
-                        std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-                    }
-
-                    PQclear(res);
-                }
-            }
-        }
-
-        // Se il numero di righe del risultato della query relativo allo "stato" dell'utente è diversa da 1, non si può recuperare il valore dell'attributo "stato".
-        else
-        {
-            // Log dell'errore e uscita dalla funzione
-            statoReq = statoRequisito::NotSuccess;
-            messageLog = "Utente " + input_nome_utente + " non trovato";
-            InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-
-            std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-            return;
-        }
-        return;
     }
 
     // Metodo utilizzato per aggiornare l'azienda produttirce di un utente fornitore nel database
@@ -622,10 +422,14 @@ public:
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
-        if (rows==1){ categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));}  
+        if (rows == 1)
+        {
+            categoriaUtente = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+        }
         PQclear(res);
 
-        if (categoriaUtente != "UtenteFornitore"){
+        if (categoriaUtente != "UtenteFornitore")
+        {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + input_nome_utente + " non è un utente fornitore, perciò non può essere aggiornato il nome dell azienda produttrice.";
@@ -643,6 +447,45 @@ public:
         statoReq = statoRequisito::Success;
         messageLog = "Aggiornamento azienda produttrice per utente: " + input_nome_utente;
         InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
+
+        return;
+    }
+
+
+
+    // Metodo utilizzato per effettuare il login di un utente dato il suo nome utente, la sua password e il sessionID che sarà creato dal server.
+    void effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw, std::string sessionID) override
+    {
+        // Chiamata al metodo della classe base
+        Utente::effettua_login(db1, input_nome_utente, input_passw, sessionID);
+
+        // Definizione di alcune variabili per il logging
+        std::string nomeRequisito = "Login utente fornitore.";
+        statoRequisito statoReq = statoRequisito::Wait;
+        std::string messageLog = "";
+
+        sprintf(sqlcmd, "SELECT * FROM UtenteFornitore WHERE nome_utente_fornitore = '%s'", input_nome_utente.c_str());
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+
+        if (rows == 1)
+        {
+            std::string azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
+            this->azienda_produzione = azienda_produzione;
+
+            // Aggiorniamo l'oggetto chiamante con i dettagli dell'utente trovato
+            //*this = UtenteCompratore(nome_utente, "UtenteCompratore", nome, cognome, numero_telefono, password, email, session_id, data_compleanno, via_residenza, numero_civico, CAP, città_residenza, stato);
+        }
+        else
+        {
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Utente " + input_nome_utente + " non trovato.";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }
+
+        PQclear(res);
 
         return;
     }
