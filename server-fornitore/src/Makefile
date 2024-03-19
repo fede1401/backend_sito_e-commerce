@@ -23,17 +23,19 @@ DEPS = $(wildcard $(IDIR)/*.h)
 SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp, $(ODIR)/%.o, $(SRC))
 
-con2db_OBJ=$(wildcard /home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/*.o)
-con2redis_OBJ=$(wildcard /home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/obj/*.o)
+#con2db_OBJ=$(wildcard /home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/*.o)
+#con2redis_OBJ=$(wildcard /home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/obj/*.o)
+con2db_OBJ=$(wildcard ../../con2db/*.o)
+con2redis_OBJ=$(wildcard ../../con2redis/obj/*.o)
 
 
 all:	con2redis $(BDIR)/main con2db $(BDIR)/main
 
 con2redis:
-	$(MAKE) -C /home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/src
+	$(MAKE) -C ../../con2redis/src
 
 con2db:
-	$(MAKE) -C /home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db
+	$(MAKE) -C ../../con2db
 
 
 $(ODIR)/%.o: %.cpp $(DEPS)

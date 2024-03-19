@@ -1,7 +1,7 @@
 
 
 #IDIR=../hdr
-IDIR=/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/src
+IDIR=../../con2redis/src
 ODIR=../obj
 BDIR=../bin
 
@@ -18,13 +18,15 @@ DEPS = $(wildcard $(IDIR)/*.h)
 SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp, $(ODIR)/%.o, $(SRC))
 
-con2redis_OBJ=$(wildcard /home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/obj/*.o)
+#con2redis_OBJ=$(wildcard /home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/obj/*.o)
+con2redis_OBJ=$(wildcard ../../con2redis/obj/*.o)
+
 
 
 all:	con2redis $(BDIR)/main
 
 con2redis:
-	$(MAKE) -C /home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/src
+	$(MAKE) -C ../../con2redis/src
 
 
 $(ODIR)/%.o: %.cpp $(DEPS)
