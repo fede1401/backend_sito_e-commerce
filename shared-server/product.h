@@ -44,7 +44,7 @@ public:
     }
 
     // Metodo utilizzato per permettere ad un utente fornitore di aggiungere un prodotto al backend.
-    void add_new_product(Con2DB db1, std::string in_nome_utente_fornitore, std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili)
+    std::string add_new_product(Con2DB db1, std::string in_nome_utente_fornitore, std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili)
     {
         std::string sessionID = "";
 
@@ -52,6 +52,9 @@ public:
         std::string nomeRequisito = "Aggiunta prodotto al sito.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_fornitore.c_str());
@@ -70,7 +73,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_fornitore + " , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }   
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -80,7 +85,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utente_fornitore + ", utente non loggato, non può essere aggiunto il prodotto al sito";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -98,7 +105,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente_fornitore + " non è un utente fornitore, perciò non può essere aggiunto il prodotto nel sito.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -113,8 +122,8 @@ public:
         PQclear(res);
         std::cout << "Le righe dopo la query di codProdotto è: " << rows << std::endl;
 
-        // Se il numero di righe del risultato della query è maggiore o uguale a 1, allora il prodotto è già all'interno del database
-        if (rows >= 1)
+        // Se il numero di righe del risultato della query è uguale a 1, allora il prodotto è già all'interno del database
+        if (rows == 1)
         {
             // Il prodotto è già all'interno del backend, perciò dobbiamo solamente aumentarne la quantità di 1
 
@@ -152,8 +161,8 @@ public:
             }
         }
 
-        // Se il numero di righe del risultato della query non è maggiore o uguale a 1, cioè il prodotto non è all'interno del database dobbiamo aggiungerlo per la prima volta:
-        else
+        // Se il numero di righe del risultato della query è 0, cioè il prodotto non è all'interno del database dobbiamo aggiungerlo per la prima volta:
+        if (rows == 0)
         {
             // Il prodotto non è all'interno del database, inseriamolo per la prima volta
             sprintf(sqlcmd, "INSERT INTO Prodotto(codProdotto, nome, categoria,descrizione, prezzoEuro, nome_AziendaProduttrice, num_copie_dispo) VALUES (DEFAULT, '%s', '%s', '%s', '%f', '%s', '%d')",
@@ -170,18 +179,22 @@ public:
             *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
         }
 
-        return;
+        result = messageLog;
+        return result;
     }
 
 
 
     // Metodo utilizzato per permettere ad un utente fornitore di rimuovere un prodotto dal backend.
-    void remove_prodotto(Con2DB db1, std::string in_nome_utente_fornitore, int codProdotto)
+    std::string remove_prodotto(Con2DB db1, std::string in_nome_utente_fornitore, int codProdotto)
     {
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione prodotto dal sito.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         std::string sessionID = "";
 
@@ -203,7 +216,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_fornitore + " , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }   
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -213,7 +228,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utente_fornitore + ", utente non loggato, non può essere rimosso il prodotto dal sito";
             InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non si può rimuovere un prodotto nel sito .", sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che l'utente si tratti di un utente fornitore:
@@ -230,7 +247,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente_fornitore + " non è un utente fornitore, perciò non può essere rimosso il prodotto nel sito.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -249,8 +268,9 @@ public:
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
 
             std::cout << "La riga da eliminare non esiste!" << std::endl;
-
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Se il numero di righe del risultato della query è 1 il prodotto può essere rimosso
@@ -266,13 +286,15 @@ public:
             messageLog = "Eliminato prodotto con codice " + std::to_string(codProdotto) + " da " + in_nome_utente_fornitore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
-        return;
+
+    result = messageLog;
+    return result;
     }
 
     
     
     // Metodo utilizzato per permettere ad un utente compratore di ricercare un prodotto
-    void ricerca_mostra_Prodotto(Con2DB db1, std::string in_nome_utente_compratore, std::string in_nomeProdotto)
+    std::string ricerca_mostra_Prodotto(Con2DB db1, std::string in_nome_utente_compratore, std::string in_nomeProdotto)
     {
 
         std::string sessionID = "";
@@ -281,6 +303,9 @@ public:
         std::string nomeRequisito = "Ricerca e mostra informazioni del prodotto.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
@@ -299,7 +324,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere ricercato il prodotto .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }   
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -309,7 +336,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere ricercato il prodotto";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -327,7 +356,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere ricercato il prodotto.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -352,7 +383,8 @@ public:
 
             std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
 
-            return;
+            result = messageLog;
+            return result;
         }
 
         // Se il numero di righe del risultato della query è 1 effettuiamo la ricerca.
@@ -429,13 +461,14 @@ public:
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
 
-        return;
+        result = messageLog;
+        return result;
     }
 
 
 
     // Metodo utilizzato per permettere a un utente compratore di acquistare un prodotto specificando il codice del prodotto e le informazioni per la spedizione.
-    Ordine acquistaProdotto(Con2DB db1, std::string nomeUtenteCompratore, int codProdotto, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione, std::string CAP_spedizione)
+    std::string acquistaProdotto(Con2DB db1, std::string nomeUtenteCompratore, int codProdotto, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione, std::string CAP_spedizione)
     {
 
         Ordine ordine;
@@ -447,6 +480,9 @@ public:
         std::string nomeRequisito = "Acquisto Prodotto.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         std::string sessionID = "";
@@ -466,7 +502,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + nomeUtenteCompratore + " , poichè non è stato registrato, non può essere acquistato il prodotto .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return ordine;
+            
+            result = messageLog;
+            return result;
         }   
         
 
@@ -477,7 +515,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + nomeUtenteCompratore + ", utente non loggato, non può essere acquistato il prodotto .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return ordine;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che l'utente si tratti di un utente compratore:
@@ -494,7 +534,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + nomeUtenteCompratore + " non è un utente compratore, perciò non può essere acquistato il prodotto.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifica che il prodotto esista
@@ -513,7 +555,8 @@ public:
 
             std::cout << "La riga da eliminare non esiste!" << std::endl;
 
-            return ordine;
+            result = messageLog;
+            return result;
         }
         
         // Se il numero di righe del risultato della query è 1 c'è un prodotto con quel codice, perciò può essere acquistato.
@@ -576,7 +619,8 @@ public:
 
                 std::cout << "La riga da eliminare non esiste!" << std::endl;
 
-                return ordine;
+                result = messageLog;
+                return result;
             }
             
             // Se il numero di righe del risultato della query è uguale ad 1 posso prendere la quantita di copie.
@@ -599,7 +643,8 @@ public:
 
         }
 
-    return ordine;
+    result = "Utente " + nomeUtenteCompratore + " ha acquistato il prodotto con codice " + std::to_string(codProdotto) + ", ordine inserito nel db ";
+    return result;
     }
 
 

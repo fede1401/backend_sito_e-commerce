@@ -151,12 +151,12 @@ int main()
     initStreams(c2r, READ_STREAM_CUSTOMER);
     initStreams(c2r, WRITE_STREAM_CUSTOMER);
 
-    printf("Streams create!\n");
+    printf("\nStreams create!\n");
 
     // Connessione al database.
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
     // Stampa un messaggio di conferma della connessione al database
-    printf("Connessione al database avvenuta con successo");
+    printf("Connessione al database avvenuta con successo.\n\n");
 
 
     while (1)
@@ -192,7 +192,7 @@ int main()
             // Scorro il numero di messaggi della Streams Redis
             for (i = 0; i < ReadStreamNumMsg(reply, k); i++)  
             {
-                printf("\n\n\n\nPROSSIMO MESSAGGIO NELLA STREAM.");
+                printf("\n\nPROSSIMO MESSAGGIO NELLA STREAM.");
 
                 ReadStreamNumMsgID(reply, k, i, msgid); 
 
@@ -218,7 +218,7 @@ int main()
 
                         strcpy(action, fval);
                         
-                        printf("Action: %s\n\n", action);
+                        //printf("Action: %s\n\n", action);
                     }
 
 
@@ -416,13 +416,13 @@ int main()
                         }
                     }
 
-                    compratore.effettuaRegistrazione(db1, nome_utente_compratore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, 
+                    std::string outputRegistrazione =  compratore.effettuaRegistrazione(db1, nome_utente_compratore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, 
                                                     viaResidenza, numeroCivico, cap,
                                                     cittàResidenza, password, confermaPassword, dataCompleanno);
 
                     sessionMapIDUtenteCompratore[sessionID] = compratore;
 
-                    strcpy(outputs, "Registrazione utente compratore avvenuta");
+                    strcpy(outputs,  outputRegistrazione.c_str());
 
 
                     // send result to client                    
@@ -431,7 +431,7 @@ int main()
                     sprintf(value, "%s", outputs);
 
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -460,16 +460,16 @@ int main()
                         }
                     }
                     
-                    compratore.effettua_login(db1, nome_utente_compratore, password, sessionID);
+                    std::string outputLogin = compratore.effettua_login(db1, nome_utente_compratore, password, sessionID);
 
-                    strcpy(outputs, "Login avvenuto");
+                    strcpy(outputs, outputLogin.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -483,16 +483,16 @@ int main()
 
                 if (std::string(action) == "EFFETTUA LOGOUT COMPRATORE")
                 {
-                    compratore.effettua_logout(db1, nome_utente_compratore);
+                    std::string outputLogout = compratore.effettua_logout(db1, nome_utente_compratore);
 
-                    strcpy(outputs, "Logout avvenuto");
+                    strcpy(outputs, outputLogout.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -506,16 +506,16 @@ int main()
 
                 if (std::string(action) == "ELIMINA PROFILO COMPRATORE")
                 {
-                    compratore.elimina_profilo(db1, nome_utente_compratore);
+                    std::string eliminazioneProfilo = compratore.elimina_profilo(db1, nome_utente_compratore);
 
-                    strcpy(outputs, "Eliminazione profilo avvenuta");
+                    strcpy(outputs, eliminazioneProfilo.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -530,16 +530,16 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NUMERO TELEFONO COMPRATORE")
                 {
-                    compratore.aggiornaNumeroDiTelefono(db1, nome_utente_compratore, nuovoNumeroTelefono);
+                    std::string aggiornamentoNumeroTelefono = compratore.aggiornaNumeroDiTelefono(db1, nome_utente_compratore, nuovoNumeroTelefono);
 
-                    strcpy(outputs, "Aggiornamento numero telefono utente compratore");   
+                    strcpy(outputs, aggiornamentoNumeroTelefono.c_str());   
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -553,16 +553,16 @@ int main()
 
                 if (std::string(action) == "AGGIORNA PASSWORD COMPRATORE")
                 {
-                    compratore.aggiornaPassword(db1, nome_utente_compratore ,vecchiaPassw, nuovaPassw);
+                    std::string aggiornamentoPassword =  compratore.aggiornaPassword(db1, nome_utente_compratore ,vecchiaPassw, nuovaPassw);
 
-                    strcpy(outputs, "Aggiornamento password utente compratore");  
+                    strcpy(outputs, aggiornamentoPassword.c_str());  
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -576,16 +576,16 @@ int main()
 
                 if (std::string(action) == "AGGIORNA RESIDENZA")
                 {
-                    compratore.aggiornaResidenza(db1, nome_utente_compratore, nuovaViaResidenza, nuovoNumCiv, nuovoCAP, nuovaCittaResidenza);
+                    std::string aggiornamentoResidenza = compratore.aggiornaResidenza(db1, nome_utente_compratore, nuovaViaResidenza, nuovoNumCiv, nuovoCAP, nuovaCittaResidenza);
 
-                    strcpy(outputs, "Aggiornamento residenza utente compratore");
+                    strcpy(outputs, aggiornamentoResidenza.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -600,16 +600,16 @@ int main()
 
                 if (std::string(action) == "AGGIUNGI CARTA PAGAMENTO")
                 {    
-                    carta.aggiungi_carta(db1, nome_utente_compratore, numeroCartaPagamento, cvvCartaPagamento);
+                    std::string aggiuntaCartaPagamento = carta.aggiungi_carta(db1, nome_utente_compratore, numeroCartaPagamento, cvvCartaPagamento);
 
-                    strcpy(outputs, "Aggiornamento carta di pagamento");
+                    strcpy(outputs, aggiuntaCartaPagamento.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -623,16 +623,16 @@ int main()
 
                 if (std::string(action) == "RIMUOVI CARTA PAGAMENTO")
                 {
-                    carta.remove_carta(db1, nome_utente_compratore, idCarta);
+                    std::string rimozioneCartaPagamento = carta.remove_carta(db1, nome_utente_compratore, idCarta);
 
-                    strcpy(outputs, "Rimozione carta di pagamento");
+                    strcpy(outputs, rimozioneCartaPagamento.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -646,16 +646,16 @@ int main()
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO CARRELLO")
                 {
-                    carrello.add_prodotto(db1, nome_utente_compratore, codiceProdotto );
+                    std::string aggiuntaProdottoCarrello = carrello.add_prodotto(db1, nome_utente_compratore, codiceProdotto );
 
-                    strcpy(outputs, "Aggiunta prodotto al carrello");
+                    strcpy(outputs, aggiuntaProdottoCarrello.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -669,16 +669,16 @@ int main()
 
                 if (std::string(action) == "RIMUOVI PRODOTTO CARRELLO")
                 {
-                    carrello.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
+                    std::string rimozioneProdottoCarrello = carrello.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
-                    strcpy(outputs, "Rimozione prodotto dal carrello");
+                    strcpy(outputs, rimozioneProdottoCarrello.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -692,16 +692,16 @@ int main()
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO LISTADESIDERI")
                 {
-                    listadesideri.add_prodotto(db1, nome_utente_compratore, codiceProdotto);
+                    std::string aggiuntaProdottoListaDesideri = listadesideri.add_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
-                    strcpy(outputs, "Aggiunta prodotto lista desideri");
+                    strcpy(outputs, aggiuntaProdottoListaDesideri.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -715,16 +715,16 @@ int main()
 
                 if (std::string(action) == "RIMUOVI PRODOTTO LISTADESIDERI")
                 {
-                    listadesideri.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
+                    std::string rimozioneProdottoListaDesideri = listadesideri.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
 
-                    strcpy(outputs, "Rimozione prodotto lista desideri");
+                    strcpy(outputs, rimozioneProdottoListaDesideri.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -738,16 +738,16 @@ int main()
 
                 if (std::string(action) == "ACQUISTA PRODOTTO")
                 {
-                    ordine = prodotto.acquistaProdotto(db1, nome_utente_compratore, codiceProdotto, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
+                    std::string acquistoProdotto = prodotto.acquistaProdotto(db1, nome_utente_compratore, codiceProdotto, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
 
-                    strcpy(outputs, "Acquisto prodotto");
+                    strcpy(outputs, acquistoProdotto.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -763,16 +763,16 @@ int main()
 
                 if (std::string(action) == "RICERCA PRODOTTO")
                 {
-                    prodotto.ricerca_mostra_Prodotto(db1, nome_utente_compratore, nomeProdotto);
+                    std::string ricercaProdotto = prodotto.ricerca_mostra_Prodotto(db1, nome_utente_compratore, nomeProdotto);
 
-                    strcpy(outputs, "Ricerca prodotto");
+                    strcpy(outputs, ricercaProdotto.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -786,16 +786,16 @@ int main()
 
                 if (std::string(action) == "VISIONA ORDINI EFFETTUATI")
                 {
-                    ordine.visione_ordini_effettuati(db1, nome_utente_compratore);
+                    std::string visionaOrdiniEffettuati = ordine.visione_ordini_effettuati(db1, nome_utente_compratore);
 
-                    strcpy(outputs, "Visione ordini effettuata con successo");
+                    strcpy(outputs, visionaOrdiniEffettuati.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
                     printf("Result: %s \n", outputs);
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_CUSTOMER, key, value);
@@ -809,16 +809,16 @@ int main()
 
                 if (std::string(action) == "ANNULLA ORDINE")
                 {    
-                    ordine.annulla_ordine(db1, nome_utente_compratore, idOrdine);
+                    std::string annullaOrdine = ordine.annulla_ordine(db1, nome_utente_compratore, idOrdine);
 
-                    strcpy(outputs, "Ordine annullato");
+                    strcpy(outputs, annullaOrdine.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -832,19 +832,16 @@ int main()
 
                 if (std::string(action) == "EFFETTUA RESO")
                 {    
-                    // Modificare
-                    //if motivazione_reso == "";
-                    
-                    reso.effettuaReso(db1,nome_utente_compratore, idOrdine, motivazioneReso::CambioOpinione);
+                    std::string effettuaReso = reso.effettuaReso(db1,nome_utente_compratore, idOrdine, motivazioneReso::CambioOpinione);
 
-                    strcpy(outputs, "Effettuamento reso");
+                    strcpy(outputs, effettuaReso.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -858,17 +855,15 @@ int main()
 
                 if (std::string(action) == "EFFETTUA RECENSIONE")
                 {
-                    // Modificare
-                    //if motivazione_reso == "";
-                    recensione.effettuaRecensione(db1, nome_utente_compratore, idOrdine, descrizioneRecensione, votoStelle::Cinque);
-                    strcpy(outputs, "Effettuamento recensione");
+                    std::string effettuaRecensione = recensione.effettuaRecensione(db1, nome_utente_compratore, idOrdine, descrizioneRecensione, votoStelle::Cinque);
+                    strcpy(outputs, effettuaRecensione.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 
@@ -882,16 +877,16 @@ int main()
 
                 if (std::string(action) == "RIMUOVI RECENSIONE")
                 {
-                    recensione.remove_recensione(db1, nome_utente_compratore, idRecensione);
+                    std::string rimuoviRecensione =  recensione.remove_recensione(db1, nome_utente_compratore, idRecensione);
 
-                    strcpy(outputs, "Recensione rimossa");
+                    strcpy(outputs, rimuoviRecensione.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
                     printf("Result: %s \n", outputs);
 

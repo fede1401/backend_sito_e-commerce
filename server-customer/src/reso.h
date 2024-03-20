@@ -31,7 +31,7 @@ public:
     }
 
     // Metodo utilizzato per permettere ad un utente compratore di effettuate un reso di un ordine.
-    void effettuaReso(Con2DB db1, std::string in_nome_utente_compratore, int idOrdine, motivazioneReso motivazione_reso)
+    std::string effettuaReso(Con2DB db1, std::string in_nome_utente_compratore, int idOrdine, motivazioneReso motivazione_reso)
     {
 
         std::string sessionID = "";
@@ -41,6 +41,9 @@ public:
         std::string nomeRequisito = "Effettuazione Reso.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
@@ -60,7 +63,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere effettuato il reso .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -70,7 +75,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, non può essere effettuato il reso .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che l'utente si tratti di un utente compratore:
@@ -91,7 +98,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere effettuato il reso.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Recupero dello stato della spedizione dell'ordine tramite il suo id per verificare se l'ordine è stato spedito e arrivato correttamente.
@@ -125,7 +134,9 @@ public:
                         // Log dell'errore e uscita dalla funzione
                         messageLog = "Utente che sta cercando di effettuare il reso ( " + in_nome_utente_compratore + ") non corrisponde a quello dell ordine ( " + nome_utente_compratore + ").";
                         InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-                        return;
+                        
+                        result = messageLog;
+                        return result;
                     }
 
                     // Rendiamo la motivazione del reso in stringa così che posso aggiungerlo al database.
@@ -166,7 +177,9 @@ public:
                     statoReq = statoRequisito::NotSuccess;
                     messageLog = "Utente " + in_nome_utente_compratore + " non trovato";
                     InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
-                    return;
+                    
+                    result = messageLog;
+                    return result;
                 }
             }
 
@@ -179,7 +192,9 @@ public:
                 statoReq = statoRequisito::NotSuccess;
                 messageLog = "Ordine con codice " + std::to_string(idOrdine) + " spedito, ma non arrivato, perciò non può essere effettuato il reso";
                 InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
-                return;
+                
+                result = messageLog;
+                return result;
             }
         }
 
@@ -193,11 +208,15 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non trovato";
             InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+           
+            result = messageLog;
+            return result;
         }
         
     std::cout << "Reso effettuato" << std::endl;
-    return;
+    
+    result = messageLog;
+    return result;
     }
 };
 

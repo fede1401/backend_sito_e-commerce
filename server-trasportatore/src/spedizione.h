@@ -42,13 +42,16 @@ public:
     }
 
     // Metodo utilizzato per permettere a un utente trasportatore di prendere in carico una spedizione.
-    void prendiInCaricoSpedizione(Con2DB db1, std::string in_nome_utente_trasportatore)
+    std::string prendiInCaricoSpedizione(Con2DB db1, std::string in_nome_utente_trasportatore)
     {
 
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Prendi in carico spedizione.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Inizializzazione generatore di numeri casuali per la scelta da parte dell'utente trasportatore dell'ordine che vuole.
         srand((unsigned)time(NULL));
@@ -79,7 +82,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_trasportatore + " , poichè non è stato registrato, non si può effettuare il logout .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+           
+            result = messageLog;
+            return result;
         }
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -89,7 +94,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utente_trasportatore + ", utente non loggato, non può essere presa in carico la spedizione.";
             InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può effettuare il logout .", sessionID, nomeRequisito, statoReq);
-            return;
+           
+            result = messageLog;
+            return result;
         }
 
         // else:
@@ -114,7 +121,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente_trasportatore + " non è un utente trasportatore, perciò non può essere presa in carico la spedizione.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Controllo se l'utente trasportatore ha l'attributo "disponibilità" = 0, cioè non è impegnato in alcuna spedizione.
@@ -136,7 +145,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_trasportatore + " .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Se il valore dell'attributo "disponibilità" è 0, allora l'utente trasportatore può prendere in carico delle spedizioni.
@@ -222,7 +233,9 @@ public:
                 statoReq = statoRequisito::NotSuccess;
                 messageLog = "Non esistono ordini con stato in elaborazione! ";
                 InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-                return;
+                
+                result = messageLog;
+            return result;
             }
         }
 
@@ -233,9 +246,13 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente_trasportatore + " è occupato già nella spedizione di altri ordini, perciò non può prendere in carico l ordine " + std::to_string(idOrdine);
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
-        return;
+
+        result = messageLog;
+        return result;
     }
 
     // Funzione che permette di assegnare un ordine che ha lo stato "in elaborazione" a un utente trasportatore che ha come attibuto "disponibilità"=0 .
@@ -422,7 +439,7 @@ public:
     }
 
     // Nell'implementazione di questo metodo l'utente trasportatore associato alla spedizione avvisa il sistema che ha completato la spedizione e consegnato il prodotto dell'ordine.
-    void spedizioneConsegnata(Con2DB db1, std::string in_nome_utente_trasportatore, int idSpedizione)
+    std::string spedizioneConsegnata(Con2DB db1, std::string in_nome_utente_trasportatore, int idSpedizione)
     {
         std::string sessionID = "";
 
@@ -430,6 +447,9 @@ public:
         std::string nomeRequisito = "Consegna Spedizione.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_trasportatore.c_str());
@@ -449,7 +469,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_trasportatore + " , poichè non è stato registrato, non si può avvisare che la spedizione è consegnata .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -460,7 +482,9 @@ public:
             messageLog = "Non esiste una sessionID per " + in_nome_utente_trasportatore + ", utente non loggato, non si può avvisare che la spedizione è consegnata .";
 
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che l'utente si tratti di un utente trasportatore:
@@ -481,7 +505,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente_trasportatore + " non è un utente trasportatore, perciò non può essere presa in carico la spedizione.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifico che l'id della spedizione esista effettuando una query.
@@ -496,7 +522,9 @@ public:
             messageLog = "Non esiste id " + std::to_string(idSpedizione) + " della spedizione";
             statoReq = statoRequisito::NotSuccess;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Recupero il nome dell'utente trasportatore associato all'id della spedizione
@@ -517,7 +545,9 @@ public:
                 // Log dell'errore e uscita dalla funzione
                 messageLog = "Utente che sta cercando di avvisare che la spedizione è consegnata ( " + in_nome_utente_trasportatore + ") non corrisponde a quello della spedizione ( " + nome_utente_trasportatore + ").";
                 InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-                return;
+                
+                result = messageLog;
+                return result;
             }
 
             // Aggiorno lo stato della spedizione nella tabella Spedizione:
@@ -551,11 +581,15 @@ public:
 
             statoReq = statoRequisito::NotSuccess;
             InsertToLogDB(db1, "WARNING", "Nessun utente trasportatore associato alla spedizione.", sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         std::cout << "Spedizione " << idSpedizione << " consegnata! " << std::endl;
-        return;
+        
+    result = messageLog;
+    return result;
     }
     
 };

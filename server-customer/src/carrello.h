@@ -21,12 +21,15 @@ public:
 
 
     // Metodo per aggiungere un prodotto al carrello dato il nome dell'utente e il codice prodotto.
-    void add_prodotto(Con2DB db1,std::string in_nome_utente_compratore, int in_cod_prodotto){
+    std::string add_prodotto(Con2DB db1,std::string in_nome_utente_compratore, int in_cod_prodotto){
         
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Aggiunta prodotto al carrello.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
 
         // Caricamento del sessionID.
@@ -42,18 +45,22 @@ public:
         if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere aggiunto il prodotto al carrello";
+            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere aggiunto il prodotto al carrello.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+
+            result = messageLog;
+            return result;
         }
 
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere aggiunto il prodotto al carrello";
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere aggiunto il prodotto al carrello.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -69,9 +76,11 @@ public:
         if (categoriaUtente != "UtenteCompratore"){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere aggiunto il prodotto al carrello";
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere aggiunto il prodotto al carrello.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Controllo se il codice del prodotto da inserire nel carrello esiste nel database
@@ -88,7 +97,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Il prodotto con codice " + std::to_string(in_cod_prodotto) + " non esiste.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
         
         // Controllo se il prodotto è stato già inserito dall'utente nel carrello:
@@ -102,9 +113,10 @@ public:
         
         for (int i = 0; i < rows; i++)
         {
-            printf("Entrato nel for.\n");
+            // Recupero il codice del prodotto.
             codProdotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
-            // Se il codice del prodotto i-esimo è uguale a quello del prodotto che l'utente vuole inserire, il prodotto già è presente nel carrello
+
+            // Se il codice del prodotto (del carrello) i-esimo è uguale a quello del prodotto che l'utente vuole inserire, il prodotto già è presente nel carrello
             if (codProdotto == in_cod_prodotto){
                 // Il prodotto è già stato inserito, perciò ne aumentiamo la quantità:
                 // Prima carichiamo la quantità precedente:
@@ -113,7 +125,11 @@ public:
                 sprintf(sqlcmd, "SELECT quantitàProd FROM Carrello WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", in_nome_utente_compratore.c_str(),in_cod_prodotto);
                 PGresult *res1 = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res1);
-                quantitàPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
+
+                // Se il numero di righe del risultato della query è 1, allora piò essere recuperata la quantità del prodotto nel carrello dell'utente.
+                if (rows == 1){
+                    quantitàPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
+                }
 
                 // Aumenta la quantità del prodotto da inserire
                 quantitàPrecedente = quantitàPrecedente + 1;
@@ -142,7 +158,7 @@ public:
         }
      
 
-        // Controlliamo se il prodotto non è nel carrello e dobbiamo inserirlo lo inseriamo per la prima volta 
+        // Controlliamo se il prodotto non è nel carrello e dobbiamo inserirlo, lo inseriamo per la prima volta 
         if (trovato == false){
             // Inseriamo il prodotto per la prima volta nel carrello:
             sprintf(sqlcmd, "INSERT INTO Carrello (nome_utente_compratore, codProdotto, quantitàProd) VALUES ('%s', '%d', '%d')", in_nome_utente_compratore.c_str(), in_cod_prodotto, 1);
@@ -160,18 +176,21 @@ public:
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
            
-    return;
+    result = messageLog;
+    return result;
     }
 
 
     // Metodo per rimuovere un prodotto dal carrello dato il nome dell'utente e il codice del prodotto.
-    void remove_prodotto(Con2DB db1,std::string in_nome_utente_compratore, int codProdotto){
+    std::string remove_prodotto(Con2DB db1,std::string in_nome_utente_compratore, int codProdotto){
         
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione prodotto dal carrello.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
 
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         std::string sessionID = "";
@@ -186,9 +205,11 @@ public:
         if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimosso il prodotto dal carrello";
+            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimosso il prodotto dal carrello.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -197,7 +218,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere rimosotto il prodotto dal carrello.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -213,9 +236,11 @@ public:
         if (categoriaUtente != "UtenteCompratore"){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere aggiunto il prodotto al carrello";
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere rimosso il prodotto dal carrello";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -232,10 +257,11 @@ public:
 
             // Log
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Il prodotto con codice "  + std::to_string(codProdotto) + " da eliminare non esiste";
+            messageLog = "Il prodotto con codice "  + std::to_string(codProdotto) + " da eliminare non esiste.";
             InsertToLogDB(db1, "ERROR", messageLog , sessionID, nomeRequisito, statoReq);
             
-            return;
+            result = messageLog;
+            return result;
         }
 
         // Se il numero di righe del risultato della query è 1, allora esiste il prodotto da eliminare e lo eliminiamo
@@ -250,7 +276,9 @@ public:
             messageLog = "Rimozione del prodotto con il codice " + std::to_string(codProdotto) + " dal carrello di " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
-    return;
+    
+    result = messageLog;
+    return result;
     }
 
 

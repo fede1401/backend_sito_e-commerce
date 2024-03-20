@@ -31,7 +31,7 @@ public:
     }
 
     // Metodo per effettuare la registrazione di un utente trasportatore dati tutti i campi di input.
-    void effettuaRegistrazione(Con2DB db1,
+    std::string effettuaRegistrazione(Con2DB db1,
                                std::string in_nome_utente, std::string in_categoria, std::string in_nome, std::string in_cognome,
                                std::string sessionID,
                                std::string in_numero_telefono, std::string in_email,
@@ -47,39 +47,39 @@ public:
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
 
-        // Controllo se il sessionID è univoco.
-        // bool resultSession = check_sessionID(db1, nomeRequisito, statoReq, sessionID);
-        // if (resultSession == false)
-        // {
-        //     return;
-        // }
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Controllo che il nome utente sia univoco con gli altri utenti.
         bool resultUsername = check_nome_utente_univoco(db1, in_nome_utente, nomeRequisito, statoReq, sessionID);
         if (resultUsername == false)
         {
-            return;
+            result = "Il nome utente non è univoco, la registrazione non è andata a buon fine.";
+            return result;
         }
 
         // Controllo che l'email sia univoca
         bool resultEmailUn = check_email_univoca(db1, in_email, nomeRequisito, statoReq, sessionID);
         if (resultEmailUn == false)
         {
-            return;
+            result = "L'email non è univoca, la registrazione non è andata a buon fine.";
+            return result;
         }
 
         // Controllo se la mail contiene il carattere "@".
         bool resultEmail = check_email(db1, in_email, nomeRequisito, statoReq, sessionID);
         if (resultEmail == false)
         {
-            return;
+            result = "L'email non contiene il carattere -@-";
+            return result;
         }
 
         // Controllo se la password rispetta i criteri: lunghezza di almeno 8, almeno una lettere maiuscola, un numero e un carattere speciale.
         bool resultPassw = check_password(db1, in_password, in_conferma_password, nomeRequisito, statoReq, sessionID);
         if (resultPassw == false)
         {
-            return;
+            result = "La password non rispetta i criteri definiti.";
+            return result;
         }
 
         // Controllo se la password data in input è uguale alla conferma password.
@@ -89,7 +89,9 @@ public:
 
             InsertToLogDB(db1, "ERROR", "Le password non corrispondono", session_id, nomeRequisito, statoReq);
             std::cout << "Errore: Le password non corrispondono." << std::endl;
-            return;
+            
+            result = "I valori del campo -password- e -conferma password- non sono uguali";
+            return result;
         }
 
         // Se tutti i check hanno dato buoni risultati, possiamo aggiungere l'utente al database:
@@ -116,7 +118,8 @@ public:
         // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
         *this = UtenteTrasportatore(in_nome_utente, session_id, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, stato, in_dittaSped, disponibilità);
 
-        return;
+        result = "Registrazione utente trasportatore : " + in_nome_utente + " avvenuta con successo.";
+        return result;
     }
 
     // Metodo per verificare se un'email è valida per la registrazione di un utente.
@@ -309,17 +312,40 @@ public:
 
 
     // Metodo utilizzato per effettuare il login di un utente dato il suo nome utente, la sua password e il sessionID che sarà creato dal server.
-    void effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw, std::string sessionID) override
+    std::string effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw, std::string sessionID) override
     {
         try
         {
-            // Chiamata al metodo della classe base
-            Utente::effettua_login(db1, input_nome_utente, input_passw, sessionID);
-
             // Definizione di alcune variabili per il logging
             std::string nomeRequisito = "Login utente trasportatore.";
             statoRequisito statoReq = statoRequisito::Wait;
             std::string messageLog = "";
+
+            // Dichiarazione variabile per il risultato dell'operazione.
+            std::string result = "";
+
+            // Controllo prima di eseguire il login della superclasse se l'utente è un utenteTrasportatore, altrimenti non può essere esguito il login.
+            sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", input_nome_utente.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            if (rows == 1){
+                std::string categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+
+                PQclear(res);
+                if (categoria != "UtenteTrasportatore"){
+                    // Log dell'errore e uscita dalla funzione
+                    statoReq = statoRequisito::NotSuccess;
+                    messageLog = "Utente " + input_nome_utente + " è di un altra categoria, non un utente trasportatore, non può essere effettuato il login.";
+                    InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+                    
+                    result = messageLog;
+                    return result;
+                } 
+            }
+
+
+            // Chiamata al metodo della classe base
+            Utente::effettua_login(db1, input_nome_utente, input_passw, sessionID);
 
             sprintf(sqlcmd, "SELECT * FROM UtenteTrasportatore WHERE nome_utente_trasportatore = '%s'", input_nome_utente.c_str());
 
@@ -333,10 +359,6 @@ public:
 
                 this->disponibilità = disponibilità;
                 this->ditta_spedizione = ditta_spedizione;
-
-                printf(this->ditta_spedizione.c_str());
-                printf("\n");
-                //*this = UtenteTrasportatore(nome_utente, categoria, nome, cognome, numero_telefono, password, email, session_id, ditta_spedizione, stato, disponibilità);
             }
         
             // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
@@ -344,30 +366,35 @@ public:
             {
                 // Log dell'errore e uscita dalla funzione
                 statoReq = statoRequisito::NotSuccess;
-                messageLog = "Utente " + input_nome_utente + " non trovato.";
+                messageLog = "Utente " + input_nome_utente + " è di un altra categoria, non un utente trasportatore.";
                 InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-                return;
+                
+                result = messageLog;
+                return result;
             }
 
             PQclear(res);
 
-            return;
+            return "Login utente fornitore avvenuto con successo";
         }
         catch(const std::exception& e)
         {
             std::cerr << e.what() << '\n';
-            return;
+            return e.what();
         }
     }
 
     // Metodo utilizzato per aggiornare la ditta di spedizione di un utente trasportatore nel database
-    void aggiornaNomeDittaSpedizione(Con2DB db1, std::string input_nome_utente, std::string nuovaDittaSpedizione)
+    std::string aggiornaNomeDittaSpedizione(Con2DB db1, std::string input_nome_utente, std::string nuovaDittaSpedizione)
     {
 
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Aggiornamento ditta Spedizione.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         std::string sessionID = "";
@@ -388,7 +415,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + input_nome_utente + " , poichè non è stato registrato, non può essere aggiornata la ditta di spedizione .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -398,7 +427,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + input_nome_utente + ", utente non loggato, non può essere aggiornata la ditta di spedizione.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che l'utente si tratti di un utente trasportatore:
@@ -419,7 +450,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + input_nome_utente + " non è un utente trasportatore, perciò non può essere aggiornato il nome della ditta di spedizione.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Aggiornamento del nome della ditta di spdeizione dell'utente trasportatore nel database
@@ -433,7 +466,9 @@ public:
         messageLog = "Aggiornamento ditta spedizione per utente: " + input_nome_utente;
         InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
-        return;
+        
+        result = messageLog;
+        return result;
     }
 };
 

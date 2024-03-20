@@ -43,10 +43,8 @@ public:
     }
 
     // Metodo utilizzato per effettuare il login di un utente dato il suo nome utente, la sua password e il sessionID che sarà creato dal server.
-    virtual void effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw, std::string sessionID)
+    virtual std::string effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw, std::string sessionID)
     {
-        printf("\n\n\n\n\nLOGIN Eseguito una volta.\n\n\n\n\n");
-
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Login utente.";
         statoRequisito statoReq = statoRequisito::Wait;
@@ -140,7 +138,7 @@ public:
 
             PQclear(res);
 
-            return;
+            return "Utente già connesso";
         }
 
         // else :Se il valore dell'attributo "stato" è uguale a 0, allora l'utente NON è connesso e dobbiamo effettuare il login
@@ -264,17 +262,20 @@ public:
         printf("\n");
 
 
-    return;
+    return "Login avvenuto con successo";
     }
 
 
     // Metodo utilizzato per effettuare il logout di un utente dato il suo nome utente.
-    void effettua_logout(Con2DB db1, std::string nomeUtenteLogout)
+    std::string effettua_logout(Con2DB db1, std::string nomeUtenteLogout)
     {
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Logout utente.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID a seconda della categoria dell'utente.
         std::string sessionID = "";
@@ -296,7 +297,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + nomeUtenteLogout + " , poichè non è stato registrato, non si può effettuare il logout .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -306,7 +309,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + nomeUtenteLogout + ", utente non loggato, non può essere effettuato il logout.";
             InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può effettuare il logout .", sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Controlliamo se l'utente è già loggato, che varia a seconda del valore dell'attributo "stato" all'interno del db.
@@ -331,7 +336,9 @@ public:
                 InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
                 std::cout << "Errore: L'utente è già disconnesso" << std::endl;
-                return;
+                
+                result = messageLog;
+                return result;
             }
 
             // Se il valore dell'attributo "stato" è uguale a 1, allora l'utente è connesso e dobbiamo effettuare il logout.
@@ -357,7 +364,8 @@ public:
 
                 // Log
                 statoReq = statoRequisito::Success;
-                InsertToLogDB(db1, "INFO", "Aggiornamento sessionID", "", nomeRequisito, statoReq);
+                messageLog = "Aggiornamento sessionID causato dalla disconnessione di Utente " + nomeUtenteLogout;
+                InsertToLogDB(db1, "INFO", messageLog, "", nomeRequisito, statoReq);
             }
         }
 
@@ -370,18 +378,26 @@ public:
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
-            return;
+            
+            result = messageLog;
+            return result;
         }
-        return;
+        
+        result = messageLog;
+        return result;
     }
 
+
     // Metodo utilizzato per effettuare l'eliminazione di un utente dato il suo nome utente.
-    void elimina_profilo(Con2DB db1, std::string nomeUtenteDaEliminare)
+    std::string elimina_profilo(Con2DB db1, std::string nomeUtenteDaEliminare)
     {
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Eliminazione profilo.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         std::string sessionID = "";
@@ -403,7 +419,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + nomeUtenteDaEliminare + " , poichè non è stato registrato, non si può eliminare il profilo .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -413,7 +431,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + nomeUtenteDaEliminare + ", utente non loggato, non si può eliminare il profilo .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Eliminazione utente compratore
@@ -426,16 +446,20 @@ public:
         messageLog = "Eliminazione profilo utente " + nomeUtenteDaEliminare;
         InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
-        return;
+        result = messageLog;
+        return result;
     }
 
     // Metodo utilizzato per effettuare l'aggiornamento del numero di telefono di un utente.
-    void aggiornaNumeroDiTelefono(Con2DB db1, std::string input_nome_utente, std::string nuovoNumeroTelefono)
+    std::string aggiornaNumeroDiTelefono(Con2DB db1, std::string input_nome_utente, std::string nuovoNumeroTelefono)
     {
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Aggiornamento numero di telefono.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID a seconda della categoria dell'utente.
         std::string sessionID = "";
@@ -457,7 +481,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + input_nome_utente + " , poichè non è stato registrato, non si può aggiornare il numero di telefono .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -467,7 +493,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + input_nome_utente + ", utente non loggato, non può essere aggiornato il numero di telefono";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Aggiornamento del numero di telefono dell'utente compratore.
@@ -480,11 +508,13 @@ public:
         messageLog = "Aggiornamento numero di telefono : " + nuovoNumeroTelefono + " per utente: " + input_nome_utente;
         InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
-        return;
+        result = messageLog;
+        return result;
     }
 
+
     // Metodo utilizzato per effettuare l'aggiornamento della password di un utente.
-    void aggiornaPassword(Con2DB db1, std::string input_nome_utente, std::string vecchiaPassw, std::string nuovaPassw)
+    std::string aggiornaPassword(Con2DB db1, std::string input_nome_utente, std::string vecchiaPassw, std::string nuovaPassw)
     {
         std::string passwDB = "";
 
@@ -492,6 +522,9 @@ public:
         std::string nomeRequisito = "Aggiornamento password.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID a seconda della categoria dell'utente.
         std::string sessionID = "";
@@ -513,7 +546,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + input_nome_utente + " , poichè non è stato registrato, non si può aggiornare la password .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -523,7 +558,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + input_nome_utente + ", utente non loggato, non può essere aggiornata la password.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che la vecchiaPassword inserita dall'utente è uguale a quella nel database relativa all'utente che vuole aggiornarla:
@@ -548,7 +585,9 @@ public:
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
             std::cout << "Errore: La password attuale inserita non è corretta" << std::endl;
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Se la password del db è uguale alla password inserita dall'utente allora può essere aggiornata quest'ultima
@@ -567,7 +606,8 @@ public:
                 InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
                 std::cout << "Errore: La nuova passowrd deve contenere almeno 8 caratteri." << std::endl;
 
-                return;
+                result = messageLog;
+                return result;
             }
 
             // Verifica se la password contiene almeno un carattere maiuscolo, un numero e un carattere speciale
@@ -602,7 +642,8 @@ public:
                 messageLog = "La nuova password inserita " + nuovaPassw + " deve contenere almeno un carattere maiuscolo.";
                 InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
-                return;
+                result = messageLog;
+                return result;
             }
 
             // Verifica se la password contiene almeno un numero
@@ -615,7 +656,8 @@ public:
                 messageLog = "La nuova password inserita " + nuovaPassw + " deve contenere almeno un numero.";
                 InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
-                return;
+                result = messageLog;
+                return result;
             }
 
             if (!hasSpecialChar)
@@ -627,7 +669,8 @@ public:
                 messageLog = "La nuova password inserita " + nuovaPassw + " deve contenere almeno un carattere speciale.";
                 InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
-                return;
+                result = messageLog;
+                return result;
             }
 
             // Aggiornamento "password" UtenteCompratore
@@ -640,7 +683,8 @@ public:
             messageLog = "Aggiornamento password (nuova password inserita: " + nuovaPassw + " ) per utente: " + input_nome_utente;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
-        return;
+        result = messageLog;
+        return result;
     }
 
 

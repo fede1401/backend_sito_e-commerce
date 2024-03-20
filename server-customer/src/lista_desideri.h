@@ -20,13 +20,15 @@ public:
 
 
     // Metodo per aggiungere un prodotto alla lista desideri dato il nome dell'utente e il codice del prodotto.
-    void add_prodotto(Con2DB db1, std::string in_nome_utente_compratore, int in_codProdotto){
+    std::string add_prodotto(Con2DB db1, std::string in_nome_utente_compratore, int in_codProdotto){
                 
         // Definizione di alcune variabili per il logging        
         std::string nomeRequisito = "Aggiunta prodotto alla lista desideri.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
 
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";            
     
         // Caricamento del sessionID.
         std::string sessionID = "";
@@ -41,18 +43,22 @@ public:
         if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere aggiunto il prodotto alla lista desideri";
+            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere aggiunto il prodotto alla lista desideri.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         } 
 
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere aggiunto il prodotto alla lista desideri";
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere aggiunto il prodotto alla lista desideri.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che l'utente si tratti di un utente compratore:
@@ -67,9 +73,11 @@ public:
         if (categoriaUtente != "UtenteCompratore"){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere aggiunto il prodotto alla lita desideri";
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere aggiunto il prodotto alla lita desideri.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Controllo se il codice del prodotto da inserire nella lista desideri esiste nel database
@@ -86,7 +94,9 @@ public:
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
             std::cout << "Il prodotto non esiste!" << std::endl;
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Controllo se il prodotto è stato già inserito dall'utente nella lista desideri:
@@ -100,8 +110,10 @@ public:
 
         for (int i = 0; i < rows; i++)
         {
+            // Recupero del codice del prodotto.
             codProdotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
-            // Se il codice del prodotto i-esimo è uguale a quello del prodotto che l'utente vuole inserire, il prodotto già è presente nella lista desideri
+
+            // Se il codice del prodotto (nella lista desideri) i-esimo è uguale a quello del prodotto che l'utente vuole inserire, il prodotto già è presente nella lista desideri
             if (codProdotto == in_codProdotto){
                 // Il prodotto è già stato inserito, perciò ne aumentiamo la quantità:
                 // Prima carichiamo la quantità precedente:
@@ -110,7 +122,12 @@ public:
                 sprintf(sqlcmd, "SELECT quantitàProd FROM ListaDesideri WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", in_nome_utente_compratore.c_str(),in_codProdotto);
                 PGresult *res1 = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res1);
-                quantitàPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
+
+                // Se il numero di righe del risultato della query è 1, allora può essere recuperata la quantità del prodotto nella lista desideri dell'utente.
+                if (rows == 1){
+                    quantitàPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
+                }
+                
                 PQclear(res1);
 
                 // Aumenta la quantità del prodotto da inserire
@@ -134,7 +151,6 @@ public:
                 // Interrompi il loop dopo aver aggiornato il prodotto
                 break;
             }
-            //break;
 
         }
          
@@ -156,17 +172,21 @@ public:
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
            
-    return;      
+    result = messageLog;
+    return result;  
     }
 
 
     // Metodo per rimuovere un prodotto dalla lista desideri dato il nome dell'utente e il codice del prodotto.
-    void remove_prodotto(Con2DB db1, std::string in_nome_utente_compratore,  int in_cod_prodotto){
+    std::string remove_prodotto(Con2DB db1, std::string in_nome_utente_compratore,  int in_cod_prodotto){
         
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione prodotto dalla lista dei desideri.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
 
         // Caricamento del sessionID.
@@ -182,17 +202,22 @@ public:
         if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimosso il prodotto dalla lista desideri";
+            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimosso il prodotto dalla lista desideri.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         } 
 
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può essere rimosso il prodotto dalla lista .", sessionID, nomeRequisito, statoReq);
-            return;
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere rimosso il prodotto dalla lista desideri.";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che l'utente si tratti di un utente compratore:
@@ -207,9 +232,11 @@ public:
         if (categoriaUtente != "UtenteCompratore"){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere rimosso il prodotto dalla lista desideri";
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere rimosso il prodotto dalla lista desideri.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+           
+            result = messageLog;
+            return result;
         }
 
         // Controlliamo se il codice del prodotto esiste all'interno della lista desideri dell'utente compratore
@@ -227,7 +254,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Il prodotto con codice " +  std::to_string(in_cod_prodotto)  + " non esiste";
             InsertToLogDB(db1, "ERROR", messageLog , sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Se il numero di righe del risultato della query è > 1, allora esiste il prodotto da eliminare e lo eliminiamo
@@ -242,7 +271,9 @@ public:
             messageLog = "Rimozione del prodotto con codice " +  std::to_string(in_cod_prodotto)  + " dalla lista desideri per utente: " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
-    return;
+    
+    result = messageLog;
+    return result;
     }
 };
 

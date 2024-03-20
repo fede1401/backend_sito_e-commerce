@@ -49,7 +49,7 @@ public:
     }
 
     // Metodo per effettuare la registrazione di un utente compratore dati tutti i campi di input.
-    void effettuaRegistrazione(Con2DB db1,
+    std::string effettuaRegistrazione(Con2DB db1,
                                std::string in_nome_utente, std::string in_categoria, std::string in_nome, std::string in_cognome,
                                std::string sessionID,
                                std::string in_numero_telefono, std::string in_email,
@@ -60,44 +60,45 @@ public:
 
         int stato = 1;
 
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
+
+
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Registrazione utente compratore.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
 
-        // Controllo se il sessionID è univoco.
-        // bool resultSession = check_sessionID(db1, nomeRequisito, statoReq, sessionID);
-        // if (resultSession == false)
-        // {
-        //     return;
-        // }
-
         // Controllo che il nome utente sia univoco con gli altri utenti.
         bool resultUsername = check_nome_utente_univoco(db1, in_nome_utente, nomeRequisito, statoReq, sessionID);
         if (resultUsername == false)
         {
-            return;
+            result = "Il nome utente non è univoco, la registrazione non è andata a buon fine.";
+            return result;
         }
 
         // Controllo che l'email sia univoca
         bool resultEmailUn = check_email_univoca(db1, in_email, nomeRequisito, statoReq, sessionID);
         if (resultEmailUn == false)
         {
-            return;
+            result = "L'email non è univoca, la registrazione non è andata a buon fine.";
+            return result;
         }
 
         // Controllo se la mail contiene il carattere "@".
         bool resultEmail = check_email(db1, in_email, nomeRequisito, statoReq, sessionID);
         if (resultEmail == false)
         {
-            return;
+            result = "L'email non contiene il carattere -@-";
+            return result;
         }
 
         // Controllo se la password rispetta i criteri: lunghezza di almeno 8, almeno una lettere maiuscola, un numero e un carattere speciale.
         bool resultPassw = check_password(db1, in_password, in_conferma_password, nomeRequisito, statoReq, sessionID);
         if (resultPassw == false)
         {
-            return;
+            result = "La password non rispetta i criteri definiti.";
+            return result;
         }
 
         // Controllo se la password data in input è uguale alla conferma password.
@@ -109,7 +110,9 @@ public:
             InsertToLogDB(db1, "ERROR", messageLog, session_id, nomeRequisito, statoReq);
 
             std::cout << "Errore: Le password non corrispondono." << std::endl;
-            return;
+
+            result = "I valori del campo -password- e -conferma password- non sono uguali";
+            return result;
         }
 
 
@@ -144,7 +147,8 @@ public:
         // Riempio il costruttore dell'utente compratore con i campi dati in input al metodo effettua registrazione:
         *this = UtenteCompratore(in_nome_utente, session_id, in_categoria, in_nome, in_cognome, in_numero_telefono, in_password, in_email, stato, formatted_date, in_via_residenza, in_numero_civico, in_CAP, in_città_residenza);
 
-        return;
+        result = "Registrazione utente compratore : " + in_nome_utente + " avvenuta con successo.";
+        return result;
     }
 
 
@@ -362,12 +366,16 @@ public:
     }
 
     // Metodo utilizzato per aggiornare l'indirizzo di residenza di un utente compratore nel database
-    void aggiornaResidenza(Con2DB db1, std::string input_nome_utente, std::string nuovaViaResidenza, std::string nuovoNumCiv, std::string nuovoCAP, std::string nuovaCittaResidenza)
+    std::string aggiornaResidenza(Con2DB db1, std::string input_nome_utente, std::string nuovaViaResidenza, std::string nuovoNumCiv, std::string nuovoCAP, std::string nuovaCittaResidenza)
     {
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Aggiornamento residenza.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
+
 
         std::string sessionID = "";
 
@@ -389,7 +397,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + input_nome_utente + " , poichè non è stato registrato, non può essere aggiornata la residenza .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+
+            result = messageLog;
+            return result;
         }
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -399,7 +409,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + input_nome_utente + ", utente non loggato, non può essere aggiornata la residenza.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che l'utente si tratti di un utente compratore:
@@ -416,7 +428,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + input_nome_utente + " non è un utente compratore, perciò non può essere aggiornata la residenza.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+
+            result = messageLog;
+            return result;
         }
 
         // Aggiornamento dell'indirizzo di residenza dell'utente compratore dato in input nel database
@@ -430,22 +444,47 @@ public:
         messageLog = "Aggiornata residenza utente compratore: " + input_nome_utente;
         InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
-        return;
+        result = messageLog;
+        return result;
     }
 
 
     // Metodo utilizzato per effettuare il login di un utente dato il suo nome utente, la sua password e il sessionID che sarà creato dal server.
-    void effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw, std::string sessionID) override
+    std::string effettua_login(Con2DB db1, std::string input_nome_utente, std::string input_passw, std::string sessionID) override
     {
         try
         {
-            // Chiamata al metodo della classe base
-            Utente::effettua_login(db1, input_nome_utente, input_passw, sessionID);
-
             // Definizione di alcune variabili per il logging
             std::string nomeRequisito = "Login utente compratore.";
             statoRequisito statoReq = statoRequisito::Wait;
             std::string messageLog = "";
+
+            // Dichiarazione variabile per il risultato dell'operazione.
+            std::string result = "";
+
+            // Controllo prima di eseguire il login della superclasse se l'utente è un utenteCompratore, altrimenti non può essere esguito il login.
+            sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", input_nome_utente.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            if (rows == 1){
+                std::string categoria = PQgetvalue(res, 0, PQfnumber(res, "categoriaUtente"));
+
+                PQclear(res);
+                if (categoria != "UtenteCompratore"){
+                    // Log dell'errore e uscita dalla funzione
+                    statoReq = statoRequisito::NotSuccess;
+                    messageLog = "Utente " + input_nome_utente + " è di un altra categoria, non un utente compratore, non può essere effettuato il login.";
+                    InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+                    
+                    result = messageLog;
+                    return result;
+                } 
+            }
+            
+
+            // Chiamata al metodo della classe base
+            Utente::effettua_login(db1, input_nome_utente, input_passw, sessionID);
+
 
             sprintf(sqlcmd, "SELECT * FROM UtenteCompratore WHERE nome_utente_compratore = '%s'", input_nome_utente.c_str());
             res = db1.ExecSQLtuples(sqlcmd);
@@ -471,19 +510,21 @@ public:
             {
                 // Log dell'errore e uscita dalla funzione
                 statoReq = statoRequisito::NotSuccess;
-                messageLog = "Utente " + input_nome_utente + " non trovato.";
+                messageLog = "Utente " + input_nome_utente + " è di un altra categoria, non un utente compratore.";
                 InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-                return;
+                
+                result = messageLog;
+                return result;
             }
 
             PQclear(res);
-            return;
+            return "Login utente compratore avvenuto con successo";
         }
 
         catch(const std::exception& e)
         {
             std::cerr << e.what() << '\n';
-            return;
+            return e.what();
         }
     }
 

@@ -34,7 +34,7 @@ public:
 
 
     // Metodo utilizzato per permettere ad un utente compratore di effettuare una recensione di un ordine. 
-    void effettuaRecensione(Con2DB db1, std::string in_nome_utente_compratore, int idOrdine, std::string descrizione, votoStelle voto_stella)
+    std::string effettuaRecensione(Con2DB db1, std::string in_nome_utente_compratore, int idOrdine, std::string descrizione, votoStelle voto_stella)
     {
         std::string sessionID = "";
         std::string stato_spedizione;
@@ -43,6 +43,9 @@ public:
         std::string nomeRequisito = "Effettuazione recensione.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
@@ -58,7 +61,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere effettuata la recensione .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }   
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -67,7 +72,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere effettuata la recensione.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che l'utente si tratti di un utente compratore:
@@ -84,7 +91,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere effettuata la recensione.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -119,7 +128,9 @@ public:
                         statoReq = statoRequisito::NotSuccess;
                         messageLog = "Utente che sta cercando di effettuare la recensione ( " + in_nome_utente_compratore + ") non corrisponde a quello dell ordine della recensione ( " + nome_utente_compratore+ ").";
                         InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-                        return;
+                        
+                        result = messageLog;
+                        return result;
                     }
 
                     // Rendiamo il voto in stelle in stringa così che posso aggiungerlo al database.
@@ -161,7 +172,9 @@ public:
                     statoReq = statoRequisito::NotSuccess;
                     messageLog = "Utente " + in_nome_utente_compratore + " non trovato";
                     InsertToLogDB(db1, "WARNING", messageLog , sessionID, nomeRequisito, statoReq);
-                    return;
+                    
+                    result = messageLog;
+                    return result;
                 }
             }
 
@@ -174,7 +187,9 @@ public:
                 statoReq = statoRequisito::NotSuccess;
                 messageLog = "Ordine con codice " + std::to_string(idOrdine) + " spedito, ma non arrivato, perciò non può essere effettuata la recensione";
                 InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
-                return;
+                
+                result = messageLog;
+                return result;
             }
         }
 
@@ -187,16 +202,20 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non trovato";
             InsertToLogDB(db1, "WARNING", messageLog , sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
+    
     std::cout << "Recensione effettuata" << std::endl;
-    return;
+    result = messageLog;
+    return result;
     }
 
 
 
     // Funzione utilizzata per permettere all'utente compratore di rimuovere una recensione dal database tramite il suo id
-    void remove_recensione(Con2DB db1, std::string in_nome_utente_compratore, int idRecensione)
+    std::string remove_recensione(Con2DB db1, std::string in_nome_utente_compratore, int idRecensione)
     {
         std::string sessionID = "";
 
@@ -204,6 +223,9 @@ public:
         std::string nomeRequisito = "Rimozione recensione.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
+
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
 
         // Caricamento del sessionID.
@@ -220,7 +242,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimossa la recensione .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }   
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -230,7 +254,8 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere rimossa la recensione.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che l'utente si tratti di un utente compratore:
@@ -247,7 +272,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere rimossa la recensione.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Recupero del nome dell'utente compratore che desidera rimuovere la recensione effettuata
@@ -270,7 +297,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Utente che sta cercando di effettuare la recensione ( " + in_nome_utente_compratore + ") non corrisponde a quello dell ordine della recensione ( " + nome_utente_compratore+ ").";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         
@@ -289,7 +318,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "La recensione con id " + std::to_string(idRecensione) + " non esiste";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Se invece il numero di righe del risultato della query è 1, allora la recensione può essere eliminata.
@@ -306,7 +337,8 @@ public:
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
     
-    return;
+    result = messageLog;
+    return result;
     }
 
 

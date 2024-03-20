@@ -53,13 +53,16 @@ public:
 
 
     // Metodo utilizzato per visualizzare gli ordini effettuati dall'utente compratore preso in input.
-    void visione_ordini_effettuati(Con2DB db1, std::string nome_utente_compratore)
+    std::string visione_ordini_effettuati(Con2DB db1, std::string nome_utente_compratore)
     {
 
       // Definizione di alcune variabili per il logging
       std::string nomeRequisito = "Visione ordini effettuati.";
       statoRequisito statoReq = statoRequisito::Wait;
       std::string messageLog = "";
+
+      // Dichiarazione variabile per il risultato dell'operazione.
+      std::string result = "";
 
 
       // Caricamento del sessionID.
@@ -77,7 +80,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + nome_utente_compratore + " , poichè non è stato registrato, non può visionare gli ordini .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
       }  
 
       // Verifica se l'utente è loggato e ha una sessionID valida
@@ -86,7 +91,9 @@ public:
           statoReq = statoRequisito::NotSuccess;
           messageLog = "Non esiste una sessionID per " + nome_utente_compratore + ", utente non loggato, non possono essere visionati gli ordini effettuati.";
           InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-          return;
+          
+          result = messageLog;
+          return result;
       }
 
 
@@ -104,7 +111,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + nome_utente_compratore + " non è un utente compratore, perciò non possono essere visionati gli ordini effettuati.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -145,12 +154,13 @@ public:
       messageLog = "Visione degli ordini da parte dell utente " + nome_utente_compratore;
       InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
-      return;
+      result = messageLog;
+      return result;
     }
 
 
     // Metodo utilizzato per annullare un ordine di un utente compratore tramite l'id dell'ordine.
-    void annulla_ordine(Con2DB db1, std::string in_nome_utenteCompratore, int idOrdine)
+    std::string annulla_ordine(Con2DB db1, std::string in_nome_utenteCompratore, int idOrdine)
     {
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Annullamento ordine.";
@@ -163,6 +173,8 @@ public:
         std::string nome_utente_compratore;
         std::string sessionID = "";
 
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utenteCompratore.c_str());
@@ -178,7 +190,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utenteCompratore + " , poichè non è stato registrato, non può essere annullato l ordine .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }    
 
 
@@ -188,7 +202,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utenteCompratore + ", utente non loggato, non può essere annullato l ordine.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
         // Verifichiamo che l'utente si tratti di un utente compratore:
@@ -205,7 +221,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utenteCompratore + " non è un utente compratore, perciò non può essere annullato l ordine";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -226,10 +244,13 @@ public:
 
           // Log
           statoReq = statoRequisito::NotSuccess;
-          InsertToLogDB(db1, "ERROR", "Nessune utente compratore ha effettuato l ordine da annullare.", sessionID, nomeRequisito, statoReq);
+          messageLog = "Nessune utente compratore ha effettuato l ordine da annullare.";
+          InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
           std::cout << "Nessun utente compratore ha effettuato l'ordine da annullare!" << std::endl;
-          return;
+          
+          result = messageLog;
+          return result;
         }
 
         // Confrontiamo il nome dell'utente compratore che vuole annullare l'ordine con l'utente associato all'id dell'ordine.
@@ -240,7 +261,9 @@ public:
           InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
           std::cout << "L'utente compratore dell'ordine non corrisponde a chi vuole annullare l'ordine" << std::endl;
-          return;
+          
+          result = messageLog;
+          return result;
         }
 
     
@@ -253,7 +276,9 @@ public:
           res = db1.ExecSQLtuples(sqlcmd);
           rows = PQntuples(res);
           
-          if (rows==1){
+          // Se il numero di righe del risultato della query è 1, possiamo recuperare lo stato dell'ordine con l'id specificato.
+          if (rows==1)
+          {
               stato_ordine = PQgetvalue(res, 0, PQfnumber(res, "statoOrdine"));
               PQclear(res);
 
@@ -283,11 +308,13 @@ public:
                   statoReq = statoRequisito::NotSuccess;
                   messageLog = "Ordine con codice "+ std::to_string(idOrdine) +" non annullabile perchè già spedito o già annullato. ";
                   InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
-                  return;
+                  
+                  result = messageLog;
+                  return result;
               }
               
           }
-          // Il numero di righe dello stato dell'ordine non è uguale a 1, perciò l'ordine non è stato trovato
+          // Il numero di righe dello stato dell'ordine è 0, perciò l'ordine non è stato trovato.
           if (rows == 0){
             std::cout << "L'ordine non è stato trovato" << std::endl;
 
@@ -295,10 +322,13 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Ordine con codice "+ std::to_string(idOrdine) +" non trovato. ";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+           return result;
           }  
           
-    return;
+    result = messageLog;
+    return result;
     }
     
 

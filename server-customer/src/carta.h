@@ -27,13 +27,15 @@ public:
 
 
     // Funzione per aggiungere una carta di pagamento dato il nome dell'utente, il numero della carta e il cvv.
-    void aggiungi_carta(Con2DB db1, std::string in_nome_utente, std::string in_numeroCarta, std::string in_cvv){
+    std::string aggiungi_carta(Con2DB db1, std::string in_nome_utente, std::string in_numeroCarta, std::string in_cvv){
 
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Aggiunta carta di pagamento.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
 
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         std::string sessionID = "";
@@ -48,9 +50,11 @@ public:
         if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste " + in_nome_utente + " , poichè non è stato registrato, non può essere aggiunta la carta di pagamento";
+            messageLog = "Non esiste " + in_nome_utente + " , poichè non è stato registrato, non può essere aggiunta la carta di pagamento.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         } 
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -59,7 +63,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utente + ", utente non loggato, non può essere aggiunta la carta di pagamento.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -77,24 +83,14 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente + " non è un utente compratore, perciò non può essere aggiunta la carta di pagamento";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
-        // Verifichiamo che il numero di carta sia univoco: NON è necessario, ci potrebbero essere utenti che inseriscono la stessa carta.
-        // sprintf(sqlcmd, "SELECT * FROM Carta WHERE numeroCarta = '%s'", in_numeroCarta.c_str());
-        // res = db1.ExecSQLtuples(sqlcmd);
-        // rows = PQntuples(res);
+        // NON è necessario verificare che ci siano carte con numero di carta univoco, ci potrebbero essere utenti che inseriscono la stessa carta.
 
-        // // Se il numero di righe della query è maggiore o uguale di 1, allora già esistono delle carte di pagamento con il numero univoco
-        // if (rows >= 1){
-        //     // Log dell'errore e uscita dalla funzione
-        //     statoReq = statoRequisito::NotSuccess;
-        //     messageLog = "La carta con il numero " + in_numeroCarta + " non può essere inserita poichè già esiste!";
-        //     InsertToLogDB(db1, "INFO", messageLog , sessionID, nomeRequisito, statoReq);
-        //     return;
-        // }
-
-        // Il nome utente è di un utente compratore e il numero della carta in input è univoco --> possiamo aggiungere la carta di pagamento al database:
+        // Il nome utente è di un utente compratore --> possiamo aggiungere la carta di pagamento al database:
         sprintf(sqlcmd, "INSERT INTO Carta (idCarta, nome_utente_compratore, numeroCarta, cvv) VALUES (DEFAULT, '%s', '%s', '%s')", in_nome_utente.c_str(), in_numeroCarta.c_str(), in_cvv.c_str());
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res); 
@@ -109,18 +105,21 @@ public:
         messageLog = "Inserimento carta di pagamento con il numero " + in_numeroCarta + " per utente compratore " + in_nome_utente;
         InsertToLogDB(db1, "INFO", messageLog , sessionID, nomeRequisito, statoReq);
         
-    return;
+    result = messageLog;
+    return result;
     }
 
 
     // Funzione per rimuovere la carta di pagamento dell'utente compratore con un determinato id di carta.
-    void remove_carta(Con2DB db1, std::string in_nome_utente_compratore, int in_idCarta){
-
+    std::string remove_carta(Con2DB db1, std::string in_nome_utente_compratore, int in_idCarta)
+    {
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione carta di pagamento.";
         statoRequisito statoReq = statoRequisito::Wait;
         std::string messageLog = "";
 
+        // Dichiarazione variabile per il risultato dell'operazione.
+        std::string result = "";
 
         // Caricamento del sessionID.
         std::string sessionID = "";
@@ -136,9 +135,11 @@ public:
         if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimossa la carta di pagamento";
+            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimossa la carta di pagamento.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         } 
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -147,7 +148,9 @@ public:
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere rimossa la carta di pagamento.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -162,10 +165,12 @@ public:
 
         if (categoriaUtente != "UtenteCompratore"){
             // Log dell'errore e uscita dalla funzione
-             statoReq = statoRequisito::NotSuccess;
+            statoReq = statoRequisito::NotSuccess;
             messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere rimossa la carta di pagamento";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
-            return;
+            
+            result = messageLog;
+            return result;
         }
 
 
@@ -174,6 +179,8 @@ public:
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
+
+        // Se il numero di righe del risultato della query è <1, non esiste la carta di pagamento con quell'id.
         if (rows < 1){
             // La carta non esiste nel database, log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
@@ -181,7 +188,8 @@ public:
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             std::cout << "La riga da eliminare non esiste!" << std::endl;
             
-            return;
+            result = messageLog;
+            return result;
         }
         else{
             // La carta esiste nel database, possiamo eliminarla
@@ -194,7 +202,9 @@ public:
             messageLog = "Eliminazione carta di pagamento " + std::to_string (in_idCarta) + " dell utente compratore " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
-    return;
+    
+    result = messageLog;
+    return result;
     }
 
 
