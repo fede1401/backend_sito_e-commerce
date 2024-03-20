@@ -69,15 +69,16 @@ public:
       rows = PQntuples(res);
       // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
       if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));}  
-      PQclear(res);   
-
-      if (rows != 1){
+      PQclear(res);  
+       
+      // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+      if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + nome_utente_compratore + " , poichè non è stato registrato, non può visionare gli ordini .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
-        }               
+      }  
 
       // Verifica se l'utente è loggato e ha una sessionID valida
       if (sessionID == ""){
@@ -169,15 +170,16 @@ public:
         rows = PQntuples(res);
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));}  
-        PQclear(res);   
-
-        if (rows != 1){
+        PQclear(res); 
+      
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utenteCompratore + " , poichè non è stato registrato, non può essere annullato l ordine .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
-        }               
+        }    
 
 
         // Verifica se l'utente è loggato e ha una sessionID valida
@@ -218,8 +220,8 @@ public:
             PQclear(res);
         }
         
-        // Se il numero di righe è diverso da 1, l'utente non esiste.
-        else{
+        // Se il numero di righe è 0, l'utente non esiste.
+        if (rows == 0){
           PQclear(res);
 
           // Log
@@ -284,17 +286,18 @@ public:
                   return;
               }
               
-            }
-            // Il numero di righe dello stato dell'ordine non è uguale a 1, perciò l'ordine non è stato trovato
-            else{
-                std::cout << "L'ordine non è stato trovato" << std::endl;
+          }
+          // Il numero di righe dello stato dell'ordine non è uguale a 1, perciò l'ordine non è stato trovato
+          if (rows == 0){
+            std::cout << "L'ordine non è stato trovato" << std::endl;
 
-                // Log
-                statoReq = statoRequisito::NotSuccess;
-                messageLog = "Ordine con codice "+ std::to_string(idOrdine) +" non trovato. ";
-                InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-                return;
-            }  
+            // Log
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Ordine con codice "+ std::to_string(idOrdine) +" non trovato. ";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+          }  
+          
     return;
     }
     

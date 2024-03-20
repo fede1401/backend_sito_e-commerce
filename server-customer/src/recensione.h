@@ -52,7 +52,8 @@ public:
         if (rows == 1){  sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id")); }
         PQclear(res);
 
-        if (rows != 1){
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere effettuata la recensione .";
@@ -152,13 +153,13 @@ public:
                 }
 
                 // Se non esiste nessun utente associato all'id dell'ordine , allora l'ordine non esiste.
-                else
+                if (rows == 0)
                 {
-                    std::cout << "L'ordine non è stato trovato!" << std::endl;
+                    std::cout << "L'utente non è stato trovato!" << std::endl;
 
                     // Log dell'errore e uscita dalla funzione
                     statoReq = statoRequisito::NotSuccess;
-                    messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non trovato";
+                    messageLog = "Utente " + in_nome_utente_compratore + " non trovato";
                     InsertToLogDB(db1, "WARNING", messageLog , sessionID, nomeRequisito, statoReq);
                     return;
                 }
@@ -213,7 +214,8 @@ public:
         if (rows == 1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id")); }
         PQclear(res);
 
-        if (rows != 1){
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimossa la recensione .";
@@ -290,8 +292,8 @@ public:
             return;
         }
 
-        // Se invece il numero di righe del risultato della query è > di 1, allora la recensione può essere eliminata.
-        else
+        // Se invece il numero di righe del risultato della query è 1, allora la recensione può essere eliminata.
+        if (rows == 1)
         {
             // Eliminazione della recensione tramite l'id.
             sprintf(sqlcmd, "DELETE FROM Recensione WHERE idRec = '%d'", idRecensione);

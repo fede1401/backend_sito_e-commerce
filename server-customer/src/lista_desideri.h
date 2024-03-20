@@ -36,8 +36,9 @@ public:
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));}  
         PQclear(res);
-
-        if (rows != 1){
+    
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere aggiunto il prodotto alla lista desideri";
@@ -176,8 +177,9 @@ public:
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));}  
         PQclear(res);
-
-        if (rows != 1){
+        
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimosso il prodotto dalla lista desideri";
@@ -229,7 +231,7 @@ public:
         }
 
         // Se il numero di righe del risultato della query è > 1, allora esiste il prodotto da eliminare e lo eliminiamo
-        else{
+        if (rows == 1){
             // Eliminazione del prodotto dalla lsta desideri dell'utente compratore.
             sprintf(sqlcmd, "DELETE FROM ListaDesideri WHERE nome_utente_compratore='%s' AND codProdotto='%d'", in_nome_utente_compratore.c_str(), in_cod_prodotto);
             res = db1.ExecSQLcmd(sqlcmd);

@@ -340,7 +340,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1)
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
@@ -418,7 +419,9 @@ public:
                 std::string azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
                 this->azienda_produzione = azienda_produzione;
             }
-            else
+            
+            // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+            if (rows == 0)
             {
                 // Log dell'errore e uscita dalla funzione
                 statoReq = statoRequisito::NotSuccess;
@@ -428,7 +431,6 @@ public:
             }
 
             PQclear(res);
-
             return;
         }
         catch(const std::exception& e)

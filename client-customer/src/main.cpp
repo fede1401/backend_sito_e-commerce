@@ -288,7 +288,7 @@ int main()
     srand((unsigned)time(NULL));
 
     // Apre il file corrispondente al test da effettuare in modalità di lettura
-    std::ifstream file("../test/login.txt");
+    std::ifstream file("../test/ricercaProdotti.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
@@ -664,7 +664,7 @@ int main()
             sprintf(value2, line.c_str());
 
             std::getline(file, line); // Passa alla riga successiva
-            sprintf(key3, "numeroCartaPagamento");
+            sprintf(key3, "idCarta");
             sprintf(value3, line.c_str());
 
             // Effettuo un comando di scrittura relativo alla rimozione della carta di pagamento.
@@ -689,7 +689,7 @@ int main()
             sprintf(value2, line.c_str());
 
             std::getline(file, line); // Passa alla riga successiva
-            sprintf(key3, "codiceProdotto");
+            sprintf(key3, "nomeProdotto");
             sprintf(value3, line.c_str());
 
             // Effettuo un comando di scrittura relativo alla rimozione della carta di pagamento.
@@ -1225,8 +1225,9 @@ int main()
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, nomi_utente[i30].c_str());
 
-                sprintf(key3, "numeroCartaPagamento");
-                sprintf(value3, carte_pagamento[i30].c_str());
+                sprintf(key3, "idCarta");
+                std::string idCarta = std::to_string(rand() % 30);
+                sprintf(value3, idCarta.c_str());
 
                 // Effettuo un comando di scrittura relativo alla rimozione della carta di pagamento.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
@@ -1379,9 +1380,9 @@ int main()
                 sprintf(key2, "nome_utente_compratore");
                 sprintf(value2, nomi_utente[i30].c_str());
 
-                sprintf(key3, "codiceProdotto");
-                std::string codiceProdotto = std::to_string(rand() % 30);
-                sprintf(value3, codiceProdotto.c_str());
+                sprintf(key3, "nomeProdotto");
+                //std::string codiceProdotto = std::to_string(rand() % 30);
+                sprintf(value3, nomi_prodotti[i30].c_str());
 
                 // Effettuo un comando di scrittura relativo alla ricerca del prodotto.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);

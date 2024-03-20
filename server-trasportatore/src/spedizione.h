@@ -72,7 +72,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1)
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
@@ -127,6 +128,16 @@ public:
             dispoTrasportatore = atoi(PQgetvalue(res, 0, PQfnumber(res, "dispo")));
         }
         PQclear(res);
+
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0)
+        {
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste " + in_nome_utente_trasportatore + " .";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            return;
+        }
 
         // Se il valore dell'attributo "disponibilità" è 0, allora l'utente trasportatore può prendere in carico delle spedizioni.
         if (dispoTrasportatore == 0)
@@ -431,7 +442,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1)
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
@@ -532,8 +544,8 @@ public:
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
 
-        // Se il numero di righe del risultato della query è diverso da 1, allora NON esiste l'utente trasportatore associato alla spedizione.
-        else
+        // Se il numero di righe del risultato della query è 0, allora NON esiste l'utente trasportatore associato alla spedizione.
+        if (rows == 0)
         {
             std::cout << "Nessun utente trasportatore associato alla spedizione! " << std::endl;
 
@@ -545,6 +557,7 @@ public:
         std::cout << "Spedizione " << idSpedizione << " consegnata! " << std::endl;
         return;
     }
+    
 };
 
 #endif // SPEDIZIONE_H

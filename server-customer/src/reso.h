@@ -53,7 +53,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1)
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
@@ -157,13 +158,13 @@ public:
                 }
 
                 // Se non esiste nessun utente associato all'id dell'ordine , allora l'ordine non esiste.
-                else
+                if (rows == 0)
                 {
-                    std::cout << "L'ordine non è stato trovato!" << std::endl;
+                    std::cout << "L'utente non è stato trovato!" << std::endl;
 
                     // Log dell'errore e uscita dalla funzione
                     statoReq = statoRequisito::NotSuccess;
-                    messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non trovato";
+                    messageLog = "Utente " + in_nome_utente_compratore + " non trovato";
                     InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
                     return;
                 }
@@ -182,8 +183,8 @@ public:
             }
         }
 
-        // Se il numero delle righe del risultato delle query è diverso da 1, allora l'ordine non è stato trovato
-        else
+        // Se il numero delle righe del risultato delle query è 0, allora l'ordine non è stato trovato.
+        if (rows == 0)
         {
 
             std::cout << "L'ordine non è stato trovato!" << std::endl;
@@ -194,8 +195,9 @@ public:
             InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
-        std::cout << "Reso effettuato" << std::endl;
-        return;
+        
+    std::cout << "Reso effettuato" << std::endl;
+    return;
     }
 };
 

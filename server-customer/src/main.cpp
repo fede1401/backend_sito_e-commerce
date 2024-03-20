@@ -72,7 +72,9 @@ int main()
 
     char numeroCartaPagamento[100];
     char cvvCartaPagamento[100];
+    int idCarta;
 
+    char nomeProdotto[100];
     int codiceProdotto;
     
     int idOrdine;
@@ -312,6 +314,12 @@ int main()
                         strcpy(cvvCartaPagamento, fval);
                     }
 
+                    if (strcmp(fval, "idCarta") == 0)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h+1, fval);
+                        idCarta = atoi(fval);
+                    }
+
                     if (strcmp(fval, "nuovaViaResidenza") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -337,6 +345,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         codiceProdotto = atoi(fval);
                     }
+
+                    if (strcmp(fval, "nomeProdotto") == 0)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h+1, fval);
+                        strcpy(nomeProdotto, fval);
+                    }
+
+
                     if (strcmp(fval, "via_spedizione") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -607,7 +623,7 @@ int main()
 
                 if (std::string(action) == "RIMUOVI CARTA PAGAMENTO")
                 {
-                    carta.remove_carta(db1, nome_utente_compratore, numeroCartaPagamento);
+                    carta.remove_carta(db1, nome_utente_compratore, idCarta);
 
                     strcpy(outputs, "Rimozione carta di pagamento");
 
@@ -747,7 +763,7 @@ int main()
 
                 if (std::string(action) == "RICERCA PRODOTTO")
                 {
-                    prodotto.ricerca_mostra_Prodotto(db1, nome_utente_compratore, codiceProdotto);
+                    prodotto.ricerca_mostra_Prodotto(db1, nome_utente_compratore, nomeProdotto);
 
                     strcpy(outputs, "Ricerca prodotto");
 

@@ -64,7 +64,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1){
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_fornitore + " , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .";
@@ -196,7 +197,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1){
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_fornitore + " , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .";
@@ -251,8 +253,8 @@ public:
             return;
         }
 
-        // Se il numero di righe del risultato della query è maggiore o uguale a 1 il prodotto può essere rimosso
-        else
+        // Se il numero di righe del risultato della query è 1 il prodotto può essere rimosso
+        if (rows == 1)
         {
             // Eliminazione del prodotto dal carrello dell'utente compratore.
             sprintf(sqlcmd, "DELETE FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
@@ -270,7 +272,7 @@ public:
     
     
     // Metodo utilizzato per permettere ad un utente compratore di ricercare un prodotto
-    void ricerca_mostra_Prodotto(Con2DB db1, std::string in_nome_utente_compratore, int codProdotto)
+    void ricerca_mostra_Prodotto(Con2DB db1, std::string in_nome_utente_compratore, std::string in_nomeProdotto)
     {
 
         std::string sessionID = "";
@@ -291,7 +293,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1){
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere ricercato il prodotto .";
@@ -330,9 +333,11 @@ public:
 
 
         // Effettuiamo la ricerca del prodotto nel database nella tabella Prodotto
-        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
+        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE nome = '%s'", in_nomeProdotto.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
+
+        printf("Rows: %d", rows);
 
         // Se il numero di righe del risultato della query è minore di 1 non c'è nessun prodotto con quel codice, perciò non può essere effettuata la ricerca.
         if (rows < 1)
@@ -342,7 +347,7 @@ public:
 
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste il prodotto che si sta ricercando con codice" + std::to_string(codProdotto);
+            messageLog = "Non esiste nessun prodotto che si sta ricercando con nome" + in_nomeProdotto;
             InsertToLogDB(db1, "ERROR", messageLog , sessionID, nomeRequisito, statoReq);
 
             std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
@@ -350,11 +355,11 @@ public:
             return;
         }
 
-        // Se il numero di righe del risultato della query è minore di 1 non c'è nessun prodotto con quel codice, perciò non può essere effettuata la ricerca.
-        else
+        // Se il numero di righe del risultato della query è 1 effettuiamo la ricerca.
+        if (rows == 1)
         {
             // Animo l'oggetto prodotto:
-            this->cod_product = codProdotto;
+            this->cod_product = atoi(PQgetvalue(res, 0, PQfnumber(res, "codProdotto")));
             this->nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
             this->categoria = PQgetvalue(res, 0, PQfnumber(res, "categoria"));
             this->descrizione = PQgetvalue(res, 0, PQfnumber(res, "descrizione"));
@@ -363,18 +368,64 @@ public:
             this->numero_copie_disponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
 
             // Mostro le informazioni del Prodotto;
+            std::cout << "Codice prodotto:" << cod_product << std::endl;
+            printf("\n");
             std::cout << "Nome prodotto:" << nome << std::endl;
+            printf("\n");
             std::cout << "Categoria prodotto: " << categoria << std::endl;
+            printf("\n");
             std::cout << "Descrizione: " << descrizione << std::endl;
+            printf("\n");
             std::cout << "Prezzo in euro: " << prezzo_euro << std::endl;
+            printf("\n");
             std::cout << "Azienda di produzione: " << azienda_produzione << std::endl;
+            printf("\n");
             std::cout << "Numero delle copie disponibili: " << numero_copie_disponibili << std::endl;
+            printf("\n");
 
             PQclear(res);
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Visione del prodotto ricercato con codice" + std::to_string(codProdotto) + " da parte dell utente compratore " + in_nome_utente_compratore;
+            messageLog = "Visione del prodotto ricercato con nome" + in_nomeProdotto + " da parte dell utente compratore " + in_nome_utente_compratore;
+            InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
+        }
+
+        if (rows > 1){
+            for (int i = 0; i < rows; i++)
+            {
+                // Animo l'oggetto prodotto:
+                this->cod_product = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
+                this->nome = PQgetvalue(res, i, PQfnumber(res, "nome"));
+                this->categoria = PQgetvalue(res, i, PQfnumber(res, "categoria"));
+                this->descrizione = PQgetvalue(res, i, PQfnumber(res, "descrizione"));
+                this->prezzo_euro = atof(PQgetvalue(res, i, PQfnumber(res, "prezzoEuro")));
+                this->azienda_produzione = PQgetvalue(res, i, PQfnumber(res, "nome_AziendaProduttrice"));
+                this->numero_copie_disponibili = atoi(PQgetvalue(res, i, PQfnumber(res, "num_copie_dispo")));
+
+                // Mostro le informazioni del Prodotto;
+                std::cout << "Codice prodotto:" << cod_product << std::endl;
+                printf("\n");
+                std::cout << "Nome prodotto:" << nome << std::endl;
+                printf("\n");
+                std::cout << "Categoria prodotto: " << categoria << std::endl;
+                printf("\n");
+                std::cout << "Descrizione: " << descrizione << std::endl;
+                printf("\n");
+                std::cout << "Prezzo in euro: " << prezzo_euro << std::endl;
+                printf("\n");
+                std::cout << "Azienda di produzione: " << azienda_produzione << std::endl;
+                printf("\n");
+                std::cout << "Numero delle copie disponibili: " << numero_copie_disponibili << std::endl;
+                printf("\n");
+
+                
+            }
+            PQclear(res);
+
+            // Log
+            statoReq = statoRequisito::Success;
+            messageLog = "Visione dei prodotti ricercato con nome" + in_nomeProdotto + " da parte dell utente compratore " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
 
@@ -409,7 +460,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1){
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + nomeUtenteCompratore + " , poichè non è stato registrato, non può essere acquistato il prodotto .";
@@ -464,8 +516,8 @@ public:
             return ordine;
         }
         
-        // Se il numero di righe del risultato della query è uguale o maggiore di 1 c'è un prodotto con quel codice, perciò può essere acquistato.
-        else{
+        // Se il numero di righe del risultato della query è 1 c'è un prodotto con quel codice, perciò può essere acquistato.
+        if (rows == 1){
             // Assegniamo alla variabile dataOrdineEffettuato la data in cui l'ordine è stato effettuato
             dataOrdineEffettuato = getCurrentDateAsString();
 
@@ -512,8 +564,8 @@ public:
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
 
-            // Se il numero di righe del risultato della query è diverso di 1 non c'è nessun prodotto con quel codice, perciò non può essere acquistato.
-            if (rows != 1) {
+            // Se il numero di righe del risultato della query è 0 non c'è nessun prodotto con quel codice, perciò non può essere acquistato.
+            if (rows == 0) {
                 
                 PQclear(res);
 
@@ -528,7 +580,7 @@ public:
             }
             
             // Se il numero di righe del risultato della query è uguale ad 1 posso prendere la quantita di copie.
-            else{
+            if (rows == 1){
                 numeroCopieDisponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
 
                 numeroCopieDisponibili = numeroCopieDisponibili - 1;

@@ -60,8 +60,8 @@ public:
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
 
-        // Se il numero di righe del risultato della query relativo allo "stato" dell'utente è diversa da 1, non si può recuperare il valore dell'attributo "stato".
-        if (rows ==0 )
+        // Se il numero di righe del risultato della query relativo allo "stato" dell'utente è 0, non si può recuperare il valore dell'attributo "stato".
+        if (rows == 0)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
@@ -77,13 +77,7 @@ public:
         if (rows == 1){
             stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato")));
         }
-        else{
-            statoReq = statoRequisito::NotSuccess;
-            messageLog = "Trovato utente loggato più volte " + input_nome_utente;
-            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
-            throw std::runtime_error("Errore: L'utente loggato più volte.");
-            //return;
-        }
+        PQclear(res);
         
 
         // Se il valore dell'attributo "stato" è uguale a 1, allora l'utente è già connesso.
@@ -110,7 +104,8 @@ public:
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
 
-            if (rows != 1){
+            // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+            if (rows == 0){
                 // Log dell'errore e uscita dalla funzione
                 statoReq = statoRequisito::NotSuccess;
                 messageLog = "Utente " + input_nome_utente + " non trovato.";
@@ -147,7 +142,6 @@ public:
 
             return;
         }
-        printf("Uscito dal blocco critico\n");
 
         // else :Se il valore dell'attributo "stato" è uguale a 0, allora l'utente NON è connesso e dobbiamo effettuare il login
 
@@ -169,8 +163,8 @@ public:
             password_utente.assign(password_u);
         }
 
-        // Se il numero di righe del risultato delle query è diverso da 1 l'utente non è stato trovato
-        else
+        // Se il numero di righe del risultato delle query è 0 l'utente non è stato trovato
+        if (rows == 0)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
@@ -229,7 +223,8 @@ public:
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
 
-        if (rows != 1){
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Utente " + input_nome_utente + " non trovato.";
@@ -294,7 +289,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1)
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
@@ -365,8 +361,8 @@ public:
             }
         }
 
-        // Se il numero di righe del risultato della query relativo allo "stato" dell'utente è diversa da 1, non si può recuperare il valore dell'attributo "stato".
-        else
+        // Se il numero di righe del risultato della query relativo allo "stato" dell'utente è 0, non si può recuperare il valore dell'attributo "stato".
+        if (rows == 0)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
@@ -400,7 +396,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1)
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
@@ -453,7 +450,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1)
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
@@ -508,7 +506,8 @@ public:
         }
         PQclear(res);
 
-        if (rows != 1)
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0)
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;

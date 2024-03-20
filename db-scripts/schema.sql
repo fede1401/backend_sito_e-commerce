@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS UtenteTrasportatore (
 CREATE TABLE IF NOT EXISTS Carta (
     idCarta SERIAL ,
     nome_utente_compratore VARCHAR(50) NOT NULL,
-    numeroCarta VARCHAR(20) NOT NULL UNIQUE,
+    numeroCarta VARCHAR(20) NOT NULL,
     cvv VARCHAR(3) NOT NULL,
     PRIMARY KEY(idCarta),
     CONSTRAINT fk_nome_utente_compratore
@@ -88,8 +88,8 @@ CREATE TABLE IF NOT EXISTS Prodotto (
 	prezzoEuro DECIMAL(10, 2),
 	nome_AziendaProduttrice VARCHAR(50) NOT NULL,
 	num_copie_dispo INTEGER,
-	PRIMARY KEY(codProdotto)
-  
+	PRIMARY KEY(codProdotto),
+  CONSTRAINT unique_combination UNIQUE (nome, categoria, descrizione, prezzoEuro, nome_AziendaProduttrice)
 );
 
 
@@ -104,7 +104,8 @@ CREATE TABLE IF NOT EXISTS Carrello (
     CONSTRAINT fk_codProdotto
       FOREIGN KEY(codProdotto)
       REFERENCES Prodotto(codProdotto)
-      ON DELETE CASCADE
+      ON DELETE CASCADE,
+  CONSTRAINT unique_combination_carr UNIQUE (nome_utente_compratore, codProdotto)
 );
 
 
@@ -119,7 +120,8 @@ CREATE TABLE IF NOT EXISTS ListaDesideri (
     CONSTRAINT fk_codProdotto
       FOREIGN KEY(codProdotto)
       REFERENCES Prodotto(codProdotto)
-      ON DELETE CASCADE
+      ON DELETE CASCADE,
+  CONSTRAINT unique_combination_listaDesideri UNIQUE (nome_utente_compratore, codProdotto)
 );
 
 

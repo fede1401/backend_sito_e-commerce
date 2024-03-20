@@ -37,15 +37,15 @@ public:
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));}  
         PQclear(res);
-
-        if (rows != 1){
+    
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere aggiunto il prodotto al carrello";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             return;
         }
-
 
         // Verifica se l'utente è loggato e ha una sessionID valida
         if (sessionID == ""){
@@ -139,7 +139,6 @@ public:
                 // Interrompi il loop dopo aver aggiornato il prodotto
                 break;
             }
-            //break;
         }
      
 
@@ -182,8 +181,9 @@ public:
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
         if (rows==1){ sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id"));}  
         PQclear(res);
-
-        if (rows != 1){
+        
+        // Se il numero di righe del risultato della query è 0, allora non esiste nessun utente con quel nome_utente.
+        if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere rimosso il prodotto dal carrello";
@@ -238,8 +238,8 @@ public:
             return;
         }
 
-        // Se il numero di righe del risultato della query è > 1, allora esiste il prodotto da eliminare e lo eliminiamo
-        else{
+        // Se il numero di righe del risultato della query è 1, allora esiste il prodotto da eliminare e lo eliminiamo
+        if (rows == 1){
             // Eliminazione del prodotto dal carrello dell'utente compratore.
             sprintf(sqlcmd, "DELETE FROM Carrello WHERE nome_utente_compratore='%s' AND codProdotto='%d'", in_nome_utente_compratore.c_str(), codProdotto);
             res = db1.ExecSQLcmd(sqlcmd);
