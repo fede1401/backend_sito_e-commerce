@@ -13,7 +13,7 @@
 #include <array>
 #include <unordered_map>
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
-
+#include <string.h>
 
 PGresult *res;
 char sqlcmd[2048];

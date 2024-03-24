@@ -13,9 +13,9 @@ enum class StatoOrdine {
 
 
 // Metodo che prende un tipo enumerativo StatoOrdine come input e restituisce una stringa che rappresenta quel particolare stato.
-    std::string statoOrdineToString(StatoOrdine stato)
+    std::string statoOrdineToString(StatoOrdine in_stato)
     {
-        switch (stato)
+        switch (in_stato)
         {
         case StatoOrdine::InElaborazione:
             return "in elaborazione";

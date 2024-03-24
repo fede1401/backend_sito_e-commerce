@@ -16,9 +16,9 @@ enum class votoStelle
 
 
 // Metodo che prende un tipo enumerativo votoStelle come input e restituisce una stringa che rappresenta quel particolare stato.
-    std::string statoVotoStelleToString(votoStelle stato)
+    std::string statoVotoStelleToString(votoStelle in_stato)
     {
-        switch (stato)
+        switch (in_stato)
         {
         case votoStelle::Uno:
             return "1";

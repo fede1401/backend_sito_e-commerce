@@ -8,20 +8,20 @@
 class Carrello {
 public:
     // Attributi per la classe Carrello.
-    std::string nome_utente_compratore;
-    int codice_prodotto;
-    int quantitàProdotti;
+    std::string m_nomeUtenteCompratore;
+    int m_codiceProdotto;
+    int m_quantitaProdotto;
 
     // Costruttore
-    Carrello(std::string nome_utente_compratore, int codice_prod, int quantitàProdotti) : 
-            nome_utente_compratore(nome_utente_compratore), codice_prodotto(codice_prod), quantitàProdotti(quantitàProdotti) {}
+    Carrello(std::string nome_utente_compratore, int codice_prod, int numero_prodotto) : 
+            m_nomeUtenteCompratore(nome_utente_compratore), m_codiceProdotto(codice_prod), m_quantitaProdotto(numero_prodotto) {}
 
     // Costruttore predefinito
-    Carrello(): nome_utente_compratore(""), codice_prodotto(-1), quantitàProdotti(-1){}
+    Carrello(): m_nomeUtenteCompratore(""), m_codiceProdotto(-1), m_quantitaProdotto(-1){}
 
 
     // Metodo per aggiungere un prodotto al carrello dato il nome dell'utente e il codice prodotto.
-    std::string add_prodotto(Con2DB db1,std::string in_nome_utente_compratore, int in_cod_prodotto){
+    std::string aggiungi_prodotto_carrello(Con2DB db1,std::string in_nome_utente_compratore, int in_cod_prodotto){
         
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Aggiunta prodotto al carrello.";
@@ -121,22 +121,22 @@ public:
                 // Il prodotto è già stato inserito, perciò ne aumentiamo la quantità:
                 // Prima carichiamo la quantità precedente:
                 trovato = true;
-                int quantitàPrecedente;
+                int quantitaPrecedente;
                 sprintf(sqlcmd, "SELECT quantitàProd FROM Carrello WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", in_nome_utente_compratore.c_str(),in_cod_prodotto);
                 PGresult *res1 = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res1);
 
                 // Se il numero di righe del risultato della query è 1, allora piò essere recuperata la quantità del prodotto nel carrello dell'utente.
                 if (rows == 1){
-                    quantitàPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
+                    quantitaPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
                 }
 
                 // Aumenta la quantità del prodotto da inserire
-                quantitàPrecedente = quantitàPrecedente + 1;
+                quantitaPrecedente = quantitaPrecedente + 1;
                 PQclear(res1);
 
                 // Aggiorno la quantità del prodotto da inserire
-                sprintf(sqlcmd, "UPDATE Carrello set quantitàProd = '%d' WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", quantitàPrecedente, in_nome_utente_compratore.c_str(),in_cod_prodotto);
+                sprintf(sqlcmd, "UPDATE Carrello set quantitàProd = '%d' WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", quantitaPrecedente, in_nome_utente_compratore.c_str(),in_cod_prodotto);
                 PGresult *res2 = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res2);
 
@@ -148,9 +148,9 @@ public:
 
 
                 // Anima l'oggetto
-                this->nome_utente_compratore = in_nome_utente_compratore;
-                this->codice_prodotto = in_cod_prodotto;
-                this->quantitàProdotti = quantitàPrecedente;
+                this->m_nomeUtenteCompratore = in_nome_utente_compratore;
+                this->m_codiceProdotto = in_cod_prodotto;
+                this->m_quantitaProdotto = quantitaPrecedente;
 
                 // Interrompi il loop dopo aver aggiornato il prodotto
                 break;
@@ -166,9 +166,9 @@ public:
             PQclear(res);   
 
             // Anima l'oggetto
-            this->nome_utente_compratore = in_nome_utente_compratore;
-            this->codice_prodotto = in_cod_prodotto;
-            this->quantitàProdotti = 1;
+            this->m_nomeUtenteCompratore = in_nome_utente_compratore;
+            this->m_codiceProdotto = in_cod_prodotto;
+            this->m_quantitaProdotto = 1;
 
             // Log 
             statoReq = statoRequisito::Success;
@@ -182,7 +182,7 @@ public:
 
 
     // Metodo per rimuovere un prodotto dal carrello dato il nome dell'utente e il codice del prodotto.
-    std::string remove_prodotto(Con2DB db1,std::string in_nome_utente_compratore, int codProdotto){
+    std::string rimuovi_prodotto_carrello(Con2DB db1,std::string in_nome_utente_compratore, int in_cod_prodotto){
         
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione prodotto dal carrello.";
@@ -245,7 +245,7 @@ public:
 
 
         // Controlliamo se il codice del prodotto esiste all'interno del carrello dell'utente compratore
-        sprintf(sqlcmd, "SELECT * FROM Carrello WHERE nome_utente_compratore = '%s' AND codProdotto ='%d'", in_nome_utente_compratore.c_str(), codProdotto);
+        sprintf(sqlcmd, "SELECT * FROM Carrello WHERE nome_utente_compratore = '%s' AND codProdotto ='%d'", in_nome_utente_compratore.c_str(), in_cod_prodotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
@@ -257,7 +257,7 @@ public:
 
             // Log
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Il prodotto con codice "  + std::to_string(codProdotto) + " da eliminare non esiste.";
+            messageLog = "Il prodotto con codice "  + std::to_string(in_cod_prodotto) + " da eliminare non esiste.";
             InsertToLogDB(db1, "ERROR", messageLog , sessionID, nomeRequisito, statoReq);
             
             result = messageLog;
@@ -267,13 +267,13 @@ public:
         // Se il numero di righe del risultato della query è 1, allora esiste il prodotto da eliminare e lo eliminiamo
         if (rows == 1){
             // Eliminazione del prodotto dal carrello dell'utente compratore.
-            sprintf(sqlcmd, "DELETE FROM Carrello WHERE nome_utente_compratore='%s' AND codProdotto='%d'", in_nome_utente_compratore.c_str(), codProdotto);
+            sprintf(sqlcmd, "DELETE FROM Carrello WHERE nome_utente_compratore='%s' AND codProdotto='%d'", in_nome_utente_compratore.c_str(), in_cod_prodotto);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Rimozione del prodotto con il codice " + std::to_string(codProdotto) + " dal carrello di " + in_nome_utente_compratore;
+            messageLog = "Rimozione del prodotto con il codice " + std::to_string(in_cod_prodotto) + " dal carrello di " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
     

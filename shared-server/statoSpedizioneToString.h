@@ -12,9 +12,9 @@ enum class StatoSpedizione
 };
 
     // Metodo che prende uno stato di spedizione come input e restituisce una stringa che rappresenta quel particolare stato.
-    std::string statoSpedizioneToString(StatoSpedizione stato)
+    std::string statoSpedizioneToString(StatoSpedizione in_stato)
     {
-        switch (stato)
+        switch (in_stato)
         {
         case StatoSpedizione::InTransito:
             return "in transito";

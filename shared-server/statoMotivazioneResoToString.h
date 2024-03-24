@@ -13,8 +13,8 @@ enum class motivazioneReso {
 
 
 // Metodo che prende un tipo enumerativo motivazioneReso come input e restituisce una stringa che rappresenta quel particolare stato.
-    std::string statoMotivazioneResoToString(motivazioneReso stato) {
-        switch (stato) {
+    std::string statoMotivazioneResoToString(motivazioneReso in_stato) {
+        switch (in_stato) {
             case motivazioneReso::Difettoso :
                 return "difettoso";
             case motivazioneReso::MisuraErrata :

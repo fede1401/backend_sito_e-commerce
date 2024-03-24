@@ -5,33 +5,35 @@
 #include "main.h"
 #include "../../shared-server/statoMotivazioneResoToString.h"
 
+
 class Reso
 {
 public:
     // Attributi per la classe Reso.
-    int idReso;
-    std::string nome_utente_compratore;
-    int idOrdine;
-    motivazioneReso motivazione_reso;
+    int m_dReso;
+    std::string m_nomeUtenteCompratore;
+    int m_idOrdine;
+    motivazioneReso m_motivazioneReso;
 
     // Costruttori:
-    Reso() : idReso(-1),
-             nome_utente_compratore(""),
-             idOrdine(-1),
-             motivazione_reso() {}
+    Reso() : m_dReso(-1),
+             m_nomeUtenteCompratore(""),
+             m_idOrdine(-1),
+             m_motivazioneReso() {}
 
-    Reso(int idReso, std::string nome_utente_compratore, int idOrdine, motivazioneReso motivazione_reso) : idReso(idReso),
-                                                                                                           nome_utente_compratore(nome_utente_compratore),
-                                                                                                           idOrdine(idOrdine),
-                                                                                                           motivazione_reso(motivazione_reso) {}
+    Reso(int id_reso, std::string nome_utente_compratore, int id_ordine, motivazioneReso motivazione_reso) : m_dReso(id_reso),
+                                                                                                           m_nomeUtenteCompratore(nome_utente_compratore),
+                                                                                                           m_idOrdine(id_ordine),
+                                                                                                           m_motivazioneReso(motivazione_reso) {}
 
-    void impostaStato(motivazioneReso nuovoStato)
+    void impostaStato(motivazioneReso in_nuovoStato)
     {
-        motivazione_reso = nuovoStato;
+        m_motivazioneReso = in_nuovoStato;
     }
 
+
     // Metodo utilizzato per permettere ad un utente compratore di effettuate un reso di un ordine.
-    std::string effettuaReso(Con2DB db1, std::string in_nome_utente_compratore, int idOrdine, motivazioneReso motivazione_reso)
+    std::string effettua_reso(Con2DB db1, std::string in_nome_utente_compratore, int in_id_ordine, motivazioneReso in_motivazione_reso)
     {
 
         std::string sessionID = "";
@@ -104,7 +106,7 @@ public:
         }
 
         // Recupero dello stato della spedizione dell'ordine tramite il suo id per verificare se l'ordine è stato spedito e arrivato correttamente.
-        sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", idOrdine);
+        sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", in_id_ordine);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare lo stato della spedizione.
@@ -119,7 +121,7 @@ public:
 
                 // Selezioniamo il nome del'utente compratore che ha effettuato l'ordine tramite il suo id.
                 std::string nome_utente_compratore;
-                sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", idOrdine);
+                sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", in_id_ordine);
                 res = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res);
                 // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il nome dell'utente compratore.
@@ -140,11 +142,11 @@ public:
                     }
 
                     // Rendiamo la motivazione del reso in stringa così che posso aggiungerlo al database.
-                    std::string motivazione_resoStr = statoMotivazioneResoToString(motivazione_reso);
+                    std::string motivazione_resoStr = statoMotivazioneResoToString(in_motivazione_reso);
 
                     // Inserisco nel database una riga corrispondente al reso.
                     sprintf(sqlcmd, "INSERT INTO Reso (idReso, nome_utente_compratore, idOrdine, motivazioneReso) VALUES (DEFAULT, '%s', '%d', '%s')",
-                            nome_utente_compratore.c_str(), idOrdine, motivazione_resoStr.c_str());
+                            nome_utente_compratore.c_str(), in_id_ordine, motivazione_resoStr.c_str());
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res);
 
@@ -155,12 +157,12 @@ public:
                     res = db1.ExecSQLtuples(sqlcmd);
                     rows = PQntuples(res);
                     // 2. Prendiamo l'ultimo id
-                    this->idReso = atoi(PQgetvalue(res, rows - 1, 0));
+                    this->m_dReso = atoi(PQgetvalue(res, rows - 1, 0));
                     PQclear(res);
 
-                    this->nome_utente_compratore = in_nome_utente_compratore;
-                    this->idOrdine = idOrdine;
-                    this->motivazione_reso = motivazione_reso;
+                    this->m_nomeUtenteCompratore = in_nome_utente_compratore;
+                    this->m_idOrdine = in_id_ordine;
+                    this->m_motivazioneReso = in_motivazione_reso;
 
                     // Log
                     statoReq = statoRequisito::Success;
@@ -190,7 +192,7 @@ public:
 
                 // Log dell'errore e uscita dalla funzione
                 statoReq = statoRequisito::NotSuccess;
-                messageLog = "Ordine con codice " + std::to_string(idOrdine) + " spedito, ma non arrivato, perciò non può essere effettuato il reso";
+                messageLog = "Ordine con codice " + std::to_string(in_id_ordine) + " spedito, ma non arrivato, perciò non può essere effettuato il reso";
                 InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
                 
                 result = messageLog;
@@ -206,7 +208,7 @@ public:
 
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non trovato";
+            messageLog = "Ordine con codice " + std::to_string(in_id_ordine) + " non trovato";
             InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
            
             result = messageLog;

@@ -287,7 +287,7 @@ int main()
                         }
                     }
 
-                    std::string outputRegistrazione = trasportatore.effettuaRegistrazione(db1, nome_utente_trasportatore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword, dittaSpedizione);
+                    std::string outputRegistrazione = trasportatore.registrazione(db1, nome_utente_trasportatore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword, dittaSpedizione);
 
                      strcpy(outputs, outputRegistrazione.c_str());
 
@@ -309,7 +309,7 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NOME DITTASPEDIZIONE")
                 {
-                    std::string aggiornaDittaSpedizione = trasportatore.aggiornaNomeDittaSpedizione(db1, nome_utente_trasportatore, nuovaDittaSpedizione);
+                    std::string aggiornaDittaSpedizione = trasportatore.aggiorna_nome_ditta_spedizione(db1, nome_utente_trasportatore, nuovaDittaSpedizione);
 
                     strcpy(outputs, aggiornaDittaSpedizione.c_str());
 
@@ -332,7 +332,7 @@ int main()
 
                 if (std::string(action) == "AVVISA SPEDIZIONE EFFETTUATA")
                 {
-                    std::string avvisaSpedizioneConsegnata = spedizione.spedizioneConsegnata(db1, nome_utente_trasportatore, idSpedizione);
+                    std::string avvisaSpedizioneConsegnata = spedizione.avvisa_spedizione_consegnata(db1, nome_utente_trasportatore, idSpedizione);
                     
                     strcpy(outputs, avvisaSpedizioneConsegnata.c_str());
 
@@ -354,7 +354,7 @@ int main()
 
                 if (std::string(action) == "PRENDI IN CARICO SPEDIZIONE")
                 {
-                    std::string prendiInCaricoSpedizione = spedizione.prendiInCaricoSpedizione(db1, nome_utente_trasportatore);
+                    std::string prendiInCaricoSpedizione = spedizione.prendi_in_carico_spedizione(db1, nome_utente_trasportatore);
                     strcpy(outputs, prendiInCaricoSpedizione.c_str());
 
                     // send result to client
@@ -390,7 +390,7 @@ int main()
                         }
                     }
 
-                    std::string effettuaLogin = trasportatore.effettua_login(db1, nome_utente_trasportatore, password, sessionID);
+                    std::string effettuaLogin = trasportatore.login(db1, nome_utente_trasportatore, password, sessionID);
 
                     strcpy(outputs, effettuaLogin.c_str());
 
@@ -412,7 +412,7 @@ int main()
 
                 if (std::string(action) == "EFFETTUA LOGOUT TRASPORTATORE")
                 {
-                    std::string effettuaLogout = trasportatore.effettua_logout(db1, nome_utente_trasportatore);
+                    std::string effettuaLogout = trasportatore.logout(db1, nome_utente_trasportatore);
 
                     strcpy(outputs, effettuaLogout.c_str());
 
@@ -455,7 +455,7 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NUMERO TELEFONO TRASPORTATORE")
                 {
-                    std::string aggiornaNumeroTelefono = trasportatore.aggiornaNumeroDiTelefono(db1,nome_utente_trasportatore,  nuovoNumeroTelefono);
+                    std::string aggiornaNumeroTelefono = trasportatore.aggiorna_numero_telefono(db1,nome_utente_trasportatore,  nuovoNumeroTelefono);
 
                     strcpy(outputs, aggiornaNumeroTelefono.c_str());
 
@@ -476,7 +476,7 @@ int main()
 
                 if (std::string(action) == "AGGIORNA PASSWORD TRASPORTATORE")
                 {
-                    std::string aggiornaPassword = trasportatore.aggiornaPassword(db1, nome_utente_trasportatore,vecchiaPassw, nuovaPassw);
+                    std::string aggiornaPassword = trasportatore.aggiorna_password(db1, nome_utente_trasportatore,vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, aggiornaPassword.c_str());
 

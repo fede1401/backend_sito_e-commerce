@@ -5,13 +5,10 @@
 
 #include "../../shared-server/log2db.h"
 #include "../../shared-server/msleep.h"
-//#include "ordine.h"
-//#include "product.h"
-//#include "recensione.h"
-//#include "reso.h"
 #include "spedizione.h"
-#include "user_trasportatore.h"
-//#include "user.h"
+#include "utente_trasportatore.h"
+#include <random>
+#include "../../shared-server/isSpecialCharacter.h"
 
 
 #endif // INCLUDE_H

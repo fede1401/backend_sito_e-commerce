@@ -3,6 +3,7 @@
 #define RECENSIONE_H
 
 #include "main.h"
+//#include "include.h"
 #include "../../shared-server/statoVotoStelleToString.h"
 
 
@@ -10,31 +11,22 @@ class Recensione
 {
 public:
     // Attributi per la classe Recensione.
-    int idRecensione;
-    std::string nome_utente_compratore;
-    int idOrdine;
-    std::string descrizione;
-    votoStelle voto_stella;
+    int m_idRecensione;
+    std::string m_nomeUtenteCompratore;
+    int m_idOrdine;
+    std::string m_descrizione;
+    votoStelle m_votoStella;
 
     // Costruttori:
-    Recensione() : idRecensione(-1),
-                   nome_utente_compratore(""),
-                   idOrdine(-1),
-                   descrizione(""),
-                   voto_stella() {}
+    Recensione() : m_idRecensione(-1), m_nomeUtenteCompratore(""), m_idOrdine(-1), m_descrizione(""), m_votoStella() {}
 
-    Recensione(int idRecensione, std::string nome_utente_compratore, int idOrdine,
-               std::string descrizione, votoStelle voto_stella) :
-
-                                                                  idRecensione(idRecensione), nome_utente_compratore(nome_utente_compratore),
-                                                                  idOrdine(idOrdine),
-                                                                  descrizione(descrizione), voto_stella(voto_stella)
-    {
-    }
+    Recensione(int id_recensione, std::string nome_utente_compratore, int id_ordine, std::string descrizione, votoStelle voto_stella) :
+        m_idRecensione(id_recensione), m_nomeUtenteCompratore(nome_utente_compratore),
+        m_idOrdine(id_ordine), m_descrizione(descrizione), m_votoStella(voto_stella) {}
 
 
     // Metodo utilizzato per permettere ad un utente compratore di effettuare una recensione di un ordine. 
-    std::string effettuaRecensione(Con2DB db1, std::string in_nome_utente_compratore, int idOrdine, std::string descrizione, votoStelle voto_stella)
+    std::string effettua_recensione(Con2DB db1, std::string in_nome_utente_compratore, int in_id_ordine, std::string in_descrizione, votoStelle in_voto_stella)
     {
         std::string sessionID = "";
         std::string stato_spedizione;
@@ -98,7 +90,7 @@ public:
 
 
         // Recupero dello stato della spedizione dell'ordine tramite il suo id per verificare se l'ordine è stato spedito e arrivato correttamente.
-        sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", idOrdine);
+        sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", in_id_ordine);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare lo stato della spedizione.
@@ -112,7 +104,7 @@ public:
             {
                 // Selezioniamo il nome del'utente compratore che ha effettuato l'ordine tramite il suo id.
                 std::string nome_utente_compratore;
-                sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", idOrdine);
+                sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", in_id_ordine);
                 res = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res);
                 // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il nome dell'utente compratore.
@@ -134,11 +126,11 @@ public:
                     }
 
                     // Rendiamo il voto in stelle in stringa così che posso aggiungerlo al database.
-                    std::string votoStelleStr = statoVotoStelleToString(voto_stella);
+                    std::string votoStelleStr = statoVotoStelleToString(in_voto_stella);
 
                     // Inserisco nel database una riga corrispondente alla recensione.
                     sprintf(sqlcmd, "INSERT INTO Recensione (idRec, nome_utente_compratore, idOrdine, descrizione, votoStelle) VALUES (DEFAULT, '%s', '%d', '%s', '%s')",
-                            nome_utente_compratore.c_str(), idOrdine, descrizione.c_str(), votoStelleStr.c_str());
+                            nome_utente_compratore.c_str(), in_id_ordine, in_descrizione.c_str(), votoStelleStr.c_str());
                     res = db1.ExecSQLcmd(sqlcmd);
                     PQclear(res);
 
@@ -149,13 +141,13 @@ public:
                     res = db1.ExecSQLtuples(sqlcmd);
                     rows = PQntuples(res);
                     // 2. Prendiamo l'ultimo id
-                    this->idRecensione = atoi(PQgetvalue(res, rows - 1, 0));
+                    this->m_idRecensione = atoi(PQgetvalue(res, rows - 1, 0));
                     PQclear(res);
 
-                    this->nome_utente_compratore = in_nome_utente_compratore;
-                    this->idOrdine = idOrdine;
-                    this->descrizione = descrizione;
-                    this->voto_stella = voto_stella;
+                    this->m_nomeUtenteCompratore = in_nome_utente_compratore;
+                    this->m_idOrdine = in_id_ordine;
+                    this->m_descrizione = in_descrizione;
+                    this->m_votoStella = in_voto_stella;
 
                     // Log 
                     statoReq = statoRequisito::Success;
@@ -185,7 +177,7 @@ public:
 
                 // Log dell'errore e uscita dalla funzione
                 statoReq = statoRequisito::NotSuccess;
-                messageLog = "Ordine con codice " + std::to_string(idOrdine) + " spedito, ma non arrivato, perciò non può essere effettuata la recensione";
+                messageLog = "Ordine con codice " + std::to_string(in_id_ordine) + " spedito, ma non arrivato, perciò non può essere effettuata la recensione";
                 InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
                 
                 result = messageLog;
@@ -200,7 +192,7 @@ public:
             std::cout << "L'ordine non è stato trovato!" << std::endl;
 
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Ordine con codice " + std::to_string(idOrdine) + " non trovato";
+            messageLog = "Ordine con codice " + std::to_string(in_id_ordine) + " non trovato";
             InsertToLogDB(db1, "WARNING", messageLog , sessionID, nomeRequisito, statoReq);
             
             result = messageLog;
@@ -215,7 +207,7 @@ public:
 
 
     // Funzione utilizzata per permettere all'utente compratore di rimuovere una recensione dal database tramite il suo id
-    std::string remove_recensione(Con2DB db1, std::string in_nome_utente_compratore, int idRecensione)
+    std::string rimuovi_recensione(Con2DB db1, std::string in_nome_utente_compratore, int in_id_recensione)
     {
         std::string sessionID = "";
 
@@ -279,7 +271,7 @@ public:
 
         // Recupero del nome dell'utente compratore che desidera rimuovere la recensione effettuata
         std::string nome_utente_compratore;
-        sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Recensione WHERE idRec = '%d'", idRecensione);
+        sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Recensione WHERE idRec = '%d'", in_id_recensione);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il nome dell'utente compratore che ha effettuato la recensione.
@@ -304,7 +296,7 @@ public:
 
         
         // Verifico che la recensione esista tramite il suo recupero.
-        sprintf(sqlcmd, "SELECT * FROM Recensione WHERE idRec = '%d'", idRecensione);
+        sprintf(sqlcmd, "SELECT * FROM Recensione WHERE idRec = '%d'", in_id_recensione);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
@@ -316,7 +308,7 @@ public:
             std::cout << "La riga da eliminare non esiste!" << std::endl;
 
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "La recensione con id " + std::to_string(idRecensione) + " non esiste";
+            messageLog = "La recensione con id " + std::to_string(in_id_recensione) + " non esiste";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             
             result = messageLog;
@@ -327,13 +319,13 @@ public:
         if (rows == 1)
         {
             // Eliminazione della recensione tramite l'id.
-            sprintf(sqlcmd, "DELETE FROM Recensione WHERE idRec = '%d'", idRecensione);
+            sprintf(sqlcmd, "DELETE FROM Recensione WHERE idRec = '%d'", in_id_recensione);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Recensione con id " + std::to_string(idRecensione) + " eliminata da parte di " + in_nome_utente_compratore;
+            messageLog = "Recensione con id " + std::to_string(in_id_recensione) + " eliminata da parte di " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
     

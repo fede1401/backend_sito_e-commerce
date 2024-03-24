@@ -8,26 +8,20 @@
 class Carta {
 public:
     // Attributi per la classe Carta.
-    std::string nome_utente;
-    std::string numero_carta;
-    std::string cvv;
+    std::string m_nomeUtente;
+    std::string m_numeroCarta;
+    std::string m_cvv;
 
 
-    // Costruttore
-    Carta():
-        nome_utente(""),
-        numero_carta(""),
-        cvv("")
-        {}
+    // Costruttori:
+    Carta(): m_nomeUtente(""), m_numeroCarta(""), m_cvv("") {}
 
-    Carta(std::string nome_utente, std::string numero, std::string codice): 
-        nome_utente(nome_utente), 
-        numero_carta(numero), 
-        cvv(codice) {}
+    Carta(std::string nome_utente, std::string numero_carta, std::string cvv): 
+        m_nomeUtente(nome_utente),  m_numeroCarta(numero_carta),  m_cvv(cvv) {}
 
 
     // Funzione per aggiungere una carta di pagamento dato il nome dell'utente, il numero della carta e il cvv.
-    std::string aggiungi_carta(Con2DB db1, std::string in_nome_utente, std::string in_numeroCarta, std::string in_cvv){
+    std::string aggiungi_carta_pagamento(Con2DB db1, std::string in_nome_utente, std::string in_numero_carta, std::string in_cvv){
 
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Aggiunta carta di pagamento.";
@@ -91,18 +85,18 @@ public:
         // NON è necessario verificare che ci siano carte con numero di carta univoco, ci potrebbero essere utenti che inseriscono la stessa carta.
 
         // Il nome utente è di un utente compratore --> possiamo aggiungere la carta di pagamento al database:
-        sprintf(sqlcmd, "INSERT INTO Carta (idCarta, nome_utente_compratore, numeroCarta, cvv) VALUES (DEFAULT, '%s', '%s', '%s')", in_nome_utente.c_str(), in_numeroCarta.c_str(), in_cvv.c_str());
+        sprintf(sqlcmd, "INSERT INTO Carta (idCarta, nome_utente_compratore, numeroCarta, cvv) VALUES (DEFAULT, '%s', '%s', '%s')", in_nome_utente.c_str(), in_numero_carta.c_str(), in_cvv.c_str());
         res = db1.ExecSQLcmd(sqlcmd);
         PQclear(res); 
 
         // Riempio i campi della classe
-        this->nome_utente = in_nome_utente;
-        this->numero_carta = in_numeroCarta;
-        this-> cvv = in_cvv;
+        this->m_nomeUtente = in_nome_utente;
+        this->m_numeroCarta = in_numero_carta;
+        this-> m_cvv = in_cvv;
 
         // Log
         statoReq = statoRequisito::Success;
-        messageLog = "Inserimento carta di pagamento con il numero " + in_numeroCarta + " per utente compratore " + in_nome_utente;
+        messageLog = "Inserimento carta di pagamento con il numero " + in_numero_carta + " per utente compratore " + in_nome_utente;
         InsertToLogDB(db1, "INFO", messageLog , sessionID, nomeRequisito, statoReq);
         
     result = messageLog;
@@ -111,7 +105,7 @@ public:
 
 
     // Funzione per rimuovere la carta di pagamento dell'utente compratore con un determinato id di carta.
-    std::string remove_carta(Con2DB db1, std::string in_nome_utente_compratore, int in_idCarta)
+    std::string rimuovi_carta_pagamento(Con2DB db1, std::string in_nome_utente_compratore, int in_id_carta)
     {
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione carta di pagamento.";
@@ -175,7 +169,7 @@ public:
 
 
         // Verifica se la carta esiste nel database
-        sprintf(sqlcmd, "SELECT * FROM Carta WHERE idCarta = '%d'", in_idCarta);
+        sprintf(sqlcmd, "SELECT * FROM Carta WHERE idCarta = '%d'", in_id_carta);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
@@ -184,7 +178,7 @@ public:
         if (rows < 1){
             // La carta non esiste nel database, log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Carta con id " + std::to_string (in_idCarta) + " non trovata";
+            messageLog = "Carta con id " + std::to_string (in_id_carta) + " non trovata";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             std::cout << "La riga da eliminare non esiste!" << std::endl;
             
@@ -193,13 +187,13 @@ public:
         }
         else{
             // La carta esiste nel database, possiamo eliminarla
-            sprintf(sqlcmd, "DELETE FROM Carta WHERE idCarta = '%d'", in_idCarta);
+            sprintf(sqlcmd, "DELETE FROM Carta WHERE idCarta = '%d'", in_id_carta);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
             // Log della rimozione della carta
             statoReq = statoRequisito::Success;
-            messageLog = "Eliminazione carta di pagamento " + std::to_string (in_idCarta) + " dell utente compratore " + in_nome_utente_compratore;
+            messageLog = "Eliminazione carta di pagamento " + std::to_string (in_id_carta) + " dell utente compratore " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
     

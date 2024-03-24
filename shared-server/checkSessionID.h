@@ -5,12 +5,12 @@
 
     
     // Metodo per verificare se un sessionID è univoco tra gli utenti compratori, fornitori e trasportatori
-    bool check_sessionID(Con2DB db1, std::string nomeRequisito, statoRequisito statoReq, std::string sessionID)
+    bool check_sessionID(Con2DB db1, std::string in_nome_requisito, statoRequisito in_stato_requisito, std::string in_sessionID)
     {
         bool result = true;
 
         // Verifico se il sessionID è già presente nella tabella UtenteCompratore
-        sprintf(sqlcmd, "SELECT * FROM Utente WHERE session_id = '%s'", sessionID.c_str());
+        sprintf(sqlcmd, "SELECT * FROM Utente WHERE session_id = '%s'", in_sessionID.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
@@ -19,8 +19,8 @@
         if (rows > 0)
         {
             // Log dell'errore e uscita dalla funzione
-            statoReq = statoRequisito::NotSuccess;
-            InsertToLogDB(db1, "ERROR", "Il session ID è già in uso da utenti.", sessionID, nomeRequisito, statoReq);
+            in_stato_requisito = statoRequisito::NotSuccess;
+            InsertToLogDB(db1, "ERROR", "Il session ID è già in uso da utenti.", in_sessionID, in_nome_requisito, in_stato_requisito);
 
             std::cout << "Errore: Il session ID è già in uso da utenti." << std::endl;
             return false;

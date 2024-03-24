@@ -86,7 +86,7 @@ int main()
     char outputs[100];
 
     UtenteCompratore compratore;
-    Product prodotto;
+    Prodotto prodotto;
     Ordine ordine;
     Carta carta;
     Carrello carrello;
@@ -346,6 +346,13 @@ int main()
                         codiceProdotto = atoi(fval);
                     }
 
+                    if (strcmp(fval, "idOrdine") == 0)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h+1, fval);
+                        idOrdine = atoi(fval);
+                    }
+
+
                     if (strcmp(fval, "nomeProdotto") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -416,7 +423,7 @@ int main()
                         }
                     }
 
-                    std::string outputRegistrazione =  compratore.effettuaRegistrazione(db1, nome_utente_compratore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, 
+                    std::string outputRegistrazione =  compratore.registrazione(db1, nome_utente_compratore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, 
                                                     viaResidenza, numeroCivico, cap,
                                                     cittàResidenza, password, confermaPassword, dataCompleanno);
 
@@ -460,7 +467,7 @@ int main()
                         }
                     }
                     
-                    std::string outputLogin = compratore.effettua_login(db1, nome_utente_compratore, password, sessionID);
+                    std::string outputLogin = compratore.login(db1, nome_utente_compratore, password, sessionID);
 
                     strcpy(outputs, outputLogin.c_str());
 
@@ -483,7 +490,7 @@ int main()
 
                 if (std::string(action) == "EFFETTUA LOGOUT COMPRATORE")
                 {
-                    std::string outputLogout = compratore.effettua_logout(db1, nome_utente_compratore);
+                    std::string outputLogout = compratore.logout(db1, nome_utente_compratore);
 
                     strcpy(outputs, outputLogout.c_str());
 
@@ -530,7 +537,7 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NUMERO TELEFONO COMPRATORE")
                 {
-                    std::string aggiornamentoNumeroTelefono = compratore.aggiornaNumeroDiTelefono(db1, nome_utente_compratore, nuovoNumeroTelefono);
+                    std::string aggiornamentoNumeroTelefono = compratore.aggiorna_numero_telefono(db1, nome_utente_compratore, nuovoNumeroTelefono);
 
                     strcpy(outputs, aggiornamentoNumeroTelefono.c_str());   
 
@@ -553,7 +560,7 @@ int main()
 
                 if (std::string(action) == "AGGIORNA PASSWORD COMPRATORE")
                 {
-                    std::string aggiornamentoPassword =  compratore.aggiornaPassword(db1, nome_utente_compratore ,vecchiaPassw, nuovaPassw);
+                    std::string aggiornamentoPassword =  compratore.aggiorna_password(db1, nome_utente_compratore ,vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, aggiornamentoPassword.c_str());  
 
@@ -576,7 +583,7 @@ int main()
 
                 if (std::string(action) == "AGGIORNA RESIDENZA")
                 {
-                    std::string aggiornamentoResidenza = compratore.aggiornaResidenza(db1, nome_utente_compratore, nuovaViaResidenza, nuovoNumCiv, nuovoCAP, nuovaCittaResidenza);
+                    std::string aggiornamentoResidenza = compratore.aggiorna_residenza(db1, nome_utente_compratore, nuovaViaResidenza, nuovoNumCiv, nuovoCAP, nuovaCittaResidenza);
 
                     strcpy(outputs, aggiornamentoResidenza.c_str());
 
@@ -600,7 +607,7 @@ int main()
 
                 if (std::string(action) == "AGGIUNGI CARTA PAGAMENTO")
                 {    
-                    std::string aggiuntaCartaPagamento = carta.aggiungi_carta(db1, nome_utente_compratore, numeroCartaPagamento, cvvCartaPagamento);
+                    std::string aggiuntaCartaPagamento = carta.aggiungi_carta_pagamento(db1, nome_utente_compratore, numeroCartaPagamento, cvvCartaPagamento);
 
                     strcpy(outputs, aggiuntaCartaPagamento.c_str());
 
@@ -623,7 +630,7 @@ int main()
 
                 if (std::string(action) == "RIMUOVI CARTA PAGAMENTO")
                 {
-                    std::string rimozioneCartaPagamento = carta.remove_carta(db1, nome_utente_compratore, idCarta);
+                    std::string rimozioneCartaPagamento = carta.rimuovi_carta_pagamento(db1, nome_utente_compratore, idCarta);
 
                     strcpy(outputs, rimozioneCartaPagamento.c_str());
 
@@ -646,7 +653,7 @@ int main()
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO CARRELLO")
                 {
-                    std::string aggiuntaProdottoCarrello = carrello.add_prodotto(db1, nome_utente_compratore, codiceProdotto );
+                    std::string aggiuntaProdottoCarrello = carrello.aggiungi_prodotto_carrello(db1, nome_utente_compratore, codiceProdotto );
 
                     strcpy(outputs, aggiuntaProdottoCarrello.c_str());
 
@@ -669,7 +676,7 @@ int main()
 
                 if (std::string(action) == "RIMUOVI PRODOTTO CARRELLO")
                 {
-                    std::string rimozioneProdottoCarrello = carrello.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
+                    std::string rimozioneProdottoCarrello = carrello.rimuovi_prodotto_carrello(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, rimozioneProdottoCarrello.c_str());
 
@@ -692,7 +699,7 @@ int main()
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO LISTADESIDERI")
                 {
-                    std::string aggiuntaProdottoListaDesideri = listadesideri.add_prodotto(db1, nome_utente_compratore, codiceProdotto);
+                    std::string aggiuntaProdottoListaDesideri = listadesideri.aggiungi_prodotto_lista_desideri(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, aggiuntaProdottoListaDesideri.c_str());
 
@@ -715,7 +722,7 @@ int main()
 
                 if (std::string(action) == "RIMUOVI PRODOTTO LISTADESIDERI")
                 {
-                    std::string rimozioneProdottoListaDesideri = listadesideri.remove_prodotto(db1, nome_utente_compratore, codiceProdotto);
+                    std::string rimozioneProdottoListaDesideri = listadesideri.rimuovi_prodotto_lista_desideri(db1, nome_utente_compratore, codiceProdotto);
 
                     strcpy(outputs, rimozioneProdottoListaDesideri.c_str());
 
@@ -832,7 +839,7 @@ int main()
 
                 if (std::string(action) == "EFFETTUA RESO")
                 {    
-                    std::string effettuaReso = reso.effettuaReso(db1,nome_utente_compratore, idOrdine, motivazioneReso::CambioOpinione);
+                    std::string effettuaReso = reso.effettua_reso(db1,nome_utente_compratore, idOrdine, motivazioneReso::CambioOpinione);
 
                     strcpy(outputs, effettuaReso.c_str());
 
@@ -855,7 +862,7 @@ int main()
 
                 if (std::string(action) == "EFFETTUA RECENSIONE")
                 {
-                    std::string effettuaRecensione = recensione.effettuaRecensione(db1, nome_utente_compratore, idOrdine, descrizioneRecensione, votoStelle::Cinque);
+                    std::string effettuaRecensione = recensione.effettua_recensione(db1, nome_utente_compratore, idOrdine, descrizioneRecensione, votoStelle::Cinque);
                     strcpy(outputs, effettuaRecensione.c_str());
 
                     // send result to client
@@ -877,7 +884,7 @@ int main()
 
                 if (std::string(action) == "RIMUOVI RECENSIONE")
                 {
-                    std::string rimuoviRecensione =  recensione.remove_recensione(db1, nome_utente_compratore, idRecensione);
+                    std::string rimuoviRecensione =  recensione.rimuovi_recensione(db1, nome_utente_compratore, idRecensione);
 
                     strcpy(outputs, rimuoviRecensione.c_str());
 

@@ -1,6 +1,6 @@
 // Product.h
-#ifndef PRODUCT_H
-#define PRODUCT_H
+#ifndef PRODOTTO_H
+#define PRODOTTO_H
 
 #include "../server-customer/src/main.h"
 #include "../server-customer/src/ordine.h"
@@ -8,43 +8,46 @@
 //#include "statoOrdineToString.h"
 
 
-class Product
+class Prodotto
 {
 public:
     // Attributi per la classe Prodotto.
-    int cod_product;
-    std::string nome;
-    std::string categoria;
-    float prezzo_euro;
-    std::string descrizione;
-    std::string azienda_produzione;
-    int numero_copie_disponibili;
+    int m_codProdotto;
+    std::string m_nome;
+    std::string m_categoria;
+    float m_prezzoEuro;
+    std::string m_descrizione;
+    std::string m_aziendaProduzione;
+    int m_numeroCopieDisponibili;
 
-    Product() : nome(""),
-                categoria(""),
-                prezzo_euro(-1.0),
-                descrizione(""),
-                azienda_produzione(""),
-                numero_copie_disponibili(-1) {}
+    Prodotto() : 
+                m_codProdotto(-1),
+                m_nome(""),
+                m_categoria(""),
+                m_prezzoEuro(-1.0),
+                m_descrizione(""),
+                m_aziendaProduzione(""),
+                m_numeroCopieDisponibili(-1) {}
 
-    Product(std::string nome, std::string categoria,
+    Prodotto(int cod_prodotto, std::string nome, std::string categoria,
             float prezzo_euro, std::string descrizione, std::string azienda_produzione, int numero_copie_disponibili)
-        : nome(nome), categoria(categoria),
-          prezzo_euro(prezzo_euro), descrizione(descrizione), azienda_produzione(azienda_produzione), numero_copie_disponibili(numero_copie_disponibili) {}
+
+        : m_codProdotto(cod_prodotto), m_nome(nome), m_categoria(categoria),
+          m_prezzoEuro(prezzo_euro), m_descrizione(descrizione), m_aziendaProduzione(azienda_produzione), m_numeroCopieDisponibili(numero_copie_disponibili) {}
 
     void mostraInformazioni()
     {
-        std::cout << "Codice prodotto: " << cod_product << std::endl;
-        std::cout << "Nome: " << nome << std::endl;
-        std::cout << "Categoria: " << categoria << std::endl;
-        std::cout << "Prezzo in euro: " << prezzo_euro << std::endl;
-        std::cout << "Descrizione: " << descrizione << std::endl;
-        std::cout << "Azienda produzione: " << azienda_produzione << std::endl;
-        std::cout << "Numero copie disponibili: " << numero_copie_disponibili << std::endl;
+        std::cout << "Codice prodotto: " << m_codProdotto << std::endl;
+        std::cout << "Nome: " << m_nome << std::endl;
+        std::cout << "Categoria: " << m_categoria << std::endl;
+        std::cout << "Prezzo in euro: " << m_prezzoEuro << std::endl;
+        std::cout << "Descrizione: " << m_descrizione << std::endl;
+        std::cout << "Azienda produzione: " << m_aziendaProduzione << std::endl;
+        std::cout << "Numero copie disponibili: " << m_numeroCopieDisponibili << std::endl;
     }
 
     // Metodo utilizzato per permettere ad un utente fornitore di aggiungere un prodotto al backend.
-    std::string add_new_product(Con2DB db1, std::string in_nome_utente_fornitore, std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili)
+    std::string aggiungi_prodotto_sito(Con2DB db1, std::string in_nome_utente_fornitore, std::string in_nome, std::string in_categoria, float in_prezzo_euro, std::string in_descrizione, std::string in_azienda_produzione, int in_numero_copie_disponibili)
     {
         std::string sessionID = "";
 
@@ -156,8 +159,18 @@ public:
                 messageLog = "Aumentata quantità del prodotto con nome " + in_nome  + " da parte di " + in_nome_utente_fornitore;
                 InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
+                // Animiamo l'oggetto Prodotto:
+                // Esegui una query SELECT per ottenere l'ultimo codProdotto inserito nella tabella Prodotto:
+                // 1. Selezioniamo tutti i codProdotto dalla tabella Prodotto:
+                sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto");
+                res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+                // 2. Prendiamo l'ultimo id
+                this->m_codProdotto = atoi(PQgetvalue(res, rows - 1, 0));
+                PQclear(res);
+
                 // Animo l'oggetto
-                *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
+                *this = Prodotto(m_codProdotto ,in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
             }
         }
 
@@ -175,8 +188,18 @@ public:
             messageLog = "Prodotto con nome " + in_nome +  " inserito nel sito da parte di " + in_nome_utente_fornitore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
+            // Animiamo l'oggetto Prodotto:
+            // Esegui una query SELECT per ottenere l'ultimo codProdotto inserito nella tabella Prodotto:
+            // 1. Selezioniamo tutti i codProdotto dalla tabella Prodotto:
+            sprintf(sqlcmd, "SELECT codProdotto FROM Prodotto");
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            // 2. Prendiamo l'ultimo id
+            this->m_codProdotto = atoi(PQgetvalue(res, rows - 1, 0));
+            PQclear(res);
+
             // Animo l'oggetto
-            *this = Product(in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
+            *this = Prodotto(this->m_codProdotto, in_nome, in_categoria, in_prezzo_euro, in_descrizione, in_azienda_produzione, in_numero_copie_disponibili);
         }
 
         result = messageLog;
@@ -186,7 +209,7 @@ public:
 
 
     // Metodo utilizzato per permettere ad un utente fornitore di rimuovere un prodotto dal backend.
-    std::string remove_prodotto(Con2DB db1, std::string in_nome_utente_fornitore, int codProdotto)
+    std::string rimuovi_prodotto_sito(Con2DB db1, std::string in_nome_utente_fornitore, int in_cod_prodotto)
     {
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione prodotto dal sito.";
@@ -254,7 +277,7 @@ public:
 
 
         // Verifica che il prodotto da rimuovere esista
-        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
+        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", in_cod_prodotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
@@ -264,7 +287,7 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Il prodotto con codice " + std::to_string(codProdotto) + " non esiste";
+            messageLog = "Il prodotto con codice " + std::to_string(in_cod_prodotto) + " non esiste";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
 
             std::cout << "La riga da eliminare non esiste!" << std::endl;
@@ -277,13 +300,13 @@ public:
         if (rows == 1)
         {
             // Eliminazione del prodotto dal carrello dell'utente compratore.
-            sprintf(sqlcmd, "DELETE FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
+            sprintf(sqlcmd, "DELETE FROM Prodotto WHERE codProdotto = '%d'", in_cod_prodotto);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Eliminato prodotto con codice " + std::to_string(codProdotto) + " da " + in_nome_utente_fornitore;
+            messageLog = "Eliminato prodotto con codice " + std::to_string(in_cod_prodotto) + " da " + in_nome_utente_fornitore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
 
@@ -294,7 +317,7 @@ public:
     
     
     // Metodo utilizzato per permettere ad un utente compratore di ricercare un prodotto
-    std::string ricerca_mostra_Prodotto(Con2DB db1, std::string in_nome_utente_compratore, std::string in_nomeProdotto)
+    std::string ricerca_mostra_Prodotto(Con2DB db1, std::string in_nome_utente_compratore, std::string in_nome_prodotto)
     {
 
         std::string sessionID = "";
@@ -364,7 +387,7 @@ public:
 
 
         // Effettuiamo la ricerca del prodotto nel database nella tabella Prodotto
-        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE nome = '%s'", in_nomeProdotto.c_str());
+        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE nome = '%s'", in_nome_prodotto.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
 
@@ -378,7 +401,7 @@ public:
 
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste nessun prodotto che si sta ricercando con nome" + in_nomeProdotto;
+            messageLog = "Non esiste nessun prodotto che si sta ricercando con nome" + in_nome_prodotto;
             InsertToLogDB(db1, "ERROR", messageLog , sessionID, nomeRequisito, statoReq);
 
             std::cout << "Errore: Non esiste il prodotto che si sta ricercando:" << std::endl;
@@ -391,35 +414,35 @@ public:
         if (rows == 1)
         {
             // Animo l'oggetto prodotto:
-            this->cod_product = atoi(PQgetvalue(res, 0, PQfnumber(res, "codProdotto")));
-            this->nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
-            this->categoria = PQgetvalue(res, 0, PQfnumber(res, "categoria"));
-            this->descrizione = PQgetvalue(res, 0, PQfnumber(res, "descrizione"));
-            this->prezzo_euro = atof(PQgetvalue(res, 0, PQfnumber(res, "prezzoEuro")));
-            this->azienda_produzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
-            this->numero_copie_disponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
+            this->m_codProdotto = atoi(PQgetvalue(res, 0, PQfnumber(res, "codProdotto")));
+            this->m_nome = PQgetvalue(res, 0, PQfnumber(res, "nome"));
+            this->m_categoria = PQgetvalue(res, 0, PQfnumber(res, "categoria"));
+            this->m_descrizione = PQgetvalue(res, 0, PQfnumber(res, "descrizione"));
+            this->m_prezzoEuro = atof(PQgetvalue(res, 0, PQfnumber(res, "prezzoEuro")));
+            this->m_aziendaProduzione = PQgetvalue(res, 0, PQfnumber(res, "nome_AziendaProduttrice"));
+            this->m_numeroCopieDisponibili = atoi(PQgetvalue(res, 0, PQfnumber(res, "num_copie_dispo")));
 
             // Mostro le informazioni del Prodotto;
-            std::cout << "Codice prodotto:" << cod_product << std::endl;
+            std::cout << "Codice prodotto:" << m_codProdotto << std::endl;
             printf("\n");
-            std::cout << "Nome prodotto:" << nome << std::endl;
+            std::cout << "Nome prodotto:" << m_nome << std::endl;
             printf("\n");
-            std::cout << "Categoria prodotto: " << categoria << std::endl;
+            std::cout << "Categoria prodotto: " << m_categoria << std::endl;
             printf("\n");
-            std::cout << "Descrizione: " << descrizione << std::endl;
+            std::cout << "Descrizione: " << m_descrizione << std::endl;
             printf("\n");
-            std::cout << "Prezzo in euro: " << prezzo_euro << std::endl;
+            std::cout << "Prezzo in euro: " << m_prezzoEuro << std::endl;
             printf("\n");
-            std::cout << "Azienda di produzione: " << azienda_produzione << std::endl;
+            std::cout << "Azienda di produzione: " << m_aziendaProduzione << std::endl;
             printf("\n");
-            std::cout << "Numero delle copie disponibili: " << numero_copie_disponibili << std::endl;
+            std::cout << "Numero delle copie disponibili: " << m_numeroCopieDisponibili << std::endl;
             printf("\n");
 
             PQclear(res);
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Visione del prodotto ricercato con nome" + in_nomeProdotto + " da parte dell utente compratore " + in_nome_utente_compratore;
+            messageLog = "Visione del prodotto ricercato con nome" + in_nome_prodotto + " da parte dell utente compratore " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
 
@@ -427,28 +450,28 @@ public:
             for (int i = 0; i < rows; i++)
             {
                 // Animo l'oggetto prodotto:
-                this->cod_product = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
-                this->nome = PQgetvalue(res, i, PQfnumber(res, "nome"));
-                this->categoria = PQgetvalue(res, i, PQfnumber(res, "categoria"));
-                this->descrizione = PQgetvalue(res, i, PQfnumber(res, "descrizione"));
-                this->prezzo_euro = atof(PQgetvalue(res, i, PQfnumber(res, "prezzoEuro")));
-                this->azienda_produzione = PQgetvalue(res, i, PQfnumber(res, "nome_AziendaProduttrice"));
-                this->numero_copie_disponibili = atoi(PQgetvalue(res, i, PQfnumber(res, "num_copie_dispo")));
+                this->m_codProdotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
+                this->m_nome = PQgetvalue(res, i, PQfnumber(res, "nome"));
+                this->m_categoria = PQgetvalue(res, i, PQfnumber(res, "categoria"));
+                this->m_descrizione = PQgetvalue(res, i, PQfnumber(res, "descrizione"));
+                this->m_prezzoEuro = atof(PQgetvalue(res, i, PQfnumber(res, "prezzoEuro")));
+                this->m_aziendaProduzione = PQgetvalue(res, i, PQfnumber(res, "nome_AziendaProduttrice"));
+                this->m_numeroCopieDisponibili = atoi(PQgetvalue(res, i, PQfnumber(res, "num_copie_dispo")));
 
                 // Mostro le informazioni del Prodotto;
-                std::cout << "Codice prodotto:" << cod_product << std::endl;
+                std::cout << "Codice prodotto:" << m_codProdotto << std::endl;
                 printf("\n");
-                std::cout << "Nome prodotto:" << nome << std::endl;
+                std::cout << "Nome prodotto:" << m_nome << std::endl;
                 printf("\n");
-                std::cout << "Categoria prodotto: " << categoria << std::endl;
+                std::cout << "Categoria prodotto: " << m_categoria << std::endl;
                 printf("\n");
-                std::cout << "Descrizione: " << descrizione << std::endl;
+                std::cout << "Descrizione: " << m_descrizione << std::endl;
                 printf("\n");
-                std::cout << "Prezzo in euro: " << prezzo_euro << std::endl;
+                std::cout << "Prezzo in euro: " << m_prezzoEuro << std::endl;
                 printf("\n");
-                std::cout << "Azienda di produzione: " << azienda_produzione << std::endl;
+                std::cout << "Azienda di produzione: " << m_aziendaProduzione << std::endl;
                 printf("\n");
-                std::cout << "Numero delle copie disponibili: " << numero_copie_disponibili << std::endl;
+                std::cout << "Numero delle copie disponibili: " << m_numeroCopieDisponibili << std::endl;
                 printf("\n");
 
                 
@@ -457,7 +480,7 @@ public:
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Visione dei prodotti ricercato con nome" + in_nomeProdotto + " da parte dell utente compratore " + in_nome_utente_compratore;
+            messageLog = "Visione dei prodotti ricercato con nome" + in_nome_prodotto + " da parte dell utente compratore " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
 
@@ -467,8 +490,10 @@ public:
 
 
 
+
+
     // Metodo utilizzato per permettere a un utente compratore di acquistare un prodotto specificando il codice del prodotto e le informazioni per la spedizione.
-    std::string acquistaProdotto(Con2DB db1, std::string nomeUtenteCompratore, int codProdotto, std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione, std::string CAP_spedizione)
+    std::string acquistaProdotto(Con2DB db1, std::string in_nome_utente_compratore, int in_cod_prodotto, std::string in_via_spedizione, std::string in_città_spedizione, std::string in_numero_civico_spedizione, std::string in_CAP_spedizione)
     {
 
         Ordine ordine;
@@ -486,7 +511,7 @@ public:
 
         // Caricamento del sessionID.
         std::string sessionID = "";
-        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", nomeUtenteCompratore.c_str());
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
@@ -500,7 +525,7 @@ public:
         if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste " + nomeUtenteCompratore + " , poichè non è stato registrato, non può essere acquistato il prodotto .";
+            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere acquistato il prodotto .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             
             result = messageLog;
@@ -513,7 +538,7 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste una sessionID per " + nomeUtenteCompratore + ", utente non loggato, non può essere acquistato il prodotto .";
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere acquistato il prodotto .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             
             result = messageLog;
@@ -522,7 +547,7 @@ public:
 
         // Verifichiamo che l'utente si tratti di un utente compratore:
         std::string categoriaUtente = "";
-        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", nomeUtenteCompratore.c_str());
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
@@ -532,7 +557,7 @@ public:
         if (categoriaUtente != "UtenteCompratore"){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "L utente " + nomeUtenteCompratore + " non è un utente compratore, perciò non può essere acquistato il prodotto.";
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere acquistato il prodotto.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
             
             result = messageLog;
@@ -540,7 +565,7 @@ public:
         }
 
         // Verifica che il prodotto esista
-        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
+        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", in_cod_prodotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
@@ -550,7 +575,7 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Il prodotto con codice " + std::to_string(codProdotto) + " da acquistare non esiste";
+            messageLog = "Il prodotto con codice " + std::to_string(in_cod_prodotto) + " da acquistare non esiste";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
 
             std::cout << "La riga da eliminare non esiste!" << std::endl;
@@ -570,7 +595,7 @@ public:
 
             // Inseriamo un record relativo all'ordine effettuato dall'utente compratore
             sprintf(sqlcmd, "INSERT INTO Ordine (idOrdine, codProdotto, nome_utente_compratore, dataOrdineEffettuato, statoOrdine, viaSpedizione, cittaSpedizione, numCivSpedizione, CAPSpedizione) VALUES (DEFAULT, '%d', '%s', '%s', '%s','%s','%s','%s', '%s' )",
-                    codProdotto, nomeUtenteCompratore.c_str(), dataOrdineEffettuato.c_str(), statoOrdineStr.c_str(), via_spedizione.c_str(), città_spedizione.c_str(), numero_civico_spedizione.c_str(), CAP_spedizione.c_str());
+                    in_cod_prodotto, in_nome_utente_compratore.c_str(), dataOrdineEffettuato.c_str(), statoOrdineStr.c_str(), in_via_spedizione.c_str(), in_città_spedizione.c_str(), in_numero_civico_spedizione.c_str(), in_CAP_spedizione.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
 
@@ -580,30 +605,30 @@ public:
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
             // 2. Prendiamo l'ultimo id
-            ordine.identificatore_ordine = atoi(PQgetvalue(res, rows - 1, 0));
+            ordine.m_idOrdine = atoi(PQgetvalue(res, rows - 1, 0));
             PQclear(res);
-            std::cout << "Id ordine: " << ordine.identificatore_ordine << std::endl;
+            std::cout << "Id ordine: " << ordine.m_idOrdine << std::endl;
 
             // Animo l'oggetto Ordine
-            ordine.codice_prodotto = codProdotto;
-            ordine.nome_uteCompratore = nomeUtenteCompratore;
-            ordine.data_ordine_effettuato = dataOrdineEffettuato;
+            ordine.m_codiceProdotto = in_cod_prodotto;
+            ordine.m_nomeUtenteCompratore = in_nome_utente_compratore;
+            ordine.m_DataOrdineEffettuato = dataOrdineEffettuato;
             ordine.impostaStato(StatoOrdine::InElaborazione);
-            ordine.via_spedizione = via_spedizione;
-            ordine.città_spedizione = città_spedizione;
-            ordine.numero_civico_spedizione = numero_civico_spedizione;
-            ordine.CAP_spedizione = CAP_spedizione;
+            ordine.m_viaSpedizione = in_via_spedizione;
+            ordine.m_cittàSpedizione = in_città_spedizione;
+            ordine.m_numeroCivicoSpedizione = in_numero_civico_spedizione;
+            ordine.m_CAPSpedizione = in_CAP_spedizione;
 
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Utente " + nomeUtenteCompratore + " ha acquistato il prodotto con codice " + std::to_string(codProdotto) + ", ordine inserito nel db ";
+            messageLog = "Utente " + in_nome_utente_compratore + " ha acquistato il prodotto con codice " + std::to_string(in_cod_prodotto) + ", ordine inserito nel db ";
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
 
 
             // Dobbiamo sottrarre di 1 il numero di copie disponibili del prodotto.
-            sprintf(sqlcmd, "SELECT num_copie_dispo FROM Prodotto WHERE codProdotto = '%d'", codProdotto);
+            sprintf(sqlcmd, "SELECT num_copie_dispo FROM Prodotto WHERE codProdotto = '%d'", in_cod_prodotto);
             res = db1.ExecSQLtuples(sqlcmd);
             rows = PQntuples(res);
 
@@ -614,7 +639,7 @@ public:
 
                 // Log dell'errore e uscita dalla funzione
                 statoReq = statoRequisito::NotSuccess;
-                messageLog = "Il prodotto com codice: " + std::to_string(codProdotto)  + " da acquistare non esiste";
+                messageLog = "Il prodotto com codice: " + std::to_string(in_cod_prodotto)  + " da acquistare non esiste";
                 InsertToLogDB(db1, "ERROR", messageLog , "", nomeRequisito, statoReq);
 
                 std::cout << "La riga da eliminare non esiste!" << std::endl;
@@ -630,20 +655,20 @@ public:
                 numeroCopieDisponibili = numeroCopieDisponibili - 1;
 
                 // Aggiorniamo il record relativo al codice del prodotto con il nuovo numero di copie disponibili:
-                sprintf(sqlcmd, "UPDATE Prodotto set num_copie_dispo='%d' WHERE codProdotto = '%d'", numeroCopieDisponibili, codProdotto);
+                sprintf(sqlcmd, "UPDATE Prodotto set num_copie_dispo='%d' WHERE codProdotto = '%d'", numeroCopieDisponibili, in_cod_prodotto);
                 res = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res);
 
                 // Log
                 std::string nomeRequisito = "Aggiornamento numero copie disponibili prodotto.";
                 statoReq = statoRequisito::Success;
-                messageLog = "Aggiornata numero copie disponibili prodotto con codice " + std::to_string(codProdotto) + " dopo l acquisto dell utente " + nomeUtenteCompratore;
+                messageLog = "Aggiornata numero copie disponibili prodotto con codice " + std::to_string(in_cod_prodotto) + " dopo l acquisto dell utente " + in_nome_utente_compratore;
                 InsertToLogDB(db1,"INFO", messageLog, "", nomeRequisito, statoReq);                
             }
 
         }
 
-    result = "Utente " + nomeUtenteCompratore + " ha acquistato il prodotto con codice " + std::to_string(codProdotto) + ", ordine inserito nel db ";
+    result = "Utente " + in_nome_utente_compratore + " ha acquistato il prodotto con codice " + std::to_string(in_cod_prodotto) + ", ordine inserito nel db ";
     return result;
     }
 
@@ -652,4 +677,4 @@ public:
 
 };
 
-#endif // PRODUCT_H
+#endif // PRODOTTO_H

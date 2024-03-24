@@ -8,19 +8,19 @@
 class ListaDesideri {
 public:
     // Attributi per la classe ListaDesideri.
-    std::string nome_utente_compratore;
-    int codice_prodotto;
-    int quantitàProdotti;
+    std::string m_nomeUtenteCompratore;
+    int m_codiceProdotto;
+    int m_quantitaProdotto;
 
-    // Costruttore
-    ListaDesideri(std::string nome_utente_compratore, int codice_prod, int quantitàProdotti) : 
-         nome_utente_compratore(nome_utente_compratore), codice_prodotto(codice_prod), quantitàProdotti(quantitàProdotti) {}
+    // Costruttori:
+    ListaDesideri(std::string nome_utente_compratore, int codice_prod, int numeroProdotto) : 
+         m_nomeUtenteCompratore(nome_utente_compratore), m_codiceProdotto(codice_prod), m_quantitaProdotto(numeroProdotto) {}
 
-    ListaDesideri() : nome_utente_compratore(""), codice_prodotto(-1), quantitàProdotti(-1){}
+    ListaDesideri() : m_nomeUtenteCompratore(""), m_codiceProdotto(-1), m_quantitaProdotto(-1){}
 
 
     // Metodo per aggiungere un prodotto alla lista desideri dato il nome dell'utente e il codice del prodotto.
-    std::string add_prodotto(Con2DB db1, std::string in_nome_utente_compratore, int in_codProdotto){
+    std::string aggiungi_prodotto_lista_desideri(Con2DB db1, std::string in_nome_utente_compratore, int in_cod_prodotto){
                 
         // Definizione di alcune variabili per il logging        
         std::string nomeRequisito = "Aggiunta prodotto alla lista desideri.";
@@ -81,7 +81,7 @@ public:
         }
 
         // Controllo se il codice del prodotto da inserire nella lista desideri esiste nel database
-        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", in_codProdotto);
+        sprintf(sqlcmd, "SELECT * FROM Prodotto WHERE codProdotto = '%d'", in_cod_prodotto);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         PQclear(res);
@@ -90,7 +90,7 @@ public:
         if (rows < 1){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Il prodotto con codice" + std::to_string(in_codProdotto) + " non esiste.";
+            messageLog = "Il prodotto con codice" + std::to_string(in_cod_prodotto) + " non esiste.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
             std::cout << "Il prodotto non esiste!" << std::endl;
@@ -114,39 +114,39 @@ public:
             codProdotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
 
             // Se il codice del prodotto (nella lista desideri) i-esimo è uguale a quello del prodotto che l'utente vuole inserire, il prodotto già è presente nella lista desideri
-            if (codProdotto == in_codProdotto){
+            if (codProdotto == in_cod_prodotto){
                 // Il prodotto è già stato inserito, perciò ne aumentiamo la quantità:
                 // Prima carichiamo la quantità precedente:
                 trovato = true;
-                int quantitàPrecedente;
-                sprintf(sqlcmd, "SELECT quantitàProd FROM ListaDesideri WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", in_nome_utente_compratore.c_str(),in_codProdotto);
+                int quantitaPrecedente;
+                sprintf(sqlcmd, "SELECT quantitàProd FROM ListaDesideri WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", in_nome_utente_compratore.c_str(), in_cod_prodotto);
                 PGresult *res1 = db1.ExecSQLtuples(sqlcmd);
                 rows = PQntuples(res1);
 
                 // Se il numero di righe del risultato della query è 1, allora può essere recuperata la quantità del prodotto nella lista desideri dell'utente.
                 if (rows == 1){
-                    quantitàPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
+                    quantitaPrecedente = atoi(PQgetvalue(res1, 0, PQfnumber(res1, "quantitàProd"))); 
                 }
                 
                 PQclear(res1);
 
                 // Aumenta la quantità del prodotto da inserire
-                quantitàPrecedente = quantitàPrecedente + 1;
+                quantitaPrecedente = quantitaPrecedente + 1;
                 
                 // Aggiorno la quantità del prodotto da inserire
-                sprintf(sqlcmd, "UPDATE ListaDesideri set quantitàProd = '%d' WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", quantitàPrecedente, in_nome_utente_compratore.c_str(),in_codProdotto);
+                sprintf(sqlcmd, "UPDATE ListaDesideri set quantitàProd = '%d' WHERE nome_utente_compratore = '%s' AND codProdotto = '%d'", quantitaPrecedente, in_nome_utente_compratore.c_str(), in_cod_prodotto);
                 PGresult *res2 = db1.ExecSQLcmd(sqlcmd);
                 PQclear(res2);
 
                 // Log 
                 statoReq = statoRequisito::Success;
-                messageLog = "Il prodotto con codice " +  std::to_string(in_codProdotto)  + " già esiste nella lista desideri, ne aggiungiamo la quantità per utente: " + in_nome_utente_compratore;
+                messageLog = "Il prodotto con codice " +  std::to_string(in_cod_prodotto)  + " già esiste nella lista desideri, ne aggiungiamo la quantità per utente: " + in_nome_utente_compratore;
                 InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                 // Anima l'oggetto:
-                this->nome_utente_compratore = in_nome_utente_compratore;
-                this->codice_prodotto = in_codProdotto;
-                this->quantitàProdotti = quantitàPrecedente;
+                this->m_nomeUtenteCompratore = in_nome_utente_compratore;
+                this->m_codiceProdotto = in_cod_prodotto;
+                this->m_quantitaProdotto = quantitaPrecedente;
 
                 // Interrompi il loop dopo aver aggiornato il prodotto
                 break;
@@ -157,18 +157,18 @@ public:
         // Controlliamo se il prodotto non è nella lista desideri e dobbiamo inserirlo lo inseriamo per la prima volta 
         if (trovato == false){
              // Inseriamo il prodotto per la prima volta nella lista desideri:
-            sprintf(sqlcmd, "INSERT INTO ListaDesideri (nome_utente_compratore, codProdotto, quantitàProd) VALUES ('%s', '%d', '%d')", in_nome_utente_compratore.c_str(), in_codProdotto, 1);
+            sprintf(sqlcmd, "INSERT INTO ListaDesideri (nome_utente_compratore, codProdotto, quantitàProd) VALUES ('%s', '%d', '%d')", in_nome_utente_compratore.c_str(), in_cod_prodotto, 1);
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);   
 
             // Anima l'oggetto:
-            this->nome_utente_compratore = in_nome_utente_compratore;
-            this->codice_prodotto = in_codProdotto;
-            this->quantitàProdotti = 1;
+            this->m_nomeUtenteCompratore = in_nome_utente_compratore;
+            this->m_codiceProdotto = in_cod_prodotto;
+            this->m_quantitaProdotto = 1;
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Inserimento del prodotto con codice " +  std::to_string(in_codProdotto)  + " nella lista desideri per utente: " + in_nome_utente_compratore;
+            messageLog = "Inserimento del prodotto con codice " +  std::to_string(in_cod_prodotto)  + " nella lista desideri per utente: " + in_nome_utente_compratore;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
         }
            
@@ -178,7 +178,7 @@ public:
 
 
     // Metodo per rimuovere un prodotto dalla lista desideri dato il nome dell'utente e il codice del prodotto.
-    std::string remove_prodotto(Con2DB db1, std::string in_nome_utente_compratore,  int in_cod_prodotto){
+    std::string rimuovi_prodotto_lista_desideri(Con2DB db1, std::string in_nome_utente_compratore,  int in_cod_prodotto){
         
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Rimozione prodotto dalla lista dei desideri.";

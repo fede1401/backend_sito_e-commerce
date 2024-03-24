@@ -68,7 +68,7 @@ int main()
     char outputs[100];
 
     UtenteFornitore fornitore;
-    Product prodotto;
+    Prodotto prodotto;
     /*  prg  */
 
 #if (DEBUG > 0)
@@ -256,11 +256,12 @@ int main()
                         strcpy(nomeProdotto, fval);
                     }
                     
-                    if (strcmp(fval, "nomeProdotto") == 0)
+                    if (strcmp(fval, "codiceProdotto") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(nomeProdotto, fval);
+                        codiceProdotto = atoi(fval);
                     }
+                    
                     if (strcmp(fval, "categoriaProdotto") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -314,7 +315,7 @@ int main()
                         }
                     }
                     
-                    std::string outputRegistrazione = fornitore.effettuaRegistrazione(db1, nome_utente_fornitore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword, aziendaProduzione);
+                    std::string outputRegistrazione = fornitore.registrazione(db1, nome_utente_fornitore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword, aziendaProduzione);
 
                     strcpy(outputs, outputRegistrazione.c_str());
 
@@ -336,7 +337,7 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NOME AZIENDAPRODUZIONE")
                 {   
-                    std::string aggiornaAziendaProduttrice = fornitore.aggiornaNomeAziendaProduttrice(db1, nome_utente_fornitore,nuovaAziendaProduzione);
+                    std::string aggiornaAziendaProduttrice = fornitore.aggiorna_nome_azienda_produttrice(db1, nome_utente_fornitore,nuovaAziendaProduzione);
 
                     strcpy(outputs, aggiornaAziendaProduttrice.c_str());
 
@@ -359,7 +360,7 @@ int main()
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO SITO")
                 {
-                    std::string aggiuntaProdottoSito = prodotto.add_new_product(db1, nome_utente_fornitore, nomeProdotto, categoriaProdotto, prezzoProdotto, descrizioneProdotto, aziendaProduzione, numeroCopieDisponibili);
+                    std::string aggiuntaProdottoSito = prodotto.aggiungi_prodotto_sito(db1, nome_utente_fornitore, nomeProdotto, categoriaProdotto, prezzoProdotto, descrizioneProdotto, aziendaProduzione, numeroCopieDisponibili);
 
                     strcpy(outputs, aggiuntaProdottoSito.c_str());
 
@@ -382,7 +383,7 @@ int main()
 
                 if (std::string(action) == "RIMUOVI PRODOTTO SITO")
                 {
-                    std::string rimozioneProdottoSito = prodotto.remove_prodotto(db1, nome_utente_fornitore, codiceProdotto);
+                    std::string rimozioneProdottoSito = prodotto.rimuovi_prodotto_sito(db1, nome_utente_fornitore, codiceProdotto);
 
                     strcpy(outputs, rimozioneProdottoSito.c_str());
 
@@ -419,7 +420,7 @@ int main()
                         }
                     }
 
-                    std::string effettuaLogin = fornitore.effettua_login(db1, nome_utente_fornitore, password, sessionID);
+                    std::string effettuaLogin = fornitore.login(db1, nome_utente_fornitore, password, sessionID);
 
                     strcpy(outputs, effettuaLogin.c_str());
 
@@ -442,7 +443,7 @@ int main()
 
                 if (std::string(action) == "EFFETTUA LOGOUT FORNITORE")
                 {
-                    std::string effettuaLogout =  fornitore.effettua_logout(db1, nome_utente_fornitore);
+                    std::string effettuaLogout =  fornitore.logout(db1, nome_utente_fornitore);
 
                     strcpy(outputs, effettuaLogout.c_str());
 
@@ -486,7 +487,7 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NUMERO TELEFONO FORNITORE")
                 {
-                    std::string aggiornaNumeroTelefono = fornitore.aggiornaNumeroDiTelefono(db1, nome_utente_fornitore, nuovoNumeroTelefono);
+                    std::string aggiornaNumeroTelefono = fornitore.aggiorna_numero_telefono(db1, nome_utente_fornitore, nuovoNumeroTelefono);
 
                     strcpy(outputs, aggiornaNumeroTelefono.c_str());
 
@@ -508,7 +509,7 @@ int main()
 
                 if (std::string(action) == "AGGIORNA PASSWORD FORNITORE")
                 {    
-                    std::string aggiornaPassword = fornitore.aggiornaPassword(db1, nome_utente_fornitore, vecchiaPassw, nuovaPassw);
+                    std::string aggiornaPassword = fornitore.aggiorna_password(db1, nome_utente_fornitore, vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, aggiornaPassword.c_str());
 

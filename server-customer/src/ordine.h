@@ -10,50 +10,44 @@
 class Ordine {
 public:
     // Attributi per la classe Ordine.
-    int identificatore_ordine;
-    int codice_prodotto;
-    std::string nome_uteCompratore;
-    std::string data_ordine_effettuato;
-    StatoOrdine stato_ordine;
-    std::string via_spedizione;
-    std::string città_spedizione;
-    std::string numero_civico_spedizione;
-    std::string CAP_spedizione;
+    int m_idOrdine;
+    int m_codiceProdotto;
+    std::string m_nomeUtenteCompratore;
+    std::string m_DataOrdineEffettuato;
+    StatoOrdine m_statoOrdine;
+    std::string m_viaSpedizione;
+    std::string m_cittàSpedizione;
+    std::string m_numeroCivicoSpedizione;
+    std::string m_CAPSpedizione;
 
 
     // Definizione costruttori:  
     Ordine():
-      identificatore_ordine(-1),
-      codice_prodotto(-1),
-      nome_uteCompratore(""),
-      data_ordine_effettuato(""),
-      stato_ordine(),
-      via_spedizione(""),
-      città_spedizione(""),
-      numero_civico_spedizione(""),
-      CAP_spedizione(""){}
+      m_idOrdine(-1),
+      m_codiceProdotto(-1),
+      m_nomeUtenteCompratore(""),
+      m_DataOrdineEffettuato(""),
+      m_statoOrdine(),
+      m_viaSpedizione(""), m_cittàSpedizione(""), m_numeroCivicoSpedizione(""), m_CAPSpedizione(""){}
           
-    Ordine( int identificatore_ordine,  int codice_prodotto, std::string nome_uteCompratore, std::string data_ordine, StatoOrdine stato_ordine,
+    Ordine( int id_ordine,  int codice_prodotto, std::string nome_utente_compratore, std::string data_ordine, StatoOrdine stato_ordine,
     std::string via_spedizione, std::string città_spedizione, std::string numero_civico_spedizione, std::string CAP_spedizione ): 
           
-          identificatore_ordine(identificatore_ordine),
-          codice_prodotto(codice_prodotto), 
-          nome_uteCompratore(nome_uteCompratore),           
-          data_ordine_effettuato(data_ordine), 
-          stato_ordine(stato_ordine),
-          via_spedizione(via_spedizione),
-          città_spedizione(città_spedizione),
-          numero_civico_spedizione(numero_civico_spedizione),
-          CAP_spedizione(CAP_spedizione) {}  
+          m_idOrdine(id_ordine),
+          m_codiceProdotto(codice_prodotto), 
+          m_nomeUtenteCompratore(nome_utente_compratore),           
+          m_DataOrdineEffettuato(data_ordine), 
+          m_statoOrdine(stato_ordine),
+          m_viaSpedizione(via_spedizione), m_cittàSpedizione(città_spedizione), m_numeroCivicoSpedizione(numero_civico_spedizione), m_CAPSpedizione(CAP_spedizione) {}  
 
 
     void impostaStato(StatoOrdine nuovoStato) {   
-      stato_ordine = nuovoStato;    
+      m_statoOrdine = nuovoStato;    
     }
 
 
     // Metodo utilizzato per visualizzare gli ordini effettuati dall'utente compratore preso in input.
-    std::string visione_ordini_effettuati(Con2DB db1, std::string nome_utente_compratore)
+    std::string visione_ordini_effettuati(Con2DB db1, std::string in_nome_utente_compratore)
     {
 
       // Definizione di alcune variabili per il logging
@@ -67,7 +61,7 @@ public:
 
       // Caricamento del sessionID.
       std::string sessionID = "";
-      sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", nome_utente_compratore.c_str());
+      sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
       res = db1.ExecSQLtuples(sqlcmd);
       rows = PQntuples(res);
       // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
@@ -78,7 +72,7 @@ public:
       if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste " + nome_utente_compratore + " , poichè non è stato registrato, non può visionare gli ordini .";
+            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può visionare gli ordini .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             
             result = messageLog;
@@ -89,7 +83,7 @@ public:
       if (sessionID == ""){
           // Log dell'errore e uscita dalla funzione
           statoReq = statoRequisito::NotSuccess;
-          messageLog = "Non esiste una sessionID per " + nome_utente_compratore + ", utente non loggato, non possono essere visionati gli ordini effettuati.";
+          messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non possono essere visionati gli ordini effettuati.";
           InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
           
           result = messageLog;
@@ -99,7 +93,7 @@ public:
 
       // Verifichiamo che l'utente si tratti di un utente compratore:
         std::string categoriaUtente = "";
-        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", nome_utente_compratore.c_str());
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
@@ -109,7 +103,7 @@ public:
         if (categoriaUtente != "UtenteCompratore"){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "L utente " + nome_utente_compratore + " non è un utente compratore, perciò non possono essere visionati gli ordini effettuati.";
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non possono essere visionati gli ordini effettuati.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
             
             result = messageLog;
@@ -118,40 +112,40 @@ public:
 
 
       // Carichiamo tutti gli ordini effettuati dall'utente compratore preso in input dal metodo
-      sprintf(sqlcmd, "SELECT * FROM Ordine WHERE nome_utente_compratore='%s'", nome_utente_compratore.c_str());
+      sprintf(sqlcmd, "SELECT * FROM Ordine WHERE nome_utente_compratore='%s'", in_nome_utente_compratore.c_str());
       res = db1.ExecSQLtuples(sqlcmd);
       rows = PQntuples(res); // Numero di righe restituite dalla query
 
       // Scorrimento dei risultati e visualizzazione degli ordini
       for (int i = 0; i < rows; ++i) {
-        this->identificatore_ordine = atoi(PQgetvalue(res, i, PQfnumber(res, "idOrdine")));
-        this->codice_prodotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
-        this->nome_uteCompratore = PQgetvalue(res, i, PQfnumber(res, "nome_utente_compratore"));
-        this->data_ordine_effettuato =  PQgetvalue(res, i, PQfnumber(res, "dataOrdineEffettuato"));
+        this->m_idOrdine = atoi(PQgetvalue(res, i, PQfnumber(res, "idOrdine")));
+        this->m_codiceProdotto = atoi(PQgetvalue(res, i, PQfnumber(res, "codProdotto")));
+        this->m_nomeUtenteCompratore = PQgetvalue(res, i, PQfnumber(res, "nome_utente_compratore"));
+        this->m_DataOrdineEffettuato =  PQgetvalue(res, i, PQfnumber(res, "dataOrdineEffettuato"));
         std::string statoOrdine = PQgetvalue(res, i, PQfnumber(res, "statoOrdine"));
         
-        if (statoOrdine.c_str() == "in elaborazione"){
-            this->stato_ordine = StatoOrdine::InElaborazione;
+        if (strcmp(statoOrdine.c_str(), "in elaborazione") == 0){
+            this->m_statoOrdine = StatoOrdine::InElaborazione;
         }
 
-        if (statoOrdine.c_str() == "spedito"){
-            this->stato_ordine = StatoOrdine::Spedito;
+        if (strcmp(statoOrdine.c_str(), "spedito") == 0){
+            this->m_statoOrdine = StatoOrdine::Spedito;
         }
 
-        if (statoOrdine.c_str() == "annullato"){
-            this->stato_ordine = StatoOrdine::Annullato;
+        if (strcmp(statoOrdine.c_str(), "annullato") == 0) {
+            this->m_statoOrdine = StatoOrdine::Annullato;
         }
 
-        this->via_spedizione = PQgetvalue(res, i, PQfnumber(res, "viaSpedizione"));
-        this->città_spedizione = PQgetvalue(res, i, PQfnumber(res, "cittaSpedizione"));
-        this->numero_civico_spedizione = PQgetvalue(res, i, PQfnumber(res, "numCivSpedizione"));
-        this->CAP_spedizione = PQgetvalue(res, i, PQfnumber(res, "CAPSpedizione"));
+        this->m_viaSpedizione = PQgetvalue(res, i, PQfnumber(res, "viaSpedizione"));
+        this->m_cittàSpedizione = PQgetvalue(res, i, PQfnumber(res, "cittaSpedizione"));
+        this->m_numeroCivicoSpedizione = PQgetvalue(res, i, PQfnumber(res, "numCivSpedizione"));
+        this->m_CAPSpedizione = PQgetvalue(res, i, PQfnumber(res, "CAPSpedizione"));
       }
       PQclear(res);
 
       // Log
       statoReq = statoRequisito::Success;
-      messageLog = "Visione degli ordini da parte dell utente " + nome_utente_compratore;
+      messageLog = "Visione degli ordini da parte dell utente " + in_nome_utente_compratore;
       InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
       result = messageLog;
@@ -160,7 +154,7 @@ public:
 
 
     // Metodo utilizzato per annullare un ordine di un utente compratore tramite l'id dell'ordine.
-    std::string annulla_ordine(Con2DB db1, std::string in_nome_utenteCompratore, int idOrdine)
+    std::string annulla_ordine(Con2DB db1, std::string in_nome_utente_compratore, int in_id_ordine)
     {
         // Definizione di alcune variabili per il logging
         std::string nomeRequisito = "Annullamento ordine.";
@@ -177,7 +171,7 @@ public:
         std::string result = "";
 
         // Caricamento del sessionID.
-        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utenteCompratore.c_str());
+        sprintf(sqlcmd, "SELECT session_id FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il sessionID
@@ -188,7 +182,7 @@ public:
         if (rows == 0){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste " + in_nome_utenteCompratore + " , poichè non è stato registrato, non può essere annullato l ordine .";
+            messageLog = "Non esiste " + in_nome_utente_compratore + " , poichè non è stato registrato, non può essere annullato l ordine .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             
             result = messageLog;
@@ -200,7 +194,7 @@ public:
         if (sessionID == ""){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste una sessionID per " + in_nome_utenteCompratore + ", utente non loggato, non può essere annullato l ordine.";
+            messageLog = "Non esiste una sessionID per " + in_nome_utente_compratore + ", utente non loggato, non può essere annullato l ordine.";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             
             result = messageLog;
@@ -209,7 +203,7 @@ public:
 
         // Verifichiamo che l'utente si tratti di un utente compratore:
         std::string categoriaUtente = "";
-        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utenteCompratore.c_str());
+        sprintf(sqlcmd, "SELECT categoriaUtente FROM Utente WHERE nome_utente = '%s'", in_nome_utente_compratore.c_str());
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
         // Se il numero di righe del risultato della query è 1, allora possiamo recuperare la categoria dell'utente.
@@ -219,7 +213,7 @@ public:
         if (categoriaUtente != "UtenteCompratore"){
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "L utente " + in_nome_utenteCompratore + " non è un utente compratore, perciò non può essere annullato l ordine";
+            messageLog = "L utente " + in_nome_utente_compratore + " non è un utente compratore, perciò non può essere annullato l ordine";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
             
             result = messageLog;
@@ -228,7 +222,7 @@ public:
 
 
         // Recupero del nome dell'utente compratore che ha effettuato l'ordine tramite l'id dell'ordine:
-        sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", idOrdine);
+        sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", in_id_ordine);
         res = db1.ExecSQLtuples(sqlcmd);
         rows = PQntuples(res);
 
@@ -254,10 +248,10 @@ public:
         }
 
         // Confrontiamo il nome dell'utente compratore che vuole annullare l'ordine con l'utente associato all'id dell'ordine.
-        if (in_nome_utenteCompratore != nome_utente_compratore){
+        if (in_nome_utente_compratore != nome_utente_compratore){
 
           // Log
-          messageLog = "L utente compratore di chi ha effettuato l ordine " + nome_utente_compratore + " non corrisponde a chi vuole annullare ordine: " + in_nome_utenteCompratore;
+          messageLog = "L utente compratore di chi ha effettuato l ordine " + nome_utente_compratore + " non corrisponde a chi vuole annullare ordine: " + in_nome_utente_compratore;
           InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
 
           std::cout << "L'utente compratore dell'ordine non corrisponde a chi vuole annullare l'ordine" << std::endl;
@@ -272,7 +266,7 @@ public:
           // Se, invece, l'ordine è stato spedito, allora NON può essere annullato;
 
           // Recupero dello stato dell'ordine:
-          sprintf(sqlcmd, "SELECT statoOrdine FROM Ordine WHERE idOrdine = '%d'", idOrdine);
+          sprintf(sqlcmd, "SELECT statoOrdine FROM Ordine WHERE idOrdine = '%d'", in_id_ordine);
           res = db1.ExecSQLtuples(sqlcmd);
           rows = PQntuples(res);
           
@@ -289,13 +283,13 @@ public:
                   std::string stato_ordine_annullato_str = statoOrdineToString(stato_ordine_annullato);
 
                   // Modifichiamo lo stato dell'ordine a "Annullato"
-                  sprintf(sqlcmd, "UPDATE Ordine set statoOrdine='%s' WHERE idOrdine='%d'", stato_ordine_annullato_str.c_str(), idOrdine);
+                  sprintf(sqlcmd, "UPDATE Ordine set statoOrdine='%s' WHERE idOrdine='%d'", stato_ordine_annullato_str.c_str(), in_id_ordine);
                   res = db1.ExecSQLcmd(sqlcmd);
                   PQclear(res); 
 
                   // Log
                   statoReq = statoRequisito::Success;
-                  messageLog = "Ordine con codice "+ std::to_string(idOrdine) +" annullato da parte dell utente Compratore " + in_nome_utenteCompratore;
+                  messageLog = "Ordine con codice "+ std::to_string(in_id_ordine) +" annullato da parte dell utente Compratore " + in_nome_utente_compratore;
                   InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
               }
@@ -306,7 +300,7 @@ public:
 
                   // Log
                   statoReq = statoRequisito::NotSuccess;
-                  messageLog = "Ordine con codice "+ std::to_string(idOrdine) +" non annullabile perchè già spedito o già annullato. ";
+                  messageLog = "Ordine con codice "+ std::to_string(in_id_ordine) +" non annullabile perchè già spedito o già annullato. ";
                   InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
                   
                   result = messageLog;
@@ -320,7 +314,7 @@ public:
 
             // Log
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Ordine con codice "+ std::to_string(idOrdine) +" non trovato. ";
+            messageLog = "Ordine con codice "+ std::to_string(in_id_ordine) +" non trovato. ";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
             
             result = messageLog;
