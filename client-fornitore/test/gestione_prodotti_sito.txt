@@ -1,0 +1,104 @@
+EFFETTUA REGISTRAZIONE FORNITORE
+utente15
+UtenteFornitore
+Utente
+Quindici
+3333333333
+utente.quindici@gmail.com
+Aspirapolvere.121.
+Aspirapolvere.121.
+Unieuro
+
+
+AGGIUNGI PRODOTTO SITO
+utente15
+Iphone
+Telefonia
+900
+Iphone15, colorazione verde, 256GB RAM
+Unieuro
+190
+
+# Aggiunta prodotto sito già esistente
+AGGIUNGI PRODOTTO SITO
+utente15
+Iphone
+Telefonia
+900
+Iphone15, colorazione verde, 256GB RAM
+Unieuro
+190
+
+AGGIUNGI PRODOTTO SITO
+utente15
+Macbook
+Computer
+1200
+Macbook, colorazione grigio siderale, 256GB archiviazione, 8GB RAM
+Unieuro
+200
+
+AGGIUNGI PRODOTTO SITO
+utente15
+Dell
+Computer
+1000
+Personal computer Dell, 16 GB RAM, 1024 GB archiviazione.
+Unieuro
+200
+
+AGGIUNGI PRODOTTO SITO
+utente15
+Samsung Galaxy S24
+Telefonia
+1000
+Samsung Galaxy S24, colorazione nero, 256GB RAM
+Unieuro
+200
+
+AGGIUNGI PRODOTTO SITO
+utente15
+Ipad
+Telefonia
+950
+Ipad 10 generazione, colorazione blu, 256GB RAM
+Unieuro
+200
+
+
+# Aggiunta prodotto sito utente non esistente.
+AGGIUNGI PRODOTTO SITO
+utente
+Samsung Galaxy S24
+Telefonia
+1000
+Samsung Galaxy S24, colorazione nero, 256GB RAM
+Unieuro
+200
+
+
+EFFETTUA LOGOUT FORNITORE
+utente15
+
+# Aggiunta prodotto sito utente non loggato.
+AGGIUNGI PRODOTTO SITO
+utente15
+Samsung Galaxy S24
+Telefonia
+1000
+Samsung Galaxy S24, colorazione nero, 256GB RAM
+Unieuro
+200
+
+# Rimozione prodotto sito utente non loggato
+RIMUOVI PRODOTTO SITO
+utente15
+1
+
+EFFETTUA LOGIN FORNITORE
+utente15
+Aspirapolvere.121.
+
+
+
+

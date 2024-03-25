@@ -1,0 +1,234 @@
+
+#Registrazione NON A BUON FINE con password corta.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente9
+UtenteTrasportatore
+Utente
+Nove
+3333333333
+utente.nove@gmail.com
+Fbe2.
+Fbe2.
+DHL
+
+
+#Registrazione NON A BUON FINE con password diversa da conferma password.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente9
+UtenteTrasportatore
+Utente
+Nove
+3333333333
+utente.nove@gmail.com
+Fbewjnfjewnfwnflwnf2.
+Fbeejefnefefnfnnf2.
+DHL
+
+
+
+#Registrazione NON A BUON FINE con password senza carattere maiuscolo.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente9
+UtenteTrasportatore
+Utente
+Nove
+3333333333
+utente.nove@gmail.com
+fbewjnfjewnfwnflwnf2.
+fbewjnfjewnfwnflwnf2.
+DHL
+
+
+
+#Registrazione NON A BUON FINE con password senza carattere speciale.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente9
+UtenteTrasportatore
+Utente
+Nove
+3333333333
+utente.nove@gmail.com
+Fbewjnfjewnfwnflwnf2
+Fbewjnfjewnfwnflwnf2
+DHL
+
+
+#Registrazione NON A BUON FINE con password senza numero.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente9
+UtenteTrasportatore
+Utente
+Nove
+3333333333
+utente.nove@gmail.com
+Fbewjnfjewnfwnflwnf.!
+Fbewjnfjewnfwnflwnf.!
+DHL
+
+
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente9
+UtenteTrasportatore
+Utente
+Nove
+3333333333
+utente.nove@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+DHL
+
+
+
+#Registrazione NON A BUON FINE con nome utente già esistente.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente9
+UtenteTrasportatore
+Utente
+Nove
+3333333333
+utente.nove@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+DHL
+
+
+
+#Registrazione NON A BUON FINE con e-mail già esistente.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente10
+UtenteTrasportatore
+Utente
+Dieci
+3333333333
+utente.nove@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+DHL
+
+
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente10
+UtenteTrasportatore
+Utente
+Dieci
+3333333333
+utente.dieci@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+DHL
+
+
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente11
+UtenteTrasportatore
+Utente
+Undici
+3333333333
+utente.undici@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+DHL
+
+
+EFFETTUA LOGOUT TRASPORTATORE
+utente9
+
+EFFETTUA LOGOUT TRASPORTATORE
+utente10
+
+EFFETTUA LOGOUT TRASPORTATORE
+utente11
+
+# Logout con utente non esistente
+EFFETTUA LOGOUT TRASPORTATORE
+utente12
+
+
+EFFETTUA LOGIN TRASPORTATORE
+utente9
+Fbefbifno2ifno2!.
+
+
+# Login con password errata.
+EFFETTUA LOGIN TRASPORTATORE
+utente9
+Dfnknklnsdl!.2
+
+
+EFFETTUA LOGIN TRASPORTATORE
+utente11
+Fbefbifno2ifno2!.
+
+
+# Login con utente non esistente.
+EFFETTUA LOGIN TRASPORTATORE
+utente12
+Fbefbifno2ifno2!.
+
+
+AGGIORNA NUMERO TELEFONO TRASPORTATORE
+utente9
+131212212
+
+# Aggiornamento numero telefono utente non loggato.
+AGGIORNA NUMERO TELEFONO TRASPORTATORE
+utente10
+131212212
+
+# Aggiornamento numero telefono utente non esistente.
+AGGIORNA NUMERO TELEFONO TRASPORTATORE
+utente12
+131212212
+
+
+AGGIORNA PASSWORD TRASPORTATORE
+utente9
+Fbefbifno2ifno2!.
+Adhfhhdhdhfhfh..9
+
+# Aggiorna password utente non loggato
+AGGIORNA PASSWORD TRASPORTATORE
+utente10
+Fbefbifno2ifno2!.
+Adhfhhdhdhfhfh..9
+
+# Aggiorna password utente non esistente
+AGGIORNA PASSWORD TRASPORTATORE
+utente12
+Fbefbifno2ifno2!.
+Adhfhhdhdhfhfh..9
+
+
+AGGIORNA NOME DITTASPEDIZIONE
+utente9
+FedEx
+
+# Aggiorna azienda produzione con utente non loggato.
+AGGIORNA NOME DITTASPEDIZIONE
+utente10
+FedEx
+
+# Aggiorna azienda produzione con utente non esistente.
+AGGIORNA NOME DITTASPEDIZIONE
+utente12
+FedEx
+
+
+ELIMINA PROFILO TRASPORTATORE
+utente9
+
+# Eliminazione profilo non loggato
+ELIMINA PROFILO TRASPORTATORE
+utente10
+
+ELIMINA PROFILO TRASPORTATORE
+utente11
+
+# Eliminazione profilo non esistente
+ELIMINA PROFILO TRASPORTATORE
+utente12
+
+

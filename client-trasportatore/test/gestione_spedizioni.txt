@@ -1,0 +1,120 @@
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente9
+UtenteTrasportatore
+Utente
+Nove
+3333333333
+utente.nove@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+DHL
+
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente20
+UtenteTrasportatore
+Utente
+Venti
+3333333333
+utente.venti@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+FedEx
+
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente21
+UtenteTrasportatore
+Utente
+Ventuno
+3333333333
+utente.ventuno@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+Bartolini
+
+
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente11
+UtenteTrasportatore
+Utente
+Undici
+3333333333
+utente.undici@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+DHL
+
+
+PRENDI IN CARICO SPEDIZIONE
+utente9
+
+PRENDI IN CARICO SPEDIZIONE
+utente20
+
+PRENDI IN CARICO SPEDIZIONE
+utente21
+
+PRENDI IN CARICO SPEDIZIONE
+utente11
+
+# Non c'è più nessun ordine da prendere in carico
+PRENDI IN CARICO SPEDIZIONE
+utente9
+
+# Spedizione presa in carica da un utente non loggato, errore.
+PRENDI IN CARICO SPEDIZIONE
+utente11
+
+
+AVVISA SPEDIZIONE EFFETTUATA
+utente9
+1
+
+AVVISA SPEDIZIONE EFFETTUATA
+utente9
+2
+
+AVVISA SPEDIZIONE EFFETTUATA
+utente9
+3
+
+AVVISA SPEDIZIONE EFFETTUATA
+utente9
+4
+
+
+
+AVVISA SPEDIZIONE EFFETTUATA
+utente20
+1
+
+AVVISA SPEDIZIONE EFFETTUATA
+utente20
+2
+
+AVVISA SPEDIZIONE EFFETTUATA
+utente20
+3
+
+AVVISA SPEDIZIONE EFFETTUATA
+utente20
+4
+
+# Avviso spedizione non esistente
+AVVISA SPEDIZIONE EFFETTUATA
+utente9
+100
+
+# Avviso spedizione da parte di un utente non loggato
+# AVVISA SPEDIZIONE EFFETTUATA
+# utent11
+# 1
+
+# ELIMINA PROFILO TRASPORTATORE
+# utente9
+
+# ELIMINA PROFILO TRASPORTATORE
+# utent11

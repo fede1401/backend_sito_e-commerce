@@ -105,6 +105,22 @@ public:
             return result;
         }
 
+        // Verifico che l'utente non abbia già effettuato un reso per lo stesso ordine.
+        sprintf(sqlcmd, "SELECT * FROM Reso WHERE nome_utente_compratore = '%s' AND idOrdine = '%d'", in_nome_utente_compratore.c_str(), in_id_ordine);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora già esiste un reso da parte dell'utente dello stesso ordine acquistato.
+        if (rows == 1){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Attualmente esiste già una reso da parte di " + in_nome_utente_compratore + " per ordine: " + std::to_string(in_id_ordine);
+            InsertToLogDB(db1, "ERROR", messageLog , sessionID, nomeRequisito, statoReq);
+                    
+            result = messageLog;
+            return result;
+        }
+
+
         // Recupero dello stato della spedizione dell'ordine tramite il suo id per verificare se l'ordine è stato spedito e arrivato correttamente.
         sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", in_id_ordine);
         res = db1.ExecSQLtuples(sqlcmd);

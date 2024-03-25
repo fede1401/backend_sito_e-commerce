@@ -161,7 +161,9 @@ int main()
     srand((unsigned)time(NULL));
 
     // Apre il file corrispondente al test da effettuare in modalità di lettura
-    std::ifstream file("../test/SpedisciOrdine.txt");
+    // test_sessioni_gestioneprofilo
+    // gestione_spedizioni
+    std::ifstream file("../test/gestione_spedizioni.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
@@ -486,7 +488,7 @@ int main()
     // Libera la risorsa della risposta
     freeReplyObject(reply);
 
-//#if (DEBUG < 0)
+#if (DEBUG < 0)
     while (1)
     {
         // send arguments to server
@@ -788,7 +790,7 @@ int main()
         /* sleep   */
         micro_sleep(10000000); // 10 secondi di attesa
     }                          // while ()
-//#endif
+#endif
 
     redisFree(c2r);
 }

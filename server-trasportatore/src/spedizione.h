@@ -198,7 +198,7 @@ public:
 
                 // Log
                 statoReq = statoRequisito::Success;
-                messageLog = "Avviata spedizione per ordine " + std::to_string(idOrdine);
+                messageLog = "Avviata spedizione per ordine " + std::to_string(idOrdine) + " da parte di " + in_nome_utente_trasportatore.c_str();
                 InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
 
                 // Animiamo l'oggetto Spedizione:
@@ -327,7 +327,7 @@ public:
         if (rows < 1)
         {
             // Log dell'errore e uscita dalla funzione
-            messageLog = "Non esiste id " + std::to_string(in_id_spedizione) + " della spedizione";
+            messageLog = "Non esiste id " + std::to_string(in_id_spedizione) + " della spedizione, perciò " + in_nome_utente_trasportatore.c_str() + " non può avvisare che la spedizione è consegnata.";
             statoReq = statoRequisito::NotSuccess;
             InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
             
@@ -365,7 +365,7 @@ public:
 
             // Log
             statoReq = statoRequisito::Success;
-            messageLog = "Ordine consegnato da " + in_nome_utente_trasportatore;
+            messageLog = "Spedizione con codice " + std::to_string(in_id_spedizione) + "consegnato da " + in_nome_utente_trasportatore;
             InsertToLogDB(db1, "INFO", "Ordine consegnato", sessionID, nomeRequisito, statoReq);
 
             // Aggiorno la disponibilità dell'utente Trasportatore , il quale può effettuare una nuova consegna:

@@ -62,7 +62,7 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Utente " + in_nome_utente + " non trovato";
+            messageLog = "Utente " + in_nome_utente + " non esistente, non è registrato perciò non può essere effettuato il login.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
 
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
@@ -95,6 +95,52 @@ public:
             messageLog = "Utente " + in_nome_utente + " già connesso e con la sessionID : " + sessionID + " , stai cercando di effettuare un nuovo login.";
             InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
 
+            // Viene effettuata la verifica delle password: confrontiamo la password data in input dall'utente che vuole effettuare il login e la password che si trova nel db dell'utente.
+            std::string password_utente;
+            char *password_u;
+
+            // Viene recuperata la password nel database
+            sprintf(sqlcmd, "SELECT password FROM Utente WHERE nome_utente = '%s'", in_nome_utente.c_str());
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+
+            // Se il numero di righe del risultato delle query è uguale a 1, la password può essere assegnata a una variabile.
+            if (rows == 1)
+            {
+                password_u = PQgetvalue(res, 0, PQfnumber(res, "password"));
+                password_utente.assign(password_u);
+            }
+
+            // Se il numero di righe del risultato delle query è 0 l'utente non è stato trovato
+            if (rows == 0)
+            {
+                // Log dell'errore e uscita dalla funzione
+                statoReq = statoRequisito::NotSuccess;
+                messageLog = "Utente " + in_nome_utente + " non esistente, non è registrato perciò non può essere effettuato il login.";
+                InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
+
+                std::cout << "Errore: L'utente non è stato trovato." << std::endl;
+                throw std::runtime_error("Errore: L'utente non è stato trovato.");
+                //return;
+            }
+
+            PQclear(res);
+
+            // Viene effettuato il confronto della password data in input dall'utente e quella segnata nel database:
+            // Se le passowrd non corrispondono allora l'utente non può collegarsi.
+            if (in_password != password_utente)
+            {
+                // Log dell'errore e uscita dalla funzione
+                statoReq = statoRequisito::NotSuccess;
+                messageLog = "Password " + in_password + " non corretta, non può essere effettuato il nuovo login per l utente: " + in_nome_utente;
+                InsertToLogDB(db1, "ERROR", messageLog, in_sessionID, nomeRequisito, statoReq);
+
+                std::cout << "Errore: La passowrd non è corretta, riprovare." << std::endl;
+                throw std::runtime_error("Errore: La passowrd non è corretta, riprovare.");
+                //return;
+            }
+
+
             // Aggiorniamo il sessionID dell'utente con quello per la nuova sessione:
             sprintf(sqlcmd, "UPDATE Utente set session_id='%s' WHERE nome_utente = '%s'", in_sessionID.c_str(), in_nome_utente.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
@@ -109,7 +155,7 @@ public:
             if (rows == 0){
                 // Log dell'errore e uscita dalla funzione
                 statoReq = statoRequisito::NotSuccess;
-                messageLog = "Utente " + in_nome_utente + " non trovato.";
+                messageLog = "Utente " + in_nome_utente + " non esistente, non è registrato perciò non può essere effettuato il login.";
                 InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
                 throw std::runtime_error("Errore: Utente non trovato.");
                 //return;
@@ -169,7 +215,7 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Utente " + in_nome_utente + " non trovato";
+            messageLog = "Utente " + in_nome_utente + " non esistente, non è registrato perciò non può essere effettuato il login.";
             InsertToLogDB(db1, "ERROR", messageLog, "", nomeRequisito, statoReq);
 
             std::cout << "Errore: L'utente non è stato trovato." << std::endl;
@@ -185,7 +231,7 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Password " + in_password + " non corretta.";
+            messageLog = "Password " + in_password + " non corretta, non può essere effettuato il login per l utente " + in_nome_utente;
             InsertToLogDB(db1, "ERROR", messageLog, in_sessionID, nomeRequisito, statoReq);
 
             std::cout << "Errore: La passowrd non è corretta, riprovare." << std::endl;
@@ -216,7 +262,7 @@ public:
 
         // Log
         statoReq = statoRequisito::Success;
-        messageLog = "Aggiornamento stato per utente " + in_nome_utente;
+        messageLog = "Utente " + in_nome_utente + " loggato, aggiornamento dello stato.";
         InsertToLogDB(db1, "INFO", messageLog, in_sessionID, nomeRequisito, statoReq);
 
         // Animo l'oggetto Utente

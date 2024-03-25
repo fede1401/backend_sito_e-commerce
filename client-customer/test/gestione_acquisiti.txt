@@ -1,0 +1,210 @@
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE COMPRATORE
+utente1
+UtenteCompratore
+Utente
+Uno
+3333333333
+utente.uno@gmail.com
+Via delle vie
+10
+01000
+Roma
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+01/01/1910
+
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE COMPRATORE
+utente5
+UtenteCompratore
+Utente
+Cinque
+3333333333
+utente.cinque@gmail.com
+Via delle vie
+10
+01000
+Roma
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+01/01/1910
+
+
+EFFETTUA LOGOUT COMPRATORE
+utente5
+
+
+RICERCA PRODOTTO
+utente1
+Iphone
+
+# Ricerca prodotto utente non esistente
+RICERCA PRODOTTO
+utente3
+Iphone
+
+# Ricerca prodotto utente non loggato
+RICERCA PRODOTTO
+utente5
+Iphone
+
+
+AGGIUNGI PRODOTTO CARRELLO
+utente1
+1
+
+# Aggiunta prodotto alla lista desideri con codice non esistente
+AGGIUNGI PRODOTTO CARRELLO
+utente1
+100
+
+# Aggiunta prodotto al carrello utente non esistente
+AGGIUNGI PRODOTTO CARRELLO
+utente3
+1
+
+# Aggiunta prodotto al carrello utente non loggato
+AGGIUNGI PRODOTTO CARRELLO
+utente5
+1
+
+
+AGGIUNGI PRODOTTO LISTADESIDERI
+utente1
+1
+
+# Aggiunta prodotto alla lista desideri con codice non esistente
+AGGIUNGI PRODOTTO LISTADESIDERI
+utente1
+100
+
+# Aggiunta prodotto alla lista desideri con utente non esistente
+AGGIUNGI PRODOTTO LISTADESIDERI
+utente3
+1
+
+# Aggiunta prodotto alla lista desideri con utente non loggato
+AGGIUNGI PRODOTTO LISTADESIDERI
+utente5
+1
+
+
+ACQUISTA PRODOTTO
+utente1
+1
+Via delle rome
+Roma
+11
+01010
+
+
+ACQUISTA PRODOTTO
+utente1
+2
+Via delle rome
+Roma
+11
+01010
+
+
+ACQUISTA PRODOTTO
+utente1
+3
+Via delle rome
+Roma
+11
+01010
+
+ACQUISTA PRODOTTO
+utente1
+4
+Via delle rome
+Roma
+11
+01010
+
+
+# Acquisto prodotto con utente non esistente
+ACQUISTA PRODOTTO
+utente3
+1
+Via delle rome
+Roma
+11
+01010
+
+# Acquisto prodotto con utente non loggato
+ACQUISTA PRODOTTO
+utente5
+1
+Via delle rome
+Roma
+11
+01010
+
+# Acquisto prodotto con prodotto non esistente
+ACQUISTA PRODOTTO
+utente1
+100
+Via delle rome
+Roma
+11
+01010
+
+
+VISIONA ORDINI EFFETTUATI
+utente1
+
+# Visiona ordini effettuati utente non esistente
+VISIONA ORDINI EFFETTUATI
+utente3
+
+# Visiona ordini effettuati utente non loggato
+VISIONA ORDINI EFFETTUATI
+utente5
+
+
+
+
+RIMUOVI PRODOTTO CARRELLO
+utente1
+1
+
+# Rimozione prodotto codice non esistente
+RIMUOVI PRODOTTO CARRELLO
+utente1
+100
+
+# Rimozione prodotto utente non esistente
+RIMUOVI PRODOTTO CARRELLO
+utente3
+1
+
+# Rimozione prodotto utente non loggato
+RIMUOVI PRODOTTO CARRELLO
+utente5
+1
+
+
+RIMUOVI PRODOTTO LISTADESIDERI
+utente1
+1
+
+# Rimozione prodotto codice non esistente
+RIMUOVI PRODOTTO LISTADESIDERI
+utente1
+100
+
+# Rimozione prodotto utente non esistente
+RIMUOVI PRODOTTO LISTADESIDERI
+utente3
+1
+
+# Rimozione prodotto utente non loggato
+RIMUOVI PRODOTTO LISTADESIDERI
+utente5
+1
+
+
+

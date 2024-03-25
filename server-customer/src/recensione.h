@@ -89,6 +89,22 @@ public:
         }
 
 
+        // Verifico che l'utente non abbia già effettuato una recensione per lo stesso ordine.
+        sprintf(sqlcmd, "SELECT * FROM Recensione WHERE nome_utente_compratore = '%s' AND idOrdine = '%d'", in_nome_utente_compratore.c_str(), in_id_ordine);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è 1, allora già esiste una recensione da parte dell'utente dello stesso ordine acquistato.
+        if (rows == 1){
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Attualmente esiste già una recensione da parte di " + in_nome_utente_compratore + " per ordine: " + std::to_string(in_id_ordine);
+            InsertToLogDB(db1, "ERROR", messageLog , sessionID, nomeRequisito, statoReq);
+                    
+            result = messageLog;
+            return result;
+        }
+
+
         // Recupero dello stato della spedizione dell'ordine tramite il suo id per verificare se l'ordine è stato spedito e arrivato correttamente.
         sprintf(sqlcmd, "SELECT statoSpedizione FROM Spedizione WHERE idOrdine = '%d'", in_id_ordine);
         res = db1.ExecSQLtuples(sqlcmd);
@@ -280,6 +296,19 @@ public:
             nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
         }
         PQclear(res);
+
+
+        if (nome_utente_compratore == ""){
+            // Log dell'errore e uscita dalla funzione
+            std::cout << "La riga da eliminare non esiste!" << std::endl;
+
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "La recensione con id " + std::to_string(in_id_recensione) + " non esiste";
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+            
+            result = messageLog;
+            return result;
+        }
 
 
         // Se l'utente che vuole rimuovere la recensione è diverso dall'utente che ha effettuato la recensione allora c'è un errore

@@ -1,0 +1,46 @@
+EFFETTUA LOGIN COMPRATORE
+utente1
+Fbefbifno2ifno2!.
+
+
+# Recensione su ordine non consegnato.
+EFFETTUA RECENSIONE
+utente1
+1
+Ottimo prodotto!
+Cinque
+
+
+EFFETTUA RECENSIONE
+utente1
+2
+Ottimo prodotto!
+Cinque
+
+
+EFFETTUA RECENSIONE
+utente1
+4
+Ottimo prodotto con id ordine 4!
+Cinque
+
+
+RIMUOVI RECENSIONE
+utente1
+2
+
+
+EFFETTUA RESO
+utente1
+3
+CambioOpinione
+
+# Annulla ordine su un ordine non consegnato, pericò corretto
+ANNULLA ORDINE
+utente1
+1
+
+# Annulla ordine su un ordine consegnato, periò non corretto
+ANNULLA ORDINE
+utente1
+2
