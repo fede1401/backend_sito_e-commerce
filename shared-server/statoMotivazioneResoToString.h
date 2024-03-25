@@ -29,5 +29,26 @@ enum class motivazioneReso {
     }
 
 
+    // Metodo che prende una stringa che rappresenta quello stato e lo trasforma nel tipo enumerativo.
+    motivazioneReso stringToStatoMotivazioneReso(std::string in_stato)
+    {    
+        if (in_stato == "difettoso"){
+            return motivazioneReso::Difettoso;
+        }
+
+        if (in_stato == "misura errata"){
+            return   motivazioneReso::MisuraErrata;
+        }
+
+        if (in_stato == "non conforme alle aspettative"){
+            return motivazioneReso::NonConformeAlleAspettative;
+        }
+
+        if (in_stato == "cambio opinione"){
+            return  motivazioneReso::CambioOpinione;
+        }
+    }
+
+
 
 #endif // STATOMOTIVAZIONERESOTOSTRING_H

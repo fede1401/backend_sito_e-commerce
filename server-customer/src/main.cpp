@@ -81,7 +81,9 @@ int main()
     
     char descrizioneRecensione[100];
     int idRecensione;
-    char motivazione_reso[100];
+    char voto_stelle_str[100];
+
+    char motivazione_reso_str[100];
 
     char outputs[100];
 
@@ -393,10 +395,17 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         idRecensione = atoi(fval);
                     }
-                    if (strcmp(fval, "motivazione_reso") == 0)
+
+                    if (strcmp(fval, "motivazioneReso") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        strcpy(motivazione_reso, fval);
+                        strcpy(motivazione_reso_str, fval);
+                    }
+
+                    if (strcmp(fval, "voto_stella") == 0)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h+1, fval);
+                        strcpy(voto_stelle_str, fval);
                     }
                 
 
@@ -839,7 +848,9 @@ int main()
 
                 if (std::string(action) == "EFFETTUA RESO")
                 {    
-                    std::string effettuaReso = reso.effettua_reso(db1,nome_utente_compratore, idOrdine, motivazioneReso::CambioOpinione);
+
+                    motivazioneReso motivazione_reso_enum = stringToStatoMotivazioneReso( motivazione_reso_str);
+                    std::string effettuaReso = reso.effettua_reso(db1,nome_utente_compratore, idOrdine, motivazione_reso_enum);
 
                     strcpy(outputs, effettuaReso.c_str());
 
@@ -862,7 +873,8 @@ int main()
 
                 if (std::string(action) == "EFFETTUA RECENSIONE")
                 {
-                    std::string effettuaRecensione = recensione.effettua_recensione(db1, nome_utente_compratore, idOrdine, descrizioneRecensione, votoStelle::Cinque);
+                    votoStelle voto_stelle_enum = stringToVotoStelle(voto_stelle_str);
+                    std::string effettuaRecensione = recensione.effettua_recensione(db1, nome_utente_compratore, idOrdine, descrizioneRecensione, voto_stelle_enum);
                     strcpy(outputs, effettuaRecensione.c_str());
 
                     // send result to client

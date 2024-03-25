@@ -245,6 +245,14 @@ int main()
         cvv_cartePagamento[i] = cvv;
     }
 
+    // Array per le motivazioni del reso
+    std::array<std::string , 4> motivazioni_reso = {"difettoso", "misura errata", "non conforme alle aspettative", "cambio opinione"};
+
+    // Array per i voti delle stelle
+    std::array<std::string , 5> voti_stelle = {"1", "2", "3", "4", "5"};
+
+
+
     /*  prg  */
 
 #if (DEBUG > 0)
@@ -913,6 +921,8 @@ int main()
 
     file.close(); // Chiude il file
 
+
+
     printf("\n\nOra di leggere i risultati dal server. \n");
 
     //  Lettura dei risultati dal server
@@ -984,6 +994,7 @@ int main()
 
             // Definisco 4 indici casuali per i parametri che passa il client
             int i5 = rand() % 5;
+            int i4 = rand()%4;
             int i10 = rand() % 10;
             int i100 = rand() % 100;
             int i30 = rand() % 30;
@@ -1457,7 +1468,7 @@ int main()
 
                 // Modificare motivazioneReso
                 sprintf(key3, "motivazioneReso");
-                sprintf(value3, "difettoso");
+                sprintf(value3, motivazioni_reso[i4].c_str());
 
                 // Effettuo un comando di scrittura relativo all'effettuazione del reso.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
@@ -1486,7 +1497,7 @@ int main()
                 sprintf(value4, descrizioneProdotti.c_str());
 
                 sprintf(key5, "voto_stella");
-                sprintf(value5, "Cinque");
+                sprintf(value5, voti_stelle[i5].c_str());
 
                 // Effettuo un comando di scrittura relativo all'effettuazione del reso.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5);

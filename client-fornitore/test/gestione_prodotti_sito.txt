@@ -1,8 +1,8 @@
 EFFETTUA REGISTRAZIONE FORNITORE
-utente15
+utente5
 UtenteFornitore
 Utente
-Quindici
+Cinque
 3333333333
 utente.quindici@gmail.com
 Aspirapolvere.121.
@@ -11,7 +11,7 @@ Unieuro
 
 
 AGGIUNGI PRODOTTO SITO
-utente15
+utente5
 Iphone
 Telefonia
 900
@@ -21,7 +21,7 @@ Unieuro
 
 # Aggiunta prodotto sito già esistente
 AGGIUNGI PRODOTTO SITO
-utente15
+utente5
 Iphone
 Telefonia
 900
@@ -30,7 +30,7 @@ Unieuro
 190
 
 AGGIUNGI PRODOTTO SITO
-utente15
+utente5
 Macbook
 Computer
 1200
@@ -39,7 +39,7 @@ Unieuro
 200
 
 AGGIUNGI PRODOTTO SITO
-utente15
+utente5
 Dell
 Computer
 1000
@@ -48,7 +48,7 @@ Unieuro
 200
 
 AGGIUNGI PRODOTTO SITO
-utente15
+utente5
 Samsung Galaxy S24
 Telefonia
 1000
@@ -57,7 +57,7 @@ Unieuro
 200
 
 AGGIUNGI PRODOTTO SITO
-utente15
+utente5
 Ipad
 Telefonia
 950
@@ -78,11 +78,11 @@ Unieuro
 
 
 EFFETTUA LOGOUT FORNITORE
-utente15
+utente5
 
 # Aggiunta prodotto sito utente non loggato.
 AGGIUNGI PRODOTTO SITO
-utente15
+utente5
 Samsung Galaxy S24
 Telefonia
 1000
@@ -92,11 +92,11 @@ Unieuro
 
 # Rimozione prodotto sito utente non loggato
 RIMUOVI PRODOTTO SITO
-utente15
+utente5
 1
 
 EFFETTUA LOGIN FORNITORE
-utente15
+utente5
 Aspirapolvere.121.
 
 

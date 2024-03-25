@@ -26,4 +26,17 @@ enum class StatoSpedizione
     }
 
 
+    // Metodo che data una stringa rappresentante lo stato della spedizione torna il tipo enumerativo corrispondente.
+    StatoSpedizione stringToStatoSpedizione(std::string in_stato)
+    {
+        if (in_stato == "in transito"){
+            return StatoSpedizione::InTransito;
+        }
+
+        if (in_stato == "consegnato"){
+            return StatoSpedizione::Consegnato;
+        }
+    }
+
+
 #endif // STATOSPEDIZIONETOSTRING_H

@@ -7,22 +7,30 @@ Fbefbifno2ifno2!.
 EFFETTUA RECENSIONE
 utente1
 1
-Ottimo prodotto!
+Ottimo prodotto con id ordine 1!
 Cinque
 
 
 EFFETTUA RECENSIONE
 utente1
+3
+Ottimo prodotto con id ordine 3!
+5
+
+
+EFFETTUA RECENSIONE
+utente1
 2
-Ottimo prodotto!
-Cinque
+Ottimo prodotto con id ordine 2!
+5
 
 
 EFFETTUA RECENSIONE
 utente1
 4
 Ottimo prodotto con id ordine 4!
-Cinque
+5
+
 
 
 RIMUOVI RECENSIONE
@@ -33,14 +41,39 @@ utente1
 EFFETTUA RESO
 utente1
 3
-CambioOpinione
+difettoso
 
-# Annulla ordine su un ordine non consegnato, pericò corretto
+
+EFFETTUA RESO
+utente1
+2
+difettoso
+
+
+EFFETTUA RESO
+utente1
+1
+difettoso
+
+
+EFFETTUA RESO
+utente1
+4
+difettoso
+
+
 ANNULLA ORDINE
 utente1
 1
 
-# Annulla ordine su un ordine consegnato, periò non corretto
 ANNULLA ORDINE
 utente1
 2
+
+ANNULLA ORDINE
+utente1
+3
+
+ANNULLA ORDINE
+utente1
+4

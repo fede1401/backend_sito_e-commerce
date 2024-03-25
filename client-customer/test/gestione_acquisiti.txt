@@ -16,12 +16,12 @@ Fbefbifno2ifno2!.
 
 #Registrazione a buon fine.
 EFFETTUA REGISTRAZIONE COMPRATORE
-utente5
+utente2
 UtenteCompratore
 Utente
-Cinque
+Due
 3333333333
-utente.cinque@gmail.com
+utente.due@gmail.com
 Via delle vie
 10
 01000
@@ -32,7 +32,7 @@ Fbefbifno2ifno2!.
 
 
 EFFETTUA LOGOUT COMPRATORE
-utente5
+utente2
 
 
 RICERCA PRODOTTO
@@ -46,7 +46,7 @@ Iphone
 
 # Ricerca prodotto utente non loggato
 RICERCA PRODOTTO
-utente5
+utente2
 Iphone
 
 
@@ -66,7 +66,7 @@ utente3
 
 # Aggiunta prodotto al carrello utente non loggato
 AGGIUNGI PRODOTTO CARRELLO
-utente5
+utente2
 1
 
 
@@ -86,7 +86,7 @@ utente3
 
 # Aggiunta prodotto alla lista desideri con utente non loggato
 AGGIUNGI PRODOTTO LISTADESIDERI
-utente5
+utente2
 1
 
 
@@ -136,7 +136,7 @@ Roma
 
 # Acquisto prodotto con utente non loggato
 ACQUISTA PRODOTTO
-utente5
+utente2
 1
 Via delle rome
 Roma
@@ -162,7 +162,7 @@ utente3
 
 # Visiona ordini effettuati utente non loggato
 VISIONA ORDINI EFFETTUATI
-utente5
+utente2
 
 
 
@@ -183,7 +183,7 @@ utente3
 
 # Rimozione prodotto utente non loggato
 RIMUOVI PRODOTTO CARRELLO
-utente5
+utente2
 1
 
 
@@ -203,7 +203,7 @@ utente3
 
 # Rimozione prodotto utente non loggato
 RIMUOVI PRODOTTO LISTADESIDERI
-utente5
+utente2
 1
 
 

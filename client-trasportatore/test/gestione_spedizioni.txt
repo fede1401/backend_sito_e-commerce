@@ -1,5 +1,29 @@
 #Registrazione a buon fine.
 EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente7
+UtenteTrasportatore
+Utente
+Sette
+3333333333
+utente.sette@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+DHL
+
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente8
+UtenteTrasportatore
+Utente
+Otto
+3333333333
+utente.otto@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+FedEx
+
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
 utente9
 UtenteTrasportatore
 Utente
@@ -8,104 +32,71 @@ Nove
 utente.nove@gmail.com
 Fbefbifno2ifno2!.
 Fbefbifno2ifno2!.
-DHL
-
-#Registrazione a buon fine.
-EFFETTUA REGISTRAZIONE TRASPORTATORE
-utente20
-UtenteTrasportatore
-Utente
-Venti
-3333333333
-utente.venti@gmail.com
-Fbefbifno2ifno2!.
-Fbefbifno2ifno2!.
-FedEx
-
-#Registrazione a buon fine.
-EFFETTUA REGISTRAZIONE TRASPORTATORE
-utente21
-UtenteTrasportatore
-Utente
-Ventuno
-3333333333
-utente.ventuno@gmail.com
-Fbefbifno2ifno2!.
-Fbefbifno2ifno2!.
 Bartolini
 
 
 #Registrazione a buon fine.
 EFFETTUA REGISTRAZIONE TRASPORTATORE
-utente11
+utente10
 UtenteTrasportatore
 Utente
-Undici
+Dieci
 3333333333
-utente.undici@gmail.com
+utente.dieci@gmail.com
 Fbefbifno2ifno2!.
 Fbefbifno2ifno2!.
 DHL
 
 
 PRENDI IN CARICO SPEDIZIONE
-utente9
+utente7
 
 PRENDI IN CARICO SPEDIZIONE
-utente20
+utente8
 
-PRENDI IN CARICO SPEDIZIONE
-utente21
-
-PRENDI IN CARICO SPEDIZIONE
-utente11
-
-# Non c'è più nessun ordine da prendere in carico
 PRENDI IN CARICO SPEDIZIONE
 utente9
 
-# Spedizione presa in carica da un utente non loggato, errore.
-PRENDI IN CARICO SPEDIZIONE
-utente11
+# Rimane un prodotto non preso in carico, cioè in elaborazione e che può essere annullato.
 
 
 AVVISA SPEDIZIONE EFFETTUATA
-utente9
+utente7
 1
 
 AVVISA SPEDIZIONE EFFETTUATA
-utente9
+utente7
 2
 
 AVVISA SPEDIZIONE EFFETTUATA
-utente9
+utente7
 3
 
 AVVISA SPEDIZIONE EFFETTUATA
-utente9
+utente7
 4
 
 
 
 AVVISA SPEDIZIONE EFFETTUATA
-utente20
+utente8
 1
 
 AVVISA SPEDIZIONE EFFETTUATA
-utente20
+utente8
 2
 
 AVVISA SPEDIZIONE EFFETTUATA
-utente20
+utente8
 3
 
 AVVISA SPEDIZIONE EFFETTUATA
-utente20
+utente8
 4
 
 # Avviso spedizione non esistente
 AVVISA SPEDIZIONE EFFETTUATA
-utente9
+utente7
 100
 
 # Avviso spedizione da parte di un utente non loggato
@@ -114,7 +105,7 @@ utente9
 # 1
 
 # ELIMINA PROFILO TRASPORTATORE
-# utente9
+# utente7
 
 # ELIMINA PROFILO TRASPORTATORE
 # utent11

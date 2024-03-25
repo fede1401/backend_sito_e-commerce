@@ -12,7 +12,7 @@ enum class StatoOrdine {
     };
 
 
-// Metodo che prende un tipo enumerativo StatoOrdine come input e restituisce una stringa che rappresenta quel particolare stato.
+    // Metodo che prende un tipo enumerativo StatoOrdine come input e restituisce una stringa che rappresenta quel particolare stato.
     std::string statoOrdineToString(StatoOrdine in_stato)
     {
         switch (in_stato)
@@ -27,6 +27,24 @@ enum class StatoOrdine {
             return ""; // gestione degli errori o valori non validi
         }
     }
+
+
+    // Metodo che data una stringa rappresentante lo stato dell'ordine torna il tipo enumerativo corrispondente.
+    StatoOrdine stringToStatoOrdine(std::string in_stato)
+    {
+        if (in_stato == "in elaborazione" ){
+            return StatoOrdine::InElaborazione;
+        }
+
+        if (in_stato == "spedito" ){
+            return StatoOrdine::Spedito;
+        }
+
+        if (in_stato == "annullato" ){
+            return StatoOrdine::Annullato;
+        }
+    }
+
 
 
 
