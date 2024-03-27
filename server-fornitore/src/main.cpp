@@ -67,6 +67,9 @@ int main()
     
     char outputs[100];
 
+    int num_richieste_fornitore = -1;      // Variabile utilizzata per enumerare le richieste del fornitore nel file corrispondente ai risultati del test.
+    int num_risposte_server = -1;       // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
+
     UtenteFornitore fornitore;
     Prodotto prodotto;
     /*  prg  */
@@ -146,20 +149,13 @@ int main()
 
     
     // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
-    std::ofstream outputFile("../result/richieste_client_fornitore.txt", std::ios::app);
+    std::ofstream outputFile("../result/test-result-fornitore.txt", std::ios::app);
     // Verifica se il file è stato aperto correttamente
     if (!outputFile.is_open()) {
         std::cerr << "Impossibile aprire il file!" << std::endl;
         return 1; // Termina il programma con un codice di errore
     }
 
-    // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
-    std::ofstream outputFile1("../result/risposte_server_fornitore.txt", std::ios::app);
-    // Verifica se il file è stato aperto correttamente
-    if (!outputFile1.is_open()) {
-        std::cerr << "Impossibile aprire il file!" << std::endl;
-        return 1; // Termina il programma con un codice di errore
-    }
 
     while (1)
     {
@@ -336,9 +332,12 @@ int main()
 
                 if (std::string(action) == "EFFETTUA REGISTRAZIONE FORNITORE")
                 {
+                    // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+                    num_richieste_fornitore++;
+            
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_fornitore << ", " << categoriaUtente << ", " << nome << ", " << cognome << ", " << numeroTelefono << ", " << email << ", " << 
-                    password  << ", " << confermaPassword << ", " << aziendaProduzione << " )\n" << std::endl;
+                    outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<  action << " (" << nome_utente_fornitore << ", " << categoriaUtente << ", " << nome << ", " << cognome << ", " << numeroTelefono << ", " << email << ", " << 
+                            password  << ", " << confermaPassword << ", " << aziendaProduzione << " )\n" << std::endl;
                     
                     // Genero il sessionID
                     std::string sessionID = generateSessionID();
@@ -366,8 +365,10 @@ int main()
 
                     ////printf("Effettuata azione: %s\n", action);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     printf("\nElaborazione della richiesta del fornitore dal server con risultato: %s\n", outputs);
 
@@ -382,8 +383,11 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NOME AZIENDAPRODUZIONE")
                 {   
+                    // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+                    num_richieste_fornitore++;
+                    
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_fornitore << ", " << nuovaAziendaProduzione << " )\n" << std::endl;
+                    outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<  action << " (" << nome_utente_fornitore << ", " << nuovaAziendaProduzione << " )\n" << std::endl;
 
                     std::string aggiornaAziendaProduttrice = fornitore.aggiorna_nome_azienda_produttrice(db1, nome_utente_fornitore,nuovaAziendaProduzione);
 
@@ -400,8 +404,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -413,9 +419,12 @@ int main()
 
                 if (std::string(action) == "AGGIUNGI PRODOTTO SITO")
                 {
+                    // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+                    num_richieste_fornitore++;
+                    
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_fornitore << ", " << nomeProdotto << ", " << categoriaProdotto << ", " << prezzoProdotto << ", " << descrizioneProdotto << ", " << aziendaProduzione << ", " << 
-                    numeroCopieDisponibili << " )\n" << std::endl;
+                    outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<  action << " (" << nome_utente_fornitore << ", " << nomeProdotto << ", " << categoriaProdotto << ", " << prezzoProdotto << ", " << descrizioneProdotto << ", " << aziendaProduzione << ", " << 
+                            numeroCopieDisponibili << " )\n" << std::endl;
 
                     std::string aggiuntaProdottoSito = prodotto.aggiungi_prodotto_sito(db1, nome_utente_fornitore, nomeProdotto, categoriaProdotto, prezzoProdotto, descrizioneProdotto, aziendaProduzione, numeroCopieDisponibili);
 
@@ -432,8 +441,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -445,8 +456,11 @@ int main()
 
                 if (std::string(action) == "RIMUOVI PRODOTTO SITO")
                 {
+                    // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+                    num_richieste_fornitore++;
+                    
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_fornitore << ", " << codiceProdotto << " )\n" << std::endl;
+                    outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<  action << " (" << nome_utente_fornitore << ", " << codiceProdotto << " )\n" << std::endl;
 
                     std::string rimozioneProdottoSito = prodotto.rimuovi_prodotto_sito(db1, nome_utente_fornitore, codiceProdotto);
 
@@ -463,8 +477,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -475,8 +491,11 @@ int main()
 
                 if (std::string(action) == "EFFETTUA LOGIN FORNITORE")
                 {
+                    // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+                    num_richieste_fornitore++;
+                    
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_fornitore << ", " << password << " )\n" << std::endl;
+                    outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<  action << " (" << nome_utente_fornitore << ", " << password << " )\n" << std::endl;
 
                     // Genero il sessionID
                     std::string sessionID = generateSessionID();
@@ -508,8 +527,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -521,8 +542,11 @@ int main()
 
                 if (std::string(action) == "EFFETTUA LOGOUT FORNITORE")
                 {
+                    // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+                    num_richieste_fornitore++;
+                    
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_fornitore << " )\n" << std::endl;
+                    outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<  action << " (" << nome_utente_fornitore << " )\n" << std::endl;
 
                     std::string effettuaLogout =  fornitore.logout(db1, nome_utente_fornitore);
 
@@ -539,8 +563,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -551,8 +577,11 @@ int main()
 
                 if (std::string(action) == "ELIMINA PROFILO FORNITORE")
                 {
+                    // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+                    num_richieste_fornitore++;
+                    
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_fornitore << " )\n" << std::endl;
+                    outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<  action << " (" << nome_utente_fornitore << " )\n" << std::endl;
 
                     std::string eliminaProfilo = fornitore.elimina_profilo(db1, nome_utente_fornitore);
 
@@ -569,8 +598,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -581,8 +612,11 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NUMERO TELEFONO FORNITORE")
                 {
+                    // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+                    num_richieste_fornitore++;
+                    
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_fornitore << ", " << nuovoNumeroTelefono << " )\n" << std::endl;
+                    outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<  action << " (" << nome_utente_fornitore << ", " << nuovoNumeroTelefono << " )\n" << std::endl;
 
                     std::string aggiornaNumeroTelefono = fornitore.aggiorna_numero_telefono(db1, nome_utente_fornitore, nuovoNumeroTelefono);
 
@@ -599,8 +633,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -611,8 +647,11 @@ int main()
 
                 if (std::string(action) == "AGGIORNA PASSWORD FORNITORE")
                 {  
+                    // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+                    num_richieste_fornitore++;
+                    
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_fornitore << ", " << vecchiaPassw << " ," << nuovaPassw << " )\n" << std::endl;
+                    outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<  action << " (" << nome_utente_fornitore << ", " << vecchiaPassw << " ," << nuovaPassw << " )\n" << std::endl;
 
                     std::string aggiornaPassword = fornitore.aggiorna_password(db1, nome_utente_fornitore, vecchiaPassw, nuovaPassw);
 
@@ -629,8 +668,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -650,8 +691,6 @@ int main()
 
 
     outputFile.close(); // Chiudi il file
-
-    outputFile1.close(); // Chiudi il file
 
 
     redisFree(c2r);

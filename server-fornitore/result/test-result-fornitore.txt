@@ -1,0 +1,231 @@
+
+Richiesta fornitore numero: 0
+EFFETTUA REGISTRAZIONE FORNITORE (utente5, UtenteFornitore, Utente, Cinque, 3333333333, utente.cinque@gmail.com, Fbe2., Fbe2., Microsoft )
+
+Risposta server numero: 0
+La password non rispetta i criteri definiti.
+
+
+Richiesta fornitore numero: 1
+EFFETTUA REGISTRAZIONE FORNITORE (utente5, UtenteFornitore, Utente, Cinque, 3333333333, utente.cinque@gmail.com, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., Microsoft )
+
+Risposta server numero: 1
+I valori del campo -password- e -conferma password- non sono uguali
+
+
+Richiesta fornitore numero: 2
+EFFETTUA REGISTRAZIONE FORNITORE (utente5, UtenteFornitore, Utente, Cinque, 3333333333, utente.cinque@gmail.com, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., Microsoft )
+
+Risposta server numero: 2
+La password non rispetta i criteri definiti.
+
+
+Richiesta fornitore numero: 3
+EFFETTUA REGISTRAZIONE FORNITORE (utente5, UtenteFornitore, Utente, Cinque, 3333333333, utente.cinque@gmail.com, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, Microsoft )
+
+Risposta server numero: 3
+La password non rispetta i criteri definiti.
+
+
+Richiesta fornitore numero: 4
+EFFETTUA REGISTRAZIONE FORNITORE (utente5, UtenteFornitore, Utente, Cinque, 3333333333, utente.cinque@gmail.com, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, Microsoft )
+
+Risposta server numero: 4
+La password non rispetta i criteri definiti.
+
+
+Richiesta fornitore numero: 5
+EFFETTUA REGISTRAZIONE FORNITORE (utente5, UtenteFornitore, Utente, Cinque, 3333333333, utente.cinque@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., Microsoft )
+
+Risposta server numero: 5
+Registrazione utente fornitore : utente5 avvenuta con successo.
+
+
+Richiesta fornitore numero: 6
+EFFETTUA REGISTRAZIONE FORNITORE (utente5, UtenteFornitore, Utente, Cinque, 3333333333, utente.cinque@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., Microsoft )
+
+Risposta server numero: 6
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 7
+EFFETTUA REGISTRAZIONE FORNITORE (utente6, UtenteFornitore, Utente, Sei, 3333333333, utente.cinque@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., Microsoft )
+
+Risposta server numero: 7
+L'email non è univoca, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 8
+EFFETTUA REGISTRAZIONE FORNITORE (utente6, UtenteFornitore, Utente, Sei, 3333333333, utente.sei@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., Microsoft )
+
+Risposta server numero: 8
+Registrazione utente fornitore : utente6 avvenuta con successo.
+
+
+Richiesta fornitore numero: 9
+EFFETTUA REGISTRAZIONE FORNITORE (utente7, UtenteFornitore, Utente, Sette, 3333333333, utente.sette@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., Microsoft )
+
+Risposta server numero: 9
+Registrazione utente fornitore : utente7 avvenuta con successo.
+
+
+Richiesta fornitore numero: 10
+EFFETTUA LOGOUT FORNITORE (utente5 )
+
+Risposta server numero: 10
+Aggiornamento sessionID causato dalla disconnessione di Utente utente5
+
+
+Richiesta fornitore numero: 11
+EFFETTUA LOGOUT FORNITORE (utente6 )
+
+Risposta server numero: 11
+Aggiornamento sessionID causato dalla disconnessione di Utente utente6
+
+
+Richiesta fornitore numero: 12
+EFFETTUA LOGOUT FORNITORE (utente7 )
+
+Risposta server numero: 12
+Aggiornamento sessionID causato dalla disconnessione di Utente utente7
+
+
+Richiesta fornitore numero: 13
+EFFETTUA LOGOUT FORNITORE (utente8 )
+
+Risposta server numero: 13
+Non esiste utente8 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 14
+EFFETTUA LOGIN FORNITORE (utente5, Fbefbifno2ifno2!. )
+
+Risposta server numero: 14
+Login utente trasportatore avvenuto con successo
+
+
+Richiesta fornitore numero: 15
+EFFETTUA LOGIN FORNITORE (utente5, Dfnknklnsdl!.2 )
+
+Risposta server numero: 15
+Errore: La passowrd non è corretta, riprovare.
+
+
+Richiesta fornitore numero: 16
+EFFETTUA LOGIN FORNITORE (utente7, Fbefbifno2ifno2!. )
+
+Risposta server numero: 16
+Login utente trasportatore avvenuto con successo
+
+
+Richiesta fornitore numero: 17
+EFFETTUA LOGIN FORNITORE (utente8, Fbefbifno2ifno2!. )
+
+Risposta server numero: 17
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 18
+AGGIORNA NUMERO TELEFONO FORNITORE (utente5, 131212212 )
+
+Risposta server numero: 18
+Aggiornamento numero di telefono : 131212212 per utente: utente5
+
+
+Richiesta fornitore numero: 19
+AGGIORNA NUMERO TELEFONO FORNITORE (utente6, 131212212 )
+
+Risposta server numero: 19
+Non esiste una sessionID per utente6, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta fornitore numero: 20
+AGGIORNA NUMERO TELEFONO FORNITORE (utente8, 131212212 )
+
+Risposta server numero: 20
+Non esiste utente8 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 21
+AGGIORNA PASSWORD FORNITORE (utente5, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 21
+Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente5
+
+
+Richiesta fornitore numero: 22
+AGGIORNA PASSWORD FORNITORE (utente6, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 22
+Non esiste una sessionID per utente6, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta fornitore numero: 23
+AGGIORNA PASSWORD FORNITORE (utente8, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 23
+Non esiste utente8 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 24
+AGGIORNA NOME AZIENDAPRODUZIONE (utente5, Apple )
+
+Risposta server numero: 24
+Aggiornamento azienda produttrice per utente: utente5
+
+
+Richiesta fornitore numero: 25
+AGGIORNA NOME AZIENDAPRODUZIONE (utente6, Apple )
+
+Risposta server numero: 25
+Non esiste una sessionID per utente6, utente non loggato, non può essere aggiornato il nome dell azienda produttrice.
+
+
+Richiesta fornitore numero: 26
+AGGIORNA NOME AZIENDAPRODUZIONE (utente8, Apple )
+
+Risposta server numero: 26
+Non esiste utente8 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 27
+ELIMINA PROFILO FORNITORE (utente5 )
+
+Risposta server numero: 27
+Eliminazione profilo utente utente5
+
+
+Richiesta fornitore numero: 28
+ELIMINA PROFILO FORNITORE (utente6 )
+
+Risposta server numero: 28
+Non esiste una sessionID per utente6, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 29
+ELIMINA PROFILO FORNITORE (utente7 )
+
+Risposta server numero: 29
+Eliminazione profilo utente utente7
+
+
+Richiesta fornitore numero: 30
+ELIMINA PROFILO FORNITORE (utente8 )
+
+Risposta server numero: 30
+Non esiste utente8 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 31
+EFFETTUA LOGIN FORNITORE (utente6, Fbefbifno2ifno2!. )
+
+Risposta server numero: 31
+Login utente trasportatore avvenuto con successo
+
+
+Richiesta fornitore numero: 32
+ELIMINA PROFILO FORNITORE (utente6 )
+
+Risposta server numero: 32
+Eliminazione profilo utente utente6
+

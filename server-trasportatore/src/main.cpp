@@ -63,8 +63,10 @@ int main()
     char nuovaDittaSpedizione[100];
     int idSpedizione;
 
-
     char outputs[100];
+
+    int num_richieste_trasportatore = -1;      // Variabile utilizzata per enumerare le richieste del trasportatore nel file corrispondente ai risultati del test.
+    int num_risposte_server = -1;       // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
 
     UtenteTrasportatore trasportatore;
     Spedizione spedizione;
@@ -144,17 +146,9 @@ int main()
 
 
     // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
-    std::ofstream outputFile("../result/richieste_client_trasportatore.txt", std::ios::app);
+    std::ofstream outputFile("../result/test-result-trasportatore.txt", std::ios::app);
     // Verifica se il file è stato aperto correttamente
     if (!outputFile.is_open()) {
-        std::cerr << "Impossibile aprire il file!" << std::endl;
-        return 1; // Termina il programma con un codice di errore
-    }
-
-    // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
-    std::ofstream outputFile1("../result/risposte_server_trasportatore.txt", std::ios::app);
-    // Verifica se il file è stato aperto correttamente
-    if (!outputFile1.is_open()) {
         std::cerr << "Impossibile aprire il file!" << std::endl;
         return 1; // Termina il programma con un codice di errore
     }
@@ -310,9 +304,12 @@ int main()
 
                 if (std::string(action) == "EFFETTUA REGISTRAZIONE TRASPORTATORE")
                 {
-                    // Scrive nel file delle richieste del client compratore.
-                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << categoriaUtente << ", " << nome << ", " << cognome << ", " << numeroTelefono << ", " << email << ", " << 
-                    password  << ", " << confermaPassword << ", " << dittaSpedizione << " )\n" << std::endl;
+                    // Incrementiamo il valore della richiesta del trasportatore che verrà scritta nel file di risultato dei test.
+                    num_richieste_trasportatore++;
+            
+                    // Scrive nel file
+                    outputFile << "\nRichiesta client numero: " << num_richieste_trasportatore << "\n" << "\nRichiesta client numero: " << num_richieste_trasportatore << "\n" <<  action << " (" << nome_utente_trasportatore << ", " << categoriaUtente << ", " << nome << ", " << cognome << ", " << numeroTelefono << ", " << email << ", " << 
+                            password  << ", " << confermaPassword << ", " << dittaSpedizione << " )\n" << std::endl;
 
                     // Genero il sessionID
                     std::string sessionID = generateSessionID();
@@ -343,10 +340,12 @@ int main()
 
                     printf("\nElaborazione della richiesta del trasportatore dal server con risultato: %s\n", outputs);
 
-                    //printf("Result: %s \n", outputs);
+                    //printf("Result: %s \n", outputs);// Scrive nel file per le risposte del server compratore.
 
-                    // Scrive nel file per le risposte del server compratore.
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -357,8 +356,11 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NOME DITTASPEDIZIONE")
                 {
+                    // Incrementiamo il valore della richiesta del trasportatore che verrà scritta nel file di risultato dei test.
+                    num_richieste_trasportatore++;
+            
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << nuovaDittaSpedizione << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client numero: " << num_richieste_trasportatore << "\n" <<  action << " (" << nome_utente_trasportatore << ", " << nuovaDittaSpedizione << " )\n" << std::endl;
 
                     std::string aggiornaDittaSpedizione = trasportatore.aggiorna_nome_ditta_spedizione(db1, nome_utente_trasportatore, nuovaDittaSpedizione);
 
@@ -375,8 +377,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -388,8 +392,11 @@ int main()
 
                 if (std::string(action) == "AVVISA SPEDIZIONE EFFETTUATA")
                 {
+                    // Incrementiamo il valore della richiesta del trasportatore che verrà scritta nel file di risultato dei test.
+                    num_richieste_trasportatore++;
+            
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << idSpedizione << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client numero: " << num_richieste_trasportatore << "\n" <<  action << " (" << nome_utente_trasportatore << ", " << idSpedizione << " )\n" << std::endl;
 
                     std::string avvisaSpedizioneConsegnata = spedizione.avvisa_spedizione_consegnata(db1, nome_utente_trasportatore, idSpedizione);
                     
@@ -406,8 +413,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -418,8 +427,11 @@ int main()
 
                 if (std::string(action) == "PRENDI IN CARICO SPEDIZIONE")
                 {
+                    // Incrementiamo il valore della richiesta del trasportatore che verrà scritta nel file di risultato dei test.
+                    num_richieste_trasportatore++;
+            
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_trasportatore << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client numero: " << num_richieste_trasportatore << "\n" <<  action << " (" << nome_utente_trasportatore << " )\n" << std::endl;
 
                     std::string prendiInCaricoSpedizione = spedizione.prendi_in_carico_spedizione(db1, nome_utente_trasportatore);
                     strcpy(outputs, prendiInCaricoSpedizione.c_str());
@@ -435,8 +447,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -462,8 +476,11 @@ int main()
                         }
                     }
 
+                    // Incrementiamo il valore della richiesta del trasportatore che verrà scritta nel file di risultato dei test.
+                    num_richieste_trasportatore++;
+            
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << password << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client numero: " << num_richieste_trasportatore << "\n" <<  action << " (" << nome_utente_trasportatore << ", " << password << " )\n" << std::endl;
 
                     std::string effettuaLogin = trasportatore.login(db1, nome_utente_trasportatore, password, sessionID);
 
@@ -480,8 +497,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -492,8 +511,11 @@ int main()
 
                 if (std::string(action) == "EFFETTUA LOGOUT TRASPORTATORE")
                 {
+                    // Incrementiamo il valore della richiesta del trasportatore che verrà scritta nel file di risultato dei test.
+                    num_richieste_trasportatore++;
+            
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_trasportatore << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client numero: " << num_richieste_trasportatore << "\n" <<  action << " (" << nome_utente_trasportatore << " )\n" << std::endl;
 
                     std::string effettuaLogout = trasportatore.logout(db1, nome_utente_trasportatore);
 
@@ -510,8 +532,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -522,8 +546,11 @@ int main()
 
                 if (std::string(action) == "ELIMINA PROFILO TRASPORTATORE")
                 {
+                    // Incrementiamo il valore della richiesta del trasportatore che verrà scritta nel file di risultato dei test.
+                    num_richieste_trasportatore++;
+            
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_trasportatore << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client numero: " << num_richieste_trasportatore << "\n" <<  action << " (" << nome_utente_trasportatore << " )\n" << std::endl;
 
                     std::string eliminaProfilo =  trasportatore.elimina_profilo(db1, nome_utente_trasportatore);
 
@@ -540,8 +567,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -551,8 +580,11 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NUMERO TELEFONO TRASPORTATORE")
                 {
+                    // Incrementiamo il valore della richiesta del trasportatore che verrà scritta nel file di risultato dei test.
+                    num_richieste_trasportatore++;
+            
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << nuovoNumeroTelefono << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client numero: " << num_richieste_trasportatore << "\n" <<  action << " (" << nome_utente_trasportatore << ", " << nuovoNumeroTelefono << " )\n" << std::endl;
 
                     std::string aggiornaNumeroTelefono = trasportatore.aggiorna_numero_telefono(db1,nome_utente_trasportatore,  nuovoNumeroTelefono);
 
@@ -569,8 +601,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -580,8 +614,11 @@ int main()
 
                 if (std::string(action) == "AGGIORNA PASSWORD TRASPORTATORE")
                 {
+                    // Incrementiamo il valore della richiesta del trasportatore che verrà scritta nel file di risultato dei test.
+                    num_richieste_trasportatore++;
+            
                     // Scrive nel file
-                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << vecchiaPassw << " ," << nuovaPassw << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client numero: " << num_richieste_trasportatore << "\n" <<  action << " (" << nome_utente_trasportatore << ", " << vecchiaPassw << " ," << nuovaPassw << " )\n" << std::endl;
 
                     std::string aggiornaPassword = trasportatore.aggiorna_password(db1, nome_utente_trasportatore,vecchiaPassw, nuovaPassw);
 
@@ -598,8 +635,10 @@ int main()
 
                     //printf("Result: %s \n", outputs);
 
-                    // Scrive nel file
-                    outputFile1 <<  outputs << "\n" << std::endl;
+                    // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                    num_risposte_server++;
+
+                    outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -617,8 +656,6 @@ int main()
 
 
     outputFile.close(); // Chiudi il file
-
-    outputFile1.close(); // Chiudi il file
 
     redisFree(c2r);
 }

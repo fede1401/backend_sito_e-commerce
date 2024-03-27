@@ -50,6 +50,9 @@ int main()
     char key10[100];
     char value10[100];
 
+    int num_richieste_fornitore = -1;      // Variabile utilizzata per enumerare le richieste del fornitore nel file corrispondente ai risultati del test.
+    int num_risposte_server = -1;       // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
+
     char streamname[100]; // Buffer per il nome dello stream Redis
     char msgid[100];      // Buffer per l'ID del messaggio Redis
     char fval[100];       // Buffer per il valore del campo del messaggio Redis
@@ -221,17 +224,9 @@ int main()
 
 
     // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
-    std::ofstream outputFile("../result/richieste_client_fornitore.txt", std::ios::app);
+    std::ofstream outputFile("../result/test-result-fornitore.txt", std::ios::app);
     // Verifica se il file è stato aperto correttamente
     if (!outputFile.is_open()) {
-        std::cerr << "Impossibile aprire il file!" << std::endl;
-        return 1; // Termina il programma con un codice di errore
-    }
-
-    // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
-    std::ofstream outputFile1("../result/risposte_server_fornitore.txt", std::ios::app);
-    // Verifica se il file è stato aperto correttamente
-    if (!outputFile1.is_open()) {
         std::cerr << "Impossibile aprire il file!" << std::endl;
         return 1; // Termina il programma con un codice di errore
     }
@@ -295,8 +290,12 @@ int main()
                    key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
                    key9, value9, key10, value10, reply->str);
 
+            // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+            num_richieste_fornitore++;
+            
             // Scrive nel file
-            outputFile << value1 << "( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << ", " << value8 << ", " << value9 << ", " << value10 << " )\n" << std::endl;
+            outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<value1 << "( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << ", " 
+                                                                                                << value8 << ", " << value9 << ", " << value10 << " )\n" << std::endl;
             
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -342,8 +341,10 @@ int main()
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
     
                         if (h == 1){
-                            // Scrive nel file
-                            outputFile1 <<  fval << "\n" << std::endl;
+                            // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                            num_risposte_server++;
+
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  fval << "\n" << std::endl;
                         }
                     }
                 }
@@ -375,8 +376,11 @@ int main()
             printf("\n----------------------------------------------------------------------------------\nRichiesta del fornitore. \n");
             printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
 
+            // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+            num_richieste_fornitore++;
+            
             // Scrive nel file
-            outputFile << value1 << "( " << value2 << ", " << value3 << " )\n" << std::endl;
+            outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<value1 << "( " << value2 << ", " << value3 << " )\n" << std::endl;
             
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -423,8 +427,10 @@ int main()
 
                         
                         if (h == 1){
-                            // Scrive nel file
-                            outputFile1 <<  fval << "\n" << std::endl;
+                            // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                            num_risposte_server++;
+
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  fval << "\n" << std::endl;
                         }
                     }
                 }
@@ -452,8 +458,11 @@ int main()
             printf("\n----------------------------------------------------------------------------------\nRichiesta del fornitore. \n");
             printf("main(): pid =%d: stream %s: Added %s: %s (%s: %s)  (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
 
+            // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+            num_richieste_fornitore++;
+            
             // Scrive nel file
-            outputFile << value1 << "( " << value2 << " )\n" << std::endl;
+            outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<value1 << "( " << value2 << " )\n" << std::endl;
             
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -500,8 +509,10 @@ int main()
 
                         
                         if (h == 1){
-                            // Scrive nel file
-                            outputFile1 <<  fval << "\n" << std::endl;
+                            // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                            num_risposte_server++;
+
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  fval << "\n" << std::endl;
                         }
                     }
                 }
@@ -529,8 +540,11 @@ int main()
             printf("\n----------------------------------------------------------------------------------\nRichiesta del fornitore. \n");
             printf("main(): pid =%d: stream %s: Added %s: %s (%s: %s)  (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, reply->str);
 
+            // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+            num_richieste_fornitore++;
+            
             // Scrive nel file
-            outputFile << value1 << "( " << value2 << " )\n" << std::endl;
+            outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<value1 << "( " << value2 << " )\n" << std::endl;
             
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -576,8 +590,10 @@ int main()
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
                         
                         if (h == 1){
-                            // Scrive nel file
-                            outputFile1 <<  fval << "\n" << std::endl;
+                            // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                            num_risposte_server++;
+
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  fval << "\n" << std::endl;
                         }
                     }
                 }
@@ -609,8 +625,11 @@ int main()
             printf("\n----------------------------------------------------------------------------------\nRichiesta del fornitore. \n");
             printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
 
+            // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+            num_richieste_fornitore++;
+            
             // Scrive nel file
-            outputFile << value1 << "( " << value2 << ", " << value3 << " )\n" << std::endl;
+            outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<value1 << "( " << value2 << ", " << value3 << " )\n" << std::endl;
             
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -656,8 +675,10 @@ int main()
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
                         
                         if (h == 1){
-                            // Scrive nel file
-                            outputFile1 <<  fval << "\n" << std::endl;
+                            // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                            num_risposte_server++;
+
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  fval << "\n" << std::endl;
                         }
                     }
                 }
@@ -689,8 +710,11 @@ int main()
             printf("\n----------------------------------------------------------------------------------\nRichiesta del fornitore. \n");
             printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
 
+            // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+            num_richieste_fornitore++;
+            
             // Scrive nel file
-            outputFile << value1 << "( " << value2 << ", " << value3 << " )\n" << std::endl;
+            outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<value1 << "( " << value2 << ", " << value3 << " )\n" << std::endl;
             
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -736,8 +760,10 @@ int main()
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
                         
                         if (h == 1){
-                            // Scrive nel file
-                            outputFile1 <<  fval << "\n" << std::endl;
+                            // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                            num_risposte_server++;
+
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  fval << "\n" << std::endl;
                         }
                     }
                 }
@@ -773,8 +799,11 @@ int main()
             printf("\n----------------------------------------------------------------------------------\nRichiesta del fornitore. \n");
             printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
 
+            // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+            num_richieste_fornitore++;
+            
             // Scrive nel file
-            outputFile << value1 << "( " << value2 << ", " << value3 << ", " << value4 << " )\n" << std::endl;
+            outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<value1 << "( " << value2 << ", " << value3 << ", " << value4 << " )\n" << std::endl;
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -820,8 +849,10 @@ int main()
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
                         
                         if (h == 1){
-                            // Scrive nel file
-                            outputFile1 <<  fval << "\n" << std::endl;
+                            // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                            num_risposte_server++;
+
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  fval << "\n" << std::endl;
                         }
                     }
                 }
@@ -875,8 +906,11 @@ int main()
             printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_FORNITORE,
                    key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8, reply->str);
 
+            // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+            num_richieste_fornitore++;
+            
             // Scrive nel file
-            outputFile << value1 << "( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << ", " << value8 << " )\n";
+            outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<value1 << "( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << ", " << value8 << " )\n";
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -922,8 +956,10 @@ int main()
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
                         
                         if (h == 1){
-                            // Scrive nel file
-                            outputFile1 <<  fval << "\n" << std::endl;
+                            // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                            num_risposte_server++;
+
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  fval << "\n" << std::endl;
                         }
                     }
                 }
@@ -955,8 +991,11 @@ int main()
             printf("\n----------------------------------------------------------------------------------\nRichiesta del fornitore. \n");
             printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3, reply->str);
 
+            // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
+            num_richieste_fornitore++;
+            
             // Scrive nel file
-            outputFile << value1 << "( " << value2 << ", " << value3 << " )\n" << std::endl;
+            outputFile << "\nRichiesta fornitore numero: " << num_richieste_fornitore << "\n" <<value1 << "( " << value2 << ", " << value3 << " )\n" << std::endl;
             
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -1002,8 +1041,10 @@ int main()
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
                         
                         if (h == 1){
-                            // Scrive nel file
-                            outputFile1 <<  fval << "\n" << std::endl;
+                            // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
+                            num_risposte_server++;
+
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  fval << "\n" << std::endl;
                         }
                     }
                 }
@@ -1019,7 +1060,7 @@ int main()
 
     outputFile.close(); // Chiudi il file
 
-    outputFile1.close(); // Chiudi il file
+    //outputFile1.close(); // Chiudi il file
 
     /* sleep   */
     //micro_sleep(10000000); // 10 secondi di attesa

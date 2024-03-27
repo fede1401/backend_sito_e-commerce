@@ -157,6 +157,7 @@ CREATE TABLE IF NOT EXISTS Spedizione (
     statoSpedizione statoSpedizione,
     nome_DittaSpedizione VARCHAR(50) NOT NULL,
     PRIMARY KEY(idSpedizione),
+    UNIQUE(nome_utente_compratore, idOrdine),
     CONSTRAINT fk_idOrdine
       FOREIGN KEY(idOrdine)
       REFERENCES Ordine(idOrdine)
