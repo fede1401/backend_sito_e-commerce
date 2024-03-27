@@ -122,7 +122,7 @@ int main()
     initStreams(c2r, READ_STREAM_TRASPORTATORE);
     initStreams(c2r, WRITE_STREAM_TRASPORTATORE);
 
-    printf("Streams create!\n");
+    printf("\nStreams create!\n");
 
     // Connessione al database.
     Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce1");
