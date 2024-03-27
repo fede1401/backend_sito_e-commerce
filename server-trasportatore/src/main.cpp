@@ -1,12 +1,14 @@
 
 #include "include.h"
 
-
 #include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/src/con2redis.h"
 #include <string.h>
 
 #include "../../shared-server/generateSessionID.h"      // Migliore separazione delle responsabilità
 #include "../../shared-server/checkSessionID.h"
+#include <fstream>
+#include <filesystem>
+
 
 
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
@@ -18,6 +20,7 @@
 #define WRITE_STREAM_TRASPORTATORE "stream6"        // Nome dello stream su cui scrivere.
 
 using namespace std;        // Consente di utilizzare le funzioni e le classi standard del C++ senza doverle qualificare con std::.
+namespace fs = std::filesystem;
 
 
 int main()
@@ -125,18 +128,53 @@ int main()
     printf("Connessione al database avvenuta con successo");
 
 
+    std::string folder_path = "../result";
+
+    // Verifica se la cartella esiste già
+    if (!fs::exists(folder_path)) {
+        // Se non esiste, crea la cartella
+        if (fs::create_directory(folder_path)) {
+            std::cout << "Cartella creata con successo.\n";
+        } else {
+            std::cerr << "Errore durante la creazione della cartella.\n";
+        }
+    } else {
+        std::cout << "La cartella esiste già.\n";
+    }
+
+
+    // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
+    std::ofstream outputFile("../result/richieste_client_trasportatore.txt", std::ios::app);
+    // Verifica se il file è stato aperto correttamente
+    if (!outputFile.is_open()) {
+        std::cerr << "Impossibile aprire il file!" << std::endl;
+        return 1; // Termina il programma con un codice di errore
+    }
+
+    // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
+    std::ofstream outputFile1("../result/risposte_server_trasportatore.txt", std::ios::app);
+    // Verifica se il file è stato aperto correttamente
+    if (!outputFile1.is_open()) {
+        std::cerr << "Impossibile aprire il file!" << std::endl;
+        return 1; // Termina il programma con un codice di errore
+    }
+
+
     while (1)
     {
         //  Lettura
         read_counter++;
 
-        micro_sleep(7000000); // 7 secondi di attesa necessari per far sì che il client mandi tutte le richieste
+        //micro_sleep(7000000); // 7 secondi di attesa necessari per far sì che il client mandi tutte le richieste
+
+        printf("\n----------------------------------------------------------------------------------\n");
+        printf("Lettura dei messaggi sulla Streams corrispondente alle richieste del trasportatore. \n ");
 
         // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
         // Imposto COUNT a -1 per leggere tutti i messaggi disponibili nello stream
         reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_TRASPORTATORE);
 
-        printf("\n\nmain(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_TRASPORTATORE);
+        printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_TRASPORTATORE);
 
         // Verifica la risposta del comando e termina il programma in caso di errore
         assertReply(c2r, reply);
@@ -144,7 +182,7 @@ int main()
         // Stampa la risposta del comando
         dumpReply(reply, 0);
 
-        printf("Effettuato il dump! \n");
+        //printf("Effettuato il dump! \n");
 
         // Elaborazione dei messaggi letti
         // Scorro il numero di Streams nella connessione Redis
@@ -153,18 +191,17 @@ int main()
             ReadStreamName(reply, streamname, k);
 
             int numberMessageStream = ReadStreamNumMsg(reply, k);
-            printf("Number of message about Stream = %d \n", numberMessageStream);
             
             // Scorro il numero di messaggi della Streams Redis
             for (i = 0; i < ReadStreamNumMsg(reply, k); i++)  
             {
-                printf("\n\n\n\nPROSSIMO MESSAGGIO NELLA STREAM.");
 
                 ReadStreamNumMsgID(reply, k, i, msgid); 
 
-                printf("Message number %d from Stream: %d\n", i, k );
+                printf("Numero messaggio: %d \n", i);
                 printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
+                printf("\tElenco dei valori del messaggio numero: %d\n", i);
                 
                 // Scorro il numero di valori del messaggio della Streams Redis
                 // h deve partire da 0, altrimenti non troverà mai fval == "Action"
@@ -172,19 +209,21 @@ int main()
                 {
                     ReadStreamMsgVal(reply, k, i, h, fval);
 
-                    printf("\nValue %d from message number %d from Stream: %d\n", h, i, k );
-                    printf("main(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+                    printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                    // Scrive nel file
+                    //outputFile <<  fval << "\n" << std::endl;
 
 
                     // Qui bisogna estrapolare l'azione da effettuare:
                     if (strcmp(fval, "Action") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        printf("\nFval: %s\n", fval);
+                        //printf("\nFval: %s\n", fval);
 
                         strcpy(action, fval);
                         
-                        printf("Action: %s\n\n", action);
+                        //printf("Action: %s\n\n", action);
                     }
 
 
@@ -266,11 +305,15 @@ int main()
 
                 }  // for dei valori dell'i-esimo messaggio dell'i-esima Stream.
 
-                printf("Azione: %s\n", action);
+                //printf("Azione: %s\n", action);
 
 
                 if (std::string(action) == "EFFETTUA REGISTRAZIONE TRASPORTATORE")
                 {
+                    // Scrive nel file delle richieste del client compratore.
+                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << categoriaUtente << ", " << nome << ", " << cognome << ", " << numeroTelefono << ", " << email << ", " << 
+                    password  << ", " << confermaPassword << ", " << dittaSpedizione << " )\n" << std::endl;
+
                     // Genero il sessionID
                     std::string sessionID = generateSessionID();
 
@@ -289,16 +332,21 @@ int main()
 
                     std::string outputRegistrazione = trasportatore.registrazione(db1, nome_utente_trasportatore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword, dittaSpedizione);
 
-                     strcpy(outputs, outputRegistrazione.c_str());
+                    strcpy(outputs, outputRegistrazione.c_str());
 
                     // send result to client
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
-                    printf("Result: %s \n", outputs);
+                    printf("\nElaborazione della richiesta del trasportatore dal server con risultato: %s\n", outputs);
+
+                    //printf("Result: %s \n", outputs);
+
+                    // Scrive nel file per le risposte del server compratore.
+                    outputFile1 <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -309,6 +357,9 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NOME DITTASPEDIZIONE")
                 {
+                    // Scrive nel file
+                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << nuovaDittaSpedizione << " )\n" << std::endl;
+
                     std::string aggiornaDittaSpedizione = trasportatore.aggiorna_nome_ditta_spedizione(db1, nome_utente_trasportatore, nuovaDittaSpedizione);
 
                     strcpy(outputs, aggiornaDittaSpedizione.c_str());
@@ -318,9 +369,14 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
-                    printf("Result: %s \n", outputs);
+                    printf("\nElaborazione della richiesta del trasportatore dal server con risultato: %s\n", outputs);
+
+                    //printf("Result: %s \n", outputs);
+
+                    // Scrive nel file
+                    outputFile1 <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -332,6 +388,9 @@ int main()
 
                 if (std::string(action) == "AVVISA SPEDIZIONE EFFETTUATA")
                 {
+                    // Scrive nel file
+                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << idSpedizione << " )\n" << std::endl;
+
                     std::string avvisaSpedizioneConsegnata = spedizione.avvisa_spedizione_consegnata(db1, nome_utente_trasportatore, idSpedizione);
                     
                     strcpy(outputs, avvisaSpedizioneConsegnata.c_str());
@@ -341,9 +400,14 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
-                    printf("Result: %s \n", outputs);
+                    printf("\nElaborazione della richiesta del trasportatore dal server con risultato: %s\n", outputs);
+
+                    //printf("Result: %s \n", outputs);
+
+                    // Scrive nel file
+                    outputFile1 <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -354,6 +418,9 @@ int main()
 
                 if (std::string(action) == "PRENDI IN CARICO SPEDIZIONE")
                 {
+                    // Scrive nel file
+                    outputFile <<  action << " (" << nome_utente_trasportatore << " )\n" << std::endl;
+
                     std::string prendiInCaricoSpedizione = spedizione.prendi_in_carico_spedizione(db1, nome_utente_trasportatore);
                     strcpy(outputs, prendiInCaricoSpedizione.c_str());
 
@@ -362,9 +429,14 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
-                    printf("Result: %s \n", outputs);
+                    printf("\nElaborazione della richiesta del trasportatore dal server con risultato: %s\n", outputs);
+
+                    //printf("Result: %s \n", outputs);
+
+                    // Scrive nel file
+                    outputFile1 <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -390,6 +462,9 @@ int main()
                         }
                     }
 
+                    // Scrive nel file
+                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << password << " )\n" << std::endl;
+
                     std::string effettuaLogin = trasportatore.login(db1, nome_utente_trasportatore, password, sessionID);
 
                     strcpy(outputs, effettuaLogin.c_str());
@@ -399,9 +474,14 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
-                    printf("Result: %s \n", outputs);
+                    printf("\nElaborazione della richiesta del trasportatore dal server con risultato: %s\n", outputs);
+
+                    //printf("Result: %s \n", outputs);
+
+                    // Scrive nel file
+                    outputFile1 <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -412,6 +492,9 @@ int main()
 
                 if (std::string(action) == "EFFETTUA LOGOUT TRASPORTATORE")
                 {
+                    // Scrive nel file
+                    outputFile <<  action << " (" << nome_utente_trasportatore << " )\n" << std::endl;
+
                     std::string effettuaLogout = trasportatore.logout(db1, nome_utente_trasportatore);
 
                     strcpy(outputs, effettuaLogout.c_str());
@@ -421,9 +504,14 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
-                    printf("Result: %s \n", outputs);
+                    printf("\nElaborazione della richiesta del trasportatore dal server con risultato: %s\n", outputs);
+
+                    //printf("Result: %s \n", outputs);
+
+                    // Scrive nel file
+                    outputFile1 <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -434,6 +522,9 @@ int main()
 
                 if (std::string(action) == "ELIMINA PROFILO TRASPORTATORE")
                 {
+                    // Scrive nel file
+                    outputFile <<  action << " (" << nome_utente_trasportatore << " )\n" << std::endl;
+
                     std::string eliminaProfilo =  trasportatore.elimina_profilo(db1, nome_utente_trasportatore);
 
                     strcpy(outputs, eliminaProfilo.c_str());
@@ -443,9 +534,14 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
-                    printf("Result: %s \n", outputs);
+                    printf("\nElaborazione della richiesta del trasportatore dal server con risultato: %s\n", outputs);
+
+                    //printf("Result: %s \n", outputs);
+
+                    // Scrive nel file
+                    outputFile1 <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -455,6 +551,9 @@ int main()
 
                 if (std::string(action) == "AGGIORNA NUMERO TELEFONO TRASPORTATORE")
                 {
+                    // Scrive nel file
+                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << nuovoNumeroTelefono << " )\n" << std::endl;
+
                     std::string aggiornaNumeroTelefono = trasportatore.aggiorna_numero_telefono(db1,nome_utente_trasportatore,  nuovoNumeroTelefono);
 
                     strcpy(outputs, aggiornaNumeroTelefono.c_str());
@@ -464,9 +563,14 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
-                    printf("Result: %s \n", outputs);
+                    printf("\nElaborazione della richiesta del trasportatore dal server con risultato: %s\n", outputs);
+
+                    //printf("Result: %s \n", outputs);
+
+                    // Scrive nel file
+                    outputFile1 <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -476,6 +580,9 @@ int main()
 
                 if (std::string(action) == "AGGIORNA PASSWORD TRASPORTATORE")
                 {
+                    // Scrive nel file
+                    outputFile <<  action << " (" << nome_utente_trasportatore << ", " << vecchiaPassw << " ," << nuovaPassw << " )\n" << std::endl;
+
                     std::string aggiornaPassword = trasportatore.aggiorna_password(db1, nome_utente_trasportatore,vecchiaPassw, nuovaPassw);
 
                     strcpy(outputs, aggiornaPassword.c_str());
@@ -485,9 +592,14 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n", action);
+                    //printf("Effettuata azione: %s\n", action);
 
-                    printf("Result: %s \n", outputs);
+                    printf("\nElaborazione della richiesta del trasportatore dal server con risultato: %s\n", outputs);
+
+                    //printf("Result: %s \n", outputs);
+
+                    // Scrive nel file
+                    outputFile1 <<  outputs << "\n" << std::endl;
 
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_TRASPORTATORE, key, value);
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
@@ -503,6 +615,10 @@ int main()
 
     } // while ()
 
+
+    outputFile.close(); // Chiudi il file
+
+    outputFile1.close(); // Chiudi il file
 
     redisFree(c2r);
 }

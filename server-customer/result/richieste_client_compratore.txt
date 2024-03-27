@@ -1,0 +1,988 @@
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+ELIMINA PROFILO COMPRATORE (utente2 )
+

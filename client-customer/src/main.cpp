@@ -4,6 +4,8 @@
 #include <string>
 #include <string.h>
 #include <fstream>
+#include <filesystem>
+
 
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
 // Usage: ./streams <add count> <read count> [block time, default: 1]
@@ -14,6 +16,7 @@
 #define WRITE_STREAM_CUSTOMER "stream1" // Nome dello stream su cui scrivere.
 
 using namespace std; // Consente di utilizzare le funzioni e le classi standard del C++ senza doverle qualificare con std::.
+namespace fs = std::filesystem;
 
 int main()
 {
@@ -60,83 +63,19 @@ int main()
     char fval[100];       // Buffer per il valore del campo del messaggio Redis
     int i, k, h;          // Variabili di iterazione
 
-    std::string test1[20] = {
-
-        "EFFETTUA REGISTRAZIONE COMPRATORE",
-        "EFFETTUA LOGIN COMPRATORE",
-
-        "AGGIORNA NUMERO TELEFONO COMPRATORE",
-        "AGGIORNA PASSWORD COMPRATORE",
-        "AGGIORNA RESIDENZA",
-
-        "AGGIUNGI CARTA PAGAMENTO",
-
-        "AGGIUNGI PRODOTTO CARRELLO",
-        "AGGIUNGI PRODOTTO LISTADESIDERI",
-
-        "RICERCA PRODOTTO",
-        "ACQUISTA PRODOTTO",
-        "VISIONA ORDINI EFFETTUATI",
-
-        "EFFETTUA RECENSIONE",
-
-        "ANNULLA ORDINE",
-
-        "EFFETTUA RESO",
-
-        "RIMUOVI RECENSIONE",
-        "RIMUOVI CARTA PAGAMENTO",
-        "RIMUOVI PRODOTTO CARRELLO",
-        "RIMUOVI PRODOTTO LISTADESIDERI",
-
-        "EFFETTUA LOGOUT COMPRATORE",
-        "ELIMINA PROFILO COMPRATORE"};
+    std::string test1[20] = { "EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA LOGIN COMPRATORE", "AGGIORNA NUMERO TELEFONO COMPRATORE", "AGGIORNA PASSWORD COMPRATORE",
+        "AGGIORNA RESIDENZA", "AGGIUNGI CARTA PAGAMENTO", "AGGIUNGI PRODOTTO CARRELLO", "AGGIUNGI PRODOTTO LISTADESIDERI",
+        "RICERCA PRODOTTO", "ACQUISTA PRODOTTO", "VISIONA ORDINI EFFETTUATI", "EFFETTUA RECENSIONE", "ANNULLA ORDINE", "EFFETTUA RESO",
+        "RIMUOVI RECENSIONE", "RIMUOVI CARTA PAGAMENTO", "RIMUOVI PRODOTTO CARRELLO", "RIMUOVI PRODOTTO LISTADESIDERI", "EFFETTUA LOGOUT COMPRATORE", "ELIMINA PROFILO COMPRATORE"};
 
     std::string test2[39] = {
-        "EFFETTUA REGISTRAZIONE COMPRATORE",
-        "EFFETTUA REGISTRAZIONE COMPRATORE",
-        "EFFETTUA REGISTRAZIONE COMPRATORE",
-        "EFFETTUA REGISTRAZIONE COMPRATORE",
-        "EFFETTUA REGISTRAZIONE COMPRATORE",
-
-        "EFFETTUA LOGIN COMPRATORE",
-        "EFFETTUA LOGIN COMPRATORE",
-        "EFFETTUA LOGIN COMPRATORE",
-        "EFFETTUA LOGIN COMPRATORE",
-        "EFFETTUA LOGIN COMPRATORE",
-
-        "AGGIORNA NUMERO TELEFONO COMPRATORE",
-        "AGGIORNA PASSWORD COMPRATORE",
-        "AGGIORNA RESIDENZA",
-        "AGGIORNA NUMERO TELEFONO COMPRATORE",
-        "AGGIORNA PASSWORD COMPRATORE",
-
-        "ACQUISTA PRODOTTO",
-        "ACQUISTA PRODOTTO",
-        "ACQUISTA PRODOTTO",
-        "ACQUISTA PRODOTTO",
-        "ACQUISTA PRODOTTO",
-        "ACQUISTA PRODOTTO",
-        "ACQUISTA PRODOTTO",
-        "ACQUISTA PRODOTTO",
-        "AGGIUNGI PRODOTTO CARRELLO",
-        "AGGIUNGI PRODOTTO CARRELLO",
-        "AGGIUNGI PRODOTTO CARRELLO",
-        "AGGIUNGI PRODOTTO CARRELLO",
-
-        "AGGIUNGI PRODOTTO LISTADESIDERI",
-        "AGGIUNGI PRODOTTO LISTADESIDERI",
-        "AGGIUNGI PRODOTTO LISTADESIDERI",
-        "AGGIUNGI PRODOTTO LISTADESIDERI",
-        "RIMUOVI PRODOTTO CARRELLO",
-
-        "RICERCA PRODOTTO",
-        "ACQUISTA PRODOTTO",
-
-        "EFFETTUA RESO",
-        "EFFETTUA RECENSIONE",
-        "EFFETTUA LOGOUT COMPRATORE",
-        "ELIMINA PROFILO COMPRATORE"};
+        "EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA REGISTRAZIONE COMPRATORE",
+        "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGIN COMPRATORE",
+        "AGGIORNA NUMERO TELEFONO COMPRATORE", "AGGIORNA PASSWORD COMPRATORE", "AGGIORNA RESIDENZA", "AGGIORNA NUMERO TELEFONO COMPRATORE", "AGGIORNA PASSWORD COMPRATORE",
+        "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO",
+        "AGGIUNGI PRODOTTO CARRELLO", "AGGIUNGI PRODOTTO CARRELLO", "AGGIUNGI PRODOTTO CARRELLO", "AGGIUNGI PRODOTTO CARRELLO",
+        "AGGIUNGI PRODOTTO LISTADESIDERI", "AGGIUNGI PRODOTTO LISTADESIDERI", "AGGIUNGI PRODOTTO LISTADESIDERI", "AGGIUNGI PRODOTTO LISTADESIDERI", "RIMUOVI PRODOTTO CARRELLO",
+        "RICERCA PRODOTTO", "ACQUISTA PRODOTTO", "EFFETTUA RESO", "EFFETTUA RECENSIONE", "EFFETTUA LOGOUT COMPRATORE", "ELIMINA PROFILO COMPRATORE"};
 
     // Array di nomi utente
     std::array<std::string, 30> nomi_utente;
@@ -299,11 +238,41 @@ int main()
     // gestione_acquisiti
     // test_sessioni_gestioneprofilo
     // test_post_acquisto.txt
-    std::ifstream file("../test/test_post_acquisto.txt");
+    std::ifstream file("../test/test_sessioni_gestioneprofilo.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
         return 1;
+    }
+
+    std::string folder_path = "../result";
+
+    // Verifica se la cartella esiste già
+    if (!fs::exists(folder_path)) {
+        // Se non esiste, crea la cartella
+        if (fs::create_directory(folder_path)) {
+            std::cout << "Cartella creata con successo.\n";
+        } else {
+            std::cerr << "Errore durante la creazione della cartella.\n";
+        }
+    } else {
+        std::cout << "La cartella esiste già.\n";
+    }
+
+    // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
+    std::ofstream outputFile("../result/richieste_client_compratore.txt", std::ios::app);
+    // Verifica se il file è stato aperto correttamente
+    if (!outputFile.is_open()) {
+        std::cerr << "Impossibile aprire il file!" << std::endl;
+        return 1; // Termina il programma con un codice di errore
+    }
+    
+    // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
+    std::ofstream outputFile1("../result/risposte_server_compratore.txt", std::ios::app);
+    // Verifica se il file è stato aperto correttamente
+    if (!outputFile1.is_open()) {
+        std::cerr << "Impossibile aprire il file!" << std::endl;
+        return 1; // Termina il programma con un codice di errore
     }
 
     // Leggiamo una riga per volta e se si trova una linea corrispondente all'azione da effettuare , prendiamo tutti i parametri necessari nelle righe seguenti e inviamo la richiesta al server. 
@@ -376,17 +345,68 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n",
-                   WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
-                   key9, value9, key10, value10, key11, value11, key12, value12, key13, value13, key14, value14);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s)  (id: %s)\n\n", 
+                            pid, WRITE_STREAM_CUSTOMER,
+                   key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8, key9, value9, key10, value10, key11, value11, key12, value12, key13, value13, key14, value14, reply->str);
 
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n\n", pid, WRITE_STREAM_CUSTOMER,
-                   key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8,
-                   key9, value9, key10, value10, key11, value11, key12, value12, key13, value13, key14, value14,
-                   reply->str);
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << ", " << value8 << ", " << value9 << ", " << value10 << ", " 
+                        <<  value11 << ", " <<  value12 << ", " << value13 << ", " << value14 << " )\n" << std::endl;
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
+
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+ 
+                    }
+                }
+            }
+
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
         }
 
         if (line == "EFFETTUA LOGIN COMPRATORE")
@@ -408,8 +428,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s\n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -430,8 +503,59 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s\n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s(id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << " )\n" << std::endl;
+
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -456,9 +580,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s (%s: %s, %s: %s)  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
 
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("\nLettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
             // Libera la risorsa della risposta
             freeReplyObject(reply);
         }
@@ -486,8 +662,67 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s , %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        // NON ENTRA NELL'IF
+                        // if (fval != "Result"){
+                        //     // Scrive nel file
+                        //     outputFile1 <<  fval << "\n" << std::endl;
+                        // }
+                        
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -524,8 +759,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s, %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -550,8 +838,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s)  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -576,8 +917,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s)  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -602,8 +996,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s)  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -628,8 +1075,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -658,8 +1158,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s : %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -684,9 +1237,62 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
 
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+            
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
+
+            // Libera la risorsa della risposta
             freeReplyObject(reply);
         }
 
@@ -709,9 +1315,62 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
 
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+            
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
+
+            // Libera la risorsa della risposta
             freeReplyObject(reply);
         }
 
@@ -750,8 +1409,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << " )\n";
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+ printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -772,8 +1484,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -794,8 +1559,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -820,8 +1638,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -850,8 +1721,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s * %s %s %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4);
-            printf("main(): pid =%d: stream %s: Added %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -884,8 +1808,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s *  %s %s %s %s %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5);
-            printf("main(): pid =%d: stream %s: Added  %s %s %s %s %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << ", " << value4 <<  ", " << value5 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -910,8 +1887,61 @@ int main()
             // Verifica la risposta del comando e termina il programma in caso di errore
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-            printf("XADD %s *  %s %s %s %s %s %s \n", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
-            printf("main(): pid =%d: stream %s: Added  %s %s %s %s %s %s (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+            printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
+
+            // Scrive nel file
+            outputFile << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+            
+            // Libera la risorsa della risposta
+            freeReplyObject(reply);
+
+            //  Lettura dei risultati dal server
+            read_counter++;
+
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
+
+            printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
+
+            printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
+
+            // Verifica la risposta del comando e termina il programma in caso di errore
+            assertReply(c2r, reply);
+
+            // Stampa la risposta del comando
+            dumpReply(reply, 0);
+
+            // Scorro il numero di Streams nella connessione Redis
+            for (k = 0; k < ReadNumStreams(reply); k++)
+            {
+                ReadStreamName(reply, streamname, k);
+
+                 
+
+                // Scorro il numero di messaggi della Streams Redis
+                for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
+                {
+                    ReadStreamNumMsgID(reply, k, i, msgid);
+
+                    printf("Numero messaggio: %d\n", i);
+
+                    printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
+
+                    printf("\tElenco dei valori del messaggio numero: %d\n", i);
+                    // Scorro il numero di valori del messaggio della Streams Redis
+                    for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
+                    {
+                        ReadStreamMsgVal(reply, k, i, h, fval);
+                        printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
+
+                        if (h == 1){
+                            // Scrive nel file
+                            outputFile1 <<  fval << "\n" << std::endl;
+                        }
+                    }
+                }
+            }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -920,58 +1950,15 @@ int main()
     } // while scorrimento linee file
 
     file.close(); // Chiude il file
+    
+    outputFile.close(); // Chiudi il file
+
+    outputFile1.close(); // Chiudi il file
 
 
+    /* sleep   */
+    //micro_sleep(10000000); // 10 secondi di attesa
 
-    printf("\n\nOra di leggere i risultati dal server. \n");
-
-    //  Lettura dei risultati dal server
-    read_counter++;
-
-    // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
-    reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
-
-    printf("Effettuato comando per leggere i messaggi della Streams. \n");
-
-    printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
-
-    // Verifica la risposta del comando e termina il programma in caso di errore
-    assertReply(c2r, reply);
-
-    // Stampa la risposta del comando
-    dumpReply(reply, 0);
-
-    // Scorro il numero di Streams nella connessione Redis
-    for (k = 0; k < ReadNumStreams(reply); k++)
-    {
-        ReadStreamName(reply, streamname, k);
-
-        printf("Numero stream: %d\n", k);
-
-        // Scorro il numero di messaggi della Streams Redis
-        for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
-        {
-            ReadStreamNumMsgID(reply, k, i, msgid);
-
-            printf("Numero messaggio: %d della Stream %d\n", i, k);
-
-            printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n",
-                   pid, username, streamname,
-                   k, i, msgid,
-                   ReadStreamMsgNumVal(reply, k, i));
-
-            // Scorro il numero di valori del messaggio della Streams Redis
-            for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
-            {
-                ReadStreamMsgVal(reply, k, i, h, fval);
-                printf("main(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n",
-                       pid, username, k, i, msgid, h, fval);
-            }
-        }
-    }
-
-    // Libera la risorsa della risposta
-    freeReplyObject(reply);
 
 
 #if (DEBUG < 0)
@@ -1544,7 +2531,7 @@ int main()
         // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
         reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
-        printf("Effettuato comando per leggere i messaggi della Streams. \n");
+        printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
 
         printf("main(): pid %d: user %s: Read msg %d from stream %s\n", pid, username, read_counter, READ_STREAM_CUSTOMER);
 
@@ -1559,14 +2546,14 @@ int main()
         {
             ReadStreamName(reply, streamname, k);
 
-            printf("Numero stream: %d\n", k);
+             
 
             // Scorro il numero di messaggi della Streams Redis
             for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
             {
                 ReadStreamNumMsgID(reply, k, i, msgid);
 
-                printf("Numero messaggio: %d della Stream %d\n", i, k);
+                printf("Numero messaggio: %d\n", i);
 
                 printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n",
                        pid, username, streamname,
