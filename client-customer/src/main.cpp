@@ -26,7 +26,7 @@ int main()
     int send_counter = 0;   // Contatore degli invii effettuati
     int block = 1000000000; // Tempo di blocco per la lettura da stream in nanosecondi
     int pid;                // ID del processo
-    // unsigned seed;
+    
     char username[100];
     char key1[100];
     char value1[100];
@@ -57,8 +57,8 @@ int main()
     char key14[100];
     char value14[100];
 
-    int num_richieste_client = -1; // Variabile utilizzata per enumerare le richieste del client nel file corrispondente ai risultati del test.
-    int num_risposte_server = -1;  // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
+    int num_richieste_client = 0; // Variabile utilizzata per enumerare le richieste del client nel file corrispondente ai risultati del test.
+    int num_risposte_server = 0;  // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
 
     char streamname[100]; // Buffer per il nome dello stream Redis
     char msgid[100];      // Buffer per l'ID del messaggio Redis
@@ -84,6 +84,7 @@ int main()
     // Stampa un messaggio di connessione riuscita.
     printf("main(): pid %d: user %s: connected to redis\n", pid, username);
 
+
     // Eliminazione stream di lettura se esiste.
     reply = RedisCommand(c2r, "DEL %s", READ_STREAM_CUSTOMER);
     // Verifica la risposta del comando e termina il programma in caso di errore
@@ -98,16 +99,19 @@ int main()
     // Stampa la risposta del comando
     dumpReply(reply, 0);
 
+
     // Creazione degli stream/gruppi
     initStreams(c2r, READ_STREAM_CUSTOMER);
     initStreams(c2r, WRITE_STREAM_CUSTOMER);
 
     printf("Creazione Streams\n");
 
+
     /* init random number generator  */
     srand((unsigned)time(NULL));
 
-    // Apre il file corrispondente al test da effettuare in modalità di lettura
+
+    // Apre il file in modalità di lettura corrispondente al test da effettuare.
     // gestione_acquisiti
     // test_sessioni_gestioneprofilo
     // test_post_acquisto.txt
@@ -118,6 +122,8 @@ int main()
         return 1;
     }
 
+
+    // Creo una cartella che conterrà i risultati dei test effettuati per gli utenti compratori.
     std::string folder_path = "../result";
 
     // Verifica se la cartella esiste già
@@ -127,8 +133,7 @@ int main()
         if (fs::create_directory(folder_path))
         {
             std::cout << "Cartella creata con successo.\n";
-        }
-        else
+        } else
         {
             std::cerr << "Errore durante la creazione della cartella.\n";
         }
@@ -138,7 +143,7 @@ int main()
         std::cout << "La cartella esiste già.\n";
     }
 
-    // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
+    // Apre il file corrispondente ai risultati dei test in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
     std::ofstream outputFile("../result/test-result-compratore.txt", std::ios::app);
     // Verifica se il file è stato aperto correttamente
     if (!outputFile.is_open())
@@ -147,7 +152,9 @@ int main()
         return 1; // Termina il programma con un codice di errore
     }
 
-    // Leggiamo una riga per volta e se si trova una linea corrispondente all'azione da effettuare , prendiamo tutti i parametri necessari nelle righe seguenti e inviamo la richiesta al server.
+
+    // Leggiamo il file corrispondente ai test una riga per volta. 
+    // Se si trova una linea corrispondente all'azione da effettuare , prendiamo tutti i parametri necessari nelle righe seguenti e inviamo la richiesta al server.
     std::string line;
     while (std::getline(file, line)) // Legge una riga per volta
     {
@@ -234,10 +241,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -255,7 +263,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -265,7 +273,7 @@ int main()
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
 
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -273,11 +281,10 @@ int main()
 
                         if (h == 1)
                         {
-                            // Scrive nel file
-
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -289,6 +296,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
         }
+
 
         if (line == "EFFETTUA LOGIN COMPRATORE")
         {
@@ -323,10 +331,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -344,7 +353,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -354,7 +363,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -365,6 +375,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -406,10 +417,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -427,7 +439,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -437,7 +449,7 @@ int main()
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
 
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -448,6 +460,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -493,10 +506,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("\nLettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -514,7 +528,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -524,7 +538,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -535,6 +550,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -545,6 +561,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
         }
+
 
         if (line == "AGGIORNA PASSWORD COMPRATORE")
         {
@@ -583,10 +600,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -604,7 +622,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -614,7 +632,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -625,6 +644,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -682,10 +702,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -703,7 +724,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -713,7 +734,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -724,6 +746,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -769,10 +792,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -790,7 +814,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -800,7 +824,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -811,6 +836,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -856,10 +882,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -877,7 +904,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -887,7 +914,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -898,6 +926,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -943,10 +972,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -964,7 +994,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -974,7 +1004,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -985,6 +1016,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1030,10 +1062,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -1051,7 +1084,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -1061,7 +1094,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -1072,6 +1106,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1121,10 +1156,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -1142,7 +1178,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -1152,7 +1188,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -1163,6 +1200,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1207,10 +1245,11 @@ int main()
 
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -1228,7 +1267,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -1238,7 +1277,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -1249,6 +1289,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1293,10 +1334,11 @@ int main()
 
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -1314,7 +1356,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -1324,7 +1366,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -1335,6 +1378,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1395,10 +1439,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -1416,7 +1461,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -1426,7 +1471,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -1437,6 +1483,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1478,10 +1525,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -1499,7 +1547,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -1509,7 +1557,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -1520,6 +1569,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1561,10 +1611,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -1582,7 +1633,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -1592,7 +1643,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -1603,6 +1655,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1648,10 +1701,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -1669,7 +1723,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -1679,7 +1733,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -1690,6 +1745,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1739,10 +1795,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -1760,7 +1817,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -1770,7 +1827,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -1781,6 +1839,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1834,10 +1893,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -1855,7 +1915,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -1865,7 +1925,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -1876,6 +1937,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1921,10 +1983,11 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+
             //  Lettura dei risultati dal server
             read_counter++;
 
-            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+            // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
             reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
             printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -1942,7 +2005,7 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                // Scorro il numero di messaggi della Streams Redis
+                // Scorro il numero di messaggi della Stream Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
                     ReadStreamNumMsgID(reply, k, i, msgid);
@@ -1952,7 +2015,8 @@ int main()
                     printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                     printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                    // Scorro il numero di valori del messaggio della Streams Redis
+                    
+                    // Scorro il numero di valori del messaggio della Stream Redis
                     for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                     {
                         ReadStreamMsgVal(reply, k, i, h, fval);
@@ -1963,6 +2027,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -2113,14 +2178,12 @@ int main()
             /* sleep   */
             micro_sleep(10000000); // 10 secondi di attesa
 
-            // send arguments to server
+            // Invio richieste al server
             send_counter++;
 
             // Randomicamente scegliamo l'azione che il client effettuerà:
             int i20 = rand() % 20;
             std::string azioneCompratore = azioniCompratore[i20];
-
-            //printf("%d, %s\n",i20, azioneCompratore.c_str());
 
             // Utilizziamo degli indici random per selezionare il parametro della richiesta che effettuerà il client.
             int i5 = rand() % 5;
@@ -2200,10 +2263,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -2221,7 +2285,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -2231,7 +2295,7 @@ int main()
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
 
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -2244,6 +2308,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -2286,10 +2351,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -2307,7 +2373,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -2317,7 +2383,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -2328,6 +2395,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -2367,10 +2435,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -2388,7 +2457,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -2398,7 +2467,7 @@ int main()
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
 
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -2409,6 +2478,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -2448,10 +2518,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -2469,7 +2540,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -2479,7 +2550,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -2490,6 +2562,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -2532,10 +2605,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("\nLettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -2553,7 +2627,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -2563,7 +2637,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -2574,6 +2649,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -2618,10 +2694,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -2639,7 +2716,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -2649,7 +2726,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -2660,6 +2738,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -2711,10 +2790,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -2732,7 +2812,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -2742,7 +2822,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -2753,6 +2834,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -2798,10 +2880,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -2819,7 +2902,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -2829,7 +2912,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -2840,6 +2924,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -2882,10 +2967,11 @@ int main()
 
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -2903,7 +2989,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -2913,7 +2999,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -2924,6 +3011,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -2967,10 +3055,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -2988,7 +3077,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -2998,7 +3087,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -3009,6 +3099,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -3052,10 +3143,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -3073,7 +3165,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -3083,7 +3175,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -3094,6 +3187,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -3137,10 +3231,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -3158,7 +3253,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -3168,7 +3263,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -3179,6 +3275,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -3222,10 +3319,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -3243,7 +3341,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -3253,7 +3351,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -3264,6 +3363,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -3318,10 +3418,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -3339,7 +3440,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -3349,7 +3450,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -3360,6 +3462,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -3402,10 +3505,11 @@ int main()
 
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -3423,7 +3527,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -3433,7 +3537,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -3444,6 +3549,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -3483,10 +3589,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -3504,7 +3611,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -3514,7 +3621,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -3525,6 +3633,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -3545,8 +3654,8 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "idOrdine");
-                // Dovrei effettuare una selezione del numero ordine compreso tra quelli presenti.
-                sprintf(value3, "1");
+                std::string idOrdine = std::to_string(rand() % 30);
+                sprintf(value3, idOrdine.c_str());
 
                 // Effettuo un comando di scrittura relativo all'annullamento dell'ordine.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
@@ -3568,10 +3677,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -3589,7 +3699,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -3599,7 +3709,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -3610,6 +3721,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -3627,7 +3739,8 @@ int main()
                 // Impostazioni chiavi e valori per il comando Redis:
 
                 sprintf(key2, "idOrdine");
-                sprintf(value2, "1");
+                std::string idOrdine = std::to_string(rand() % 30);
+                sprintf(value2, idOrdine.c_str());
 
                 // Modificare motivazioneReso
                 sprintf(key3, "motivazioneReso");
@@ -3653,10 +3766,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -3674,7 +3788,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -3684,7 +3798,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -3695,6 +3810,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -3715,7 +3831,8 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "idOrdine");
-                sprintf(value3, "1");
+                std::string idOrdine = std::to_string(rand() % 30);
+                sprintf(value3, idOrdine.c_str());
 
                 sprintf(key4, "descrizioneRecensione");
                 sprintf(value4, descrizioneProdotti.c_str());
@@ -3743,10 +3860,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -3764,7 +3882,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -3774,7 +3892,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -3785,6 +3904,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;
@@ -3805,7 +3925,8 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "idRecensione");
-                sprintf(value3, "1");
+                std::string idRecensione = std::to_string(rand() % 30);
+                sprintf(value3, idRecensione.c_str());
 
                 // Effettuo un comando di scrittura relativo alla rimozione del reso.
                 reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
@@ -3827,10 +3948,11 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
+                
                 //  Lettura dei risultati dal server
                 read_counter++;
 
-                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER.
+                // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER per verificare che la richiesta effettuata dal client sia andata a buon fine oppure no.
                 reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_CUSTOMER);
 
                 printf("Lettura dei messaggi sulla Streams corrispondente alle risposte del server. \n");
@@ -3848,7 +3970,7 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    // Scorro il numero di messaggi della Streams Redis
+                    // Scorro il numero di messaggi della Stream Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
                         ReadStreamNumMsgID(reply, k, i, msgid);
@@ -3858,7 +3980,8 @@ int main()
                         printf("main(): pid %d: user %s: stream %s, streamnum %d, msg %d, msgid %s with %d values\n", pid, username, streamname, k, i, msgid, ReadStreamMsgNumVal(reply, k, i));
 
                         printf("\tElenco dei valori del messaggio numero: %d\n", i);
-                        // Scorro il numero di valori del messaggio della Streams Redis
+                        
+                        // Scorro il numero di valori del messaggio della Stream Redis
                         for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h++)
                         {
                             ReadStreamMsgVal(reply, k, i, h, fval);
@@ -3869,6 +3992,7 @@ int main()
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
+                                // Scrive nel file corrispondente alla risposta del server
                                 outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                            << fval << "\n"
                                            << std::endl;

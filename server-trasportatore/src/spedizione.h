@@ -160,6 +160,22 @@ public:
 
                 PQclear(res);
 
+                // Verifico che l'utente non abbia già preso in carica la spedizione dello stesso ordine.
+                sprintf(sqlcmd, "SELECT * FROM Spedizione WHERE nome_utente_trasportatore = '%s' AND idOrdine = '%d'", in_nome_utente_trasportatore.c_str(), idOrdine);
+                res = db1.ExecSQLtuples(sqlcmd);
+                rows = PQntuples(res);
+                // Se il numero di righe del risultato della query è 1, allora già esiste una spedizione con lo stesso utente trasportatore e ordine.
+                if (rows == 1){
+                    // Log dell'errore e uscita dalla funzione
+                    statoReq = statoRequisito::NotSuccess;
+                    messageLog = "Attualmente esiste già una spedizione da parte di " + in_nome_utente_trasportatore + " per ordine: " + std::to_string(idOrdine);
+                    InsertToLogDB(db1, "ERROR", messageLog , sessionID, nomeRequisito, statoReq);
+                            
+                    result = messageLog;
+                    return result;
+                } 
+
+
                 // Recupero del nome della ditta di spedizione dell'utente trasportatore:
                 sprintf(sqlcmd, "SELECT nome_DittaSpedizione FROM UtenteTrasportatore WHERE nome_utente_trasportatore='%s'", in_nome_utente_trasportatore.c_str());
                 res = db1.ExecSQLtuples(sqlcmd);

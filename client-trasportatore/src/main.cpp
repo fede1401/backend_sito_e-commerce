@@ -26,7 +26,7 @@ int main()
     int send_counter = 0;   // Contatore degli invii effettuati
     int block = 1000000000; // Tempo di blocco per la lettura da stream in nanosecondi
     int pid;                // ID del processo
-    // unsigned seed;
+    
     char username[100];
     char key1[100];
     char value1[100];
@@ -49,8 +49,8 @@ int main()
     char key10[100];
     char value10[100];
 
-    int num_richieste_trasportatore = -1; // Variabile utilizzata per enumerare le richieste del trasportatore nel file corrispondente ai risultati del test.
-    int num_risposte_server = -1;         // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
+    int num_richieste_trasportatore = 0; // Variabile utilizzata per enumerare le richieste del trasportatore nel file corrispondente ai risultati del test.
+    int num_risposte_server = 0;         // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
 
     char streamname[100]; // Buffer per il nome dello stream Redis
     char msgid[100];      // Buffer per l'ID del messaggio Redis
@@ -76,6 +76,7 @@ int main()
     // Stampa un messaggio di connessione riuscita.
     printf("main(): pid %d: user %s: connected to redis\n", pid, username);
 
+
     // Eliminazione stream di lettura se esiste.
     reply = RedisCommand(c2r, "DEL %s", READ_STREAM_TRASPORTATORE);
     // Verifica la risposta del comando e termina il programma in caso di errore
@@ -90,11 +91,13 @@ int main()
     // Stampa la risposta del comando
     dumpReply(reply, 0);
 
+
     // Creazione degli stream/gruppi
     initStreams(c2r, READ_STREAM_TRASPORTATORE);
     initStreams(c2r, WRITE_STREAM_TRASPORTATORE);
 
     printf("Creazione Streams\n");
+
 
     /* init random number generator  */
     srand((unsigned)time(NULL));
@@ -109,6 +112,7 @@ int main()
         return 1;
     }
 
+    // Creo una cartella che conterrà i risultati dei test effettuati per gli utenti trasportatori.
     std::string folder_path = "../result";
 
     // Verifica se la cartella esiste già
@@ -129,7 +133,7 @@ int main()
         std::cout << "La cartella esiste già.\n";
     }
 
-    // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
+    // Apre il file corrispondente ai risultati dei test in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
     std::ofstream outputFile("../result/test-result-trasportatore.txt", std::ios::app);
     // Verifica se il file è stato aperto correttamente
     if (!outputFile.is_open())
@@ -138,7 +142,8 @@ int main()
         return 1; // Termina il programma con un codice di errore
     }
 
-    // Leggiamo una riga per volta e se si trova una linea corrispondente all'azione da effettuare , prendiamo tutti i parametri necessari nelle righe seguenti e inviamo la richiesta al server.
+    // Leggiamo il file corrispondente ai test una riga per volta. 
+    // Se si trova una linea corrispondente all'azione da effettuare , prendiamo tutti i parametri necessari nelle righe seguenti e inviamo la richiesta al server.
     std::string line;
     while (std::getline(file, line)) // Legge una riga per volta
     {
@@ -208,6 +213,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -251,6 +257,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -296,6 +303,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -339,6 +347,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -379,6 +388,7 @@ int main()
 
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -422,6 +432,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -463,6 +474,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -506,6 +518,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -551,6 +564,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -594,6 +608,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -643,6 +658,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -686,6 +702,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -730,6 +747,7 @@ int main()
 
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -773,6 +791,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -818,6 +837,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -861,6 +881,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -902,6 +923,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -945,6 +967,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -965,6 +988,7 @@ int main()
 
     /* sleep   */
     // micro_sleep(10000000); // 10 secondi di attesa
+
 
     // Esecuzione dei test randomici.
 
@@ -1014,7 +1038,7 @@ int main()
         /* sleep   */
         micro_sleep(10000000); // 10 secondi di attesa
 
-        // send arguments to server
+        // Invio richieste al server
         send_counter++;
 
         // Randomicamente scegliamo l'azione che il fornitore effettuerà:
@@ -1085,6 +1109,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -1128,6 +1153,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1169,6 +1195,7 @@ int main()
 
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -1212,6 +1239,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1232,7 +1260,8 @@ int main()
             sprintf(value2, nomi_utente[i30].c_str());
 
             sprintf(key3, "idSpedizione");
-            sprintf(value3, "1");
+            std::string idSpedizione = std::to_string(rand() % 30);
+            sprintf(value3, idSpedizione.c_str());
 
             // Effettuo un comando di scrittura relativo all'avviso della spedizione dell'utente trasportatore.
             reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_TRASPORTATORE, key1, value1, key2, value2, key3, value3);
@@ -1254,6 +1283,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -1297,6 +1327,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1336,6 +1367,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -1379,6 +1411,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1421,6 +1454,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -1464,6 +1498,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1502,6 +1537,7 @@ int main()
 
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -1545,6 +1581,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1584,6 +1621,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -1627,6 +1665,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1668,6 +1707,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -1711,6 +1751,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1756,6 +1797,7 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
+            
             //  Lettura dei risultati dal server
             read_counter++;
 
@@ -1799,6 +1841,7 @@ int main()
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
+                            // Scrive nel file corrispondente alla risposta del server
                             outputFile << "Risposta server numero: " << num_risposte_server << "\n"
                                        << fval << "\n"
                                        << std::endl;
@@ -1810,10 +1853,8 @@ int main()
             // Libera la risorsa della risposta
             freeReplyObject(reply);
         }
-        micro_sleep(1000000); // 1 secondi di attesa
 
-        /* sleep   */
-        // micro_sleep(10000000); // 10 secondi di attesa
+        micro_sleep(10000000); // 10 secondi di attesa
 
     } // while ()
 

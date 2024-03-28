@@ -29,7 +29,7 @@ int main()
     int send_counter = 0;       // Contatore degli invii effettuati
     int block = 1000000000;     // Tempo di blocco per la lettura da stream in nanosecondi
     int pid;                    // ID del processo
-    //unsigned seed;
+    
     char username[100];
     char key[100];              // Buffer per la chiave da utilizzare in Redis
     char value[100];            // Buffer per il valore da utilizzare in Redis
@@ -67,8 +67,8 @@ int main()
     
     char outputs[100];
 
-    int num_richieste_fornitore = -1;      // Variabile utilizzata per enumerare le richieste del fornitore nel file corrispondente ai risultati del test.
-    int num_risposte_server = -1;       // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
+    int num_richieste_fornitore = 0;      // Variabile utilizzata per enumerare le richieste del fornitore nel file corrispondente ai risultati del test.
+    int num_risposte_server = 0;       // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
 
     UtenteFornitore fornitore;
     Prodotto prodotto;
@@ -133,6 +133,7 @@ int main()
     printf("Connessione al database avvenuta con successo");
 
 
+    // Creo una cartella che conterrà i risultati dei test effettuati per gli utenti fornitori.
     std::string folder_path = "../result";
 
     // Verifica se la cartella esiste già
@@ -148,7 +149,7 @@ int main()
     }
 
     
-    // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
+    // Apre il file corrispondente ai risultati dei test in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
     std::ofstream outputFile("../result/test-result-fornitore.txt", std::ios::app);
     // Verifica se il file è stato aperto correttamente
     if (!outputFile.is_open()) {
@@ -167,7 +168,7 @@ int main()
         printf("\n----------------------------------------------------------------------------------\n");
         printf("Lettura dei messaggi sulla Streams corrispondente alle richieste del fornitore. \n ");
 
-        // Effettuo un comando di lettura dei messaggi delle richieste del client fornitore sulla Stream di lettura READ_STREAM_CUSTOMER.
+        // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_FORNITORE corrispondenti alle richieste del client fornitore.
         //Imposto COUNT a -1 per leggere tutti i messaggi disponibili nello stream
         reply = RedisCommand(c2r, "XREADGROUP GROUP diameter %s BLOCK %d COUNT -1 NOACK STREAMS %s >", username, block, READ_STREAM_FORNITORE);
 
@@ -179,17 +180,17 @@ int main()
         // Stampa la risposta del comando
         dumpReply(reply, 0);
 
-        //printf("Effettuato il dump! \n");
 
         // Elaborazione dei messaggi letti
-        // Scorro il numero di Streams nella connessione Redis
+
+        // Scorro il numero di Stream nella connessione Redis
         for (k = 0; k < ReadNumStreams(reply); k++)
         {
             ReadStreamName(reply, streamname, k);
 
             int numberMessageStream = ReadStreamNumMsg(reply, k);
             
-            // Scorro il numero di messaggi della Streams Redis
+            // Scorro il numero di messaggi della Stream Redis
             for (i = 0; i < ReadStreamNumMsg(reply, k); i++)  
             {
 
@@ -200,7 +201,7 @@ int main()
 
                 printf("\tElenco dei valori del messaggio numero: %d\n", i);
                 
-                // Scorro il numero di valori del messaggio della Streams Redis
+                // Scorro il numero di valori del messaggio della Stream Redis
                 // h deve partire da 0, altrimenti non troverà mai fval == "Action"
                 for (h = 0; h < ReadStreamMsgNumVal(reply, k, i); h = h + 1)
                 {
@@ -208,18 +209,12 @@ int main()
 
                     printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                    // Scrive nel file
-                    // outputFile <<  fval << "\n" << std::endl;
-
-                    // Estrapoliamo l'azione da effettuare e la salvo nella variabile action:
+                    // Qui bisogna estrapolare l'azione da effettuare e la copiamo nella variabile action.
                     if (strcmp(fval, "Action") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
-                        //printf("\nFval: %s\n", fval);
 
-                        strcpy(action, fval);
-                        
-                        //printf("Action: %s\n\n", action);
+                        strcpy(action, fval);                        
                     }
 
 
@@ -275,25 +270,21 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(email, fval);
                     }
-                    
                     if (strcmp(fval, "confermaPassword") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(confermaPassword, fval);
                     }
-                    
                     if (strcmp(fval, "nomeProdotto") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         strcpy(nomeProdotto, fval);
                     }
-                    
                     if (strcmp(fval, "codiceProdotto") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
                         codiceProdotto = atoi(fval);
                     }
-                    
                     if (strcmp(fval, "categoriaProdotto") == 0)
                     {
                         ReadStreamMsgVal(reply, k, i, h+1, fval);
@@ -328,8 +319,8 @@ int main()
 
                 }  // for dei valori dell'i-esimo messaggio dell'i-esima Stream.
                 
-                //printf("Azione: %s\n", action);
 
+                // Effettuiamo l'azione all'i-esima iterazione del messaggio
                 if (std::string(action) == "EFFETTUA REGISTRAZIONE FORNITORE")
                 {
                     // Incrementiamo il valore della richiesta del fornitore che verrà scritta nel file di risultato dei test.
@@ -348,36 +339,43 @@ int main()
                     // Se il risultato è false il sessionID già esiste nel database, ed è stato assegnato ad un altro utente, dobbiamo generarlo un'altro finchè non ne abbiamo uno univoco
                     if (resultSession == false)
                     {
+                        // Genero il sessionID finchè non sia univoco il suo valore.
                         while (resultSession == false){
                             sessionID = generateSessionID();
                             resultSession = check_sessionID(db1, "creazione sessionID per utente fornitore", statoRequisito::Wait, sessionID);
                         }
                     }
                     
+                    // Effettuo la registrazione dell'utente fornitore e ottengo la risposta.
                     std::string outputRegistrazione = fornitore.registrazione(db1, nome_utente_fornitore, categoriaUtente, nome, cognome, sessionID, numeroTelefono, email, password, confermaPassword, aziendaProduzione);
 
+                    // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, outputRegistrazione.c_str());
 
-                    // send result to client
+                    // Invio la risposta al fornitore
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    ////printf("Effettuata azione: %s\n", action);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
 
+                    // Scrivo nel file la risposta del server.
                     outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
                     printf("\nElaborazione della richiesta del fornitore dal server con risultato: %s\n", outputs);
 
-                    //printf("Result: %s \n", outputs);
-
+                    // Effettuo un comando di scrittura relativo all'elaborazione del server in risposta alla registrazione dell'utente fornitore.
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
+                    
+                    // Verifica la risposta del comando e termina il programma in caso di errore
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
+
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
-                    freeReplyObject(reply2);
+                    
+                    // Libera la risorsa della risposta
+                    freeReplyObject(reply2); 
                 }
 
 
@@ -391,28 +389,32 @@ int main()
 
                     std::string aggiornaAziendaProduttrice = fornitore.aggiorna_nome_azienda_produttrice(db1, nome_utente_fornitore,nuovaAziendaProduzione);
 
+                    // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiornaAziendaProduttrice.c_str());
 
-                    // send result to client
+                    // Invio la risposta al fornitore
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    ////printf("Effettuata azione: %s\n", action);
-
                     printf("\nElaborazione della richiesta del fornitore dal server con risultato: %s\n", outputs);
-
-                    //printf("Result: %s \n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
 
+                    // Scrivo nel file la risposta del server.
                     outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
+                    // Effettuo un comando di scrittura relativo all'elaborazione del server in risposta all'aggiornamento del nome dell'azienda di produzione dell'utente fornitore.
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
+                    
+                    // Verifica la risposta del comando e termina il programma in caso di errore
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
+
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
-                    freeReplyObject(reply2);
+                    
+                    // Libera la risorsa della risposta
+                    freeReplyObject(reply2); 
                     
                 }
 
@@ -428,28 +430,33 @@ int main()
 
                     std::string aggiuntaProdottoSito = prodotto.aggiungi_prodotto_sito(db1, nome_utente_fornitore, nomeProdotto, categoriaProdotto, prezzoProdotto, descrizioneProdotto, aziendaProduzione, numeroCopieDisponibili);
 
+                    // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiuntaProdottoSito.c_str());
 
-                    // send result to client
+                    // Invio la risposta al fornitore
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    //printf("Effettuata azione: %s\n", action);
-
+                    
                     printf("\nElaborazione della richiesta del fornitore dal server con risultato: %s\n", outputs);
-
-                    //printf("Result: %s \n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
 
+                    // Scrivo nel file la risposta del server.
                     outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
+                    // Effettuo un comando di scrittura relativo all'elaborazione del server in risposta all'aggiungimento del prodotto nel sito da parte dell'utente fornitore.
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
+                    
+                    // Verifica la risposta del comando e termina il programma in caso di errore
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
+
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
-                    freeReplyObject(reply2);
+                    
+                    // Libera la risorsa della risposta
+                    freeReplyObject(reply2); 
 
                 }
 
@@ -464,28 +471,34 @@ int main()
 
                     std::string rimozioneProdottoSito = prodotto.rimuovi_prodotto_sito(db1, nome_utente_fornitore, codiceProdotto);
 
+                    // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, rimozioneProdottoSito.c_str());
 
-                    // send result to client
+                    // Invio la risposta al fornitore
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    //printf("Effettuata azione: %s\n", action);
-
+                    
                     printf("\nElaborazione della richiesta del fornitore dal server con risultato: %s\n", outputs);
 
-                    //printf("Result: %s \n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
 
+                    // Scrivo nel file la risposta del server.
                     outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
+                    // Effettuo un comando di scrittura relativo all'elaborazione del server in risposta alla rimozione del prodotto nel sito da parte dell'utente fornitore.
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
+                    
+                    // Verifica la risposta del comando e termina il programma in caso di errore
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
+
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
-                    freeReplyObject(reply2);
+                    
+                    // Libera la risorsa della risposta
+                    freeReplyObject(reply2); 
                 }
                 
 
@@ -514,28 +527,32 @@ int main()
 
                     std::string effettuaLogin = fornitore.login(db1, nome_utente_fornitore, password, sessionID);
 
+                    // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, effettuaLogin.c_str());
 
-                    // send result to client
+                    // Invio la risposta al fornitore
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
-
-                    //printf("Effettuata azione: %s\n", action);
-
+                    
                     printf("\nElaborazione della richiesta del fornitore dal server con risultato: %s\n", outputs);
-
-                    //printf("Result: %s \n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
 
+                    // Scrivo nel file la risposta del server.
                     outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
+                    // Effettuo un comando di scrittura relativo all'elaborazione del server in risposta al login dell'utente fornitore.
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
+                    
+                    // Verifica la risposta del comando e termina il programma in caso di errore
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
+
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
-                    freeReplyObject(reply2);
+                    
+                    // Libera la risorsa della risposta
+                    freeReplyObject(reply2); 
 
                 }
 
@@ -550,28 +567,32 @@ int main()
 
                     std::string effettuaLogout =  fornitore.logout(db1, nome_utente_fornitore);
 
+                    // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, effettuaLogout.c_str());
 
-                    // send result to client
+                    // Invio la risposta al fornitore
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
-
-                    //printf("Effettuata azione: %s\n", action);
-
+                    
                     printf("\nElaborazione della richiesta del fornitore dal server con risultato: %s\n", outputs);
-
-                    //printf("Result: %s \n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
 
+                    // Scrivo nel file la risposta del server.
                     outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
+                    // Effettuo un comando di scrittura relativo all'elaborazione del server in risposta al logout dell'utente fornitore.
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
+                    
+                    // Verifica la risposta del comando e termina il programma in caso di errore
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
+
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
-                    freeReplyObject(reply2);
+                    
+                    // Libera la risorsa della risposta
+                    freeReplyObject(reply2); 
                 }
 
 
@@ -585,28 +606,33 @@ int main()
 
                     std::string eliminaProfilo = fornitore.elimina_profilo(db1, nome_utente_fornitore);
 
+                    // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, eliminaProfilo.c_str());
 
-                    // send result to client
+                    // Invio la risposta al fornitore
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    //printf("Effettuata azione: %s\n", action);
-
+                    
                     printf("\nElaborazione della richiesta del fornitore dal server con risultato: %s\n", outputs);
-
-                    //printf("Result: %s \n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
 
+                    // Scrivo nel file la risposta del server.
                     outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
+                    // Effettuo un comando di scrittura relativo all'elaborazione del server in risposta all'eliminazione del profilo dell'utente fornitore.
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
+                    
+                    // Verifica la risposta del comando e termina il programma in caso di errore
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
+
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
-                    freeReplyObject(reply2);
+                    
+                    // Libera la risorsa della risposta
+                    freeReplyObject(reply2); 
                 }
 
 
@@ -620,28 +646,33 @@ int main()
 
                     std::string aggiornaNumeroTelefono = fornitore.aggiorna_numero_telefono(db1, nome_utente_fornitore, nuovoNumeroTelefono);
 
+                    // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiornaNumeroTelefono.c_str());
 
-                    // send result to client
+                    // Invio la risposta al fornitore
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("Effettuata azione: %s\n",action);
-
                     printf("\nElaborazione della richiesta del fornitore dal server con risultato: %s\n", outputs);
 
-                    //printf("Result: %s \n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
 
+                    // Scrivo nel file la risposta del server.
                     outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
+                    // Effettuo un comando di scrittura relativo all'elaborazione del server in risposta all'aggiornamento del numero di telefono dell'utente fornitore.
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
+                    
+                    // Verifica la risposta del comando e termina il programma in caso di errore
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
+
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
-                    freeReplyObject(reply2);
+                    
+                    // Libera la risorsa della risposta
+                    freeReplyObject(reply2); 
                 }
 
 
@@ -655,28 +686,32 @@ int main()
 
                     std::string aggiornaPassword = fornitore.aggiorna_password(db1, nome_utente_fornitore, vecchiaPassw, nuovaPassw);
 
+                    // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiornaPassword.c_str());
 
-                    // send result to client
+                    // Invio la risposta al fornitore
                     send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    //printf("Effettuata azione: %s\n", action);
-
                     printf("\nElaborazione della richiesta del fornitore dal server con risultato: %s\n", outputs);
-
-                    //printf("Result: %s \n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
 
+                    // Scrivo nel file la risposta del server.
                     outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
+                    // Effettuo un comando di scrittura relativo all'elaborazione del server in risposta all'aggiornamento della password dell'utente fornitore.
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_FORNITORE, key, value);
+                    
+                    // Verifica la risposta del comando e termina il programma in caso di errore
                     assertReplyType(c2r, reply2, REDIS_REPLY_STRING);
+
                     printf("main(): pid =%d: stream %s: Added %s -> %s (id: %s)\n", pid, WRITE_STREAM_FORNITORE, key, value, reply2->str);
-                    freeReplyObject(reply2);
+                    
+                    // Libera la risorsa della risposta
+                    freeReplyObject(reply2); 
 
                 }
 
