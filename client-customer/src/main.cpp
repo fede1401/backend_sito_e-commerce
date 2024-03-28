@@ -6,7 +6,6 @@
 #include <fstream>
 #include <filesystem>
 
-
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
 // Usage: ./streams <add count> <read count> [block time, default: 1]
 
@@ -58,142 +57,13 @@ int main()
     char key14[100];
     char value14[100];
 
-    int num_richieste_client = -1;      // Variabile utilizzata per enumerare le richieste del client nel file corrispondente ai risultati del test.
-    int num_risposte_server = -1;       // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
+    int num_richieste_client = -1; // Variabile utilizzata per enumerare le richieste del client nel file corrispondente ai risultati del test.
+    int num_risposte_server = -1;  // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
 
     char streamname[100]; // Buffer per il nome dello stream Redis
     char msgid[100];      // Buffer per l'ID del messaggio Redis
     char fval[100];       // Buffer per il valore del campo del messaggio Redis
-    int i, k, h, index;          // Variabili di iterazione
-
-    std::string test1[20] = { "EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA LOGIN COMPRATORE", "AGGIORNA NUMERO TELEFONO COMPRATORE", "AGGIORNA PASSWORD COMPRATORE",
-        "AGGIORNA RESIDENZA", "AGGIUNGI CARTA PAGAMENTO", "AGGIUNGI PRODOTTO CARRELLO", "AGGIUNGI PRODOTTO LISTADESIDERI",
-        "RICERCA PRODOTTO", "ACQUISTA PRODOTTO", "VISIONA ORDINI EFFETTUATI", "EFFETTUA RECENSIONE", "ANNULLA ORDINE", "EFFETTUA RESO",
-        "RIMUOVI RECENSIONE", "RIMUOVI CARTA PAGAMENTO", "RIMUOVI PRODOTTO CARRELLO", "RIMUOVI PRODOTTO LISTADESIDERI", "EFFETTUA LOGOUT COMPRATORE", "ELIMINA PROFILO COMPRATORE"};
-
-    std::string test2[39] = {
-        "EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA REGISTRAZIONE COMPRATORE",
-        "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGIN COMPRATORE",
-        "AGGIORNA NUMERO TELEFONO COMPRATORE", "AGGIORNA PASSWORD COMPRATORE", "AGGIORNA RESIDENZA", "AGGIORNA NUMERO TELEFONO COMPRATORE", "AGGIORNA PASSWORD COMPRATORE",
-        "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO", "ACQUISTA PRODOTTO",
-        "AGGIUNGI PRODOTTO CARRELLO", "AGGIUNGI PRODOTTO CARRELLO", "AGGIUNGI PRODOTTO CARRELLO", "AGGIUNGI PRODOTTO CARRELLO",
-        "AGGIUNGI PRODOTTO LISTADESIDERI", "AGGIUNGI PRODOTTO LISTADESIDERI", "AGGIUNGI PRODOTTO LISTADESIDERI", "AGGIUNGI PRODOTTO LISTADESIDERI", "RIMUOVI PRODOTTO CARRELLO",
-        "RICERCA PRODOTTO", "ACQUISTA PRODOTTO", "EFFETTUA RESO", "EFFETTUA RECENSIONE", "EFFETTUA LOGOUT COMPRATORE", "ELIMINA PROFILO COMPRATORE"};
-
-    // Array di nomi utente
-    std::array<std::string, 30> nomi_utente;
-    for (int i = 0; i < 30; ++i)
-    {
-        nomi_utente[i] = "Utente" + std::to_string(i + 1);
-    }
-
-    // Array di nomi
-    std::array<std::string, 10> nomi = {"Mario", "Luigi", "Giovanni", "Alessia", "Chiara", "Francesco", "Elena", "Roberto", "Laura", "Paolo"};
-
-    // Array di cognomi
-    std::array<std::string, 10> cognomi = {"Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Esposito", "Romano", "Gallo", "Conti", "De Luca"};
-
-    // Array di email
-    std::array<std::string, 30> email;
-    for (int i = 0; i < 30; ++i)
-    {
-        email[i] = nomi_utente[i] + "@example.com";
-    }
-
-    // Array di numeri di telefono
-    std::array<std::string, 30> numeri_telefono;
-    for (int i = 0; i < 30; ++i)
-    {
-        numeri_telefono[i] = "123456789" + std::to_string(i);
-    }
-
-    // Array di password
-    std::array<std::string, 30> password;
-    for (int i = 0; i < 30; ++i)
-    {
-        password[i] = "P.assword" + std::to_string(i + 1);
-    }
-
-    // Array di nomi di prodotti
-    std::array<std::string, 30> nomi_prodotti;
-    for (int i = 0; i < 30; ++i)
-    {
-        nomi_prodotti[i] = "Prodotto" + std::to_string(i + 1);
-    }
-
-    // Array di nomi di prodotti
-    std::string descrizioneProdotti = "Prodotto eccellente.";
-
-    // Array di categorie prodotti
-    std::array<std::string, 10> categorie_prodotti = {"Abbigliamento", "Elettronica", "Informatica", "Arredamento", "Culinario", "Sportivo", "Illuminazione", "Giardinaggio", "Musicale", "Fotografia"};
-
-    // Array di prezzi e copie disponibili di prodotti
-    std::array<std::string, 30> prezzo_copie_disponibili;
-    for (int i = 0; i < 30; ++i)
-    {
-        prezzo_copie_disponibili[i] = std::to_string(i + 1);
-    }
-
-    // Array di date di nascita
-    std::array<std::string, 30> date_di_nascita;
-    for (int i = 0; i < 30; ++i)
-    {
-        date_di_nascita[i] = "01/01/2000"; // Esempio di data di nascita fittizia
-    }
-
-    // Array di CAP
-    std::array<std::string, 5> CAP = {"12345", "54321", "67890", "09876", "45678"};
-
-    // Array di città di residenza
-    std::array<std::string, 5> citta_di_residenza = {"Roma", "Milano", "Napoli", "Firenze", "Venezia"};
-
-    // Array di vie di residenza
-    std::array<std::string, 5> vie_di_residenza = {"Via Roma", "Via Milano", "Via Napoli", "Via Firenze", "Via Venezia"};
-
-    // Array di numeri civici
-    std::array<std::string, 30> numeri_civici;
-    for (int i = 0; i < 30; ++i)
-    {
-        numeri_civici[i] = std::to_string(i + 1);
-    }
-
-    // Array di numeri di carte di pagamento:
-    std::array<std::string, 30> carte_pagamento;
-    for (int i = 0; i < 30; ++i)
-    {
-        std::string carta = "";
-
-        // Genera le restanti 10 cifre casuali
-        for (int j = 0; j < 10; ++j)
-        {
-            carta += std::to_string(rand() % 10); // Aggiunge una cifra casuale compresa tra 0 e 9
-        }
-
-        carte_pagamento[i] = carta;
-    }
-
-    // Array di numeri di carte di pagamento:
-    std::array<std::string, 30> cvv_cartePagamento;
-    for (int i = 0; i < 30; ++i)
-    {
-        std::string cvv = "";
-
-        // Genera le restanti 10 cifre casuali
-        for (int j = 0; j < 3; ++j)
-        {
-            cvv += std::to_string(rand() % 3); // Aggiunge una cifra casuale compresa tra 0 e 9
-        }
-
-        cvv_cartePagamento[i] = cvv;
-    }
-
-    // Array per le motivazioni del reso
-    std::array<std::string , 4> motivazioni_reso = {"difettoso", "misura errata", "non conforme alle aspettative", "cambio opinione"};
-
-    // Array per i voti delle stelle
-    std::array<std::string , 5> voti_stelle = {"1", "2", "3", "4", "5"};
-
-
+    int i, k, h;   // Variabili di iterazione
 
     /*  prg  */
 
@@ -251,28 +121,33 @@ int main()
     std::string folder_path = "../result";
 
     // Verifica se la cartella esiste già
-    if (!fs::exists(folder_path)) {
+    if (!fs::exists(folder_path))
+    {
         // Se non esiste, crea la cartella
-        if (fs::create_directory(folder_path)) {
+        if (fs::create_directory(folder_path))
+        {
             std::cout << "Cartella creata con successo.\n";
-        } else {
+        }
+        else
+        {
             std::cerr << "Errore durante la creazione della cartella.\n";
         }
-    } else {
+    }
+    else
+    {
         std::cout << "La cartella esiste già.\n";
     }
 
     // Apre il file in modalità scrittura (se il file non esiste, lo crea; altrimenti sovrascrive il contenuto)
     std::ofstream outputFile("../result/test-result-compratore.txt", std::ios::app);
     // Verifica se il file è stato aperto correttamente
-    if (!outputFile.is_open()) {
+    if (!outputFile.is_open())
+    {
         std::cerr << "Impossibile aprire il file!" << std::endl;
         return 1; // Termina il programma con un codice di errore
     }
 
-
-
-    // Leggiamo una riga per volta e se si trova una linea corrispondente all'azione da effettuare , prendiamo tutti i parametri necessari nelle righe seguenti e inviamo la richiesta al server. 
+    // Leggiamo una riga per volta e se si trova una linea corrispondente all'azione da effettuare , prendiamo tutti i parametri necessari nelle righe seguenti e inviamo la richiesta al server.
     std::string line;
     while (std::getline(file, line)) // Legge una riga per volta
     {
@@ -343,21 +218,21 @@ int main()
             assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
             printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
-            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s)  (id: %s)\n\n", 
-                            pid, WRITE_STREAM_CUSTOMER,
+            printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s)  (id: %s)\n\n",
+                   pid, WRITE_STREAM_CUSTOMER,
                    key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8, key9, value9, key10, value10, key11, value11, key12, value12, key13, value13, key14, value14, reply->str);
-
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << ", " << value8 << ", " << value9 << ", " << value10 << ", " 
-                        <<  value11 << ", " <<  value12 << ", " << value13 << ", " << value14 << " )\n" << std::endl;
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << ", " << value8 << ", " << value9 << ", " << value10 << ", "
+                       << value11 << ", " << value12 << ", " << value13 << ", " << value14 << " )\n"
+                       << std::endl;
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
-
 
             //  Lettura dei risultati dal server
             read_counter++;
@@ -396,22 +271,23 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Scrive nel file
 
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
- 
                     }
                 }
             }
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
-
         }
 
         if (line == "EFFETTUA LOGIN COMPRATORE")
@@ -438,9 +314,11 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                       << std::endl;
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -466,8 +344,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -484,11 +360,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -518,9 +397,11 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << " )\n" << std::endl;
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << " )\n"
+                       << std::endl;
 
             // Libera la risorsa della risposta
             freeReplyObject(reply);
@@ -562,11 +443,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -600,10 +484,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -628,8 +514,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -646,11 +530,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -687,10 +574,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -715,8 +604,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -733,11 +620,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -783,10 +673,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -811,8 +703,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -829,11 +719,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -867,10 +760,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -895,8 +790,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -913,11 +806,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -948,13 +844,15 @@ int main()
 
             printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
             printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s)  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
-            
+
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -979,8 +877,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -997,11 +893,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1032,13 +931,15 @@ int main()
 
             printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
             printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s)  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
-            
+
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -1063,8 +964,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -1081,11 +980,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1119,10 +1021,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -1147,8 +1051,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -1165,11 +1067,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1207,10 +1112,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -1235,8 +1142,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -1253,11 +1158,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1291,10 +1199,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                       << std::endl;
+
             freeReplyObject(reply);
 
             //  Lettura dei risultati dal server
@@ -1318,8 +1228,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -1336,11 +1244,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1374,10 +1285,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                       << std::endl;
+
             freeReplyObject(reply);
 
             //  Lettura dei risultati dal server
@@ -1401,8 +1314,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -1419,11 +1330,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1473,10 +1387,11 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << " )\n";
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << " )\n";
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -1501,8 +1416,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -1519,11 +1432,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1553,10 +1469,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -1581,8 +1499,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -1599,11 +1515,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1633,10 +1552,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -1661,8 +1582,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -1679,11 +1598,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1717,10 +1639,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -1745,8 +1669,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -1763,11 +1685,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1805,10 +1730,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -1833,8 +1760,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -1851,11 +1776,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1897,10 +1825,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 <<  ", " << value5 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -1925,8 +1855,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -1943,11 +1871,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -1981,10 +1912,12 @@ int main()
 
             // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
             num_richieste_client++;
-            
+
             // Scrive nel file
-            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-            
+            outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                       << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                       << std::endl;
+
             // Libera la risorsa della risposta
             freeReplyObject(reply);
 
@@ -2009,8 +1942,6 @@ int main()
             {
                 ReadStreamName(reply, streamname, k);
 
-                 
-
                 // Scorro il numero di messaggi della Streams Redis
                 for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                 {
@@ -2027,11 +1958,14 @@ int main()
                         ReadStreamMsgVal(reply, k, i, h, fval);
                         printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                        if (h == 1){
+                        if (h == 1)
+                        {
                             // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                             num_risposte_server++;
 
-                            outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                            outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                       << fval << "\n"
+                                       << std::endl;
                         }
                     }
                 }
@@ -2044,40 +1978,161 @@ int main()
     } // while scorrimento linee file
 
     file.close(); // Chiude il file
-    
+
     outputFile.close(); // Chiudi il file
-    
 
     /* sleep   */
-    //micro_sleep(10000000); // 10 secondi di attesa
+    // micro_sleep(10000000); // 10 secondi di attesa
 
 
 
-//#if (DEBUG < 0)
-    // Test randomici.
+    // Esecuzione test randomici:
+
+    std::string azioniCompratore[20] = {"EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGOUT COMPRATORE", "ELIMINA PROFILO COMPRATORE",
+                                        "AGGIORNA NUMERO TELEFONO COMPRATORE", "AGGIORNA PASSWORD COMPRATORE", "AGGIORNA RESIDENZA", "AGGIUNGI CARTA PAGAMENTO",
+                                        "RIMUOVI CARTA PAGAMENTO", "AGGIUNGI PRODOTTO CARRELLO", "AGGIUNGI PRODOTTO LISTADESIDERI", "RIMUOVI PRODOTTO CARRELLO", "RIMUOVI PRODOTTO LISTADESIDERI",
+                                        "RICERCA PRODOTTO", "ACQUISTA PRODOTTO", "VISIONA ORDINI EFFETTUATI", "EFFETTUA RECENSIONE", "ANNULLA ORDINE", "EFFETTUA RESO", "RIMUOVI RECENSIONE"};
+
+    // Array di nomi utente
+    std::array<std::string, 30> nomi_utente;
+    for (int i = 0; i < 30; ++i)
+    {
+        nomi_utente[i] = "Utente" + std::to_string(i + 1);
+    }
+
+    // Array di nomi
+    std::array<std::string, 10> nomi = {"Mario", "Luigi", "Giovanni", "Alessia", "Chiara", "Francesco", "Elena", "Roberto", "Laura", "Paolo"};
+
+    // Array di cognomi
+    std::array<std::string, 10> cognomi = {"Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Esposito", "Romano", "Gallo", "Conti", "De Luca"};
+
+    // Array di email
+    std::array<std::string, 30> email;
+    for (int i = 0; i < 30; ++i)
+    {
+        email[i] = nomi_utente[i] + "@example.com";
+    }
+
+    // Array di numeri di telefono
+    std::array<std::string, 30> numeri_telefono;
+    for (int i = 0; i < 30; ++i)
+    {
+        numeri_telefono[i] = "123456789" + std::to_string(i);
+    }
+
+    // Array di password
+    std::array<std::string, 30> password;
+    for (int i = 0; i < 30; ++i)
+    {
+        password[i] = "P.assword" + std::to_string(i + 1);
+    }
+
+    // Array di nomi di prodotti
+    std::array<std::string, 30> nomi_prodotti;
+    for (int i = 0; i < 30; ++i)
+    {
+        nomi_prodotti[i] = "Prodotto" + std::to_string(i + 1);
+    }
+
+    // Array di nomi di prodotti
+    std::string descrizioneProdotti = "Prodotto eccellente.";
+
+    // Array di categorie prodotti
+    std::array<std::string, 10> categorie_prodotti = {"Abbigliamento", "Elettronica", "Informatica", "Arredamento", "Culinario", "Sportivo", "Illuminazione", "Giardinaggio", "Musicale", "Fotografia"};
+
+    // Array di prezzi e copie disponibili di prodotti
+    std::array<std::string, 30> prezzo_copie_disponibili;
+    for (int i = 0; i < 30; ++i)
+    {
+        prezzo_copie_disponibili[i] = std::to_string(i + 1);
+    }
+
+    // Array di date di nascita
+    std::array<std::string, 30> date_di_nascita;
+    for (int i = 0; i < 30; ++i)
+    {
+        date_di_nascita[i] = "01/01/2000"; // Esempio di data di nascita fittizia }
+    }
+
+        // Array di CAP
+        std::array<std::string, 5> CAP = {"12345", "54321", "67890", "09876", "45678"};
+
+        // Array di città di residenza
+        std::array<std::string, 5> citta_di_residenza = {"Roma", "Milano", "Napoli", "Firenze", "Venezia"};
+
+        // Array di vie di residenza
+        std::array<std::string, 5> vie_di_residenza = {"Via Roma", "Via Milano", "Via Napoli", "Via Firenze", "Via Venezia"};
+
+        // Array di numeri civici
+        std::array<std::string, 30> numeri_civici;
+        for (int i = 0; i < 30; ++i)
+        {
+            numeri_civici[i] = std::to_string(i + 1);
+        }
+
+        // Array di numeri di carte di pagamento:
+        std::array<std::string, 30> carte_pagamento;
+        for (int i = 0; i < 30; ++i)
+        {
+            std::string carta = "";
+
+            // Genera le restanti 10 cifre casuali
+            for (int j = 0; j < 10; ++j)
+            {
+                carta += std::to_string(rand() % 10); // Aggiunge una cifra casuale compresa tra 0 e 9
+            }
+
+            carte_pagamento[i] = carta;
+        }
+
+        // Array di numeri di carte di pagamento:
+        std::array<std::string, 30> cvv_cartePagamento;
+        for (int i = 0; i < 30; ++i)
+        {
+            std::string cvv = "";
+
+            // Genera le restanti 10 cifre casuali
+            for (int j = 0; j < 3; ++j)
+            {
+                cvv += std::to_string(rand() % 3); // Aggiunge una cifra casuale compresa tra 0 e 9
+            }
+
+            cvv_cartePagamento[i] = cvv;
+        }
+
+        // Array per le motivazioni del reso
+        std::array<std::string, 4> motivazioni_reso = {"difettoso", "misura errata", "non conforme alle aspettative", "cambio opinione"};
+
+        // Array per i voti delle stelle
+        std::array<std::string, 5> voti_stelle = {"1", "2", "3", "4", "5"};
+
+        // #if (DEBUG < 0)
+
     while (1)
     {
-        /* sleep   */
-        micro_sleep(10000000); // 10 secondi di attesa
+            /* sleep   */
+            micro_sleep(10000000); // 10 secondi di attesa
 
-        // send arguments to server
-        send_counter++;
+            // send arguments to server
+            send_counter++;
 
-        // Itero sulle azioni che effettua il client.
-        for (index = 0; index < 39; index++)
-        {
+            // Randomicamente scegliamo l'azione che il client effettuerà:
+            int i20 = rand() % 20;
+            std::string azioneCompratore = azioniCompratore[i20];
 
-            // Definisco 4 indici casuali per i parametri che passa il client
+            //printf("%d, %s\n",i20, azioneCompratore.c_str());
+
+            // Utilizziamo degli indici random per selezionare il parametro della richiesta che effettuerà il client.
             int i5 = rand() % 5;
-            int i4 = rand()%4;
+            int i4 = rand() % 4;
             int i10 = rand() % 10;
-            int i100 = rand() % 100;
+            //int i100 = rand() % 100;
             int i30 = rand() % 30;
 
             sprintf(key1, "Action");
-            sprintf(value1, test2[index].c_str());
+            sprintf(value1, azioneCompratore.c_str());
 
-            if (test2[index] == "EFFETTUA REGISTRAZIONE COMPRATORE")
+            if (azioneCompratore == "EFFETTUA REGISTRAZIONE COMPRATORE")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -2129,21 +2184,21 @@ int main()
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
-                printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s)  (id: %s)\n\n", 
-                                pid, WRITE_STREAM_CUSTOMER,
-                    key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8, key9, value9, key10, value10, key11, value11, key12, value12, key13, value13, key14, value14, reply->str);
-
+                printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s)  (id: %s)\n\n",
+                       pid, WRITE_STREAM_CUSTOMER,
+                       key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8, key9, value9, key10, value10, key11, value11, key12, value12, key13, value13, key14, value14, reply->str);
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << ", " << value8 << ", " << value9 << ", " << value10 << ", " 
-                            <<  value11 << ", " <<  value12 << ", " << value13 << ", " << value14 << " )\n" << std::endl;
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << ", " << value8 << ", " << value9 << ", " << value10 << ", "
+                           << value11 << ", " << value12 << ", " << value13 << ", " << value14 << " )\n"
+                           << std::endl;
 
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
-
 
                 //  Lettura dei risultati dal server
                 read_counter++;
@@ -2182,15 +2237,17 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Scrive nel file
 
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
-    
                         }
                     }
                 }
@@ -2199,7 +2256,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "EFFETTUA LOGIN COMPRATORE")
+            if (azioneCompratore == "EFFETTUA LOGIN COMPRATORE")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -2220,9 +2277,11 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                           << std::endl;
 
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
@@ -2248,8 +2307,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -2266,11 +2323,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -2280,7 +2340,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "EFFETTUA LOGOUT COMPRATORE")
+            if (azioneCompratore == "EFFETTUA LOGOUT COMPRATORE")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -2298,9 +2358,11 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << " )\n" << std::endl;
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << " )\n"
+                           << std::endl;
 
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
@@ -2342,11 +2404,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -2356,9 +2421,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-
-
-            if (test2[index] == "ELIMINA PROFILO COMPRATORE")
+            if (azioneCompratore == "ELIMINA PROFILO COMPRATORE")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -2376,10 +2439,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -2404,8 +2469,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -2422,11 +2485,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -2436,7 +2502,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "AGGIORNA NUMERO TELEFONO COMPRATORE")
+            if (azioneCompratore == "AGGIORNA NUMERO TELEFONO COMPRATORE")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -2457,10 +2523,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -2501,11 +2569,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -2514,7 +2585,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "AGGIORNA PASSWORD COMPRATORE")
+            if (azioneCompratore == "AGGIORNA PASSWORD COMPRATORE")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -2538,10 +2609,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -2566,8 +2639,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -2584,11 +2655,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -2598,8 +2672,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-
-            if (test2[index] == "AGGIORNA RESIDENZA")
+            if (azioneCompratore == "AGGIORNA RESIDENZA")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -2629,10 +2702,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -2657,8 +2732,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -2675,11 +2748,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -2689,7 +2765,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "AGGIUNGI CARTA PAGAMENTO")
+            if (azioneCompratore == "AGGIUNGI CARTA PAGAMENTO")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -2708,15 +2784,17 @@ int main()
                 // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
-                 printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
+                printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
                 printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s : %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -2757,11 +2835,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -2771,7 +2852,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "RIMUOVI CARTA PAGAMENTO")
+            if (azioneCompratore == "RIMUOVI CARTA PAGAMENTO")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -2793,10 +2874,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                           << std::endl;
+
                 freeReplyObject(reply);
 
                 //  Lettura dei risultati dal server
@@ -2820,8 +2903,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -2838,11 +2919,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -2852,7 +2936,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "AGGIUNGI PRODOTTO CARRELLO")
+            if (azioneCompratore == "AGGIUNGI PRODOTTO CARRELLO")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -2874,10 +2958,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -2918,11 +3004,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -2932,7 +3021,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "RIMUOVI PRODOTTO CARRELLO")
+            if (azioneCompratore == "RIMUOVI PRODOTTO CARRELLO")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -2951,13 +3040,15 @@ int main()
 
                 printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
                 printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s)  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
-                
+
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -2998,11 +3089,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -3012,7 +3106,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "AGGIUNGI PRODOTTO LISTADESIDERI")
+            if (azioneCompratore == "AGGIUNGI PRODOTTO LISTADESIDERI")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -3031,13 +3125,15 @@ int main()
 
                 printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
                 printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s)  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, reply->str);
-                
+
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -3062,8 +3158,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -3080,11 +3174,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -3094,7 +3191,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "RIMUOVI PRODOTTO LISTADESIDERI")
+            if (azioneCompratore == "RIMUOVI PRODOTTO LISTADESIDERI")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -3116,10 +3213,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -3144,8 +3243,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -3162,11 +3259,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -3176,7 +3276,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "ACQUISTA PRODOTTO")
+            if (azioneCompratore == "ACQUISTA PRODOTTO")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -3210,10 +3310,11 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << " )\n";
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << ", " << value6 << ", " << value7 << " )\n";
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -3238,8 +3339,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -3256,11 +3355,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -3270,7 +3372,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "RICERCA PRODOTTO")
+            if (azioneCompratore == "RICERCA PRODOTTO")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -3278,7 +3380,7 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "nomeProdotto");
-                //std::string codiceProdotto = std::to_string(rand() % 30);
+                // std::string codiceProdotto = std::to_string(rand() % 30);
                 sprintf(value3, nomi_prodotti[i30].c_str());
 
                 // Effettuo un comando di scrittura relativo alla ricerca del prodotto.
@@ -3292,10 +3394,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                           << std::endl;
+
                 freeReplyObject(reply);
 
                 //  Lettura dei risultati dal server
@@ -3319,8 +3423,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -3337,11 +3439,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -3351,7 +3456,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "VISIONA ORDINI EFFETTUATI")
+            if (azioneCompratore == "VISIONA ORDINI EFFETTUATI")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -3369,10 +3474,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -3397,8 +3504,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -3415,11 +3520,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -3429,7 +3537,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "ANNULLA ORDINE")
+            if (azioneCompratore == "ANNULLA ORDINE")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -3451,10 +3559,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -3495,11 +3605,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -3507,11 +3620,9 @@ int main()
 
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
-
-                
             }
 
-            if (test2[index] == "EFFETTUA RESO")
+            if (azioneCompratore == "EFFETTUA RESO")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -3533,10 +3644,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -3561,8 +3674,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -3579,11 +3690,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -3593,7 +3707,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "EFFETTUA RECENSIONE")
+            if (azioneCompratore == "EFFETTUA RECENSIONE")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -3620,10 +3734,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << ", " << value4 <<  ", " << value5 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << ", " << value4 << ", " << value5 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -3664,11 +3780,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -3678,7 +3797,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-            if (test2[index] == "RIMUOVI RECENSIONE")
+            if (azioneCompratore == "RIMUOVI RECENSIONE")
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
@@ -3699,10 +3818,12 @@ int main()
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
-                
+
                 // Scrive nel file
-                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" << value1 << " ( " << value2 << ", " << value3 << " )\n" << std::endl;
-                
+                outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n"
+                           << value1 << " ( " << value2 << ", " << value3 << " )\n"
+                           << std::endl;
+
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
 
@@ -3727,8 +3848,6 @@ int main()
                 {
                     ReadStreamName(reply, streamname, k);
 
-                    
-
                     // Scorro il numero di messaggi della Streams Redis
                     for (i = 0; i < ReadStreamNumMsg(reply, k); i++)
                     {
@@ -3745,11 +3864,14 @@ int main()
                             ReadStreamMsgVal(reply, k, i, h, fval);
                             printf("\tmain(): pid %d: user %s: streamnum %d, msg %d, msgid %s value %d = %s\n", pid, username, k, i, msgid, h, fval);
 
-                            if (h == 1){
+                            if (h == 1)
+                            {
                                 // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                                 num_risposte_server++;
 
-                                outputFile << "Risposta server numero: " << num_risposte_server << "\n" << fval << "\n" << std::endl;
+                                outputFile << "Risposta server numero: " << num_risposte_server << "\n"
+                                           << fval << "\n"
+                                           << std::endl;
                             }
                         }
                     }
@@ -3758,16 +3880,12 @@ int main()
                 // Libera la risorsa della risposta
                 freeReplyObject(reply);
             }
-        
-        //micro_sleep(1000000); // 1 secondo di attesa
-        }
 
-        /* sleep   */
-        //micro_sleep(10000000); // 10 secondi di attesa
+        micro_sleep(10000000); // 10 secondi di attesa
 
     } // while ()
 
-//#endif
+    // #endif
 
     redisFree(c2r);
 }
