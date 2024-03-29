@@ -2179,7 +2179,7 @@ int main()
     while (1)
     {
             /* sleep   */
-            micro_sleep(10000000); // 10 secondi di attesa
+            micro_sleep(2000000); // 2 secondi di attesa
 
             // Invio richieste al server
             send_counter++;
@@ -3757,7 +3757,7 @@ int main()
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
-                printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s, %s: %s)  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+                printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s)  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
@@ -4009,7 +4009,7 @@ int main()
                 freeReplyObject(reply);
             }
 
-        micro_sleep(10000000); // 10 secondi di attesa
+        micro_sleep(5000000); // 2 secondi di attesa
 
     } // while ()
 

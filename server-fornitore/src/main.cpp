@@ -31,8 +31,8 @@ int main()
     int pid;                    // ID del processo
     
     char username[100];
-    char key[100];              // Buffer per la chiave da utilizzare in Redis
-    char value[100];            // Buffer per il valore da utilizzare in Redis
+    char key[200];              // Buffer per la chiave da utilizzare in Redis
+    char value[200];            // Buffer per il valore da utilizzare in Redis
     char streamname[100];       // Buffer per il nome dello stream Redis
     char msgid[100];            // Buffer per l'ID del messaggio Redis
     char fval[100];             // Buffer per il valore del campo del messaggio Redis

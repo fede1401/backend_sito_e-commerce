@@ -1088,7 +1088,7 @@ int main()
     while (1)
     {
         /* sleep   */
-        micro_sleep(10000000); // 10 secondi di attesa
+        micro_sleep(2000000); // 2 secondi di attesa
 
         // Invio richieste al server
         send_counter++;
@@ -1927,7 +1927,7 @@ int main()
             freeReplyObject(reply);
         }
 
-        micro_sleep(10000000); // 10 secondi di attesa
+        micro_sleep(5000000); // 2 secondi di attesa
 
     } // while ()
 
