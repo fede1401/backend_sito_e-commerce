@@ -984,8 +984,6 @@ int main()
 
     file.close(); // Chiude il file
 
-    outputFile.close(); // Chiudi il file
-
     /* sleep   */
     // micro_sleep(10000000); // 10 secondi di attesa
 
@@ -1031,6 +1029,8 @@ int main()
 
     // Array di nomi aziende produttrici
     std::array<std::string, 5> nomi_ditte_spedizione = {"Ditta1", "Ditta2", "Ditta3", "Ditta4", "Ditta5"};
+
+    std::string idSpedizione = "";
 
     // #if (DEBUG < 0)
     while (1)
@@ -1260,7 +1260,7 @@ int main()
             sprintf(value2, nomi_utente[i30].c_str());
 
             sprintf(key3, "idSpedizione");
-            std::string idSpedizione = std::to_string(rand() % 30);
+            idSpedizione = std::to_string(rand() % 30);
             sprintf(value3, idSpedizione.c_str());
 
             // Effettuo un comando di scrittura relativo all'avviso della spedizione dell'utente trasportatore.
@@ -1859,6 +1859,8 @@ int main()
     } // while ()
 
     // #endif
+
+    outputFile.close(); // Chiudi il file
 
     redisFree(c2r);
 }

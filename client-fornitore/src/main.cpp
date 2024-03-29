@@ -1013,8 +1013,6 @@ int main()
 
     file.close(); // Chiude il file
 
-    outputFile.close(); // Chiudi il file
-
     /* sleep   */
     // micro_sleep(10000000); // 10 secondi di attesa
 
@@ -1081,6 +1079,8 @@ int main()
     {
         prezzo_copie_disponibili[i] = std::to_string(i + 1);
     }
+
+    std::string codiceProdotto = "";
 
     // #if (DEBUG < 0)
 
@@ -1417,7 +1417,7 @@ int main()
             sprintf(value2, nomi_utente[i30].c_str());
 
             sprintf(key3, "codiceProdotto");
-            std::string codiceProdotto = std::to_string(rand() % 30);
+            codiceProdotto = std::to_string(rand() % 30);
             sprintf(value3, codiceProdotto.c_str());
 
             // Effettuo un comando di scrittura relativo alla rimozione del prodotto dell'utente fornitore.
@@ -1932,6 +1932,8 @@ int main()
     } // while ()
 
     // #endif
+
+    outputFile.close(); // Chiudi il file
 
     redisFree(c2r);
 }

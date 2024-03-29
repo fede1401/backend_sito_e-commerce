@@ -2044,8 +2044,6 @@ int main()
 
     file.close(); // Chiude il file
 
-    outputFile.close(); // Chiudi il file
-
     /* sleep   */
     // micro_sleep(10000000); // 10 secondi di attesa
 
@@ -2170,6 +2168,11 @@ int main()
 
         // Array per i voti delle stelle
         std::array<std::string, 5> voti_stelle = {"1", "2", "3", "4", "5"};
+
+        std::string idOrdine="";
+        std::string codiceProdotto="";
+        std::string idCarta = "";
+        std::string idRecensione="";
 
         // #if (DEBUG < 0)
 
@@ -2945,7 +2948,7 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "idCarta");
-                std::string idCarta = std::to_string(rand() % 30);
+                idCarta = std::to_string(rand() % 30);
                 sprintf(value3, idCarta.c_str());
 
                 // Effettuo un comando di scrittura relativo alla rimozione della carta di pagamento.
@@ -3032,7 +3035,7 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "codiceProdotto");
-                std::string codiceProdotto = std::to_string(rand() % 30);
+                codiceProdotto = std::to_string(rand() % 30);
                 sprintf(value3, codiceProdotto.c_str());
 
                 // Effettuo un comando di scrittura relativo all'aggiungimento del prodtto nel carrello.
@@ -3120,7 +3123,7 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "codiceProdotto");
-                std::string codiceProdotto = std::to_string(rand() % 30);
+                codiceProdotto = std::to_string(rand() % 30);
                 sprintf(value3, codiceProdotto.c_str());
 
                 // Effettuo un comando di scrittura relativo alla rimozione del prodtto nel carrello.
@@ -3208,7 +3211,7 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "codiceProdotto");
-                std::string codiceProdotto = std::to_string(rand() % 30);
+                codiceProdotto = std::to_string(rand() % 30);
                 sprintf(value3, codiceProdotto.c_str());
 
                 // Effettuo un comando di scrittura relativo all'aggiungimento del prodtto nella lista desideri.
@@ -3296,7 +3299,7 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "codiceProdotto");
-                std::string codiceProdotto = std::to_string(rand() % 30);
+                codiceProdotto = std::to_string(rand() % 30);
                 sprintf(value3, codiceProdotto.c_str());
 
                 // Effettuo un comando di scrittura relativo alla rimozione del prodotto dalla lista desideri.
@@ -3384,7 +3387,7 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "codiceProdotto");
-                std::string codiceProdotto = std::to_string(rand() % 30);
+                codiceProdotto = std::to_string(rand() % 30);
                 sprintf(value3, codiceProdotto.c_str());
 
                 sprintf(key4, "via_spedizione");
@@ -3483,7 +3486,6 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "nomeProdotto");
-                // std::string codiceProdotto = std::to_string(rand() % 30);
                 sprintf(value3, nomi_prodotti[i30].c_str());
 
                 // Effettuo un comando di scrittura relativo alla ricerca del prodotto.
@@ -3654,7 +3656,7 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "idOrdine");
-                std::string idOrdine = std::to_string(rand() % 30);
+                idOrdine = std::to_string(rand() % 30);
                 sprintf(value3, idOrdine.c_str());
 
                 // Effettuo un comando di scrittura relativo all'annullamento dell'ordine.
@@ -3738,22 +3740,24 @@ int main()
             {
                 // Impostazioni chiavi e valori per il comando Redis:
 
-                sprintf(key2, "idOrdine");
-                std::string idOrdine = std::to_string(rand() % 30);
-                sprintf(value2, idOrdine.c_str());
+                sprintf(key2, "nome_utente_compratore");
+                sprintf(value2, nomi_utente[i30].c_str());
 
-                // Modificare motivazioneReso
-                sprintf(key3, "motivazioneReso");
-                sprintf(value3, motivazioni_reso[i4].c_str());
+                sprintf(key3, "idOrdine");
+                idOrdine = std::to_string(rand() % 30);
+                sprintf(value3, idOrdine.c_str());
+
+                sprintf(key4, "motivazioneReso");
+                sprintf(value4, motivazioni_reso[i4].c_str());
 
                 // Effettuo un comando di scrittura relativo all'effettuazione del reso.
-                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3);
+                reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s %s %s", WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4);
 
                 // Verifica la risposta del comando e termina il programma in caso di errore
                 assertReplyType(c2r, reply, REDIS_REPLY_STRING);
 
                 printf("\n----------------------------------------------------------------------------------\nRichiesta del client compratore. \n");
-                printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s )  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
+                printf("main(): pid =%d: stream %s: Added %s: %s ( %s: %s, %s: %s, %s: %s, %s: %s)  (id: %s)\n", pid, WRITE_STREAM_CUSTOMER, key1, value1, key2, value2, key3, value3, key4, value4, reply->str);
 
                 // Incrementiamo il valore della richiesta del client che verrà scritta nel file di risultato dei test.
                 num_richieste_client++;
@@ -3831,7 +3835,7 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "idOrdine");
-                std::string idOrdine = std::to_string(rand() % 30);
+                idOrdine = std::to_string(rand() % 30);
                 sprintf(value3, idOrdine.c_str());
 
                 sprintf(key4, "descrizioneRecensione");
@@ -3925,7 +3929,7 @@ int main()
                 sprintf(value2, nomi_utente[i30].c_str());
 
                 sprintf(key3, "idRecensione");
-                std::string idRecensione = std::to_string(rand() % 30);
+                idRecensione = std::to_string(rand() % 30);
                 sprintf(value3, idRecensione.c_str());
 
                 // Effettuo un comando di scrittura relativo alla rimozione del reso.
@@ -4010,6 +4014,9 @@ int main()
     } // while ()
 
     // #endif
+
+    outputFile.close(); // Chiudi il file
+
 
     redisFree(c2r);
 }
