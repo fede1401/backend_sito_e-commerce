@@ -6200,3 +6200,2064 @@ EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente25, UtenteTrasportatore, Chiara, Rus
 Risposta server numero: 54
 Il nome utente non è univoco, la registrazione non è andata a buon fine.
 
+
+Richiesta client numero: 1
+
+Richiesta client numero: 1
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbe2., Fbe2., DHL )
+
+Risposta server numero: 1
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 2
+
+Richiesta client numero: 2
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., DHL )
+
+Risposta server numero: 2
+I valori del campo -password- e -conferma password- non sono uguali
+
+
+Richiesta client numero: 3
+
+Richiesta client numero: 3
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., DHL )
+
+Risposta server numero: 3
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 4
+
+Richiesta client numero: 4
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, DHL )
+
+Risposta server numero: 4
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 5
+
+Richiesta client numero: 5
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, DHL )
+
+Risposta server numero: 5
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 6
+
+Richiesta client numero: 6
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 6
+Registrazione utente trasportatore : utente9 avvenuta con successo.
+
+
+Richiesta client numero: 7
+
+Richiesta client numero: 7
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 7
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 8
+
+Richiesta client numero: 8
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente10, UtenteTrasportatore, Utente, Dieci, 3333333333, utente.nove@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 8
+L'email non è univoca, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 9
+
+Richiesta client numero: 9
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente10, UtenteTrasportatore, Utente, Dieci, 3333333333, utente.dieci@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 9
+Registrazione utente trasportatore : utente10 avvenuta con successo.
+
+
+Richiesta client numero: 10
+
+Richiesta client numero: 10
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente11, UtenteTrasportatore, Utente, Undici, 3333333333, utente.undici@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 10
+Registrazione utente trasportatore : utente11 avvenuta con successo.
+
+
+Richiesta client numero: 11
+EFFETTUA LOGOUT TRASPORTATORE (utente9 )
+
+Risposta server numero: 11
+Aggiornamento sessionID causato dalla disconnessione di Utente utente9
+
+
+Richiesta client numero: 12
+EFFETTUA LOGOUT TRASPORTATORE (utente10 )
+
+Risposta server numero: 12
+Aggiornamento sessionID causato dalla disconnessione di Utente utente10
+
+
+Richiesta client numero: 13
+EFFETTUA LOGOUT TRASPORTATORE (utente11 )
+
+Risposta server numero: 13
+Aggiornamento sessionID causato dalla disconnessione di Utente utente11
+
+
+Richiesta client numero: 14
+EFFETTUA LOGOUT TRASPORTATORE (utente12 )
+
+Risposta server numero: 14
+Non esiste utente12 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 15
+EFFETTUA LOGIN TRASPORTATORE (utente9, Fbefbifno2ifno2!. )
+
+Risposta server numero: 15
+Login utente fornitore avvenuto con successo
+
+
+Richiesta client numero: 16
+EFFETTUA LOGIN TRASPORTATORE (utente9, Dfnknklnsdl!.2 )
+
+Risposta server numero: 16
+Errore: La passowrd non è corretta, riprovare.
+
+
+Richiesta client numero: 17
+EFFETTUA LOGIN TRASPORTATORE (utente11, Fbefbifno2ifno2!. )
+
+Risposta server numero: 17
+Login utente fornitore avvenuto con successo
+
+
+Richiesta client numero: 18
+EFFETTUA LOGIN TRASPORTATORE (utente12, Fbefbifno2ifno2!. )
+
+Risposta server numero: 18
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 19
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (utente9, 131212212 )
+
+Risposta server numero: 19
+Aggiornamento numero di telefono : 131212212 per utente: utente9
+
+
+Richiesta client numero: 20
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (utente10, 131212212 )
+
+Risposta server numero: 20
+Non esiste una sessionID per utente10, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 21
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (utente12, 131212212 )
+
+Risposta server numero: 21
+Non esiste utente12 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 22
+AGGIORNA PASSWORD TRASPORTATORE (utente9, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 22
+Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente9
+
+
+Richiesta client numero: 23
+AGGIORNA PASSWORD TRASPORTATORE (utente10, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 23
+Non esiste una sessionID per utente10, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 24
+AGGIORNA PASSWORD TRASPORTATORE (utente12, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 24
+Non esiste utente12 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 25
+AGGIORNA NOME DITTASPEDIZIONE (utente9, FedEx )
+
+Risposta server numero: 25
+Aggiornamento ditta spedizione per utente: utente9
+
+
+Richiesta client numero: 26
+AGGIORNA NOME DITTASPEDIZIONE (utente10, FedEx )
+
+Risposta server numero: 26
+Non esiste una sessionID per utente10, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 27
+AGGIORNA NOME DITTASPEDIZIONE (utente12, FedEx )
+
+Risposta server numero: 27
+Non esiste utente12 , poichè non è stato registrato, non può essere aggiornata la ditta di spedizione .
+
+
+Richiesta client numero: 28
+ELIMINA PROFILO TRASPORTATORE (utente9 )
+
+Risposta server numero: 28
+Eliminazione profilo utente utente9
+
+
+Richiesta client numero: 29
+ELIMINA PROFILO TRASPORTATORE (utente10 )
+
+Risposta server numero: 29
+Non esiste una sessionID per utente10, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 30
+ELIMINA PROFILO TRASPORTATORE (utente11 )
+
+Risposta server numero: 30
+Eliminazione profilo utente utente11
+
+
+Richiesta client numero: 31
+ELIMINA PROFILO TRASPORTATORE (utente12 )
+
+Risposta server numero: 31
+Non esiste utente12 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 32
+EFFETTUA LOGIN TRASPORTATORE (utente10, Fbefbifno2ifno2!. )
+
+Risposta server numero: 32
+Login utente fornitore avvenuto con successo
+
+
+Richiesta client numero: 33
+ELIMINA PROFILO TRASPORTATORE (utente10 )
+
+Risposta server numero: 33
+Eliminazione profilo utente utente10
+
+
+Richiesta client numero: 34
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente12, 12345678911 )
+
+Risposta server numero: 34
+Non esiste una sessionID per Utente12, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 35
+AVVISA SPEDIZIONE EFFETTUATA (Utente27, 11 )
+
+Risposta server numero: 35
+L utente Utente27 non è un utente trasportatore, perciò non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 36
+AGGIORNA NOME DITTASPEDIZIONE (Utente30, Ditta5 )
+
+Risposta server numero: 36
+Non esiste una sessionID per Utente30, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 37
+AGGIORNA PASSWORD TRASPORTATORE (Utente28, P.assword28 ,P.assword28 )
+
+Risposta server numero: 37
+Non esiste Utente28 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 38
+PRENDI IN CARICO SPEDIZIONE (Utente8 )
+
+Risposta server numero: 38
+Non esiste una sessionID per Utente8, utente non loggato, non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 39
+AGGIORNA PASSWORD TRASPORTATORE (Utente7, P.assword7 ,P.assword7 )
+
+Risposta server numero: 39
+Non esiste Utente7 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 40
+PRENDI IN CARICO SPEDIZIONE (Utente19 )
+
+Risposta server numero: 40
+L utente Utente19 non è un utente trasportatore, perciò non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 41
+AGGIORNA PASSWORD TRASPORTATORE (Utente9, P.assword9 ,P.assword9 )
+
+Risposta server numero: 41
+Aggiornamento password (nuova password inserita: P.assword9 ) per utente: Utente9
+
+
+Richiesta client numero: 42
+AGGIORNA PASSWORD TRASPORTATORE (Utente22, P.assword22 ,P.assword22 )
+
+Risposta server numero: 42
+Non esiste una sessionID per Utente22, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 43
+AGGIORNA NOME DITTASPEDIZIONE (Utente12, Ditta3 )
+
+Risposta server numero: 43
+Non esiste una sessionID per Utente12, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 44
+PRENDI IN CARICO SPEDIZIONE (Utente30 )
+
+Risposta server numero: 44
+Non esiste una sessionID per Utente30, utente non loggato, non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 45
+PRENDI IN CARICO SPEDIZIONE (Utente29 )
+
+Risposta server numero: 45
+Non esiste Utente29 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 46
+
+Richiesta client numero: 46
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente25, UtenteTrasportatore, Chiara, Russo, 12345678924, Utente25@example.com, P.assword25, P.assword25, Ditta5 )
+
+Risposta server numero: 46
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 47
+AGGIORNA NOME DITTASPEDIZIONE (Utente3, Ditta2 )
+
+Risposta server numero: 47
+Non esiste una sessionID per Utente3, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 48
+
+Richiesta client numero: 48
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente20, UtenteTrasportatore, Giovanni, Verdi, 12345678919, Utente20@example.com, P.assword20, P.assword20, Ditta5 )
+
+Risposta server numero: 48
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 49
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente23, 12345678922 )
+
+Risposta server numero: 49
+Aggiornamento numero di telefono : 12345678922 per utente: Utente23
+
+
+Richiesta client numero: 50
+AGGIORNA PASSWORD TRASPORTATORE (Utente22, P.assword22 ,P.assword22 )
+
+Risposta server numero: 50
+Non esiste una sessionID per Utente22, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 51
+AGGIORNA PASSWORD TRASPORTATORE (Utente27, P.assword27 ,P.assword27 )
+
+Risposta server numero: 51
+Aggiornamento password (nuova password inserita: P.assword27 ) per utente: Utente27
+
+
+Richiesta client numero: 52
+AGGIORNA PASSWORD TRASPORTATORE (Utente11, P.assword11 ,P.assword11 )
+
+Risposta server numero: 52
+Non esiste Utente11 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 53
+AGGIORNA PASSWORD TRASPORTATORE (Utente18, P.assword18 ,P.assword18 )
+
+Risposta server numero: 53
+Non esiste Utente18 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 54
+AGGIORNA NOME DITTASPEDIZIONE (Utente19, Ditta2 )
+
+Risposta server numero: 54
+L utente Utente19 non è un utente trasportatore, perciò non può essere aggiornato il nome della ditta di spedizione.
+
+
+Richiesta client numero: 55
+AGGIORNA PASSWORD TRASPORTATORE (Utente20, P.assword20 ,P.assword20 )
+
+Risposta server numero: 55
+Non esiste una sessionID per Utente20, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 56
+EFFETTUA LOGOUT TRASPORTATORE (Utente21 )
+
+Risposta server numero: 56
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente21
+
+
+Richiesta client numero: 57
+AVVISA SPEDIZIONE EFFETTUATA (Utente1, 21 )
+
+Risposta server numero: 57
+Non esiste una sessionID per Utente1, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 58
+PRENDI IN CARICO SPEDIZIONE (Utente24 )
+
+Risposta server numero: 58
+Non esistono ordini con stato in elaborazione! 
+
+
+Richiesta client numero: 59
+EFFETTUA LOGIN TRASPORTATORE (Utente15, P.assword15 )
+
+Risposta server numero: 59
+Login utente fornitore avvenuto con successo
+
+
+Richiesta client numero: 60
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente28, 12345678927 )
+
+Risposta server numero: 60
+Non esiste Utente28 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 61
+
+Richiesta client numero: 61
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente11, UtenteTrasportatore, Francesco, Esposito, 12345678910, Utente11@example.com, P.assword11, P.assword11, Ditta2 )
+
+Risposta server numero: 61
+Registrazione utente trasportatore : Utente11 avvenuta con successo.
+
+
+Richiesta client numero: 62
+AGGIORNA NOME DITTASPEDIZIONE (Utente19, Ditta2 )
+
+Risposta server numero: 62
+L utente Utente19 non è un utente trasportatore, perciò non può essere aggiornato il nome della ditta di spedizione.
+
+
+Richiesta client numero: 63
+PRENDI IN CARICO SPEDIZIONE (Utente14 )
+
+Risposta server numero: 63
+Non esiste una sessionID per Utente14, utente non loggato, non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 64
+
+Richiesta client numero: 64
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente12, UtenteTrasportatore, Laura, Conti, 12345678911, Utente12@example.com, P.assword12, P.assword12, Ditta3 )
+
+Risposta server numero: 64
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 65
+AGGIORNA PASSWORD TRASPORTATORE (Utente12, P.assword12 ,P.assword12 )
+
+Risposta server numero: 65
+Non esiste una sessionID per Utente12, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 66
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente29, 12345678928 )
+
+Risposta server numero: 66
+Non esiste Utente29 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 67
+AGGIORNA NOME DITTASPEDIZIONE (Utente23, Ditta1 )
+
+Risposta server numero: 67
+Aggiornamento ditta spedizione per utente: Utente23
+
+
+Richiesta client numero: 68
+PRENDI IN CARICO SPEDIZIONE (Utente9 )
+
+Risposta server numero: 68
+L utente Utente9 non è un utente trasportatore, perciò non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 69
+AVVISA SPEDIZIONE EFFETTUATA (Utente16, 18 )
+
+Risposta server numero: 69
+Non esiste una sessionID per Utente16, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 70
+EFFETTUA LOGIN TRASPORTATORE (Utente7, P.assword7 )
+
+Risposta server numero: 70
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 71
+EFFETTUA LOGIN TRASPORTATORE (Utente5, P.assword5 )
+
+Risposta server numero: 71
+Utente Utente5 è di un altra categoria, non un utente trasportatore, non può essere effettuato il login.
+
+
+Richiesta client numero: 72
+AVVISA SPEDIZIONE EFFETTUATA (Utente5, 2 )
+
+Risposta server numero: 72
+Non esiste una sessionID per Utente5, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 73
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente16, 12345678915 )
+
+Risposta server numero: 73
+Non esiste una sessionID per Utente16, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 74
+ELIMINA PROFILO TRASPORTATORE (Utente27 )
+
+Risposta server numero: 74
+Eliminazione profilo utente Utente27
+
+
+Richiesta client numero: 75
+PRENDI IN CARICO SPEDIZIONE (Utente30 )
+
+Risposta server numero: 75
+Non esiste una sessionID per Utente30, utente non loggato, non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 76
+PRENDI IN CARICO SPEDIZIONE (Utente30 )
+
+Risposta server numero: 76
+Non esiste una sessionID per Utente30, utente non loggato, non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 77
+AVVISA SPEDIZIONE EFFETTUATA (Utente13, 5 )
+
+Risposta server numero: 77
+Non esiste una sessionID per Utente13, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 78
+
+Richiesta client numero: 78
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente30, UtenteTrasportatore, Luigi, Bianchi, 12345678929, Utente30@example.com, P.assword30, P.assword30, Ditta3 )
+
+Risposta server numero: 78
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 79
+PRENDI IN CARICO SPEDIZIONE (Utente28 )
+
+Risposta server numero: 79
+Non esiste Utente28 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 80
+AVVISA SPEDIZIONE EFFETTUATA (Utente21, 13 )
+
+Risposta server numero: 80
+Non esiste una sessionID per Utente21, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 81
+
+Richiesta client numero: 81
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente9, UtenteTrasportatore, Mario, Rossi, 1234567898, Utente9@example.com, P.assword9, P.assword9, Ditta2 )
+
+Risposta server numero: 81
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 1
+
+Richiesta client numero: 1
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbe2., Fbe2., DHL )
+
+Risposta server numero: 1
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 2
+
+Richiesta client numero: 2
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., DHL )
+
+Risposta server numero: 2
+I valori del campo -password- e -conferma password- non sono uguali
+
+
+Richiesta client numero: 3
+
+Richiesta client numero: 3
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., DHL )
+
+Risposta server numero: 3
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 4
+
+Richiesta client numero: 4
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, DHL )
+
+Risposta server numero: 4
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 5
+
+Richiesta client numero: 5
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, DHL )
+
+Risposta server numero: 5
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 6
+
+Richiesta client numero: 6
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 6
+Registrazione utente trasportatore : utente9 avvenuta con successo.
+
+
+Richiesta client numero: 7
+
+Richiesta client numero: 7
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 7
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 8
+
+Richiesta client numero: 8
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente10, UtenteTrasportatore, Utente, Dieci, 3333333333, utente.nove@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 8
+L'email non è univoca, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 9
+
+Richiesta client numero: 9
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente10, UtenteTrasportatore, Utente, Dieci, 3333333333, utente.dieci@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 9
+Registrazione utente trasportatore : utente10 avvenuta con successo.
+
+
+Richiesta client numero: 10
+
+Richiesta client numero: 10
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente11, UtenteTrasportatore, Utente, Undici, 3333333333, utente.undici@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 10
+Registrazione utente trasportatore : utente11 avvenuta con successo.
+
+
+Richiesta client numero: 11
+EFFETTUA LOGOUT TRASPORTATORE (utente9 )
+
+Risposta server numero: 11
+Aggiornamento sessionID causato dalla disconnessione di Utente utente9
+
+
+Richiesta client numero: 12
+EFFETTUA LOGOUT TRASPORTATORE (utente10 )
+
+Risposta server numero: 12
+Aggiornamento sessionID causato dalla disconnessione di Utente utente10
+
+
+Richiesta client numero: 13
+EFFETTUA LOGOUT TRASPORTATORE (utente11 )
+
+Risposta server numero: 13
+Aggiornamento sessionID causato dalla disconnessione di Utente utente11
+
+
+Richiesta client numero: 14
+EFFETTUA LOGOUT TRASPORTATORE (utente12 )
+
+Risposta server numero: 14
+Non esiste utente12 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 15
+EFFETTUA LOGIN TRASPORTATORE (utente9, Fbefbifno2ifno2!. )
+
+Risposta server numero: 15
+Login utente fornitore avvenuto con successo
+
+
+Richiesta client numero: 16
+EFFETTUA LOGIN TRASPORTATORE (utente9, Dfnknklnsdl!.2 )
+
+Risposta server numero: 16
+Errore: La passowrd non è corretta, riprovare.
+
+
+Richiesta client numero: 17
+EFFETTUA LOGIN TRASPORTATORE (utente11, Fbefbifno2ifno2!. )
+
+Risposta server numero: 17
+Login utente fornitore avvenuto con successo
+
+
+Richiesta client numero: 18
+EFFETTUA LOGIN TRASPORTATORE (utente12, Fbefbifno2ifno2!. )
+
+Risposta server numero: 18
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 19
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (utente9, 131212212 )
+
+Risposta server numero: 19
+Aggiornamento numero di telefono : 131212212 per utente: utente9
+
+
+Richiesta client numero: 20
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (utente10, 131212212 )
+
+Risposta server numero: 20
+Non esiste una sessionID per utente10, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 21
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (utente12, 131212212 )
+
+Risposta server numero: 21
+Non esiste utente12 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 22
+AGGIORNA PASSWORD TRASPORTATORE (utente9, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 22
+Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente9
+
+
+Richiesta client numero: 23
+AGGIORNA PASSWORD TRASPORTATORE (utente10, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 23
+Non esiste una sessionID per utente10, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 24
+AGGIORNA PASSWORD TRASPORTATORE (utente12, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 24
+Non esiste utente12 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 25
+AGGIORNA NOME DITTASPEDIZIONE (utente9, FedEx )
+
+Risposta server numero: 25
+Aggiornamento ditta spedizione per utente: utente9
+
+
+Richiesta client numero: 26
+AGGIORNA NOME DITTASPEDIZIONE (utente10, FedEx )
+
+Risposta server numero: 26
+Non esiste una sessionID per utente10, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 27
+AGGIORNA NOME DITTASPEDIZIONE (utente12, FedEx )
+
+Risposta server numero: 27
+Non esiste utente12 , poichè non è stato registrato, non può essere aggiornata la ditta di spedizione .
+
+
+Richiesta client numero: 28
+ELIMINA PROFILO TRASPORTATORE (utente9 )
+
+Risposta server numero: 28
+Eliminazione profilo utente utente9
+
+
+Richiesta client numero: 29
+ELIMINA PROFILO TRASPORTATORE (utente10 )
+
+Risposta server numero: 29
+Non esiste una sessionID per utente10, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 30
+ELIMINA PROFILO TRASPORTATORE (utente11 )
+
+Risposta server numero: 30
+Eliminazione profilo utente utente11
+
+
+Richiesta client numero: 31
+ELIMINA PROFILO TRASPORTATORE (utente12 )
+
+Risposta server numero: 31
+Non esiste utente12 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 32
+EFFETTUA LOGIN TRASPORTATORE (utente10, Fbefbifno2ifno2!. )
+
+Risposta server numero: 32
+Login utente fornitore avvenuto con successo
+
+
+Richiesta client numero: 33
+ELIMINA PROFILO TRASPORTATORE (utente10 )
+
+Risposta server numero: 33
+Eliminazione profilo utente utente10
+
+
+Richiesta client numero: 34
+EFFETTUA LOGOUT TRASPORTATORE (Utente9 )
+
+Risposta server numero: 34
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente9
+
+
+Richiesta client numero: 35
+EFFETTUA LOGOUT TRASPORTATORE (Utente22 )
+
+Risposta server numero: 35
+Non esiste una sessionID per Utente22, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 36
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente24, 12345678923 )
+
+Risposta server numero: 36
+Non esiste una sessionID per Utente24, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 37
+EFFETTUA LOGIN TRASPORTATORE (Utente14, P.assword14 )
+
+Risposta server numero: 37
+Utente Utente14 è di un altra categoria, non un utente trasportatore, non può essere effettuato il login.
+
+
+Richiesta client numero: 38
+ELIMINA PROFILO TRASPORTATORE (Utente9 )
+
+Risposta server numero: 38
+Non esiste una sessionID per Utente9, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 39
+
+Richiesta client numero: 39
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente23, UtenteTrasportatore, Giovanni, Verdi, 12345678922, Utente23@example.com, P.assword23, P.assword23, Ditta3 )
+
+Risposta server numero: 39
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 40
+
+Richiesta client numero: 40
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente28, UtenteTrasportatore, Laura, Conti, 12345678927, Utente28@example.com, P.assword28, P.assword28, Ditta2 )
+
+Risposta server numero: 40
+Registrazione utente trasportatore : Utente28 avvenuta con successo.
+
+
+Richiesta client numero: 41
+AGGIORNA PASSWORD TRASPORTATORE (Utente13, P.assword13 ,P.assword13 )
+
+Risposta server numero: 41
+Non esiste una sessionID per Utente13, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 42
+AVVISA SPEDIZIONE EFFETTUATA (Utente12, 2 )
+
+Risposta server numero: 42
+Non esiste una sessionID per Utente12, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 43
+EFFETTUA LOGOUT TRASPORTATORE (Utente4 )
+
+Risposta server numero: 43
+Non esiste una sessionID per Utente4, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 44
+
+Richiesta client numero: 44
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente2, UtenteTrasportatore, Mario, Rossi, 1234567891, Utente2@example.com, P.assword2, P.assword2, Ditta2 )
+
+Risposta server numero: 44
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 45
+AVVISA SPEDIZIONE EFFETTUATA (Utente29, 28 )
+
+Risposta server numero: 45
+Non esiste Utente29 , poichè non è stato registrato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 46
+AVVISA SPEDIZIONE EFFETTUATA (Utente28, 6 )
+
+Risposta server numero: 46
+Non esiste id 6 della spedizione, perciò Utente28 non può avvisare che la spedizione è consegnata.
+
+
+Richiesta client numero: 47
+PRENDI IN CARICO SPEDIZIONE (Utente25 )
+
+Risposta server numero: 47
+Non esiste una sessionID per Utente25, utente non loggato, non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 48
+AGGIORNA NOME DITTASPEDIZIONE (Utente8, Ditta4 )
+
+Risposta server numero: 48
+Non esiste una sessionID per Utente8, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 49
+AGGIORNA NOME DITTASPEDIZIONE (Utente27, Ditta5 )
+
+Risposta server numero: 49
+Non esiste Utente27 , poichè non è stato registrato, non può essere aggiornata la ditta di spedizione .
+
+
+Richiesta client numero: 50
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente14, 12345678913 )
+
+Risposta server numero: 50
+Non esiste una sessionID per Utente14, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 51
+AVVISA SPEDIZIONE EFFETTUATA (Utente8, 28 )
+
+Risposta server numero: 51
+Non esiste una sessionID per Utente8, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 52
+AGGIORNA NOME DITTASPEDIZIONE (Utente30, Ditta4 )
+
+Risposta server numero: 52
+Non esiste una sessionID per Utente30, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 53
+AVVISA SPEDIZIONE EFFETTUATA (Utente19, 8 )
+
+Risposta server numero: 53
+L utente Utente19 non è un utente trasportatore, perciò non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 54
+
+Richiesta client numero: 54
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente3, UtenteTrasportatore, Mario, Rossi, 1234567892, Utente3@example.com, P.assword3, P.assword3, Ditta1 )
+
+Risposta server numero: 54
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 55
+EFFETTUA LOGIN TRASPORTATORE (Utente29, P.assword29 )
+
+Risposta server numero: 55
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 56
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente11, 12345678910 )
+
+Risposta server numero: 56
+Aggiornamento numero di telefono : 12345678910 per utente: Utente11
+
+
+Richiesta client numero: 57
+ELIMINA PROFILO TRASPORTATORE (Utente30 )
+
+Risposta server numero: 57
+Non esiste una sessionID per Utente30, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 58
+AGGIORNA NOME DITTASPEDIZIONE (Utente24, Ditta3 )
+
+Risposta server numero: 58
+Non esiste una sessionID per Utente24, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 59
+
+Richiesta client numero: 59
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente27, UtenteTrasportatore, Francesco, Esposito, 12345678926, Utente27@example.com, P.assword27, P.assword27, Ditta2 )
+
+Risposta server numero: 59
+Registrazione utente trasportatore : Utente27 avvenuta con successo.
+
+
+Richiesta client numero: 60
+ELIMINA PROFILO TRASPORTATORE (Utente11 )
+
+Risposta server numero: 60
+Eliminazione profilo utente Utente11
+
+
+Richiesta client numero: 61
+EFFETTUA LOGIN TRASPORTATORE (Utente21, P.assword21 )
+
+Risposta server numero: 61
+Utente Utente21 è di un altra categoria, non un utente trasportatore, non può essere effettuato il login.
+
+
+Richiesta client numero: 62
+
+Richiesta client numero: 62
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente21, UtenteTrasportatore, Elena, Romano, 12345678920, Utente21@example.com, P.assword21, P.assword21, Ditta1 )
+
+Risposta server numero: 62
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 63
+EFFETTUA LOGOUT TRASPORTATORE (Utente3 )
+
+Risposta server numero: 63
+Non esiste una sessionID per Utente3, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 64
+PRENDI IN CARICO SPEDIZIONE (Utente7 )
+
+Risposta server numero: 64
+L utente Utente7 non è un utente trasportatore, perciò non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 65
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente8, 1234567897 )
+
+Risposta server numero: 65
+Non esiste una sessionID per Utente8, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 66
+AVVISA SPEDIZIONE EFFETTUATA (Utente21, 3 )
+
+Risposta server numero: 66
+Non esiste una sessionID per Utente21, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 67
+AGGIORNA PASSWORD TRASPORTATORE (Utente14, P.assword14 ,P.assword14 )
+
+Risposta server numero: 67
+Non esiste una sessionID per Utente14, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 68
+EFFETTUA LOGIN TRASPORTATORE (Utente3, P.assword3 )
+
+Risposta server numero: 68
+Utente Utente3 è di un altra categoria, non un utente trasportatore, non può essere effettuato il login.
+
+
+Richiesta client numero: 69
+EFFETTUA LOGIN TRASPORTATORE (Utente16, P.assword16 )
+
+Risposta server numero: 69
+Utente Utente16 è di un altra categoria, non un utente trasportatore, non può essere effettuato il login.
+
+
+Richiesta client numero: 70
+AVVISA SPEDIZIONE EFFETTUATA (Utente18, 15 )
+
+Risposta server numero: 70
+Non esiste Utente18 , poichè non è stato registrato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 71
+AGGIORNA PASSWORD TRASPORTATORE (Utente19, P.assword19 ,P.assword19 )
+
+Risposta server numero: 71
+Aggiornamento password (nuova password inserita: P.assword19 ) per utente: Utente19
+
+
+Richiesta client numero: 72
+AGGIORNA NOME DITTASPEDIZIONE (Utente19, Ditta1 )
+
+Risposta server numero: 72
+L utente Utente19 non è un utente trasportatore, perciò non può essere aggiornato il nome della ditta di spedizione.
+
+
+Richiesta client numero: 73
+AVVISA SPEDIZIONE EFFETTUATA (Utente5, 19 )
+
+Risposta server numero: 73
+Non esiste una sessionID per Utente5, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 74
+AGGIORNA NOME DITTASPEDIZIONE (Utente29, Ditta2 )
+
+Risposta server numero: 74
+Non esiste Utente29 , poichè non è stato registrato, non può essere aggiornata la ditta di spedizione .
+
+
+Richiesta client numero: 75
+AGGIORNA PASSWORD TRASPORTATORE (Utente15, P.assword15 ,P.assword15 )
+
+Risposta server numero: 75
+Aggiornamento password (nuova password inserita: P.assword15 ) per utente: Utente15
+
+
+Richiesta client numero: 76
+AGGIORNA PASSWORD TRASPORTATORE (Utente12, P.assword12 ,P.assword12 )
+
+Risposta server numero: 76
+Non esiste una sessionID per Utente12, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 77
+ELIMINA PROFILO TRASPORTATORE (Utente28 )
+
+Risposta server numero: 77
+Eliminazione profilo utente Utente28
+
+
+Richiesta client numero: 78
+AGGIORNA PASSWORD TRASPORTATORE (Utente14, P.assword14 ,P.assword14 )
+
+Risposta server numero: 78
+Non esiste una sessionID per Utente14, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 79
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente30, 12345678929 )
+
+Risposta server numero: 79
+Non esiste una sessionID per Utente30, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 80
+
+Richiesta client numero: 80
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente15, UtenteTrasportatore, Francesco, Esposito, 12345678914, Utente15@example.com, P.assword15, P.assword15, Ditta1 )
+
+Risposta server numero: 80
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 81
+AVVISA SPEDIZIONE EFFETTUATA (Utente18, 21 )
+
+Risposta server numero: 81
+Non esiste Utente18 , poichè non è stato registrato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 82
+AGGIORNA NOME DITTASPEDIZIONE (Utente18, Ditta5 )
+
+Risposta server numero: 82
+Non esiste Utente18 , poichè non è stato registrato, non può essere aggiornata la ditta di spedizione .
+
+
+Richiesta client numero: 83
+AGGIORNA PASSWORD TRASPORTATORE (Utente2, P.assword2 ,P.assword2 )
+
+Risposta server numero: 83
+Non esiste una sessionID per Utente2, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 84
+AVVISA SPEDIZIONE EFFETTUATA (Utente4, 11 )
+
+Risposta server numero: 84
+Non esiste una sessionID per Utente4, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 85
+AVVISA SPEDIZIONE EFFETTUATA (Utente7, 22 )
+
+Risposta server numero: 85
+L utente Utente7 non è un utente trasportatore, perciò non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 86
+
+Richiesta client numero: 86
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente10, UtenteTrasportatore, Paolo, De Luca, 1234567899, Utente10@example.com, P.assword10, P.assword10, Ditta1 )
+
+Risposta server numero: 86
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 87
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente21, 12345678920 )
+
+Risposta server numero: 87
+Non esiste una sessionID per Utente21, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 88
+AGGIORNA PASSWORD TRASPORTATORE (Utente19, P.assword19 ,P.assword19 )
+
+Risposta server numero: 88
+Aggiornamento password (nuova password inserita: P.assword19 ) per utente: Utente19
+
+
+Richiesta client numero: 1
+
+Richiesta client numero: 1
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbe2., Fbe2., DHL )
+
+Risposta server numero: 1
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 2
+
+Richiesta client numero: 2
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., DHL )
+
+Risposta server numero: 2
+I valori del campo -password- e -conferma password- non sono uguali
+
+
+Richiesta client numero: 3
+
+Richiesta client numero: 3
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., DHL )
+
+Risposta server numero: 3
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 4
+
+Richiesta client numero: 4
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, DHL )
+
+Risposta server numero: 4
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 5
+
+Richiesta client numero: 5
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, DHL )
+
+Risposta server numero: 5
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 6
+
+Richiesta client numero: 6
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 6
+Registrazione utente trasportatore : utente9 avvenuta con successo.
+
+
+Richiesta client numero: 7
+
+Richiesta client numero: 7
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente9, UtenteTrasportatore, Utente, Nove, 3333333333, utente.nove@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 7
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 8
+
+Richiesta client numero: 8
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente10, UtenteTrasportatore, Utente, Dieci, 3333333333, utente.nove@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 8
+L'email non è univoca, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 9
+
+Richiesta client numero: 9
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente10, UtenteTrasportatore, Utente, Dieci, 3333333333, utente.dieci@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 9
+Registrazione utente trasportatore : utente10 avvenuta con successo.
+
+
+Richiesta client numero: 10
+
+Richiesta client numero: 10
+EFFETTUA REGISTRAZIONE TRASPORTATORE (utente11, UtenteTrasportatore, Utente, Undici, 3333333333, utente.undici@gmail.com, Fbefbifno2ifno2!., Fbefbifno2ifno2!., DHL )
+
+Risposta server numero: 10
+Registrazione utente trasportatore : utente11 avvenuta con successo.
+
+
+Richiesta client numero: 11
+EFFETTUA LOGOUT TRASPORTATORE (utente9 )
+
+Risposta server numero: 11
+Aggiornamento sessionID causato dalla disconnessione di Utente utente9
+
+
+Richiesta client numero: 12
+EFFETTUA LOGOUT TRASPORTATORE (utente10 )
+
+Risposta server numero: 12
+Aggiornamento sessionID causato dalla disconnessione di Utente utente10
+
+
+Richiesta client numero: 13
+EFFETTUA LOGOUT TRASPORTATORE (utente11 )
+
+Risposta server numero: 13
+Aggiornamento sessionID causato dalla disconnessione di Utente utente11
+
+
+Richiesta client numero: 14
+EFFETTUA LOGOUT TRASPORTATORE (utente12 )
+
+Risposta server numero: 14
+Non esiste utente12 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 15
+EFFETTUA LOGIN TRASPORTATORE (utente9, Fbefbifno2ifno2!. )
+
+Risposta server numero: 15
+Login utente fornitore avvenuto con successo
+
+
+Richiesta client numero: 16
+EFFETTUA LOGIN TRASPORTATORE (utente9, Dfnknklnsdl!.2 )
+
+Risposta server numero: 16
+Errore: La passowrd non è corretta, riprovare.
+
+
+Richiesta client numero: 17
+EFFETTUA LOGIN TRASPORTATORE (utente11, Fbefbifno2ifno2!. )
+
+Risposta server numero: 17
+Login utente fornitore avvenuto con successo
+
+
+Richiesta client numero: 18
+EFFETTUA LOGIN TRASPORTATORE (utente12, Fbefbifno2ifno2!. )
+
+Risposta server numero: 18
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 19
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (utente9, 131212212 )
+
+Risposta server numero: 19
+Aggiornamento numero di telefono : 131212212 per utente: utente9
+
+
+Richiesta client numero: 20
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (utente10, 131212212 )
+
+Risposta server numero: 20
+Non esiste una sessionID per utente10, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 21
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (utente12, 131212212 )
+
+Risposta server numero: 21
+Non esiste utente12 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 22
+AGGIORNA PASSWORD TRASPORTATORE (utente9, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 22
+Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente9
+
+
+Richiesta client numero: 23
+AGGIORNA PASSWORD TRASPORTATORE (utente10, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 23
+Non esiste una sessionID per utente10, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 24
+AGGIORNA PASSWORD TRASPORTATORE (utente12, Fbefbifno2ifno2!. ,Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 24
+Non esiste utente12 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 25
+AGGIORNA NOME DITTASPEDIZIONE (utente9, FedEx )
+
+Risposta server numero: 25
+Aggiornamento ditta spedizione per utente: utente9
+
+
+Richiesta client numero: 26
+AGGIORNA NOME DITTASPEDIZIONE (utente10, FedEx )
+
+Risposta server numero: 26
+Non esiste una sessionID per utente10, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 27
+AGGIORNA NOME DITTASPEDIZIONE (utente12, FedEx )
+
+Risposta server numero: 27
+Non esiste utente12 , poichè non è stato registrato, non può essere aggiornata la ditta di spedizione .
+
+
+Richiesta client numero: 28
+ELIMINA PROFILO TRASPORTATORE (utente9 )
+
+Risposta server numero: 28
+Eliminazione profilo utente utente9
+
+
+Richiesta client numero: 29
+ELIMINA PROFILO TRASPORTATORE (utente10 )
+
+Risposta server numero: 29
+Non esiste una sessionID per utente10, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 30
+ELIMINA PROFILO TRASPORTATORE (utente11 )
+
+Risposta server numero: 30
+Eliminazione profilo utente utente11
+
+
+Richiesta client numero: 31
+ELIMINA PROFILO TRASPORTATORE (utente12 )
+
+Risposta server numero: 31
+Non esiste utente12 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 32
+EFFETTUA LOGIN TRASPORTATORE (utente10, Fbefbifno2ifno2!. )
+
+Risposta server numero: 32
+Login utente fornitore avvenuto con successo
+
+
+Richiesta client numero: 33
+ELIMINA PROFILO TRASPORTATORE (utente10 )
+
+Risposta server numero: 33
+Eliminazione profilo utente utente10
+
+
+Richiesta client numero: 34
+AGGIORNA NOME DITTASPEDIZIONE (Utente13, Ditta4 )
+
+Risposta server numero: 34
+Non esiste una sessionID per Utente13, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 35
+PRENDI IN CARICO SPEDIZIONE (Utente19 )
+
+Risposta server numero: 35
+L utente Utente19 non è un utente trasportatore, perciò non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 36
+EFFETTUA LOGOUT TRASPORTATORE (Utente29 )
+
+Risposta server numero: 36
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente29
+
+
+Richiesta client numero: 37
+EFFETTUA LOGIN TRASPORTATORE (Utente18, P.assword18 )
+
+Risposta server numero: 37
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 38
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente29, 12345678928 )
+
+Risposta server numero: 38
+Non esiste una sessionID per Utente29, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 39
+
+Richiesta client numero: 39
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente28, UtenteTrasportatore, Luigi, Bianchi, 12345678927, Utente28@example.com, P.assword28, P.assword28, Ditta2 )
+
+Risposta server numero: 39
+Registrazione utente trasportatore : Utente28 avvenuta con successo.
+
+
+Richiesta client numero: 40
+AGGIORNA NOME DITTASPEDIZIONE (Utente7, Ditta3 )
+
+Risposta server numero: 40
+L utente Utente7 non è un utente trasportatore, perciò non può essere aggiornato il nome della ditta di spedizione.
+
+
+Richiesta client numero: 41
+AGGIORNA NOME DITTASPEDIZIONE (Utente28, Ditta1 )
+
+Risposta server numero: 41
+Aggiornamento ditta spedizione per utente: Utente28
+
+
+Richiesta client numero: 42
+
+Richiesta client numero: 42
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente18, UtenteTrasportatore, Luigi, Bianchi, 12345678917, Utente18@example.com, P.assword18, P.assword18, Ditta4 )
+
+Risposta server numero: 42
+Registrazione utente trasportatore : Utente18 avvenuta con successo.
+
+
+Richiesta client numero: 43
+AVVISA SPEDIZIONE EFFETTUATA (Utente7, 1 )
+
+Risposta server numero: 43
+L utente Utente7 non è un utente trasportatore, perciò non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 44
+
+Richiesta client numero: 44
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente25, UtenteTrasportatore, Elena, Romano, 12345678924, Utente25@example.com, P.assword25, P.assword25, Ditta2 )
+
+Risposta server numero: 44
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 45
+
+Richiesta client numero: 45
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente29, UtenteTrasportatore, Roberto, Gallo, 12345678928, Utente29@example.com, P.assword29, P.assword29, Ditta5 )
+
+Risposta server numero: 45
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 46
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente10, 1234567899 )
+
+Risposta server numero: 46
+Non esiste una sessionID per Utente10, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 47
+ELIMINA PROFILO TRASPORTATORE (Utente26 )
+
+Risposta server numero: 47
+Non esiste Utente26 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 48
+AGGIORNA PASSWORD TRASPORTATORE (Utente16, P.assword16 ,P.assword16 )
+
+Risposta server numero: 48
+Aggiornamento password (nuova password inserita: P.assword16 ) per utente: Utente16
+
+
+Richiesta client numero: 49
+EFFETTUA LOGIN TRASPORTATORE (Utente11, P.assword11 )
+
+Risposta server numero: 49
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 50
+AGGIORNA NOME DITTASPEDIZIONE (Utente2, Ditta4 )
+
+Risposta server numero: 50
+L utente Utente2 non è un utente trasportatore, perciò non può essere aggiornato il nome della ditta di spedizione.
+
+
+Richiesta client numero: 51
+EFFETTUA LOGIN TRASPORTATORE (Utente9, P.assword9 )
+
+Risposta server numero: 51
+Utente Utente9 è di un altra categoria, non un utente trasportatore, non può essere effettuato il login.
+
+
+Richiesta client numero: 52
+EFFETTUA LOGOUT TRASPORTATORE (Utente2 )
+
+Risposta server numero: 52
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente2
+
+
+Richiesta client numero: 53
+PRENDI IN CARICO SPEDIZIONE (Utente21 )
+
+Risposta server numero: 53
+Non esiste una sessionID per Utente21, utente non loggato, non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 54
+ELIMINA PROFILO TRASPORTATORE (Utente4 )
+
+Risposta server numero: 54
+Non esiste una sessionID per Utente4, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 55
+
+Richiesta client numero: 55
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente11, UtenteTrasportatore, Roberto, Gallo, 12345678910, Utente11@example.com, P.assword11, P.assword11, Ditta2 )
+
+Risposta server numero: 55
+Registrazione utente trasportatore : Utente11 avvenuta con successo.
+
+
+Richiesta client numero: 56
+AVVISA SPEDIZIONE EFFETTUATA (Utente4, 12 )
+
+Risposta server numero: 56
+Non esiste una sessionID per Utente4, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 57
+AVVISA SPEDIZIONE EFFETTUATA (Utente4, 15 )
+
+Risposta server numero: 57
+Non esiste una sessionID per Utente4, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 58
+AGGIORNA PASSWORD TRASPORTATORE (Utente27, P.assword27 ,P.assword27 )
+
+Risposta server numero: 58
+Aggiornamento password (nuova password inserita: P.assword27 ) per utente: Utente27
+
+
+Richiesta client numero: 59
+AVVISA SPEDIZIONE EFFETTUATA (Utente11, 0 )
+
+Risposta server numero: 59
+Non esiste id 0 della spedizione, perciò Utente11 non può avvisare che la spedizione è consegnata.
+
+
+Richiesta client numero: 60
+AVVISA SPEDIZIONE EFFETTUATA (Utente27, 2 )
+
+Risposta server numero: 60
+Non esiste id 2 della spedizione, perciò Utente27 non può avvisare che la spedizione è consegnata.
+
+
+Richiesta client numero: 61
+ELIMINA PROFILO TRASPORTATORE (Utente9 )
+
+Risposta server numero: 61
+Non esiste una sessionID per Utente9, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 62
+AGGIORNA PASSWORD TRASPORTATORE (Utente18, P.assword18 ,P.assword18 )
+
+Risposta server numero: 62
+Aggiornamento password (nuova password inserita: P.assword18 ) per utente: Utente18
+
+
+Richiesta client numero: 63
+AGGIORNA PASSWORD TRASPORTATORE (Utente20, P.assword20 ,P.assword20 )
+
+Risposta server numero: 63
+Non esiste una sessionID per Utente20, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 64
+
+Richiesta client numero: 64
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente9, UtenteTrasportatore, Alessia, Ferrari, 1234567898, Utente9@example.com, P.assword9, P.assword9, Ditta3 )
+
+Risposta server numero: 64
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 65
+
+Richiesta client numero: 65
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente7, UtenteTrasportatore, Chiara, Russo, 1234567896, Utente7@example.com, P.assword7, P.assword7, Ditta5 )
+
+Risposta server numero: 65
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 66
+EFFETTUA LOGIN TRASPORTATORE (Utente1, P.assword1 )
+
+Risposta server numero: 66
+Utente Utente1 è di un altra categoria, non un utente trasportatore, non può essere effettuato il login.
+
+
+Richiesta client numero: 67
+AVVISA SPEDIZIONE EFFETTUATA (Utente29, 7 )
+
+Risposta server numero: 67
+Non esiste una sessionID per Utente29, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 68
+EFFETTUA LOGOUT TRASPORTATORE (Utente1 )
+
+Risposta server numero: 68
+Non esiste una sessionID per Utente1, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 69
+AVVISA SPEDIZIONE EFFETTUATA (Utente7, 23 )
+
+Risposta server numero: 69
+L utente Utente7 non è un utente trasportatore, perciò non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 70
+EFFETTUA LOGOUT TRASPORTATORE (Utente13 )
+
+Risposta server numero: 70
+Non esiste una sessionID per Utente13, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 71
+AVVISA SPEDIZIONE EFFETTUATA (Utente1, 28 )
+
+Risposta server numero: 71
+Non esiste una sessionID per Utente1, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 72
+EFFETTUA LOGIN TRASPORTATORE (Utente11, P.assword11 )
+
+Risposta server numero: 72
+Login utente fornitore avvenuto con successo
+
+
+Richiesta client numero: 73
+ELIMINA PROFILO TRASPORTATORE (Utente28 )
+
+Risposta server numero: 73
+Eliminazione profilo utente Utente28
+
+
+Richiesta client numero: 74
+EFFETTUA LOGOUT TRASPORTATORE (Utente17 )
+
+Risposta server numero: 74
+Non esiste una sessionID per Utente17, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 75
+
+Richiesta client numero: 75
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente3, UtenteTrasportatore, Luigi, Bianchi, 1234567892, Utente3@example.com, P.assword3, P.assword3, Ditta5 )
+
+Risposta server numero: 75
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 76
+AGGIORNA PASSWORD TRASPORTATORE (Utente3, P.assword3 ,P.assword3 )
+
+Risposta server numero: 76
+Aggiornamento password (nuova password inserita: P.assword3 ) per utente: Utente3
+
+
+Richiesta client numero: 77
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente24, 12345678923 )
+
+Risposta server numero: 77
+Non esiste una sessionID per Utente24, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 78
+AGGIORNA NOME DITTASPEDIZIONE (Utente6, Ditta4 )
+
+Risposta server numero: 78
+Non esiste una sessionID per Utente6, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 79
+EFFETTUA LOGIN TRASPORTATORE (Utente3, P.assword3 )
+
+Risposta server numero: 79
+Utente Utente3 è di un altra categoria, non un utente trasportatore, non può essere effettuato il login.
+
+
+Richiesta client numero: 80
+AGGIORNA PASSWORD TRASPORTATORE (Utente14, P.assword14 ,P.assword14 )
+
+Risposta server numero: 80
+Non esiste una sessionID per Utente14, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 81
+
+Richiesta client numero: 81
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente13, UtenteTrasportatore, Chiara, Russo, 12345678912, Utente13@example.com, P.assword13, P.assword13, Ditta2 )
+
+Risposta server numero: 81
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 82
+PRENDI IN CARICO SPEDIZIONE (Utente4 )
+
+Risposta server numero: 82
+Non esiste una sessionID per Utente4, utente non loggato, non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 83
+ELIMINA PROFILO TRASPORTATORE (Utente23 )
+
+Risposta server numero: 83
+Non esiste una sessionID per Utente23, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 84
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente19, 12345678918 )
+
+Risposta server numero: 84
+Non esiste Utente19 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 85
+ELIMINA PROFILO TRASPORTATORE (Utente30 )
+
+Risposta server numero: 85
+Non esiste una sessionID per Utente30, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 86
+AGGIORNA NOME DITTASPEDIZIONE (Utente22, Ditta1 )
+
+Risposta server numero: 86
+Non esiste una sessionID per Utente22, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 87
+AGGIORNA NOME DITTASPEDIZIONE (Utente3, Ditta1 )
+
+Risposta server numero: 87
+Non esiste Utente3 , poichè non è stato registrato, non può essere aggiornata la ditta di spedizione .
+
+
+Richiesta client numero: 88
+EFFETTUA LOGOUT TRASPORTATORE (Utente2 )
+
+Risposta server numero: 88
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente2
+
+
+Richiesta client numero: 89
+AGGIORNA NOME DITTASPEDIZIONE (Utente11, Ditta3 )
+
+Risposta server numero: 89
+Aggiornamento ditta spedizione per utente: Utente11
+
+
+Richiesta client numero: 90
+PRENDI IN CARICO SPEDIZIONE (Utente24 )
+
+Risposta server numero: 90
+Non esiste una sessionID per Utente24, utente non loggato, non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 91
+
+Richiesta client numero: 91
+EFFETTUA REGISTRAZIONE TRASPORTATORE (Utente15, UtenteTrasportatore, Elena, Romano, 12345678914, Utente15@example.com, P.assword15, P.assword15, Ditta1 )
+
+Risposta server numero: 91
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 92
+PRENDI IN CARICO SPEDIZIONE (Utente24 )
+
+Risposta server numero: 92
+Non esiste una sessionID per Utente24, utente non loggato, non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 93
+ELIMINA PROFILO TRASPORTATORE (Utente21 )
+
+Risposta server numero: 93
+Non esiste una sessionID per Utente21, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 94
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente18, 12345678917 )
+
+Risposta server numero: 94
+Aggiornamento numero di telefono : 12345678917 per utente: Utente18
+
+
+Richiesta client numero: 95
+AVVISA SPEDIZIONE EFFETTUATA (Utente21, 21 )
+
+Risposta server numero: 95
+Non esiste una sessionID per Utente21, utente non loggato, non si può avvisare che la spedizione è consegnata .
+
+
+Richiesta client numero: 96
+PRENDI IN CARICO SPEDIZIONE (Utente2 )
+
+Risposta server numero: 96
+Non esiste una sessionID per Utente2, utente non loggato, non può essere presa in carico la spedizione.
+
+
+Richiesta client numero: 97
+EFFETTUA LOGOUT TRASPORTATORE (Utente25 )
+
+Risposta server numero: 97
+Non esiste una sessionID per Utente25, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 98
+AGGIORNA PASSWORD TRASPORTATORE (Utente1, P.assword1 ,P.assword1 )
+
+Risposta server numero: 98
+Non esiste una sessionID per Utente1, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 99
+EFFETTUA LOGIN TRASPORTATORE (Utente29, P.assword29 )
+
+Risposta server numero: 99
+Utente Utente29 è di un altra categoria, non un utente trasportatore, non può essere effettuato il login.
+
+
+Richiesta client numero: 100
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente16, 12345678915 )
+
+Risposta server numero: 100
+Non esiste Utente16 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 101
+AGGIORNA PASSWORD TRASPORTATORE (Utente9, P.assword9 ,P.assword9 )
+
+Risposta server numero: 101
+Non esiste una sessionID per Utente9, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 102
+AGGIORNA NOME DITTASPEDIZIONE (Utente23, Ditta4 )
+
+Risposta server numero: 102
+Non esiste una sessionID per Utente23, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 103
+EFFETTUA LOGOUT TRASPORTATORE (Utente20 )
+
+Risposta server numero: 103
+Non esiste una sessionID per Utente20, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 104
+AGGIORNA NUMERO TELEFONO TRASPORTATORE (Utente30, 12345678929 )
+
+Risposta server numero: 104
+Non esiste una sessionID per Utente30, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 105
+EFFETTUA LOGOUT TRASPORTATORE (Utente3 )
+
+Risposta server numero: 105
+Non esiste Utente3 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 106
+AGGIORNA NOME DITTASPEDIZIONE (Utente25, Ditta5 )
+
+Risposta server numero: 106
+Non esiste una sessionID per Utente25, utente non loggato, non può essere aggiornata la ditta di spedizione.
+
+
+Richiesta client numero: 107
+EFFETTUA LOGIN TRASPORTATORE (Utente7, P.assword7 )
+
+Risposta server numero: 107
+Utente Utente7 è di un altra categoria, non un utente trasportatore, non può essere effettuato il login.
+
+
+Richiesta client numero: 108
+ELIMINA PROFILO TRASPORTATORE (Utente26 )
+
+Risposta server numero: 108
+Non esiste Utente26 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 109
+PRENDI IN CARICO SPEDIZIONE (Utente3 )
+
+Risposta server numero: 109
+Non esiste Utente3 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 110
+PRENDI IN CARICO SPEDIZIONE (Utente12 )
+
+Risposta server numero: 110
+Non esiste una sessionID per Utente12, utente non loggato, non può essere presa in carico la spedizione.
+

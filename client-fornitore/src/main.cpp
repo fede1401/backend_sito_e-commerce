@@ -1758,7 +1758,7 @@ int main()
             sprintf(value2, nomi_utente[i30].c_str());
 
             sprintf(key3, "nuovoNumeroTelefono");
-            sprintf(value3, numeri_telefono[i100].c_str());
+            sprintf(value3, numeri_telefono[i30].c_str());
 
             // Effettuo un comando di scrittura relativo all'aggiornamento di numero telefono dell'utente fornitore.
             reply = RedisCommand(c2r, "XADD %s * %s %s %s %s %s %s", WRITE_STREAM_FORNITORE, key1, value1, key2, value2, key3, value3);

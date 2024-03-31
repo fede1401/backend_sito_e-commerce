@@ -6806,3 +6806,2873 @@ RICERCA PRODOTTO (Utente1, Prodotto1 )
 Risposta server numero: 59
 Non esiste una sessionID per Utente1, utente non loggato, non può essere ricercato il prodotto
 
+
+Richiesta client numero: 1
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+Risposta server numero: 1
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 2
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+Risposta server numero: 2
+I valori del campo -password- e -conferma password- non sono uguali
+
+
+Richiesta client numero: 3
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+Risposta server numero: 3
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 4
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+Risposta server numero: 4
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 5
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+Risposta server numero: 5
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 6
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 6
+Registrazione utente compratore : utente1 avvenuta con successo.
+
+
+Richiesta client numero: 7
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 7
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 8
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 8
+L'email non è univoca, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 9
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 9
+Registrazione utente compratore : utente2 avvenuta con successo.
+
+
+Richiesta client numero: 10
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 10
+Registrazione utente compratore : utente3 avvenuta con successo.
+
+
+Richiesta client numero: 11
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+Risposta server numero: 11
+Aggiornamento sessionID causato dalla disconnessione di Utente utente1
+
+
+Richiesta client numero: 12
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+Risposta server numero: 12
+Aggiornamento sessionID causato dalla disconnessione di Utente utente2
+
+
+Richiesta client numero: 13
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+Risposta server numero: 13
+Aggiornamento sessionID causato dalla disconnessione di Utente utente3
+
+
+Richiesta client numero: 14
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+Risposta server numero: 14
+Non esiste utente4 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 15
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+Risposta server numero: 15
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 16
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+Risposta server numero: 16
+Errore: La passowrd non è corretta, riprovare.
+
+
+Richiesta client numero: 17
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+Risposta server numero: 17
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 18
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+Risposta server numero: 18
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 19
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 19
+Aggiornata residenza utente compratore: utente1
+
+
+Richiesta client numero: 20
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 20
+Non esiste utente4 , poichè non è stato registrato, non può essere aggiornata la residenza .
+
+
+Richiesta client numero: 21
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 21
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 22
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+Risposta server numero: 22
+Inserimento carta di pagamento con il numero 121131322323 per utente compratore utente1
+
+
+Richiesta client numero: 23
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+Risposta server numero: 23
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 24
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+Risposta server numero: 24
+Non esiste utente4 , poichè non è stato registrato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 25
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+Risposta server numero: 25
+Carta con id 1 non trovata
+
+
+Richiesta client numero: 26
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+Risposta server numero: 26
+Carta con id 4 non trovata
+
+
+Richiesta client numero: 27
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+Risposta server numero: 27
+Non esiste utente4 , poichè non è stato registrato, non può essere rimossa la carta di pagamento.
+
+
+Richiesta client numero: 28
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+Risposta server numero: 28
+Aggiornamento numero di telefono : 131212212 per utente: utente1
+
+
+Richiesta client numero: 29
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+Risposta server numero: 29
+Non esiste utente4 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 30
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+Risposta server numero: 30
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 31
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 31
+Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente1
+
+
+Richiesta client numero: 32
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 32
+Non esiste utente4 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 33
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+Risposta server numero: 33
+Eliminazione profilo utente utente1
+
+
+Richiesta client numero: 34
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+Risposta server numero: 34
+Non esiste una sessionID per utente2, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 35
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+Risposta server numero: 35
+Eliminazione profilo utente utente3
+
+
+Richiesta client numero: 36
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+Risposta server numero: 36
+Non esiste utente4 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 37
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+Risposta server numero: 37
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 38
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+Risposta server numero: 38
+Eliminazione profilo utente utente2
+
+
+Richiesta client numero: 39
+ANNULLA ORDINE (Utente28, 0 )
+
+Risposta server numero: 39
+Non esiste Utente28 , poichè non è stato registrato, non può essere annullato l ordine .
+
+
+Richiesta client numero: 40
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente28, 12345678927 )
+
+Risposta server numero: 40
+Non esiste Utente28 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 41
+RICERCA PRODOTTO (Utente8, Prodotto8 )
+
+Risposta server numero: 41
+Non esiste una sessionID per Utente8, utente non loggato, non può essere ricercato il prodotto
+
+
+Richiesta client numero: 42
+EFFETTUA LOGIN COMPRATORE (Utente5, P.assword5 )
+
+Risposta server numero: 42
+Utente Utente5 è di un altra categoria, non un utente compratore, non può essere effettuato il login.
+
+
+Richiesta client numero: 43
+VISIONA ORDINI EFFETTUATI (Utente24 )
+
+Risposta server numero: 43
+L utente Utente24 non è un utente compratore, perciò non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 44
+AGGIORNA PASSWORD COMPRATORE (Utente25, P.assword25, P.assword25 )
+
+Risposta server numero: 44
+Non esiste una sessionID per Utente25, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 45
+RIMUOVI PRODOTTO CARRELLO (Utente28, 24 )
+
+Risposta server numero: 45
+Non esiste Utente28 , poichè non è stato registrato, non può essere rimosso il prodotto dal carrello.
+
+
+Richiesta client numero: 46
+AGGIUNGI PRODOTTO CARRELLO (Utente28, 11 )
+
+Risposta server numero: 46
+Non esiste Utente28 , poichè non è stato registrato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 47
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente4, 1234567893 )
+
+Risposta server numero: 47
+Non esiste una sessionID per Utente4, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 48
+AGGIUNGI CARTA PAGAMENTO (Utente10, 7568867229, 011 )
+
+Risposta server numero: 48
+Non esiste una sessionID per Utente10, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 49
+AGGIUNGI CARTA PAGAMENTO (Utente25, 1063121271, 022 )
+
+Risposta server numero: 49
+Non esiste una sessionID per Utente25, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 50
+AGGIORNA PASSWORD COMPRATORE (Utente19, P.assword19, P.assword19 )
+
+Risposta server numero: 50
+Aggiornamento password (nuova password inserita: P.assword19 ) per utente: Utente19
+
+
+Richiesta client numero: 51
+RICERCA PRODOTTO (Utente30, Prodotto30 )
+
+Risposta server numero: 51
+Non esiste una sessionID per Utente30, utente non loggato, non può essere ricercato il prodotto
+
+
+Richiesta client numero: 52
+RIMUOVI PRODOTTO LISTADESIDERI (Utente2, 10 )
+
+Risposta server numero: 52
+Non esiste una sessionID per Utente2, utente non loggato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 53
+RIMUOVI PRODOTTO LISTADESIDERI (Utente28, 24 )
+
+Risposta server numero: 53
+Non esiste Utente28 , poichè non è stato registrato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 54
+RIMUOVI RECENSIONE (Utente6, 17 )
+
+Risposta server numero: 54
+Non esiste una sessionID per Utente6, utente non loggato, non può essere rimossa la recensione.
+
+
+Richiesta client numero: 55
+RIMUOVI PRODOTTO CARRELLO (Utente26, 17 )
+
+Risposta server numero: 55
+L utente Utente26 non è un utente compratore, perciò non può essere rimosso il prodotto dal carrello
+
+
+Richiesta client numero: 56
+RIMUOVI RECENSIONE (Utente1, 25 )
+
+Risposta server numero: 56
+Non esiste una sessionID per Utente1, utente non loggato, non può essere rimossa la recensione.
+
+
+Richiesta client numero: 57
+VISIONA ORDINI EFFETTUATI (Utente12 )
+
+Risposta server numero: 57
+Non esiste una sessionID per Utente12, utente non loggato, non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 58
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente22, 12345678921 )
+
+Risposta server numero: 58
+Non esiste una sessionID per Utente22, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 59
+EFFETTUA REGISTRAZIONE COMPRATORE (Utente27, UtenteCompratore, Luigi, Bianchi, 12345678926, Utente27@example.com, Via Firenze, 27, 09876, Firenze, P.assword27, P.assword27, 01/01/2000 )
+
+Risposta server numero: 59
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 60
+AGGIORNA RESIDENZA (Utente27, Via Firenze, 27, 09876, Firenze )
+
+Risposta server numero: 60
+Aggiornata residenza utente compratore: Utente27
+
+
+Richiesta client numero: 61
+RIMUOVI PRODOTTO LISTADESIDERI (Utente15, 13 )
+
+Risposta server numero: 61
+Non esiste una sessionID per Utente15, utente non loggato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 62
+AGGIORNA PASSWORD COMPRATORE (Utente17, P.assword17, P.assword17 )
+
+Risposta server numero: 62
+Non esiste una sessionID per Utente17, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 63
+AGGIORNA RESIDENZA (Utente4, Via Roma, 4, 12345, Roma )
+
+Risposta server numero: 63
+Non esiste una sessionID per Utente4, utente non loggato, non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 64
+RICERCA PRODOTTO (Utente2, Prodotto2 )
+
+Risposta server numero: 64
+Non esiste una sessionID per Utente2, utente non loggato, non può essere ricercato il prodotto
+
+
+Richiesta client numero: 65
+EFFETTUA REGISTRAZIONE COMPRATORE (Utente9, UtenteCompratore, Alessia, Ferrari, 1234567898, Utente9@example.com, Via Napoli, 9, 67890, Napoli, P.assword9, P.assword9, 01/01/2000 )
+
+Risposta server numero: 65
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 66
+AGGIORNA PASSWORD COMPRATORE (Utente25, P.assword25, P.assword25 )
+
+Risposta server numero: 66
+Non esiste una sessionID per Utente25, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 67
+VISIONA ORDINI EFFETTUATI (Utente13 )
+
+Risposta server numero: 67
+Non esiste una sessionID per Utente13, utente non loggato, non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 68
+VISIONA ORDINI EFFETTUATI (Utente18 )
+
+Risposta server numero: 68
+Non esiste Utente18 , poichè non è stato registrato, non può visionare gli ordini .
+
+
+Richiesta client numero: 69
+RIMUOVI CARTA PAGAMENTO (Utente17, 5 )
+
+Risposta server numero: 69
+Non esiste una sessionID per Utente17, utente non loggato, non può essere rimossa la carta di pagamento.
+
+
+Richiesta client numero: 70
+RIMUOVI PRODOTTO CARRELLO (Utente19, 8 )
+
+Risposta server numero: 70
+L utente Utente19 non è un utente compratore, perciò non può essere rimosso il prodotto dal carrello
+
+
+Richiesta client numero: 71
+AGGIUNGI CARTA PAGAMENTO (Utente5, 2772932470, 001 )
+
+Risposta server numero: 71
+Non esiste una sessionID per Utente5, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 72
+RIMUOVI PRODOTTO LISTADESIDERI (Utente17, 3 )
+
+Risposta server numero: 72
+Non esiste una sessionID per Utente17, utente non loggato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 73
+AGGIUNGI PRODOTTO CARRELLO (Utente6, 19 )
+
+Risposta server numero: 73
+Non esiste una sessionID per Utente6, utente non loggato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 74
+ELIMINA PROFILO COMPRATORE (Utente25 )
+
+Risposta server numero: 74
+Non esiste una sessionID per Utente25, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 75
+EFFETTUA RESO (Utente23, 8, non conforme alle aspettative )
+
+Risposta server numero: 75
+L utente Utente23 non è un utente compratore, perciò non può essere effettuato il reso.
+
+
+Richiesta client numero: 76
+EFFETTUA RECENSIONE (Utente1, 20, Prodotto eccellente., 1 )
+
+Risposta server numero: 76
+Non esiste una sessionID per Utente1, utente non loggato, non può essere effettuata la recensione.
+
+
+Richiesta client numero: 77
+EFFETTUA LOGOUT COMPRATORE (Utente24 )
+
+Risposta server numero: 77
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente24
+
+
+Richiesta client numero: 78
+RIMUOVI PRODOTTO LISTADESIDERI (Utente23, 26 )
+
+Risposta server numero: 78
+L utente Utente23 non è un utente compratore, perciò non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 79
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente4, 16 )
+
+Risposta server numero: 79
+Non esiste una sessionID per Utente4, utente non loggato, non può essere aggiunto il prodotto alla lista desideri.
+
+
+Richiesta client numero: 80
+EFFETTUA LOGOUT COMPRATORE (Utente13 )
+
+Risposta server numero: 80
+Non esiste una sessionID per Utente13, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 81
+EFFETTUA RESO (Utente22, 6, non conforme alle aspettative )
+
+Risposta server numero: 81
+L utente Utente22 non è un utente compratore, non può essere effettuato il reso .
+
+
+Richiesta client numero: 82
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente11, 12 )
+
+Risposta server numero: 82
+L utente Utente11 non è un utente compratore, perciò non può essere aggiunto il prodotto alla lita desideri.
+
+
+Richiesta client numero: 83
+AGGIORNA PASSWORD COMPRATORE (Utente23, P.assword23, P.assword23 )
+
+Risposta server numero: 83
+Aggiornamento password (nuova password inserita: P.assword23 ) per utente: Utente23
+
+
+Richiesta client numero: 84
+RIMUOVI RECENSIONE (Utente20, 17 )
+
+Risposta server numero: 84
+Non esiste una sessionID per Utente20, utente non loggato, non può essere rimossa la recensione.
+
+
+Richiesta client numero: 85
+EFFETTUA RECENSIONE (Utente14, 1, Prodotto eccellente., 4 )
+
+Risposta server numero: 85
+Non esiste una sessionID per Utente14, utente non loggato, non può essere effettuata la recensione.
+
+
+Richiesta client numero: 86
+AGGIUNGI CARTA PAGAMENTO (Utente16, 9001872436, 110 )
+
+Risposta server numero: 86
+Non esiste una sessionID per Utente16, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 87
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente28, 12345678927 )
+
+Risposta server numero: 87
+Non esiste Utente28 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 1
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+Risposta server numero: 1
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 2
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+Risposta server numero: 2
+I valori del campo -password- e -conferma password- non sono uguali
+
+
+Richiesta client numero: 3
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+Risposta server numero: 3
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 4
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+Risposta server numero: 4
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 5
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+Risposta server numero: 5
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 6
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 6
+Registrazione utente compratore : utente1 avvenuta con successo.
+
+
+Richiesta client numero: 7
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 7
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 8
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 8
+L'email non è univoca, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 9
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 9
+Registrazione utente compratore : utente2 avvenuta con successo.
+
+
+Richiesta client numero: 10
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 10
+Registrazione utente compratore : utente3 avvenuta con successo.
+
+
+Richiesta client numero: 11
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+Risposta server numero: 11
+Aggiornamento sessionID causato dalla disconnessione di Utente utente1
+
+
+Richiesta client numero: 12
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+Risposta server numero: 12
+Aggiornamento sessionID causato dalla disconnessione di Utente utente2
+
+
+Richiesta client numero: 13
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+Risposta server numero: 13
+Aggiornamento sessionID causato dalla disconnessione di Utente utente3
+
+
+Richiesta client numero: 14
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+Risposta server numero: 14
+Non esiste utente4 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 15
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+Risposta server numero: 15
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 16
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+Risposta server numero: 16
+Errore: La passowrd non è corretta, riprovare.
+
+
+Richiesta client numero: 17
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+Risposta server numero: 17
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 18
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+Risposta server numero: 18
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 19
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 19
+Aggiornata residenza utente compratore: utente1
+
+
+Richiesta client numero: 20
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 20
+Non esiste utente4 , poichè non è stato registrato, non può essere aggiornata la residenza .
+
+
+Richiesta client numero: 21
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 21
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 22
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+Risposta server numero: 22
+Inserimento carta di pagamento con il numero 121131322323 per utente compratore utente1
+
+
+Richiesta client numero: 23
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+Risposta server numero: 23
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 24
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+Risposta server numero: 24
+Non esiste utente4 , poichè non è stato registrato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 25
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+Risposta server numero: 25
+Carta con id 1 non trovata
+
+
+Richiesta client numero: 26
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+Risposta server numero: 26
+Carta con id 4 non trovata
+
+
+Richiesta client numero: 27
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+Risposta server numero: 27
+Non esiste utente4 , poichè non è stato registrato, non può essere rimossa la carta di pagamento.
+
+
+Richiesta client numero: 28
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+Risposta server numero: 28
+Aggiornamento numero di telefono : 131212212 per utente: utente1
+
+
+Richiesta client numero: 29
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+Risposta server numero: 29
+Non esiste utente4 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 30
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+Risposta server numero: 30
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 31
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 31
+Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente1
+
+
+Richiesta client numero: 32
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 32
+Non esiste utente4 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 33
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+Risposta server numero: 33
+Eliminazione profilo utente utente1
+
+
+Richiesta client numero: 34
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+Risposta server numero: 34
+Non esiste una sessionID per utente2, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 35
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+Risposta server numero: 35
+Eliminazione profilo utente utente3
+
+
+Richiesta client numero: 36
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+Risposta server numero: 36
+Non esiste utente4 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 37
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+Risposta server numero: 37
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 38
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+Risposta server numero: 38
+Eliminazione profilo utente utente2
+
+
+Richiesta client numero: 39
+RIMUOVI PRODOTTO LISTADESIDERI (Utente14, 2 )
+
+Risposta server numero: 39
+Non esiste una sessionID per Utente14, utente non loggato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 40
+EFFETTUA RESO (Utente8, 17, misura errata )
+
+Risposta server numero: 40
+L utente Utente8 non è un utente compratore, non può essere effettuato il reso .
+
+
+Richiesta client numero: 41
+ACQUISTA PRODOTTO (Utente30, 1, Via Napoli, Napoli, 3067890 )
+
+Risposta server numero: 41
+Non esiste una sessionID per Utente30, utente non loggato, non può essere acquistato il prodotto .
+
+
+Richiesta client numero: 42
+AGGIUNGI PRODOTTO CARRELLO (Utente29, 16 )
+
+Risposta server numero: 42
+Non esiste Utente29 , poichè non è stato registrato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 43
+EFFETTUA RESO (Utente25, 0, cambio opinione )
+
+Risposta server numero: 43
+L utente Utente25 non è un utente compratore, non può essere effettuato il reso .
+
+
+Richiesta client numero: 44
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente19, 7 )
+
+Risposta server numero: 44
+L utente Utente19 non è un utente compratore, perciò non può essere aggiunto il prodotto alla lita desideri.
+
+
+Richiesta client numero: 45
+RIMUOVI PRODOTTO LISTADESIDERI (Utente8, 11 )
+
+Risposta server numero: 45
+Non esiste una sessionID per Utente8, utente non loggato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 46
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente25, 29 )
+
+Risposta server numero: 46
+Non esiste una sessionID per Utente25, utente non loggato, non può essere aggiunto il prodotto alla lista desideri.
+
+
+Richiesta client numero: 47
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente8, 1234567897 )
+
+Risposta server numero: 47
+Non esiste una sessionID per Utente8, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 48
+RIMUOVI RECENSIONE (Utente25, 25 )
+
+Risposta server numero: 48
+Non esiste una sessionID per Utente25, utente non loggato, non può essere rimossa la recensione.
+
+
+Richiesta client numero: 49
+EFFETTUA RECENSIONE (Utente19, 27, Prodotto eccellente., 5 )
+
+Risposta server numero: 49
+L utente Utente19 non è un utente compratore, perciò non può essere effettuata la recensione.
+
+
+Richiesta client numero: 50
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente22, 12345678921 )
+
+Risposta server numero: 50
+Non esiste una sessionID per Utente22, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 51
+RICERCA PRODOTTO (Utente24, Prodotto24 )
+
+Risposta server numero: 51
+Non esiste una sessionID per Utente24, utente non loggato, non può essere ricercato il prodotto
+
+
+Richiesta client numero: 52
+VISIONA ORDINI EFFETTUATI (Utente13 )
+
+Risposta server numero: 52
+Non esiste una sessionID per Utente13, utente non loggato, non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 53
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente17, 12345678916 )
+
+Risposta server numero: 53
+Non esiste una sessionID per Utente17, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 54
+EFFETTUA LOGOUT COMPRATORE (Utente27 )
+
+Risposta server numero: 54
+Non esiste Utente27 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 55
+ACQUISTA PRODOTTO (Utente3, 21, Via Napoli, Napoli, 367890 )
+
+Risposta server numero: 55
+Non esiste una sessionID per Utente3, utente non loggato, non può essere acquistato il prodotto .
+
+
+Richiesta client numero: 56
+VISIONA ORDINI EFFETTUATI (Utente3 )
+
+Risposta server numero: 56
+Non esiste una sessionID per Utente3, utente non loggato, non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 57
+AGGIORNA RESIDENZA (Utente26, Via Roma, 26, 12345, Roma )
+
+Risposta server numero: 57
+L utente Utente26 non è un utente compratore, perciò non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 58
+RICERCA PRODOTTO (Utente15, Prodotto15 )
+
+Risposta server numero: 58
+L utente Utente15 non è un utente compratore, perciò non può essere ricercato il prodotto.
+
+
+Richiesta client numero: 59
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente23, 7 )
+
+Risposta server numero: 59
+L utente Utente23 non è un utente compratore, perciò non può essere aggiunto il prodotto alla lita desideri.
+
+
+Richiesta client numero: 60
+VISIONA ORDINI EFFETTUATI (Utente25 )
+
+Risposta server numero: 60
+Non esiste una sessionID per Utente25, utente non loggato, non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 61
+AGGIUNGI CARTA PAGAMENTO (Utente24, 6972653894, 020 )
+
+Risposta server numero: 61
+Non esiste una sessionID per Utente24, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 62
+RIMUOVI RECENSIONE (Utente14, 24 )
+
+Risposta server numero: 62
+Non esiste una sessionID per Utente14, utente non loggato, non può essere rimossa la recensione.
+
+
+Richiesta client numero: 63
+AGGIUNGI PRODOTTO CARRELLO (Utente4, 19 )
+
+Risposta server numero: 63
+Non esiste una sessionID per Utente4, utente non loggato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 64
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente12, 29 )
+
+Risposta server numero: 64
+Non esiste una sessionID per Utente12, utente non loggato, non può essere aggiunto il prodotto alla lista desideri.
+
+
+Richiesta client numero: 65
+VISIONA ORDINI EFFETTUATI (Utente14 )
+
+Risposta server numero: 65
+Non esiste una sessionID per Utente14, utente non loggato, non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 66
+ACQUISTA PRODOTTO (Utente8, 3, Via Napoli, Napoli, 867890 )
+
+Risposta server numero: 66
+Non esiste una sessionID per Utente8, utente non loggato, non può essere acquistato il prodotto .
+
+
+Richiesta client numero: 67
+ELIMINA PROFILO COMPRATORE (Utente29 )
+
+Risposta server numero: 67
+Non esiste Utente29 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 68
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente20, 12345678919 )
+
+Risposta server numero: 68
+Non esiste una sessionID per Utente20, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 69
+RIMUOVI RECENSIONE (Utente4, 28 )
+
+Risposta server numero: 69
+Non esiste una sessionID per Utente4, utente non loggato, non può essere rimossa la recensione.
+
+
+Richiesta client numero: 70
+AGGIORNA PASSWORD COMPRATORE (Utente14, P.assword14, P.assword14 )
+
+Risposta server numero: 70
+Non esiste una sessionID per Utente14, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 71
+ACQUISTA PRODOTTO (Utente21, 14, Via Roma, Roma, 2112345 )
+
+Risposta server numero: 71
+Non esiste una sessionID per Utente21, utente non loggato, non può essere acquistato il prodotto .
+
+
+Richiesta client numero: 72
+EFFETTUA RESO (Utente8, 5, misura errata )
+
+Risposta server numero: 72
+L utente Utente8 non è un utente compratore, non può essere effettuato il reso .
+
+
+Richiesta client numero: 73
+AGGIUNGI PRODOTTO CARRELLO (Utente21, 17 )
+
+Risposta server numero: 73
+Non esiste una sessionID per Utente21, utente non loggato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 74
+RIMUOVI PRODOTTO CARRELLO (Utente26, 18 )
+
+Risposta server numero: 74
+L utente Utente26 non è un utente compratore, perciò non può essere rimosso il prodotto dal carrello
+
+
+Richiesta client numero: 75
+RIMUOVI RECENSIONE (Utente18, 21 )
+
+Risposta server numero: 75
+Non esiste Utente18 , poichè non è stato registrato, non può essere rimossa la recensione .
+
+
+Richiesta client numero: 76
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente24, 19 )
+
+Risposta server numero: 76
+Non esiste una sessionID per Utente24, utente non loggato, non può essere aggiunto il prodotto alla lista desideri.
+
+
+Richiesta client numero: 77
+ELIMINA PROFILO COMPRATORE (Utente6 )
+
+Risposta server numero: 77
+Non esiste una sessionID per Utente6, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 78
+RIMUOVI PRODOTTO LISTADESIDERI (Utente11, 0 )
+
+Risposta server numero: 78
+Non esiste Utente11 , poichè non è stato registrato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 79
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente9, 1234567898 )
+
+Risposta server numero: 79
+Aggiornamento numero di telefono : 1234567898 per utente: Utente9
+
+
+Richiesta client numero: 80
+AGGIUNGI CARTA PAGAMENTO (Utente10, 2233561475, 110 )
+
+Risposta server numero: 80
+Non esiste una sessionID per Utente10, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 81
+RICERCA PRODOTTO (Utente28, Prodotto28 )
+
+Risposta server numero: 81
+L utente Utente28 non è un utente compratore, perciò non può essere ricercato il prodotto.
+
+
+Richiesta client numero: 82
+RIMUOVI PRODOTTO CARRELLO (Utente18, 12 )
+
+Risposta server numero: 82
+Non esiste Utente18 , poichè non è stato registrato, non può essere rimosso il prodotto dal carrello.
+
+
+Richiesta client numero: 83
+EFFETTUA REGISTRAZIONE COMPRATORE (Utente15, UtenteCompratore, Roberto, Gallo, 12345678914, Utente15@example.com, Via Napoli, 15, 67890, Napoli, P.assword15, P.assword15, 01/01/2000 )
+
+Risposta server numero: 83
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 84
+ANNULLA ORDINE (Utente5, 25 )
+
+Risposta server numero: 84
+Non esiste una sessionID per Utente5, utente non loggato, non può essere annullato l ordine.
+
+
+Richiesta client numero: 85
+RIMUOVI PRODOTTO CARRELLO (Utente8, 17 )
+
+Risposta server numero: 85
+Non esiste una sessionID per Utente8, utente non loggato, non può essere rimosotto il prodotto dal carrello.
+
+
+Richiesta client numero: 86
+EFFETTUA REGISTRAZIONE COMPRATORE (Utente24, UtenteCompratore, Alessia, Ferrari, 12345678923, Utente24@example.com, Via Roma, 24, 12345, Roma, P.assword24, P.assword24, 01/01/2000 )
+
+Risposta server numero: 86
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 87
+AGGIORNA RESIDENZA (Utente29, Via Napoli, 29, 67890, Napoli )
+
+Risposta server numero: 87
+Non esiste Utente29 , poichè non è stato registrato, non può essere aggiornata la residenza .
+
+
+Richiesta client numero: 88
+ANNULLA ORDINE (Utente19, 27 )
+
+Risposta server numero: 88
+L utente Utente19 non è un utente compratore, perciò non può essere annullato l ordine
+
+
+Richiesta client numero: 89
+EFFETTUA LOGOUT COMPRATORE (Utente30 )
+
+Risposta server numero: 89
+Non esiste una sessionID per Utente30, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 90
+RIMUOVI PRODOTTO LISTADESIDERI (Utente25, 3 )
+
+Risposta server numero: 90
+Non esiste una sessionID per Utente25, utente non loggato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 91
+EFFETTUA LOGIN COMPRATORE (Utente6, P.assword6 )
+
+Risposta server numero: 91
+Utente Utente6 è di un altra categoria, non un utente compratore, non può essere effettuato il login.
+
+
+Richiesta client numero: 92
+ANNULLA ORDINE (Utente25, 13 )
+
+Risposta server numero: 92
+Non esiste una sessionID per Utente25, utente non loggato, non può essere annullato l ordine.
+
+
+Richiesta client numero: 93
+RICERCA PRODOTTO (Utente2, Prodotto2 )
+
+Risposta server numero: 93
+L utente Utente2 non è un utente compratore, perciò non può essere ricercato il prodotto.
+
+
+Richiesta client numero: 94
+AGGIUNGI PRODOTTO CARRELLO (Utente18, 7 )
+
+Risposta server numero: 94
+Non esiste Utente18 , poichè non è stato registrato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 95
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+Risposta server numero: 95
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 96
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+Risposta server numero: 96
+I valori del campo -password- e -conferma password- non sono uguali
+
+
+Richiesta client numero: 97
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+Risposta server numero: 97
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 98
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+Risposta server numero: 98
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 99
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+Risposta server numero: 99
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 100
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 100
+Registrazione utente compratore : utente1 avvenuta con successo.
+
+
+Richiesta client numero: 101
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 101
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 102
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 102
+L'email non è univoca, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 103
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 103
+Registrazione utente compratore : utente2 avvenuta con successo.
+
+
+Richiesta client numero: 104
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 104
+Registrazione utente compratore : utente3 avvenuta con successo.
+
+
+Richiesta client numero: 105
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+Risposta server numero: 105
+Aggiornamento sessionID causato dalla disconnessione di Utente utente1
+
+
+Richiesta client numero: 106
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+Risposta server numero: 106
+Aggiornamento sessionID causato dalla disconnessione di Utente utente2
+
+
+Richiesta client numero: 107
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+Risposta server numero: 107
+Aggiornamento sessionID causato dalla disconnessione di Utente utente3
+
+
+Richiesta client numero: 108
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+Risposta server numero: 108
+Non esiste utente4 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 109
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+Risposta server numero: 109
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 110
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+Risposta server numero: 110
+Errore: La passowrd non è corretta, riprovare.
+
+
+Richiesta client numero: 111
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+Risposta server numero: 111
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 112
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+Risposta server numero: 112
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 113
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 113
+Aggiornata residenza utente compratore: utente1
+
+
+Richiesta client numero: 114
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 114
+Non esiste utente4 , poichè non è stato registrato, non può essere aggiornata la residenza .
+
+
+Richiesta client numero: 115
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 115
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 116
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+Risposta server numero: 116
+Inserimento carta di pagamento con il numero 121131322323 per utente compratore utente1
+
+
+Richiesta client numero: 117
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+Risposta server numero: 117
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 118
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+Risposta server numero: 118
+Non esiste utente4 , poichè non è stato registrato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 119
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+Risposta server numero: 119
+Carta con id 1 non trovata
+
+
+Richiesta client numero: 120
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+Risposta server numero: 120
+Carta con id 4 non trovata
+
+
+Richiesta client numero: 121
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+Risposta server numero: 121
+Non esiste utente4 , poichè non è stato registrato, non può essere rimossa la carta di pagamento.
+
+
+Richiesta client numero: 122
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+Risposta server numero: 122
+Aggiornamento numero di telefono : 131212212 per utente: utente1
+
+
+Richiesta client numero: 123
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+Risposta server numero: 123
+Non esiste utente4 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 124
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+Risposta server numero: 124
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 125
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 125
+Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente1
+
+
+Richiesta client numero: 126
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 126
+Non esiste utente4 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 127
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+Risposta server numero: 127
+Eliminazione profilo utente utente1
+
+
+Richiesta client numero: 128
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+Risposta server numero: 128
+Non esiste una sessionID per utente2, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 129
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+Risposta server numero: 129
+Eliminazione profilo utente utente3
+
+
+Richiesta client numero: 130
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+Risposta server numero: 130
+Non esiste utente4 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 131
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+Risposta server numero: 131
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 132
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+Risposta server numero: 132
+Eliminazione profilo utente utente2
+
+
+Richiesta client numero: 133
+ELIMINA PROFILO COMPRATORE (Utente6 )
+
+Risposta server numero: 133
+Non esiste una sessionID per Utente6, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 134
+AGGIUNGI CARTA PAGAMENTO (Utente19, 9543788404, 100 )
+
+Risposta server numero: 134
+L utente Utente19 non è un utente compratore, perciò non può essere aggiunta la carta di pagamento
+
+
+Richiesta client numero: 135
+RIMUOVI PRODOTTO LISTADESIDERI (Utente9, 18 )
+
+Risposta server numero: 135
+L utente Utente9 non è un utente compratore, perciò non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 136
+ACQUISTA PRODOTTO (Utente30, 3, Via Firenze, Firenze, 3009876 )
+
+Risposta server numero: 136
+Non esiste una sessionID per Utente30, utente non loggato, non può essere acquistato il prodotto .
+
+
+Richiesta client numero: 137
+ELIMINA PROFILO COMPRATORE (Utente12 )
+
+Risposta server numero: 137
+Non esiste una sessionID per Utente12, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 138
+EFFETTUA RESO (Utente26, 0, cambio opinione )
+
+Risposta server numero: 138
+L utente Utente26 non è un utente compratore, perciò non può essere effettuato il reso.
+
+
+Richiesta client numero: 139
+ACQUISTA PRODOTTO (Utente24, 18, Via Napoli, Napoli, 2467890 )
+
+Risposta server numero: 139
+Non esiste una sessionID per Utente24, utente non loggato, non può essere acquistato il prodotto .
+
+
+Richiesta client numero: 140
+AGGIORNA PASSWORD COMPRATORE (Utente17, P.assword17, P.assword17 )
+
+Risposta server numero: 140
+Non esiste una sessionID per Utente17, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 141
+ELIMINA PROFILO COMPRATORE (Utente26 )
+
+Risposta server numero: 141
+Eliminazione profilo utente Utente26
+
+
+Richiesta client numero: 142
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente8, 1234567897 )
+
+Risposta server numero: 142
+Non esiste una sessionID per Utente8, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 143
+EFFETTUA RESO (Utente2, 12, difettoso )
+
+Risposta server numero: 143
+L utente Utente2 non è un utente compratore, perciò non può essere effettuato il reso.
+
+
+Richiesta client numero: 144
+VISIONA ORDINI EFFETTUATI (Utente1 )
+
+Risposta server numero: 144
+Non esiste una sessionID per Utente1, utente non loggato, non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 145
+RIMUOVI PRODOTTO LISTADESIDERI (Utente27, 1 )
+
+Risposta server numero: 145
+L utente Utente27 non è un utente compratore, perciò non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 146
+RIMUOVI CARTA PAGAMENTO (Utente22, 25 )
+
+Risposta server numero: 146
+Non esiste una sessionID per Utente22, utente non loggato, non può essere rimossa la carta di pagamento.
+
+
+Richiesta client numero: 147
+ELIMINA PROFILO COMPRATORE (Utente26 )
+
+Risposta server numero: 147
+Non esiste Utente26 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 148
+RIMUOVI PRODOTTO CARRELLO (Utente15, 6 )
+
+Risposta server numero: 148
+L utente Utente15 non è un utente compratore, perciò non può essere rimosso il prodotto dal carrello
+
+
+Richiesta client numero: 149
+RIMUOVI PRODOTTO LISTADESIDERI (Utente23, 9 )
+
+Risposta server numero: 149
+Non esiste una sessionID per Utente23, utente non loggato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 150
+AGGIORNA RESIDENZA (Utente11, Via Roma, 11, 12345, Roma )
+
+Risposta server numero: 150
+Non esiste Utente11 , poichè non è stato registrato, non può essere aggiornata la residenza .
+
+
+Richiesta client numero: 151
+EFFETTUA REGISTRAZIONE COMPRATORE (Utente29, UtenteCompratore, Paolo, De Luca, 12345678928, Utente29@example.com, Via Venezia, 29, 45678, Venezia, P.assword29, P.assword29, 01/01/2000 )
+
+Risposta server numero: 151
+Registrazione utente compratore : Utente29 avvenuta con successo.
+
+
+Richiesta client numero: 152
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente24, 4 )
+
+Risposta server numero: 152
+Non esiste una sessionID per Utente24, utente non loggato, non può essere aggiunto il prodotto alla lista desideri.
+
+
+Richiesta client numero: 153
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente17, 7 )
+
+Risposta server numero: 153
+Non esiste una sessionID per Utente17, utente non loggato, non può essere aggiunto il prodotto alla lista desideri.
+
+
+Richiesta client numero: 154
+EFFETTUA LOGOUT COMPRATORE (Utente9 )
+
+Risposta server numero: 154
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente9
+
+
+Richiesta client numero: 155
+AGGIORNA PASSWORD COMPRATORE (Utente22, P.assword22, P.assword22 )
+
+Risposta server numero: 155
+Non esiste una sessionID per Utente22, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 156
+EFFETTUA RESO (Utente20, 25, non conforme alle aspettative )
+
+Risposta server numero: 156
+L utente Utente20 non è un utente compratore, non può essere effettuato il reso .
+
+
+Richiesta client numero: 157
+EFFETTUA LOGOUT COMPRATORE (Utente9 )
+
+Risposta server numero: 157
+Non esiste una sessionID per Utente9, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 158
+AGGIUNGI CARTA PAGAMENTO (Utente4, 9264556410, 001 )
+
+Risposta server numero: 158
+Non esiste una sessionID per Utente4, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 1
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbe2., Fbe2., 01/01/1910 )
+
+Risposta server numero: 1
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 2
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2., Fbeejefnefefnfnnf2., 01/01/1910 )
+
+Risposta server numero: 2
+I valori del campo -password- e -conferma password- non sono uguali
+
+
+Richiesta client numero: 3
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, fbewjnfjewnfwnflwnf2., fbewjnfjewnfwnflwnf2., 01/01/1910 )
+
+Risposta server numero: 3
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 4
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf2, Fbewjnfjewnfwnflwnf2, 01/01/1910 )
+
+Risposta server numero: 4
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 5
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbewjnfjewnfwnflwnf.!, Fbewjnfjewnfwnflwnf.!, 01/01/1910 )
+
+Risposta server numero: 5
+La password non rispetta i criteri definiti.
+
+
+Richiesta client numero: 6
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 6
+Registrazione utente compratore : utente1 avvenuta con successo.
+
+
+Richiesta client numero: 7
+EFFETTUA REGISTRAZIONE COMPRATORE (utente1, UtenteCompratore, Utente, Uno, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 7
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 8
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.uno@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 8
+L'email non è univoca, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 9
+EFFETTUA REGISTRAZIONE COMPRATORE (utente2, UtenteCompratore, Utente, Due, 3333333333, utente.due@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 9
+Registrazione utente compratore : utente2 avvenuta con successo.
+
+
+Richiesta client numero: 10
+EFFETTUA REGISTRAZIONE COMPRATORE (utente3, UtenteCompratore, Utente, Tre, 3333333333, utente.tre@gmail.com, Via delle vie, 10, 01000, Roma, Fbefbifno2ifno2!., Fbefbifno2ifno2!., 01/01/1910 )
+
+Risposta server numero: 10
+Registrazione utente compratore : utente3 avvenuta con successo.
+
+
+Richiesta client numero: 11
+EFFETTUA LOGOUT COMPRATORE (utente1 )
+
+Risposta server numero: 11
+Aggiornamento sessionID causato dalla disconnessione di Utente utente1
+
+
+Richiesta client numero: 12
+EFFETTUA LOGOUT COMPRATORE (utente2 )
+
+Risposta server numero: 12
+Aggiornamento sessionID causato dalla disconnessione di Utente utente2
+
+
+Richiesta client numero: 13
+EFFETTUA LOGOUT COMPRATORE (utente3 )
+
+Risposta server numero: 13
+Aggiornamento sessionID causato dalla disconnessione di Utente utente3
+
+
+Richiesta client numero: 14
+EFFETTUA LOGOUT COMPRATORE (utente4 )
+
+Risposta server numero: 14
+Non esiste utente4 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta client numero: 15
+EFFETTUA LOGIN COMPRATORE (utente1, Fbefbifno2ifno2!. )
+
+Risposta server numero: 15
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 16
+EFFETTUA LOGIN COMPRATORE (utente1, Dfnknklnsdl!.2 )
+
+Risposta server numero: 16
+Errore: La passowrd non è corretta, riprovare.
+
+
+Richiesta client numero: 17
+EFFETTUA LOGIN COMPRATORE (utente3, Fbefbifno2ifno2!. )
+
+Risposta server numero: 17
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 18
+EFFETTUA LOGIN COMPRATORE (utente4, Fbefbifno2ifno2!. )
+
+Risposta server numero: 18
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 19
+AGGIORNA RESIDENZA (utente1, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 19
+Aggiornata residenza utente compratore: utente1
+
+
+Richiesta client numero: 20
+AGGIORNA RESIDENZA (utente4, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 20
+Non esiste utente4 , poichè non è stato registrato, non può essere aggiornata la residenza .
+
+
+Richiesta client numero: 21
+AGGIORNA RESIDENZA (utente2, Via dei reni, 23, 00090, Maldive )
+
+Risposta server numero: 21
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 22
+AGGIUNGI CARTA PAGAMENTO (utente1, 121131322323, 999 )
+
+Risposta server numero: 22
+Inserimento carta di pagamento con il numero 121131322323 per utente compratore utente1
+
+
+Richiesta client numero: 23
+AGGIUNGI CARTA PAGAMENTO (utente2, 121131322323, 999 )
+
+Risposta server numero: 23
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 24
+AGGIUNGI CARTA PAGAMENTO (utente4, 121131322323, 999 )
+
+Risposta server numero: 24
+Non esiste utente4 , poichè non è stato registrato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 25
+RIMUOVI CARTA PAGAMENTO (utente3, 1 )
+
+Risposta server numero: 25
+Carta con id 1 non trovata
+
+
+Richiesta client numero: 26
+RIMUOVI CARTA PAGAMENTO (utente3, 4 )
+
+Risposta server numero: 26
+Carta con id 4 non trovata
+
+
+Richiesta client numero: 27
+RIMUOVI CARTA PAGAMENTO (utente4, 1 )
+
+Risposta server numero: 27
+Non esiste utente4 , poichè non è stato registrato, non può essere rimossa la carta di pagamento.
+
+
+Richiesta client numero: 28
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente1, 131212212 )
+
+Risposta server numero: 28
+Aggiornamento numero di telefono : 131212212 per utente: utente1
+
+
+Richiesta client numero: 29
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente4, 131212212 )
+
+Risposta server numero: 29
+Non esiste utente4 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 30
+AGGIORNA NUMERO TELEFONO COMPRATORE (utente2, 131212212 )
+
+Risposta server numero: 30
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 31
+AGGIORNA PASSWORD COMPRATORE (utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 31
+Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente1
+
+
+Richiesta client numero: 32
+AGGIORNA PASSWORD COMPRATORE (utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+
+Risposta server numero: 32
+Non esiste utente4 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 33
+ELIMINA PROFILO COMPRATORE (utente1 )
+
+Risposta server numero: 33
+Eliminazione profilo utente utente1
+
+
+Richiesta client numero: 34
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+Risposta server numero: 34
+Non esiste una sessionID per utente2, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 35
+ELIMINA PROFILO COMPRATORE (utente3 )
+
+Risposta server numero: 35
+Eliminazione profilo utente utente3
+
+
+Richiesta client numero: 36
+ELIMINA PROFILO COMPRATORE (utente4 )
+
+Risposta server numero: 36
+Non esiste utente4 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 37
+EFFETTUA LOGIN COMPRATORE (utente2, Fbefbifno2ifno2!. )
+
+Risposta server numero: 37
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 38
+ELIMINA PROFILO COMPRATORE (utente2 )
+
+Risposta server numero: 38
+Eliminazione profilo utente utente2
+
+
+Richiesta client numero: 39
+RIMUOVI RECENSIONE (Utente24, 9 )
+
+Risposta server numero: 39
+Non esiste una sessionID per Utente24, utente non loggato, non può essere rimossa la recensione.
+
+
+Richiesta client numero: 40
+RIMUOVI RECENSIONE (Utente19, 23 )
+
+Risposta server numero: 40
+L utente Utente19 non è un utente compratore, perciò non può essere rimossa la recensione.
+
+
+Richiesta client numero: 41
+ANNULLA ORDINE (Utente19, 5 )
+
+Risposta server numero: 41
+L utente Utente19 non è un utente compratore, perciò non può essere annullato l ordine
+
+
+Richiesta client numero: 42
+RIMUOVI RECENSIONE (Utente8, 9 )
+
+Risposta server numero: 42
+Non esiste una sessionID per Utente8, utente non loggato, non può essere rimossa la recensione.
+
+
+Richiesta client numero: 43
+ANNULLA ORDINE (Utente25, 12 )
+
+Risposta server numero: 43
+Non esiste una sessionID per Utente25, utente non loggato, non può essere annullato l ordine.
+
+
+Richiesta client numero: 44
+EFFETTUA RESO (Utente4, 0, misura errata )
+
+Risposta server numero: 44
+L utente Utente4 non è un utente compratore, non può essere effettuato il reso .
+
+
+Richiesta client numero: 45
+EFFETTUA REGISTRAZIONE COMPRATORE (Utente7, UtenteCompratore, Giovanni, Verdi, 1234567896, Utente7@example.com, Via Roma, 7, 12345, Roma, P.assword7, P.assword7, 01/01/2000 )
+
+Risposta server numero: 45
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 46
+EFFETTUA LOGOUT COMPRATORE (Utente22 )
+
+Risposta server numero: 46
+Non esiste una sessionID per Utente22, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 47
+AGGIUNGI CARTA PAGAMENTO (Utente6, 7921252418, 002 )
+
+Risposta server numero: 47
+Non esiste una sessionID per Utente6, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 48
+ACQUISTA PRODOTTO (Utente10, 11, Via Napoli, Napoli, 1067890 )
+
+Risposta server numero: 48
+Non esiste una sessionID per Utente10, utente non loggato, non può essere acquistato il prodotto .
+
+
+Richiesta client numero: 49
+EFFETTUA RESO (Utente12, 12, cambio opinione )
+
+Risposta server numero: 49
+L utente Utente12 non è un utente compratore, non può essere effettuato il reso .
+
+
+Richiesta client numero: 50
+AGGIUNGI PRODOTTO CARRELLO (Utente13, 1 )
+
+Risposta server numero: 50
+Non esiste una sessionID per Utente13, utente non loggato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 51
+AGGIORNA RESIDENZA (Utente25, Via Milano, 25, 54321, Milano )
+
+Risposta server numero: 51
+Non esiste una sessionID per Utente25, utente non loggato, non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 52
+AGGIORNA PASSWORD COMPRATORE (Utente26, P.assword26, P.assword26 )
+
+Risposta server numero: 52
+Non esiste Utente26 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 53
+EFFETTUA RECENSIONE (Utente23, 28, Prodotto eccellente., 1 )
+
+Risposta server numero: 53
+Non esiste una sessionID per Utente23, utente non loggato, non può essere effettuata la recensione.
+
+
+Richiesta client numero: 54
+RIMUOVI CARTA PAGAMENTO (Utente18, 7 )
+
+Risposta server numero: 54
+L utente Utente18 non è un utente compratore, perciò non può essere rimossa la carta di pagamento
+
+
+Richiesta client numero: 55
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente14, 27 )
+
+Risposta server numero: 55
+Non esiste una sessionID per Utente14, utente non loggato, non può essere aggiunto il prodotto alla lista desideri.
+
+
+Richiesta client numero: 56
+EFFETTUA LOGIN COMPRATORE (Utente3, P.assword3 )
+
+Risposta server numero: 56
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 57
+RIMUOVI PRODOTTO LISTADESIDERI (Utente13, 17 )
+
+Risposta server numero: 57
+Non esiste una sessionID per Utente13, utente non loggato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 58
+AGGIUNGI PRODOTTO CARRELLO (Utente2, 17 )
+
+Risposta server numero: 58
+Non esiste una sessionID per Utente2, utente non loggato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 59
+AGGIORNA RESIDENZA (Utente9, Via Venezia, 9, 45678, Venezia )
+
+Risposta server numero: 59
+Non esiste una sessionID per Utente9, utente non loggato, non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 60
+EFFETTUA RECENSIONE (Utente20, 19, Prodotto eccellente., 5 )
+
+Risposta server numero: 60
+Non esiste una sessionID per Utente20, utente non loggato, non può essere effettuata la recensione.
+
+
+Richiesta client numero: 61
+EFFETTUA RESO (Utente29, 21, non conforme alle aspettative )
+
+Risposta server numero: 61
+L utente Utente29 non è un utente compratore, non può essere effettuato il reso .
+
+
+Richiesta client numero: 62
+EFFETTUA RESO (Utente3, 10, cambio opinione )
+
+Risposta server numero: 62
+Ordine con codice 10 non trovato
+
+
+Richiesta client numero: 63
+RIMUOVI PRODOTTO LISTADESIDERI (Utente26, 24 )
+
+Risposta server numero: 63
+L utente Utente26 non è un utente compratore, perciò non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 64
+EFFETTUA LOGIN COMPRATORE (Utente3, P.assword3 )
+
+Risposta server numero: 64
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 65
+EFFETTUA REGISTRAZIONE COMPRATORE (Utente1, UtenteCompratore, Luigi, Bianchi, 1234567890, Utente1@example.com, Via Roma, 1, 12345, Roma, P.assword1, P.assword1, 01/01/2000 )
+
+Risposta server numero: 65
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 66
+EFFETTUA RECENSIONE (Utente24, 19, Prodotto eccellente., 2 )
+
+Risposta server numero: 66
+Non esiste una sessionID per Utente24, utente non loggato, non può essere effettuata la recensione.
+
+
+Richiesta client numero: 67
+AGGIORNA PASSWORD COMPRATORE (Utente28, P.assword28, P.assword28 )
+
+Risposta server numero: 67
+Aggiornamento password (nuova password inserita: P.assword28 ) per utente: Utente28
+
+
+Richiesta client numero: 68
+RICERCA PRODOTTO (Utente28, Prodotto28 )
+
+Risposta server numero: 68
+L utente Utente28 non è un utente compratore, perciò non può essere ricercato il prodotto.
+
+
+Richiesta client numero: 69
+RIMUOVI PRODOTTO CARRELLO (Utente24, 12 )
+
+Risposta server numero: 69
+Non esiste una sessionID per Utente24, utente non loggato, non può essere rimosotto il prodotto dal carrello.
+
+
+Richiesta client numero: 70
+ELIMINA PROFILO COMPRATORE (Utente17 )
+
+Risposta server numero: 70
+Non esiste una sessionID per Utente17, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 71
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente14, 12345678913 )
+
+Risposta server numero: 71
+Non esiste una sessionID per Utente14, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 72
+EFFETTUA REGISTRAZIONE COMPRATORE (Utente6, UtenteCompratore, Chiara, Russo, 1234567895, Utente6@example.com, Via Roma, 6, 12345, Roma, P.assword6, P.assword6, 01/01/2000 )
+
+Risposta server numero: 72
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 73
+AGGIUNGI CARTA PAGAMENTO (Utente28, 4329740035, 001 )
+
+Risposta server numero: 73
+L utente Utente28 non è un utente compratore, perciò non può essere aggiunta la carta di pagamento
+
+
+Richiesta client numero: 74
+RICERCA PRODOTTO (Utente20, Prodotto20 )
+
+Risposta server numero: 74
+Non esiste una sessionID per Utente20, utente non loggato, non può essere ricercato il prodotto
+
+
+Richiesta client numero: 75
+AGGIUNGI PRODOTTO CARRELLO (Utente13, 20 )
+
+Risposta server numero: 75
+Non esiste una sessionID per Utente13, utente non loggato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 76
+RIMUOVI PRODOTTO CARRELLO (Utente26, 28 )
+
+Risposta server numero: 76
+L utente Utente26 non è un utente compratore, perciò non può essere rimosso il prodotto dal carrello
+
+
+Richiesta client numero: 77
+VISIONA ORDINI EFFETTUATI (Utente6 )
+
+Risposta server numero: 77
+Non esiste una sessionID per Utente6, utente non loggato, non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 78
+RIMUOVI PRODOTTO LISTADESIDERI (Utente29, 29 )
+
+Risposta server numero: 78
+Non esiste una sessionID per Utente29, utente non loggato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 79
+ANNULLA ORDINE (Utente16, 14 )
+
+Risposta server numero: 79
+L utente Utente16 non è un utente compratore, perciò non può essere annullato l ordine
+
+
+Richiesta client numero: 80
+RIMUOVI PRODOTTO LISTADESIDERI (Utente13, 4 )
+
+Risposta server numero: 80
+Non esiste una sessionID per Utente13, utente non loggato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 81
+AGGIORNA PASSWORD COMPRATORE (Utente11, P.assword11, P.assword11 )
+
+Risposta server numero: 81
+Aggiornamento password (nuova password inserita: P.assword11 ) per utente: Utente11
+
+
+Richiesta client numero: 82
+VISIONA ORDINI EFFETTUATI (Utente6 )
+
+Risposta server numero: 82
+Non esiste una sessionID per Utente6, utente non loggato, non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 83
+AGGIORNA PASSWORD COMPRATORE (Utente12, P.assword12, P.assword12 )
+
+Risposta server numero: 83
+Non esiste una sessionID per Utente12, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 84
+RIMUOVI PRODOTTO LISTADESIDERI (Utente27, 24 )
+
+Risposta server numero: 84
+L utente Utente27 non è un utente compratore, perciò non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 85
+RIMUOVI PRODOTTO CARRELLO (Utente4, 5 )
+
+Risposta server numero: 85
+Non esiste una sessionID per Utente4, utente non loggato, non può essere rimosotto il prodotto dal carrello.
+
+
+Richiesta client numero: 86
+ACQUISTA PRODOTTO (Utente13, 3, Via Venezia, Venezia, 1345678 )
+
+Risposta server numero: 86
+Non esiste una sessionID per Utente13, utente non loggato, non può essere acquistato il prodotto .
+
+
+Richiesta client numero: 87
+ANNULLA ORDINE (Utente18, 13 )
+
+Risposta server numero: 87
+L utente Utente18 non è un utente compratore, perciò non può essere annullato l ordine
+
+
+Richiesta client numero: 88
+ACQUISTA PRODOTTO (Utente27, 21, Via Firenze, Firenze, 2709876 )
+
+Risposta server numero: 88
+L utente Utente27 non è un utente compratore, perciò non può essere acquistato il prodotto.
+
+
+Richiesta client numero: 89
+RIMUOVI RECENSIONE (Utente23, 29 )
+
+Risposta server numero: 89
+Non esiste una sessionID per Utente23, utente non loggato, non può essere rimossa la recensione.
+
+
+Richiesta client numero: 90
+EFFETTUA RECENSIONE (Utente14, 10, Prodotto eccellente., 4 )
+
+Risposta server numero: 90
+Non esiste una sessionID per Utente14, utente non loggato, non può essere effettuata la recensione.
+
+
+Richiesta client numero: 91
+EFFETTUA LOGOUT COMPRATORE (Utente20 )
+
+Risposta server numero: 91
+Non esiste una sessionID per Utente20, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 92
+AGGIUNGI PRODOTTO CARRELLO (Utente12, 10 )
+
+Risposta server numero: 92
+Non esiste una sessionID per Utente12, utente non loggato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 93
+AGGIORNA PASSWORD COMPRATORE (Utente19, P.assword19, P.assword19 )
+
+Risposta server numero: 93
+Non esiste Utente19 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 94
+ELIMINA PROFILO COMPRATORE (Utente16 )
+
+Risposta server numero: 94
+Eliminazione profilo utente Utente16
+
+
+Richiesta client numero: 95
+RIMUOVI PRODOTTO CARRELLO (Utente4, 24 )
+
+Risposta server numero: 95
+Non esiste una sessionID per Utente4, utente non loggato, non può essere rimosotto il prodotto dal carrello.
+
+
+Richiesta client numero: 96
+EFFETTUA REGISTRAZIONE COMPRATORE (Utente18, UtenteCompratore, Giovanni, Verdi, 12345678917, Utente18@example.com, Via Firenze, 18, 09876, Firenze, P.assword18, P.assword18, 01/01/2000 )
+
+Risposta server numero: 96
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta client numero: 97
+ANNULLA ORDINE (Utente11, 27 )
+
+Risposta server numero: 97
+L utente Utente11 non è un utente compratore, perciò non può essere annullato l ordine
+
+
+Richiesta client numero: 98
+RICERCA PRODOTTO (Utente5, Prodotto5 )
+
+Risposta server numero: 98
+Non esiste una sessionID per Utente5, utente non loggato, non può essere ricercato il prodotto
+
+
+Richiesta client numero: 99
+RIMUOVI CARTA PAGAMENTO (Utente28, 11 )
+
+Risposta server numero: 99
+Non esiste Utente28 , poichè non è stato registrato, non può essere rimossa la carta di pagamento.
+
+
+Richiesta client numero: 100
+AGGIUNGI PRODOTTO CARRELLO (Utente10, 25 )
+
+Risposta server numero: 100
+Non esiste una sessionID per Utente10, utente non loggato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 101
+EFFETTUA LOGIN COMPRATORE (Utente28, P.assword28 )
+
+Risposta server numero: 101
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 102
+RIMUOVI RECENSIONE (Utente16, 6 )
+
+Risposta server numero: 102
+Non esiste Utente16 , poichè non è stato registrato, non può essere rimossa la recensione .
+
+
+Richiesta client numero: 103
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente25, 12345678924 )
+
+Risposta server numero: 103
+Non esiste una sessionID per Utente25, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 104
+AGGIORNA RESIDENZA (Utente29, Via Roma, 29, 12345, Roma )
+
+Risposta server numero: 104
+Non esiste una sessionID per Utente29, utente non loggato, non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 105
+RIMUOVI PRODOTTO LISTADESIDERI (Utente4, 11 )
+
+Risposta server numero: 105
+Non esiste una sessionID per Utente4, utente non loggato, non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 106
+RIMUOVI PRODOTTO CARRELLO (Utente28, 17 )
+
+Risposta server numero: 106
+Non esiste Utente28 , poichè non è stato registrato, non può essere rimosso il prodotto dal carrello.
+
+
+Richiesta client numero: 107
+EFFETTUA RESO (Utente4, 21, difettoso )
+
+Risposta server numero: 107
+L utente Utente4 non è un utente compratore, non può essere effettuato il reso .
+
+
+Richiesta client numero: 108
+AGGIORNA RESIDENZA (Utente7, Via Roma, 7, 12345, Roma )
+
+Risposta server numero: 108
+L utente Utente7 non è un utente compratore, perciò non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 109
+ANNULLA ORDINE (Utente16, 20 )
+
+Risposta server numero: 109
+Non esiste Utente16 , poichè non è stato registrato, non può essere annullato l ordine .
+
+
+Richiesta client numero: 110
+EFFETTUA LOGOUT COMPRATORE (Utente24 )
+
+Risposta server numero: 110
+Non esiste una sessionID per Utente24, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta client numero: 111
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente9, 17 )
+
+Risposta server numero: 111
+Non esiste una sessionID per Utente9, utente non loggato, non può essere aggiunto il prodotto alla lista desideri.
+
+
+Richiesta client numero: 112
+EFFETTUA LOGOUT COMPRATORE (Utente18 )
+
+Risposta server numero: 112
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente18
+
+
+Richiesta client numero: 113
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente29, 23 )
+
+Risposta server numero: 113
+Non esiste una sessionID per Utente29, utente non loggato, non può essere aggiunto il prodotto alla lista desideri.
+
+
+Richiesta client numero: 114
+VISIONA ORDINI EFFETTUATI (Utente11 )
+
+Risposta server numero: 114
+L utente Utente11 non è un utente compratore, perciò non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 115
+EFFETTUA LOGIN COMPRATORE (Utente3, P.assword3 )
+
+Risposta server numero: 115
+Errore: L'utente non è stato trovato.
+
+
+Richiesta client numero: 116
+VISIONA ORDINI EFFETTUATI (Utente22 )
+
+Risposta server numero: 116
+Non esiste una sessionID per Utente22, utente non loggato, non possono essere visionati gli ordini effettuati.
+
+
+Richiesta client numero: 117
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente15, 12345678914 )
+
+Risposta server numero: 117
+Aggiornamento numero di telefono : 12345678914 per utente: Utente15
+
+
+Richiesta client numero: 118
+RIMUOVI RECENSIONE (Utente9, 12 )
+
+Risposta server numero: 118
+Non esiste una sessionID per Utente9, utente non loggato, non può essere rimossa la recensione.
+
+
+Richiesta client numero: 119
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente15, 12345678914 )
+
+Risposta server numero: 119
+Aggiornamento numero di telefono : 12345678914 per utente: Utente15
+
+
+Richiesta client numero: 120
+ACQUISTA PRODOTTO (Utente28, 26, Via Roma, Roma, 2812345 )
+
+Risposta server numero: 120
+Non esiste Utente28 , poichè non è stato registrato, non può essere acquistato il prodotto .
+
+
+Richiesta client numero: 121
+EFFETTUA RESO (Utente24, 20, cambio opinione )
+
+Risposta server numero: 121
+L utente Utente24 non è un utente compratore, non può essere effettuato il reso .
+
+
+Richiesta client numero: 122
+RICERCA PRODOTTO (Utente21, Prodotto21 )
+
+Risposta server numero: 122
+Non esiste una sessionID per Utente21, utente non loggato, non può essere ricercato il prodotto
+
+
+Richiesta client numero: 123
+EFFETTUA LOGIN COMPRATORE (Utente6, P.assword6 )
+
+Risposta server numero: 123
+Utente Utente6 è di un altra categoria, non un utente compratore, non può essere effettuato il login.
+
+
+Richiesta client numero: 124
+EFFETTUA RECENSIONE (Utente20, 19, Prodotto eccellente., 4 )
+
+Risposta server numero: 124
+Non esiste una sessionID per Utente20, utente non loggato, non può essere effettuata la recensione.
+
+
+Richiesta client numero: 125
+AGGIUNGI PRODOTTO CARRELLO (Utente12, 8 )
+
+Risposta server numero: 125
+Non esiste una sessionID per Utente12, utente non loggato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 126
+ACQUISTA PRODOTTO (Utente17, 17, Via Firenze, Firenze, 1709876 )
+
+Risposta server numero: 126
+Non esiste una sessionID per Utente17, utente non loggato, non può essere acquistato il prodotto .
+
+
+Richiesta client numero: 127
+AGGIORNA PASSWORD COMPRATORE (Utente25, P.assword25, P.assword25 )
+
+Risposta server numero: 127
+Non esiste una sessionID per Utente25, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 128
+AGGIORNA PASSWORD COMPRATORE (Utente24, P.assword24, P.assword24 )
+
+Risposta server numero: 128
+Non esiste una sessionID per Utente24, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta client numero: 129
+RIMUOVI PRODOTTO CARRELLO (Utente22, 27 )
+
+Risposta server numero: 129
+Non esiste una sessionID per Utente22, utente non loggato, non può essere rimosotto il prodotto dal carrello.
+
+
+Richiesta client numero: 130
+ELIMINA PROFILO COMPRATORE (Utente20 )
+
+Risposta server numero: 130
+Non esiste una sessionID per Utente20, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 131
+RIMUOVI PRODOTTO CARRELLO (Utente5, 0 )
+
+Risposta server numero: 131
+Non esiste una sessionID per Utente5, utente non loggato, non può essere rimosotto il prodotto dal carrello.
+
+
+Richiesta client numero: 132
+AGGIUNGI CARTA PAGAMENTO (Utente22, 0339575989, 121 )
+
+Risposta server numero: 132
+Non esiste una sessionID per Utente22, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 133
+AGGIUNGI PRODOTTO CARRELLO (Utente4, 21 )
+
+Risposta server numero: 133
+Non esiste una sessionID per Utente4, utente non loggato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 134
+EFFETTUA LOGIN COMPRATORE (Utente1, P.assword1 )
+
+Risposta server numero: 134
+Utente Utente1 è di un altra categoria, non un utente compratore, non può essere effettuato il login.
+
+
+Richiesta client numero: 135
+AGGIUNGI CARTA PAGAMENTO (Utente30, 9692359393, 222 )
+
+Risposta server numero: 135
+Non esiste una sessionID per Utente30, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 136
+AGGIORNA RESIDENZA (Utente6, Via Napoli, 6, 67890, Napoli )
+
+Risposta server numero: 136
+Non esiste una sessionID per Utente6, utente non loggato, non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 137
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente21, 12345678920 )
+
+Risposta server numero: 137
+Non esiste una sessionID per Utente21, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 138
+AGGIORNA PASSWORD COMPRATORE (Utente19, P.assword19, P.assword19 )
+
+Risposta server numero: 138
+Non esiste Utente19 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta client numero: 139
+RIMUOVI PRODOTTO LISTADESIDERI (Utente27, 20 )
+
+Risposta server numero: 139
+L utente Utente27 non è un utente compratore, perciò non può essere rimosso il prodotto dalla lista desideri.
+
+
+Richiesta client numero: 140
+RIMUOVI PRODOTTO CARRELLO (Utente10, 2 )
+
+Risposta server numero: 140
+Non esiste una sessionID per Utente10, utente non loggato, non può essere rimosotto il prodotto dal carrello.
+
+
+Richiesta client numero: 141
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente2, 1234567891 )
+
+Risposta server numero: 141
+Non esiste una sessionID per Utente2, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta client numero: 142
+ELIMINA PROFILO COMPRATORE (Utente24 )
+
+Risposta server numero: 142
+Non esiste una sessionID per Utente24, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 143
+EFFETTUA RESO (Utente28, 28, misura errata )
+
+Risposta server numero: 143
+Non esiste Utente28 , poichè non è stato registrato, non può essere effettuato il reso .
+
+
+Richiesta client numero: 144
+EFFETTUA LOGIN COMPRATORE (Utente14, P.assword14 )
+
+Risposta server numero: 144
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 145
+AGGIUNGI CARTA PAGAMENTO (Utente23, 6767337008, 021 )
+
+Risposta server numero: 145
+Non esiste una sessionID per Utente23, utente non loggato, non può essere aggiunta la carta di pagamento.
+
+
+Richiesta client numero: 146
+RIMUOVI PRODOTTO CARRELLO (Utente20, 3 )
+
+Risposta server numero: 146
+Non esiste una sessionID per Utente20, utente non loggato, non può essere rimosotto il prodotto dal carrello.
+
+
+Richiesta client numero: 147
+AGGIUNGI CARTA PAGAMENTO (Utente7, 9313182282, 002 )
+
+Risposta server numero: 147
+L utente Utente7 non è un utente compratore, perciò non può essere aggiunta la carta di pagamento
+
+
+Richiesta client numero: 148
+RIMUOVI CARTA PAGAMENTO (Utente1, 6 )
+
+Risposta server numero: 148
+Non esiste una sessionID per Utente1, utente non loggato, non può essere rimossa la carta di pagamento.
+
+
+Richiesta client numero: 149
+ANNULLA ORDINE (Utente23, 16 )
+
+Risposta server numero: 149
+Non esiste una sessionID per Utente23, utente non loggato, non può essere annullato l ordine.
+
+
+Richiesta client numero: 150
+RICERCA PRODOTTO (Utente7, Prodotto7 )
+
+Risposta server numero: 150
+L utente Utente7 non è un utente compratore, perciò non può essere ricercato il prodotto.
+
+
+Richiesta client numero: 151
+RICERCA PRODOTTO (Utente29, Prodotto29 )
+
+Risposta server numero: 151
+Non esiste una sessionID per Utente29, utente non loggato, non può essere ricercato il prodotto
+
+
+Richiesta client numero: 152
+RIMUOVI RECENSIONE (Utente29, 18 )
+
+Risposta server numero: 152
+Non esiste una sessionID per Utente29, utente non loggato, non può essere rimossa la recensione.
+
+
+Richiesta client numero: 153
+ACQUISTA PRODOTTO (Utente2, 3, Via Venezia, Venezia, 245678 )
+
+Risposta server numero: 153
+Non esiste una sessionID per Utente2, utente non loggato, non può essere acquistato il prodotto .
+
+
+Richiesta client numero: 154
+EFFETTUA RESO (Utente3, 5, misura errata )
+
+Risposta server numero: 154
+Non esiste Utente3 , poichè non è stato registrato, non può essere effettuato il reso .
+
+
+Richiesta client numero: 155
+ELIMINA PROFILO COMPRATORE (Utente30 )
+
+Risposta server numero: 155
+Non esiste una sessionID per Utente30, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta client numero: 156
+AGGIORNA NUMERO TELEFONO COMPRATORE (Utente16, 12345678915 )
+
+Risposta server numero: 156
+Non esiste Utente16 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta client numero: 157
+AGGIUNGI PRODOTTO CARRELLO (Utente9, 22 )
+
+Risposta server numero: 157
+Non esiste una sessionID per Utente9, utente non loggato, non può essere aggiunto il prodotto al carrello.
+
+
+Richiesta client numero: 158
+AGGIORNA RESIDENZA (Utente18, Via Milano, 18, 54321, Milano )
+
+Risposta server numero: 158
+Non esiste una sessionID per Utente18, utente non loggato, non può essere aggiornata la residenza.
+
+
+Richiesta client numero: 159
+EFFETTUA RECENSIONE (Utente30, 3, Prodotto eccellente., 4 )
+
+Risposta server numero: 159
+Non esiste una sessionID per Utente30, utente non loggato, non può essere effettuata la recensione.
+
+
+Richiesta client numero: 160
+RIMUOVI PRODOTTO CARRELLO (Utente11, 22 )
+
+Risposta server numero: 160
+L utente Utente11 non è un utente compratore, perciò non può essere rimosso il prodotto dal carrello
+
+
+Richiesta client numero: 161
+EFFETTUA LOGIN COMPRATORE (Utente14, P.assword14 )
+
+Risposta server numero: 161
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 162
+RICERCA PRODOTTO (Utente5, Prodotto5 )
+
+Risposta server numero: 162
+Non esiste una sessionID per Utente5, utente non loggato, non può essere ricercato il prodotto
+
+
+Richiesta client numero: 163
+RICERCA PRODOTTO (Utente3, Prodotto3 )
+
+Risposta server numero: 163
+Non esiste Utente3 , poichè non è stato registrato, non può essere ricercato il prodotto .
+
+
+Richiesta client numero: 164
+AGGIUNGI PRODOTTO LISTADESIDERI (Utente10, 26 )
+
+Risposta server numero: 164
+Non esiste una sessionID per Utente10, utente non loggato, non può essere aggiunto il prodotto alla lista desideri.
+
+
+Richiesta client numero: 165
+RIMUOVI RECENSIONE (Utente2, 12 )
+
+Risposta server numero: 165
+Non esiste una sessionID per Utente2, utente non loggato, non può essere rimossa la recensione.
+
