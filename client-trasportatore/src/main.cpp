@@ -1,10 +1,5 @@
 
 #include "main.h"
-#include <array>
-#include <string>
-#include <string.h>
-#include <fstream>
-#include <filesystem>
 
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
 // Usage: ./streams <add count> <read count> [block time, default: 1]
@@ -99,7 +94,7 @@ int main()
     printf("Creazione Streams\n");
 
 
-    /* init random number generator  */
+    // Inizializza il generatore di numeri casuali per la funzione rand() utilizzata in seguito.
     srand((unsigned)time(NULL));
 
     // Apre il file corrispondente al test da effettuare in modalità di lettura
@@ -1036,7 +1031,7 @@ int main()
     while (1)
     {
         /* sleep   */
-        micro_sleep(2000000); // 2 secondi di attesa
+        micro_sleep(5000000); // 5 secondi di attesa tra una richiesta e l'altra del trasportatore per non affollare troppo la Stream
 
         // Invio richieste al server
         send_counter++;
@@ -1854,7 +1849,6 @@ int main()
             freeReplyObject(reply);
         }
 
-        micro_sleep(5000000); // 2 secondi di attesa
 
     } // while ()
 

@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
-
 #include <iostream>
 #include <string>
 #include <cctype> // Per isupper() e isdigit()
@@ -15,6 +14,9 @@
 #include <iomanip>
 #include <ctime>
 #include <array>
+#include <string.h>
+#include <fstream>
+#include <filesystem>
 
 #include "con2redis.h"
 
