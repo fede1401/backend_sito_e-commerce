@@ -2,9 +2,7 @@
 #ifndef ORDINE_H
 #define ORDINE_H
 
-//#include "main.h"
-#include "../../shared-server/statoOrdineToString.h"
-
+#include "main.h"
 
 
 class Ordine {

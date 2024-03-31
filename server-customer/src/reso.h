@@ -3,7 +3,6 @@
 #define RESO_H
 
 #include "main.h"
-#include "../../shared-server/statoMotivazioneResoToString.h"
 
 
 class Reso

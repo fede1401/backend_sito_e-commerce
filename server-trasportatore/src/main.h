@@ -11,23 +11,17 @@
 #include <iomanip>
 #include <ctime>
 #include <array>
-#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2db/pgsql.h"
+#include <fstream>
+#include <filesystem>
+#include <string.h>
 
 
-//#include "carrello.h"
-//#include "lista_desideri.h"
-//#include "carta.h"
-//#include "ordine.h"
-//#include "reso.h"
-//#include "recensione.h"
-//#include "user.h"
-//#include "user_compratore.h"
-//#include "user_fornitore.h"
-//#include "user_trasportatore.h"
-//#include "product.h"
-//#include "spedizione.h"
-//#include "log2db.h"
-//#include "test_generator.h"
+#include "../../con2db/pgsql.h"
+#include "../../con2redis/src/con2redis.h"
+
+
+#include "../../shared-server/statoSpedizione.h"
+
 
 
 PGresult *res;
@@ -37,23 +31,6 @@ int rows, k;
 
 #define HORIZON 20  // TICKS
 
-/*
-typedef enum {COMPRAVENDITA, RICERCA, COMPRATORE_UPD_RESIDENZA, COMPR_UPD_NUMTEL, COMPR_UPD_PASSWORD, COMPR_LOGOUT,
-                    COMPR_LOGIN, COMPR_ELIMINAPROFILO, COMPR_CONTROLLA_ORDINI_EFFETTUATI,
-                    INSERT_CARRELLO, REMOVE_CARRELLO, INSERT_LISTA_DESIDERI, REMOVE_LISTA_DESIDERI, AGGIUNTA_CARTA_PAGAMENTO,
-                    EFFETTUA_RECENSIONE, RIMUOVE_RECENSIONE, EFFETTUA_RESO, ANNULLA_ORDINE,
-                    FORN_UPD_PASSWORD, FORN_LOGOUT, FORN_LOGIN, FORN_ELIMINAPROFILO, FORN_UPD_NUMTEL, FORN_INSERT_PRODOTTO, FORN_REMOVE_PRODOTTO,
-                    TRASP_UPD_PASSWORD, TRASP_LOGOUT, TRASP_LOGIN, TRASP_ELIMINAPROFILO, TRASP_UPD_NUMTEL, TRASP_AVVIA_SPED, TRASP_AVVISA_SPEDITO } server_type;
-
-
- std::vector<std::string> server_types = {
-        "COMPRAVENDITA", "RICERCA", "COMPRATORE_UPD_RESIDENZA", "COMPR_UPD_NUMTEL", "COMPR_UPD_PASSWORD", "COMPR_LOGOUT", "COMPR_LOGIN", "COMPR_ELIMINAPROFILO", 
-        "COMPR_CONTROLLA_ORDINI_EFFETTUATI", "INSERT_CARRELLO", "REMOVE_CARRELLO", "INSERT_LISTA_DESIDERI", "REMOVE_LISTA_DESIDERI", "AGGIUNTA_CARTA_PAGAMENTO",
-        "EFFETTUA_RECENSIONE", "RIMUOVE_RECENSIONE", "EFFETTUA_RESO", "ANNULLA_ORDINE",
-        "FORN_UPD_PASSWORD", "FORN_LOGOUT", "FORN_LOGIN", "FORN_ELIMINAPROFILO", "FORN_UPD_NUMTEL", "FORN_INSERT_PRODOTTO", "FORN_REMOVE_PRODOTTO", "FORN_UPD_AZIENDA"
-        "TRASP_UPD_PASSWORD", "TRASP_LOGOUT", "TRASP_LOGIN", "TRASP_ELIMINAPROFILO", "TRASP_UPD_NUMTEL", "TRASP_UPD_DITTA", "TRASP_AVVIA_SPED", "TRASP_AVVISA_SPEDITO"
-    };
-*/    
 
 enum class statoRequisito {
     Success, 
@@ -61,6 +38,23 @@ enum class statoRequisito {
     Wait
   };
 
+std::string registrazione(Con2DB db1,
+                               std::string in_nome_utente, std::string in_categoria, std::string in_nome, std::string in_cognome,
+                               std::string in_sessionID,
+                               std::string in_numero_telefono, std::string in_email,
+                               std::string in_password, std::string in_conferma_password,
+                               std::string in_dittaSped);
+
+std::string login(Con2DB db1, std::string in_nome_utente, std::string in_password, std::string in_sessionID);
+std::string aggiorna_nome_ditta_spedizione(Con2DB db1, std::string input_nome_utente, std::string nuovaDittaSpedizione);
+
+bool check_email(Con2DB db1, std::string in_email, std::string in_nome_requisito, statoRequisito in_stato_requisito, std::string in_sessionID);
+bool check_password(Con2DB db1, std::string in_password, std::string in_conferma_password, std::string in_nome_requisito, statoRequisito in_stato_requisito, std::string in_sessionID);
+bool check_nome_utente_univoco(Con2DB db1, std::string in_nome_utente, std::string in_nome_requisito, statoRequisito in_stato_requisito, std::string in_sessionID);          
+bool check_email_univoca(Con2DB db1, std::string in_email, std::string in_nome_requisito, statoRequisito in_stato_requisito, std::string in_sessionID);
+
+std::string prendi_in_carico_spedizione(Con2DB db1, std::string in_nome_utente_trasportatore);
+std::string avvisa_spedizione_consegnata(Con2DB db1, std::string in_nome_utente_trasportatore, int in_id_spedizione);
 
 void InsertToLogDB(Con2DB db1,std::string statoLog, std::string message, std::string sessionID, std::string nomeRequisito, statoRequisito statoReq);
 std::string statoRequisitoToString(statoRequisito statoReq);

@@ -3,8 +3,6 @@
 #define RECENSIONE_H
 
 #include "main.h"
-//#include "include.h"
-#include "../../shared-server/statoVotoStelleToString.h"
 
 
 class Recensione

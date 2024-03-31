@@ -1,12 +1,12 @@
-#ifndef STATOVOTOSTELLETOSTRING_H
-#define STATOVOTOSTELLETOSTRING_H
+#ifndef VOTOSTELLE_H
+#define VOTOSTELLE_H
 
 #include "../server-customer/src/main.h"
-//#include "../server-customer/src/recensione.h"
 
 
 enum class votoStelle
 {
+    NonVotato,
     Uno,
     Due,
     Tre,
@@ -58,9 +58,11 @@ enum class votoStelle
         if (in_stato == "5"){
             return votoStelle::Cinque;
         }
+        
+        return votoStelle::NonVotato;
     }
 
 
 
 
-#endif // STATOVOTOSTELLETOSTRING_H
+#endif // VOTOSTELLE_H

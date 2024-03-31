@@ -1,11 +1,5 @@
 
 #include "include.h"
-#include "/home/federico/sito_ecommerce/github/backend_sito_e-commerce/con2redis/src/con2redis.h"
-#include <string.h>
-#include "../../shared-server/generateSessionID.h"          // Migliore separazione delle responsabilità
-#include "../../shared-server/checkSessionID.h"
-#include <fstream>
-#include <filesystem>
 
 
 // cc -Wall -g -ggdb -o streams streams.c -lhiredis
@@ -187,8 +181,6 @@ int main()
         for (k = 0; k < ReadNumStreams(reply); k++)
         {
             ReadStreamName(reply, streamname, k);
-
-            int numberMessageStream = ReadStreamNumMsg(reply, k);
             
             // Scorro il numero di messaggi della Stream Redis
             for (i = 0; i < ReadStreamNumMsg(reply, k); i++)  

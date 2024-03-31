@@ -1096,7 +1096,6 @@ int main()
         // Utilizziamo degli indici random per selezionare il parametro della richiesta che effettuerà il fornitore.
         int i5 = rand() % 5;
         int i10 = rand() % 10;
-        int i100 = rand() % 100;
         int i30 = rand() % 30;
         int i2 = rand() % 2;
 

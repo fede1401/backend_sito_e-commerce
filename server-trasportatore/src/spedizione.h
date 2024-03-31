@@ -3,7 +3,6 @@
 #define SPEDIZIONE_H
 
 #include "main.h"
-#include "../../shared-server/statoSpedizioneToString.h"
 
 
 class Spedizione

@@ -1,11 +1,11 @@
-#ifndef STATOORDINETOSTRING_H
-#define STATOORDINETOSTRING_H
+#ifndef STATOORDINE_H
+#define STATOORDINE_H
 
 #include "../server-customer/src/main.h"
-//#include "../server-customer/src/ordine.h"
 
 
 enum class StatoOrdine {
+    NonOrdinato,
     InElaborazione,
     Spedito,
     Annullato
@@ -43,9 +43,11 @@ enum class StatoOrdine {
         if (in_stato == "annullato" ){
             return StatoOrdine::Annullato;
         }
+        
+        return StatoOrdine::NonOrdinato;
     }
 
 
 
 
-#endif // STATOORDINETOSTRING_H
+#endif // STATOORDINE_H

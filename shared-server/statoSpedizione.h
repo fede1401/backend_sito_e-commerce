@@ -1,12 +1,12 @@
-#ifndef STATOSPEDIZIONETOSTRING_H
-#define STATOSPEDIZIONETOSTRING_H
+#ifndef STATOSPEDIZIONE_H
+#define STATOSPEDIZIONE_H
 
 #include "../server-customer/src/main.h"
-//#include "../server-trasportatore/src/spedizione.h"
 
 
 enum class StatoSpedizione
 {
+    NonSpedito,
     InTransito,
     Consegnato
 };
@@ -36,7 +36,9 @@ enum class StatoSpedizione
         if (in_stato == "consegnato"){
             return StatoSpedizione::Consegnato;
         }
+
+        return StatoSpedizione::NonSpedito;
     }
 
 
-#endif // STATOSPEDIZIONETOSTRING_H
+#endif // STATOSPEDIZIONE_H

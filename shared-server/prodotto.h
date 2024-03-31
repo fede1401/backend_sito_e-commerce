@@ -2,10 +2,8 @@
 #ifndef PRODOTTO_H
 #define PRODOTTO_H
 
-#include "../server-customer/src/main.h"
 #include "../server-customer/src/ordine.h"
 #include "getCurrentDateAsString.h"          // Migliore separazione delle responsabilità
-//#include "statoOrdineToString.h"
 
 
 class Prodotto

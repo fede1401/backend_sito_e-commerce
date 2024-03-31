@@ -1,10 +1,11 @@
-#ifndef STATOMOTIVAZIONERESOTOSTRING_H
-#define STATOMOTIVAZIONERESOTOSTRING_H
+#ifndef MOTIVAZIONERESO_H
+#define MOTIVAZIONERESO_H
 
 #include "../server-customer/src/main.h"
 
 
 enum class motivazioneReso {
+    NonReso,
     Difettoso,
     MisuraErrata,
     NonConformeAlleAspettative,
@@ -47,8 +48,10 @@ enum class motivazioneReso {
         if (in_stato == "cambio opinione"){
             return  motivazioneReso::CambioOpinione;
         }
+
+        return motivazioneReso::NonReso;
     }
 
 
 
-#endif // STATOMOTIVAZIONERESOTOSTRING_H
+#endif // MOTIVAZIONERESO_H
