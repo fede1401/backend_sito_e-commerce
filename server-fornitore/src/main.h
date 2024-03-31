@@ -55,6 +55,15 @@ std::string aggiorna_nome_azienda_produttrice(Con2DB db1, std::string in_nome_ut
 
 std::string login(Con2DB db1, std::string in_nome_utente, std::string in_password, std::string in_sessionID);
 
+std::string logout(Con2DB db1, std::string in_nome_utente);
+
+std::string elimina_profilo(Con2DB db1, std::string in_nome_utente);
+
+std::string aggiorna_numero_telefono(Con2DB db1, std::string in_nome_utente, std::string in_nuovo_numero_telefono);
+
+std::string aggiorna_password(Con2DB db1, std::string in_nome_utente, std::string in_vecchia_password, std::string in_nuova_password);
+
+
 void InsertToLogDB(Con2DB db1,std::string statoLog, std::string message, std::string sessionID, std::string nomeRequisito, statoRequisito statoReq);
 std::string statoRequisitoToString(statoRequisito statoReq);
 

@@ -46,6 +46,15 @@ std::string registrazione(Con2DB db1,
                                std::string in_dittaSped);
 
 std::string login(Con2DB db1, std::string in_nome_utente, std::string in_password, std::string in_sessionID);
+
+std::string logout(Con2DB db1, std::string in_nome_utente);
+
+ std::string elimina_profilo(Con2DB db1, std::string in_nome_utente);
+
+std::string aggiorna_password(Con2DB db1, std::string in_nome_utente, std::string in_vecchia_password, std::string in_nuova_password);
+
+std::string aggiorna_numero_telefono(Con2DB db1, std::string in_nome_utente, std::string in_nuovo_numero_telefono);
+
 std::string aggiorna_nome_ditta_spedizione(Con2DB db1, std::string input_nome_utente, std::string nuovaDittaSpedizione);
 
 bool check_email(Con2DB db1, std::string in_email, std::string in_nome_requisito, statoRequisito in_stato_requisito, std::string in_sessionID);
