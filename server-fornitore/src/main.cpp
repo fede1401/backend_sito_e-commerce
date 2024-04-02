@@ -19,8 +19,12 @@ int main()
     redisContext *c2r;
     redisReply *reply;          // Inizializzazione risposta Redis
     redisReply *reply2;         // Inizializzazione risposta2 Redis
-    int read_counter = 0;       // Contatore delle letture effettuate
-    int send_counter = 0;       // Contatore degli invii effettuati
+    
+    int read_counter = 0;                 // Contatore delle letture effettuate
+
+    int num_richieste_fornitore = 0;      // Variabile utilizzata per enumerare le richieste del fornitore nel file corrispondente ai risultati del test.
+    int num_risposte_server = 0;          // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
+
     int block = 1000000000;     // Tempo di blocco per la lettura da stream in nanosecondi
     int pid;                    // ID del processo
     
@@ -60,9 +64,6 @@ int main()
     char nuovaAziendaProduzione[100];
     
     char outputs[100];
-
-    int num_richieste_fornitore = 0;      // Variabile utilizzata per enumerare le richieste del fornitore nel file corrispondente ai risultati del test.
-    int num_risposte_server = 0;       // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
 
     UtenteFornitore fornitore;
     Prodotto prodotto;
@@ -344,8 +345,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, outputRegistrazione.c_str());
 
-                    // Invio la risposta al fornitore
-                    send_counter++;
+                    // Invio la risposta al fornitore.
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -384,8 +384,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiornaAziendaProduttrice.c_str());
 
-                    // Invio la risposta al fornitore
-                    send_counter++;
+                    // Invio la risposta al fornitore.
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -425,8 +424,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiuntaProdottoSito.c_str());
 
-                    // Invio la risposta al fornitore
-                    send_counter++;
+                    // Invio la risposta al fornitore.
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -466,8 +464,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, rimozioneProdottoSito.c_str());
 
-                    // Invio la risposta al fornitore
-                    send_counter++;
+                    // Invio la risposta al fornitore.
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -522,8 +519,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, effettuaLogin.c_str());
 
-                    // Invio la risposta al fornitore
-                    send_counter++;
+                    // Invio la risposta al fornitore.
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
                     
@@ -562,8 +558,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, effettuaLogout.c_str());
 
-                    // Invio la risposta al fornitore
-                    send_counter++;
+                    // Invio la risposta al fornitore.
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
                     
@@ -601,8 +596,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, eliminaProfilo.c_str());
 
-                    // Invio la risposta al fornitore
-                    send_counter++;
+                    // Invio la risposta al fornitore.
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -641,8 +635,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiornaNumeroTelefono.c_str());
 
-                    // Invio la risposta al fornitore
-                    send_counter++;
+                    // Invio la risposta al fornitore.
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -681,8 +674,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiornaPassword.c_str());
 
-                    // Invio la risposta al fornitore
-                    send_counter++;
+                    // Invio la risposta al fornitore.
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 

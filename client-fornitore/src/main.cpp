@@ -18,8 +18,11 @@ int main()
 
     redisContext *c2r;
     redisReply *reply;      // Inizializzazione risposta Redis
+    
     int read_counter = 0;   // Contatore delle letture effettuate
-    int send_counter = 0;   // Contatore degli invii effettuati
+    int num_richieste_fornitore = 0; // Variabile utilizzata per enumerare le richieste del fornitore nel file corrispondente ai risultati del test.
+    int num_risposte_server = 0;     // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
+
     int block = 1000000000; // Tempo di blocco per la lettura da stream in nanosecondi
     int pid;                // ID del processo
     
@@ -45,8 +48,6 @@ int main()
     char key10[100];
     char value10[100];
 
-    int num_richieste_fornitore = 0; // Variabile utilizzata per enumerare le richieste del fornitore nel file corrispondente ai risultati del test.
-    int num_risposte_server = 0;     // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
 
     char streamname[100]; // Buffer per il nome dello stream Redis
     char msgid[100];      // Buffer per l'ID del messaggio Redis
@@ -101,7 +102,7 @@ int main()
     // Apre il file corrispondente al test da effettuare in modalità di lettura
     // test_sessioni_gestioneprofilo
     // gestione_prodotti_sito
-    std::ifstream file("../test/test_sessioni_gestioneprofilo.txt");
+    std::ifstream file("../test/gestione_prodotti_sito.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
@@ -1015,6 +1016,9 @@ int main()
 
     // Esecuzione test randomici.
 
+    #if (DEBUG < 0)
+
+
     std::string azioniFornitore[9] = {"EFFETTUA REGISTRAZIONE FORNITORE", "EFFETTUA LOGIN FORNITORE", "AGGIORNA NUMERO TELEFONO FORNITORE",
                                       "AGGIORNA PASSWORD FORNITORE", "AGGIORNA NOME AZIENDAPRODUZIONE", "AGGIUNGI PRODOTTO SITO", "RIMUOVI PRODOTTO SITO", "EFFETTUA LOGOUT FORNITORE", "ELIMINA PROFILO FORNITORE"};
 
@@ -1078,16 +1082,11 @@ int main()
 
     std::string codiceProdotto = "";
 
-    // #if (DEBUG < 0)
-
     // Test randomici
     while (1)
     {
         /* sleep   */
         micro_sleep(5000000); // 5 secondi di attesa tra una richiesta e l'altra del trasportatore per non affollare troppo la Stream
-
-        // Invio richieste al server
-        send_counter++;
 
         // Randomicamente scegliamo l'azione che il fornitore effettuerà:
         int i9 = rand() % 9;
@@ -1925,7 +1924,7 @@ int main()
 
     } // while ()
 
-    // #endif
+    #endif
 
     outputFile.close(); // Chiudi il file
 

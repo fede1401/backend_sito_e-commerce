@@ -19,8 +19,12 @@ int main()
     redisContext *c2r;
     redisReply *reply;          // Inizializzazione risposta Redis
     redisReply *reply2;         // Inizializzazione risposta2 Redis
+
     int read_counter = 0;       // Contatore delle letture effettuate
-    int send_counter = 0;       // Contatore degli invii effettuati
+
+    int num_richieste_client = 0;      // Variabile utilizzata per enumerare le richieste del client nel file corrispondente ai risultati del test.
+    int num_risposte_server = 0;       // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
+    
     int block = 1000000000;     // Tempo di blocco per la lettura da stream in nanosecondi
     int pid;                    // ID del processo
     
@@ -83,8 +87,6 @@ int main()
 
     char outputs[100];
 
-    int num_richieste_client = 0;      // Variabile utilizzata per enumerare le richieste del client nel file corrispondente ai risultati del test.
-    int num_risposte_server = 0;       // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
 
     UtenteCompratore compratore;
     Prodotto prodotto;
@@ -461,7 +463,6 @@ int main()
 
 
                     // Invio la risposta al client.                    
-                    send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -519,7 +520,6 @@ int main()
                     strcpy(outputs, outputLogin.c_str());
 
                     // Invio la risposta al client.      
-                    send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -558,7 +558,6 @@ int main()
                     strcpy(outputs, outputLogout.c_str());
 
                     // Invio la risposta al client. 
-                    send_counter++;
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -596,8 +595,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, eliminazioneProfilo.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
                     
@@ -637,8 +635,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiornamentoNumeroTelefono.c_str());   
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
                     
@@ -677,8 +674,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiornamentoPassword.c_str());  
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -717,8 +713,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiornamentoResidenza.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -757,8 +752,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiuntaCartaPagamento.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -796,8 +790,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, rimozioneCartaPagamento.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -837,8 +830,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiuntaProdottoCarrello.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -876,8 +868,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, rimozioneProdottoCarrello.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -915,8 +906,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, aggiuntaProdottoListaDesideri.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -954,8 +944,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, rimozioneProdottoListaDesideri.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -995,8 +984,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, acquistoProdotto.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -1034,8 +1022,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, ricercaProdotto.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -1074,8 +1061,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, visionaOrdiniEffettuati.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
                     
@@ -1113,8 +1099,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, annullaOrdine.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -1153,8 +1138,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, effettuaReso.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -1193,8 +1177,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, effettuaRecensione.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
@@ -1233,8 +1216,7 @@ int main()
                     // Assegno alla variabile outputs la risposta dell'operazione.
                     strcpy(outputs, rimuoviRecensione.c_str());
 
-                    // Invio la risposta al client.
-                    send_counter++;
+                    // Invio la risposta al client. 
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 

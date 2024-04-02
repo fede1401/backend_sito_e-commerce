@@ -18,8 +18,11 @@ int main()
 
     redisContext *c2r;
     redisReply *reply;      // Inizializzazione risposta Redis
+
     int read_counter = 0;   // Contatore delle letture effettuate
-    int send_counter = 0;   // Contatore degli invii effettuati
+    int num_richieste_client = 0; // Variabile utilizzata per enumerare le richieste del client nel file corrispondente ai risultati del test.
+    int num_risposte_server = 0;  // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
+    
     int block = 1000000000; // Tempo di blocco per la lettura da stream in nanosecondi
     int pid;                // ID del processo
     
@@ -53,8 +56,6 @@ int main()
     char key14[100];
     char value14[100];
 
-    int num_richieste_client = 0; // Variabile utilizzata per enumerare le richieste del client nel file corrispondente ai risultati del test.
-    int num_risposte_server = 0;  // Variabile utilizzata per enumerare le risposte nel file corrispondente ai risultati del test.
 
     char streamname[100]; // Buffer per il nome dello stream Redis
     char msgid[100];      // Buffer per l'ID del messaggio Redis
@@ -111,7 +112,7 @@ int main()
     // gestione_acquisiti
     // test_sessioni_gestioneprofilo
     // test_post_acquisto.txt
-    std::ifstream file("../test/test_sessioni_gestioneprofilo.txt");
+    std::ifstream file("../test/test_post_acquisto.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
@@ -2047,6 +2048,8 @@ int main()
 
     // Esecuzione test randomici:
 
+    #if (DEBUG < 0)
+
     std::string azioniCompratore[20] = {"EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGOUT COMPRATORE", "ELIMINA PROFILO COMPRATORE",
                                         "AGGIORNA NUMERO TELEFONO COMPRATORE", "AGGIORNA PASSWORD COMPRATORE", "AGGIORNA RESIDENZA", "AGGIUNGI CARTA PAGAMENTO",
                                         "RIMUOVI CARTA PAGAMENTO", "AGGIUNGI PRODOTTO CARRELLO", "AGGIUNGI PRODOTTO LISTADESIDERI", "RIMUOVI PRODOTTO CARRELLO", "RIMUOVI PRODOTTO LISTADESIDERI",
@@ -2170,15 +2173,11 @@ int main()
         std::string idCarta = "";
         std::string idRecensione="";
 
-        // #if (DEBUG < 0)
 
     while (1)
     {
             /* sleep   */
             micro_sleep(5000000); // 5 secondi di attesa tra una richiesta e l'altra del trasportatore per non affollare troppo la Stream
-
-            // Invio richieste al server
-            send_counter++;
 
             // Randomicamente scegliamo l'azione che il client effettuerà:
             int i20 = rand() % 20;
@@ -4007,7 +4006,7 @@ int main()
 
     } // while ()
 
-    // #endif
+     #endif
 
     outputFile.close(); // Chiudi il file
 
