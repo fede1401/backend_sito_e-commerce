@@ -219,6 +219,25 @@ public:
         }
 
 
+        // Verifico che l'id dell'ordine esista nel database:
+        sprintf(sqlcmd, "SELECT * FROM Ordine WHERE idOrdine = '%d'",  in_id_ordine);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è < 1, allora non esiste l'ordine.
+        if (rows < 1){
+            PQclear(res);
+
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste ordine con id : " + std::to_string(in_id_ordine);
+            InsertToLogDB(db1, "ERROR", messageLog , sessionID, nomeRequisito, statoReq);
+                    
+            result = messageLog;
+            return result;
+        }
+        PQclear(res);
+
+
         // Recupero del nome dell'utente compratore che ha effettuato l'ordine tramite l'id dell'ordine:
         sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Ordine WHERE idOrdine = '%d'", in_id_ordine);
         res = db1.ExecSQLtuples(sqlcmd);

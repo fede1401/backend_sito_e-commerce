@@ -104,6 +104,27 @@ public:
             return result;
         }
 
+
+        // Verifico che l'id dell'ordine esista nel database:
+        sprintf(sqlcmd, "SELECT * FROM Ordine WHERE idOrdine = '%d'",  in_id_ordine);
+        res = db1.ExecSQLtuples(sqlcmd);
+        rows = PQntuples(res);
+        // Se il numero di righe del risultato della query è < 1, allora non esiste l'ordine.
+        if (rows < 1){
+            PQclear(res);
+
+            // Log dell'errore e uscita dalla funzione
+            statoReq = statoRequisito::NotSuccess;
+            messageLog = "Non esiste ordine con id : " + std::to_string(in_id_ordine);
+            InsertToLogDB(db1, "ERROR", messageLog , sessionID, nomeRequisito, statoReq);
+                    
+            result = messageLog;
+            return result;
+        }
+        PQclear(res);
+
+
+
         // Verifico che l'utente non abbia già effettuato un reso per lo stesso ordine.
         sprintf(sqlcmd, "SELECT * FROM Reso WHERE nome_utente_compratore = '%s' AND idOrdine = '%d'", in_nome_utente_compratore.c_str(), in_id_ordine);
         res = db1.ExecSQLtuples(sqlcmd);
@@ -218,12 +239,9 @@ public:
         // Se il numero delle righe del risultato delle query è 0, allora l'ordine non è stato trovato.
         if (rows == 0)
         {
-
-            std::cout << "L'ordine non è stato trovato!" << std::endl;
-
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Ordine con codice " + std::to_string(in_id_ordine) + " non trovato";
+            messageLog = "Ordine con codice " + std::to_string(in_id_ordine) + " non è stato ancora spedito (si trova in fase di elaborazione).";
             InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
            
             result = messageLog;

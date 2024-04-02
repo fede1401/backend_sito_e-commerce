@@ -3,20 +3,13 @@ utente1
 Fbefbifno2ifno2!.
 
 
-# Recensione su ordine non consegnato.
+# Recensione su ordine tra cui uno non spedito e uno non consegnato.
+
 EFFETTUA RECENSIONE
 utente1
 1
 Ottimo prodotto con id ordine 1!
 5
-
-
-EFFETTUA RECENSIONE
-utente1
-3
-Ottimo prodotto con id ordine 3!
-5
-
 
 EFFETTUA RECENSIONE
 utente1
@@ -24,6 +17,11 @@ utente1
 Ottimo prodotto con id ordine 2!
 5
 
+EFFETTUA RECENSIONE
+utente1
+3
+Ottimo prodotto con id ordine 3!
+5
 
 EFFETTUA RECENSIONE
 utente1
@@ -32,29 +30,41 @@ Ottimo prodotto con id ordine 4!
 5
 
 
+# Recensione con id ordine non esistente.
+EFFETTUA RECENSIONE
+utente1
+100
+Ottimo prodotto con id ordine 4!
+5
+
 
 RIMUOVI RECENSIONE
 utente1
 2
 
-
-EFFETTUA RESO
+# Rimozione recensione non esistente.
+RIMUOVI RECENSIONE
 utente1
-3
-difettoso
+5
 
 
-EFFETTUA RESO
-utente1
-2
-difettoso
 
+# Reso su ordine tra cui uno non spedito e uno non consegnato.
 
 EFFETTUA RESO
 utente1
 1
 difettoso
 
+EFFETTUA RESO
+utente1
+2
+difettoso
+
+EFFETTUA RESO
+utente1
+3
+difettoso
 
 EFFETTUA RESO
 utente1
@@ -62,6 +72,16 @@ utente1
 difettoso
 
 
+# Reso con id ordine non esistente
+EFFETTUA RESO
+utente1
+100
+difettoso
+
+
+
+# Annullamento ordini tra cui uno non spedito e uno non consegnato.
+ 
 ANNULLA ORDINE
 utente1
 1
@@ -74,6 +94,11 @@ ANNULLA ORDINE
 utente1
 3
 
+ANNULLA ORDINE
+utente1
+4
+
+# Annullamento ordine con id non esistente.
 ANNULLA ORDINE
 utente1
 4

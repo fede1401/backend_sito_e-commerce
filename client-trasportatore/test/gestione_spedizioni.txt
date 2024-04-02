@@ -48,6 +48,24 @@ Fbefbifno2ifno2!.
 DHL
 
 
+#Registrazione a buon fine.
+EFFETTUA REGISTRAZIONE TRASPORTATORE
+utente11
+UtenteTrasportatore
+Utente
+Undici
+3333333333
+utente.undici@gmail.com
+Fbefbifno2ifno2!.
+Fbefbifno2ifno2!.
+DHL
+
+
+EFFETTUA LOGOUT TRASPORTATORE
+utente11
+
+
+
 PRENDI IN CARICO SPEDIZIONE
 utente7
 
@@ -57,55 +75,55 @@ utente8
 PRENDI IN CARICO SPEDIZIONE
 utente9
 
+# Presa in carico spedizione di un utente non loggato
+PRENDI IN CARICO SPEDIZIONE
+utente11
+
+
 # Rimane un prodotto non preso in carico, cioè in elaborazione e che può essere annullato.
+# Utente7 avrà id spedizione 1 poichè è il primo che ha preso in carico la spedizione
+# Utente8 avrà id spedizione 2 poichè è il secondo che ha preso in carico la spedizione
 
 
+# Avvisa spedizione con id della spedizione dell'utente stesso
 AVVISA SPEDIZIONE EFFETTUATA
 utente7
 1
 
+# Avvisa spedizione con id della spedizione non proprio
 AVVISA SPEDIZIONE EFFETTUATA
 utente7
 2
 
+# Avvisa spedizione con id della spedizione non proprio
 AVVISA SPEDIZIONE EFFETTUATA
 utente7
 3
 
-AVVISA SPEDIZIONE EFFETTUATA
-utente7
-4
 
-
-
+# Avvisa spedizione con id della spedizione non proprio
 AVVISA SPEDIZIONE EFFETTUATA
 utente8
 1
 
+# Avvisa spedizione con id della spedizione dell'utente stesso
 AVVISA SPEDIZIONE EFFETTUATA
 utente8
 2
 
+# Avvisa spedizione con id della spedizione non proprio
 AVVISA SPEDIZIONE EFFETTUATA
 utente8
 3
 
-AVVISA SPEDIZIONE EFFETTUATA
-utente8
-4
 
 # Avviso spedizione non esistente
 AVVISA SPEDIZIONE EFFETTUATA
 utente7
 100
 
-# Avviso spedizione da parte di un utente non loggato
-# AVVISA SPEDIZIONE EFFETTUATA
-# utent11
-# 1
 
-# ELIMINA PROFILO TRASPORTATORE
-# utente7
-
-# ELIMINA PROFILO TRASPORTATORE
-# utent11
+# Avvisa spedizione con utente non loggato
+AVVISA SPEDIZIONE EFFETTUATA
+utente11
+3
