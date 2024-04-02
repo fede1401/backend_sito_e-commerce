@@ -195,7 +195,7 @@ int main()
         //micro_sleep(7000000); // 7 secondi di attesa necessari per far sì che il client mandi tutte le richieste
         
         printf("\n----------------------------------------------------------------------------------\n");
-        printf("Lettura dei messaggi sulla Streams corrispondente alle richieste del client. \n ");
+        printf("Lettura dei messaggi sulla Streams corrispondente alle richieste del client compratore. \n ");
 
         // Effettuo un comando di lettura dei messaggi sulla Stream di lettura READ_STREAM_CUSTOMER corrispondenti alle richieste del client compratore.
         // Imposto COUNT a -1 per leggere tutti i messaggi disponibili nello stream
@@ -431,7 +431,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << categoriaUtente << ", " << nome << ", " << cognome << ", " << numeroTelefono
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << categoriaUtente << ", " << nome << ", " << cognome << ", " << numeroTelefono
                             << ", " << email << ", " << viaResidenza << ", " << numeroCivico << ", " << cap  << ", " << cittàResidenza  << ", " << password  << ", " << confermaPassword << ", " << dataCompleanno << " )\n" << std::endl;
                     
 
@@ -474,7 +474,7 @@ int main()
                     outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Effettuo un comando di scrittura relativo all'elaborazione del server in risposta alla registrazione dell'utente compratore.
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_CUSTOMER, key, value);
@@ -495,7 +495,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << password << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << password << " )\n" << std::endl;
                             
                     // Genero il sessionID
                     std::string sessionID = generateSessionID();
@@ -529,7 +529,7 @@ int main()
                     // Scrivo nel file la risposta del server.
                     outputFile << "Risposta server numero: " << num_risposte_server << "\n" <<  outputs << "\n" << std::endl;
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Effettuo un comando di scrittura relativo all'elaborazione del server in risposta al login dell'utente compratore.
                     reply2 = RedisCommand(c2r, "XADD %s * %s %s", WRITE_STREAM_CUSTOMER, key, value);
@@ -549,7 +549,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << " )\n" << std::endl;
 
                     // Effettuo il logout dell'utente compratore e ottengo la risposta.
                     std::string outputLogout = compratore.logout(db1, nome_utente_compratore);
@@ -561,7 +561,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -588,7 +588,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << " )\n" << std::endl;
                     
                     std::string eliminazioneProfilo = compratore.elimina_profilo(db1, nome_utente_compratore);
 
@@ -599,7 +599,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
                     
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -628,7 +628,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << nuovoNumeroTelefono << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << nuovoNumeroTelefono << " )\n" << std::endl;
                             
                     std::string aggiornamentoNumeroTelefono = compratore.aggiorna_numero_telefono(db1, nome_utente_compratore, nuovoNumeroTelefono);
 
@@ -639,7 +639,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
                     
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -667,7 +667,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << vecchiaPassw << ", " << nuovaPassw << " )\n" << std::endl;
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << vecchiaPassw << ", " << nuovaPassw << " )\n" << std::endl;
 
                     std::string aggiornamentoPassword =  compratore.aggiorna_password(db1, nome_utente_compratore ,vecchiaPassw, nuovaPassw);
 
@@ -678,7 +678,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);                    
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);                    
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -706,7 +706,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << nuovaViaResidenza << ", " << nuovoNumCiv << ", " << nuovoCAP << ", " << nuovaCittaResidenza << " )\n" << std::endl;   
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << nuovaViaResidenza << ", " << nuovoNumCiv << ", " << nuovoCAP << ", " << nuovaCittaResidenza << " )\n" << std::endl;   
 
                     std::string aggiornamentoResidenza = compratore.aggiorna_residenza(db1, nome_utente_compratore, nuovaViaResidenza, nuovoNumCiv, nuovoCAP, nuovaCittaResidenza);
 
@@ -717,7 +717,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
                 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -745,7 +745,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << numeroCartaPagamento << ", " << cvvCartaPagamento << " )\n" << std::endl;   
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << numeroCartaPagamento << ", " << cvvCartaPagamento << " )\n" << std::endl;   
 
                     std::string aggiuntaCartaPagamento = carta.aggiungi_carta_pagamento(db1, nome_utente_compratore, numeroCartaPagamento, cvvCartaPagamento);
 
@@ -756,7 +756,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -783,7 +783,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << idCarta  << " )\n" << std::endl;   
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << idCarta  << " )\n" << std::endl;   
 
                     std::string rimozioneCartaPagamento = carta.rimuovi_carta_pagamento(db1, nome_utente_compratore, idCarta);
 
@@ -795,7 +795,7 @@ int main()
                     sprintf(value, "%s", outputs);
 
                     
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -823,7 +823,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << codiceProdotto << " )\n" << std::endl;   
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << codiceProdotto << " )\n" << std::endl;   
 
                     std::string aggiuntaProdottoCarrello = carrello.aggiungi_prodotto_carrello(db1, nome_utente_compratore, codiceProdotto );
 
@@ -834,7 +834,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -861,7 +861,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << codiceProdotto << " )\n" << std::endl; 
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << codiceProdotto << " )\n" << std::endl; 
 
                     std::string rimozioneProdottoCarrello = carrello.rimuovi_prodotto_carrello(db1, nome_utente_compratore, codiceProdotto);
 
@@ -872,7 +872,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -899,7 +899,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << codiceProdotto << " )\n" << std::endl; 
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << codiceProdotto << " )\n" << std::endl; 
 
                     std::string aggiuntaProdottoListaDesideri = listadesideri.aggiungi_prodotto_lista_desideri(db1, nome_utente_compratore, codiceProdotto);
 
@@ -910,7 +910,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -937,7 +937,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << codiceProdotto << " )\n" << std::endl; 
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << codiceProdotto << " )\n" << std::endl; 
 
                     std::string rimozioneProdottoListaDesideri = listadesideri.rimuovi_prodotto_lista_desideri(db1, nome_utente_compratore, codiceProdotto);
 
@@ -948,7 +948,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -976,7 +976,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << codiceProdotto << ", " << via_spedizione << ", " << città_spedizione << ", " << numero_civico_spedizione <<
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << codiceProdotto << ", " << via_spedizione << ", " << città_spedizione << ", " << numero_civico_spedizione <<
                             CAP_spedizione << " )\n" << std::endl;   
 
                     std::string acquistoProdotto = prodotto.acquistaProdotto(db1, nome_utente_compratore, codiceProdotto, via_spedizione, città_spedizione, numero_civico_spedizione, CAP_spedizione);
@@ -988,7 +988,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -1015,7 +1015,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << nomeProdotto << " )\n" << std::endl;   
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << nomeProdotto << " )\n" << std::endl;   
 
                     std::string ricercaProdotto = prodotto.ricerca_mostra_Prodotto(db1, nome_utente_compratore, nomeProdotto);
 
@@ -1026,7 +1026,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);           
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);           
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -1054,7 +1054,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << " )\n" << std::endl;  
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << " )\n" << std::endl;  
 
                     std::string visionaOrdiniEffettuati = ordine.visione_ordini_effettuati(db1, nome_utente_compratore);
 
@@ -1065,7 +1065,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
                     
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -1092,7 +1092,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << idOrdine << " )\n" << std::endl;  
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << idOrdine << " )\n" << std::endl;  
 
                     std::string annullaOrdine = ordine.annulla_ordine(db1, nome_utente_compratore, idOrdine);
 
@@ -1103,7 +1103,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -1130,7 +1130,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << idOrdine << ", " << motivazione_reso_str << " )\n" << std::endl;   
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << idOrdine << ", " << motivazione_reso_str << " )\n" << std::endl;   
 
                     motivazioneReso motivazione_reso_enum = stringToStatoMotivazioneReso( motivazione_reso_str);
                     std::string effettuaReso = reso.effettua_reso(db1,nome_utente_compratore, idOrdine, motivazione_reso_enum);
@@ -1142,7 +1142,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -1169,7 +1169,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << idOrdine << ", " << descrizioneRecensione << ", " << voto_stelle_str << " )\n" << std::endl;   
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << idOrdine << ", " << descrizioneRecensione << ", " << voto_stelle_str << " )\n" << std::endl;   
 
                     votoStelle voto_stelle_enum = stringToVotoStelle(voto_stelle_str);
                     std::string effettuaRecensione = recensione.effettua_recensione(db1, nome_utente_compratore, idOrdine, descrizioneRecensione, voto_stelle_enum);
@@ -1181,7 +1181,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;
@@ -1209,7 +1209,7 @@ int main()
                     num_richieste_client++;
                     
                     // Scrive nel file
-                    outputFile << "\nRichiesta client numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << idRecensione << " )\n" << std::endl;   
+                    outputFile << "\nRichiesta client compratore numero: " << num_richieste_client << "\n" <<  action << " (" << nome_utente_compratore << ", " << idRecensione << " )\n" << std::endl;   
 
                     std::string rimuoviRecensione =  recensione.rimuovi_recensione(db1, nome_utente_compratore, idRecensione);
 
@@ -1220,7 +1220,7 @@ int main()
                     sprintf(key, "Result");
                     sprintf(value, "%s", outputs);
 
-                    printf("\nElaborazione della richiesta del client dal server con risultato: %s\n", outputs);
+                    printf("\nElaborazione della richiesta del client compratore dal server con risultato: %s\n", outputs);
 
                     // Incrementiamo il valore della risposta del server che verrà scritta nel file di risultato dei test.
                     num_risposte_server++;

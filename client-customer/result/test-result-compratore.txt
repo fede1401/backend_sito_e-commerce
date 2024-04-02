@@ -171,97 +171,104 @@ Richiesta client numero: 25
 RIMUOVI CARTA PAGAMENTO ( utente3, 1 )
 
 Risposta server numero: 25
-Eliminazione carta di pagamento 1 dell utente compratore utente3
+Utente che sta cercando di rimuovere la carta ( utente3) non corrisponde al proprierario della carta che è ( utente1).
 
 
 Richiesta client numero: 26
-RIMUOVI CARTA PAGAMENTO ( utente3, 4 )
+RIMUOVI CARTA PAGAMENTO ( utente1, 1 )
 
 Risposta server numero: 26
-Carta con id 4 non trovata
+Eliminazione carta di pagamento 1 dell utente compratore utente1
 
 
 Richiesta client numero: 27
-RIMUOVI CARTA PAGAMENTO ( utente4, 1 )
+RIMUOVI CARTA PAGAMENTO ( utente3, 4 )
 
 Risposta server numero: 27
-Non esiste utente4 , poichè non è stato registrato, non può essere rimossa la carta di pagamento.
+Carta con id 4 non trovata
 
 
 Richiesta client numero: 28
-AGGIORNA NUMERO TELEFONO COMPRATORE ( utente1, 131212212 )
+RIMUOVI CARTA PAGAMENTO ( utente4, 1 )
 
 Risposta server numero: 28
-Aggiornamento numero di telefono : 131212212 per utente: utente1
+Non esiste utente4 , poichè non è stato registrato, non può essere rimossa la carta di pagamento.
 
 
 Richiesta client numero: 29
-AGGIORNA NUMERO TELEFONO COMPRATORE ( utente4, 131212212 )
+AGGIORNA NUMERO TELEFONO COMPRATORE ( utente1, 131212212 )
 
 Risposta server numero: 29
-Non esiste utente4 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+Aggiornamento numero di telefono : 131212212 per utente: utente1
 
 
 Richiesta client numero: 30
-AGGIORNA NUMERO TELEFONO COMPRATORE ( utente2, 131212212 )
+AGGIORNA NUMERO TELEFONO COMPRATORE ( utente4, 131212212 )
 
 Risposta server numero: 30
-Non esiste una sessionID per utente2, utente non loggato, non può essere aggiornato il numero di telefono
+Non esiste utente4 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
 
 
 Richiesta client numero: 31
-AGGIORNA PASSWORD COMPRATORE ( utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+AGGIORNA NUMERO TELEFONO COMPRATORE ( utente2, 131212212 )
 
 Risposta server numero: 31
-Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente1
+Non esiste una sessionID per utente2, utente non loggato, non può essere aggiornato il numero di telefono
 
 
 Richiesta client numero: 32
-AGGIORNA PASSWORD COMPRATORE ( utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+AGGIORNA PASSWORD COMPRATORE ( utente1, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
 
 Risposta server numero: 32
-Non esiste utente4 , poichè non è stato registrato, non si può aggiornare la password .
+Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente1
 
 
 Richiesta client numero: 33
-ELIMINA PROFILO COMPRATORE ( utente1 )
+AGGIORNA PASSWORD COMPRATORE ( utente4, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
 
 Risposta server numero: 33
-Eliminazione profilo utente utente1
+Non esiste utente4 , poichè non è stato registrato, non si può aggiornare la password .
 
 
 Richiesta client numero: 34
-ELIMINA PROFILO COMPRATORE ( utente2 )
+ELIMINA PROFILO COMPRATORE ( utente1 )
 
 Risposta server numero: 34
-Non esiste una sessionID per utente2, utente non loggato, non si può eliminare il profilo .
+Eliminazione profilo utente utente1
 
 
 Richiesta client numero: 35
-ELIMINA PROFILO COMPRATORE ( utente3 )
+ELIMINA PROFILO COMPRATORE ( utente2 )
 
 Risposta server numero: 35
-Eliminazione profilo utente utente3
+Non esiste una sessionID per utente2, utente non loggato, non si può eliminare il profilo .
 
 
 Richiesta client numero: 36
-ELIMINA PROFILO COMPRATORE ( utente4 )
+ELIMINA PROFILO COMPRATORE ( utente3 )
 
 Risposta server numero: 36
-Non esiste utente4 , poichè non è stato registrato, non si può eliminare il profilo .
+Eliminazione profilo utente utente3
 
 
 Richiesta client numero: 37
-EFFETTUA LOGIN COMPRATORE ( utente2, Fbefbifno2ifno2!. )
+ELIMINA PROFILO COMPRATORE ( utente4 )
 
 Risposta server numero: 37
-Login utente compratore avvenuto con successo
+Non esiste utente4 , poichè non è stato registrato, non si può eliminare il profilo .
 
 
 Richiesta client numero: 38
-ELIMINA PROFILO COMPRATORE ( utente2 )
+EFFETTUA LOGIN COMPRATORE ( utente2, Fbefbifno2ifno2!. )
 
 Risposta server numero: 38
+Login utente compratore avvenuto con successo
+
+
+Richiesta client numero: 39
+ELIMINA PROFILO COMPRATORE ( utente2 )
+
+Risposta server numero: 39
 Eliminazione profilo utente utente2
 
 
@@ -490,17 +497,17 @@ Login utente compratore avvenuto con successo
 
 
 Richiesta client numero: 2
-EFFETTUA RECENSIONE ( utente1, 1, Ottimo prodotto con id ordine 1!, Cinque )
+EFFETTUA RECENSIONE ( utente1, 1, Ottimo prodotto con id ordine 1!, 5 )
 
 Risposta server numero: 2
-Ordine con codice 1 spedito, ma non arrivato, perciò non può essere effettuata la recensione
+Effettuata recensione compratore utente1
 
 
 Richiesta client numero: 3
 EFFETTUA RECENSIONE ( utente1, 3, Ottimo prodotto con id ordine 3!, 5 )
 
 Risposta server numero: 3
-Effettuata recensione compratore utente1
+Ordine con codice 3 non trovato
 
 
 Richiesta client numero: 4
@@ -514,7 +521,7 @@ Richiesta client numero: 5
 EFFETTUA RECENSIONE ( utente1, 4, Ottimo prodotto con id ordine 4!, 5 )
 
 Risposta server numero: 5
-Ordine con codice 4 non trovato
+Ordine con codice 4 spedito, ma non arrivato, perciò non può essere effettuata la recensione
 
 
 Richiesta client numero: 6
@@ -528,7 +535,7 @@ Richiesta client numero: 7
 EFFETTUA RESO ( utente1, 3, difettoso )
 
 Risposta server numero: 7
-Effettuata reso del prodotto da utente1
+Ordine con codice 3 non trovato
 
 
 Richiesta client numero: 8
@@ -542,14 +549,14 @@ Richiesta client numero: 9
 EFFETTUA RESO ( utente1, 1, difettoso )
 
 Risposta server numero: 9
-Ordine con codice 1 spedito, ma non arrivato, perciò non può essere effettuato il reso
+Effettuata reso del prodotto da utente1
 
 
 Richiesta client numero: 10
 EFFETTUA RESO ( utente1, 4, difettoso )
 
 Risposta server numero: 10
-Ordine con codice 4 non trovato
+Ordine con codice 4 spedito, ma non arrivato, perciò non può essere effettuato il reso
 
 
 Richiesta client numero: 11
@@ -570,12 +577,12 @@ Richiesta client numero: 13
 ANNULLA ORDINE ( utente1, 3 )
 
 Risposta server numero: 13
-Ordine con codice 3 non annullabile perchè già spedito o già annullato. 
+Ordine con codice 3 annullato da parte dell utente Compratore utente1
 
 
 Richiesta client numero: 14
 ANNULLA ORDINE ( utente1, 4 )
 
 Risposta server numero: 14
-Ordine con codice 4 annullato da parte dell utente Compratore utente1
+Ordine con codice 4 non annullabile perchè già spedito o già annullato. 
 

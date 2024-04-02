@@ -98,8 +98,8 @@ int main()
     srand((unsigned)time(NULL));
 
     // Apre il file corrispondente al test da effettuare in modalità di lettura
-    // test_sessioni_gestioneprofilo
-    // gestione_spedizioni
+    // 1: test_sessioni_gestioneprofilo
+    // 2: gestione_spedizioni
     std::ifstream file("../test/gestione_spedizioni.txt");
     if (!file.is_open())
     {

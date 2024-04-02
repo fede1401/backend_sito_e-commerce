@@ -8,7 +8,7 @@ EFFETTUA RECENSIONE
 utente1
 1
 Ottimo prodotto con id ordine 1!
-Cinque
+5
 
 
 EFFETTUA RECENSIONE

@@ -109,9 +109,9 @@ int main()
 
 
     // Apre il file in modalità di lettura corrispondente al test da effettuare.
-    // gestione_acquisiti
-    // test_sessioni_gestioneprofilo
-    // test_post_acquisto.txt
+    // 1: test_sessioni_gestioneprofilo
+    // 2: gestione_acquisti
+    // 3: test_post_acquisto
     std::ifstream file("../test/test_post_acquisto.txt");
     if (!file.is_open())
     {

@@ -247,9 +247,13 @@ utente4
 121131322323
 999
 
-
+# Rimozione carta di pagamento di un utente3 che non ha la carta di pagamento con id:1.
 RIMUOVI CARTA PAGAMENTO
 utente3
+1
+
+RIMUOVI CARTA PAGAMENTO
+utente1
 1
 
 # Rimuovi carta id non esistente

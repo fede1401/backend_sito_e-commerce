@@ -290,21 +290,21 @@ Richiesta client numero: 38
 PRENDI IN CARICO SPEDIZIONE (utente7 )
 
 Risposta server numero: 38
-Avviata spedizione per ordine 3 da parte di utente7
+Avviata spedizione per ordine 2 da parte di utente7
 
 
 Richiesta client numero: 39
 PRENDI IN CARICO SPEDIZIONE (utente8 )
 
 Risposta server numero: 39
-Avviata spedizione per ordine 2 da parte di utente8
+Avviata spedizione per ordine 1 da parte di utente8
 
 
 Richiesta client numero: 40
 PRENDI IN CARICO SPEDIZIONE (utente9 )
 
 Risposta server numero: 40
-Avviata spedizione per ordine 1 da parte di utente9
+Avviata spedizione per ordine 4 da parte di utente9
 
 
 Richiesta client numero: 41

@@ -186,15 +186,49 @@ public:
             return result;
         }
         else{
-            // La carta esiste nel database, possiamo eliminarla
-            sprintf(sqlcmd, "DELETE FROM Carta WHERE idCarta = '%d'", in_id_carta);
-            res = db1.ExecSQLcmd(sqlcmd);
-            PQclear(res);
+            
+            // Verifico che l'id della carta sia associata all'utente che vuole eliminarla.
+            std::string nome_utente_compratore;
+            sprintf(sqlcmd, "SELECT nome_utente_compratore FROM Carta WHERE idCarta = '%d'", in_id_carta);
+            res = db1.ExecSQLtuples(sqlcmd);
+            rows = PQntuples(res);
+            // Se il numero di righe del risultato della query è 1, allora possiamo recuperare il nome dell'utente compratore.
+            if (rows < 1)
+            {
+                PQclear(res);  
+                
+                // Log dell'errore e uscita dalla funzione
+                messageLog = "Non esiste nessun utente associato alla carta con id: " + std::to_string(in_id_carta);
+                InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+                        
+                result = messageLog;
+                return result;
+            }       
 
-            // Log della rimozione della carta
-            statoReq = statoRequisito::Success;
-            messageLog = "Eliminazione carta di pagamento " + std::to_string (in_id_carta) + " dell utente compratore " + in_nome_utente_compratore;
-            InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
+            if (rows == 1){
+                
+                nome_utente_compratore = PQgetvalue(res, 0, PQfnumber(res, "nome_utente_compratore"));
+                PQclear(res);  
+
+                if (nome_utente_compratore != in_nome_utente_compratore){
+                    // Log dell'errore e uscita dalla funzione
+                    messageLog = "Utente che sta cercando di rimuovere la carta ( " + in_nome_utente_compratore + ") non corrisponde al proprierario della carta che è ( " + nome_utente_compratore + ").";
+                    InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
+                            
+                    result = messageLog;
+                    return result;
+                }
+
+                // La carta esiste nel database ed è dell'utente che vuole rimuoverla, possiamo eliminarla
+                sprintf(sqlcmd, "DELETE FROM Carta WHERE idCarta = '%d'", in_id_carta);
+                res = db1.ExecSQLcmd(sqlcmd);
+                PQclear(res);
+
+                // Log della rimozione della carta
+                statoReq = statoRequisito::Success;
+                messageLog = "Eliminazione carta di pagamento " + std::to_string (in_id_carta) + " dell utente compratore " + in_nome_utente_compratore;
+                InsertToLogDB(db1, "INFO", messageLog, sessionID, nomeRequisito, statoReq);
+            }   
         }
     
     result = messageLog;

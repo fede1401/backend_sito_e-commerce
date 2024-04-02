@@ -262,21 +262,21 @@ Richiesta client numero: 5
 PRENDI IN CARICO SPEDIZIONE( utente7 )
 
 Risposta server numero: 5
-Avviata spedizione per ordine 3 da parte di utente7
+Avviata spedizione per ordine 2 da parte di utente7
 
 
 Richiesta client numero: 6
 PRENDI IN CARICO SPEDIZIONE( utente8 )
 
 Risposta server numero: 6
-Avviata spedizione per ordine 2 da parte di utente8
+Avviata spedizione per ordine 1 da parte di utente8
 
 
 Richiesta client numero: 7
 PRENDI IN CARICO SPEDIZIONE( utente9 )
 
 Risposta server numero: 7
-Avviata spedizione per ordine 1 da parte di utente9
+Avviata spedizione per ordine 4 da parte di utente9
 
 
 Richiesta client numero: 8
