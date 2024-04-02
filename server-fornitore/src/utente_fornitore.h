@@ -466,7 +466,7 @@ public:
             }
 
             PQclear(res);
-            return "Login utente trasportatore avvenuto con successo";
+            return "Login utente fornitore avvenuto con successo";
         }
         catch(const std::exception& e)
         {

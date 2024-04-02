@@ -102,7 +102,8 @@ int main()
     // Apre il file corrispondente al test da effettuare in modalità di lettura
     // 1: test_sessioni_gestioneprofilo
     // 2: gestione_prodotti_sito
-    std::ifstream file("../test/gestione_prodotti_sito.txt");
+    // 3: vuoto
+    std::ifstream file("../test/vuoto.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
@@ -1006,6 +1007,8 @@ int main()
             freeReplyObject(reply);
         }
 
+    micro_sleep(500000); // 0.5 secondo di attesa
+
     } // while scorrimento linee file
 
     file.close(); // Chiude il file
@@ -1016,7 +1019,7 @@ int main()
 
     // Esecuzione test randomici.
 
-    #if (DEBUG < 0)
+    // #if (DEBUG < 0)
 
 
     std::string azioniFornitore[9] = {"EFFETTUA REGISTRAZIONE FORNITORE", "EFFETTUA LOGIN FORNITORE", "AGGIORNA NUMERO TELEFONO FORNITORE",
@@ -1924,7 +1927,7 @@ int main()
 
     } // while ()
 
-    #endif
+    // #endif
 
     outputFile.close(); // Chiudi il file
 

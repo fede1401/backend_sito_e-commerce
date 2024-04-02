@@ -112,7 +112,8 @@ int main()
     // 1: test_sessioni_gestioneprofilo
     // 2: gestione_acquisti
     // 3: test_post_acquisto
-    std::ifstream file("../test/test_post_acquisto.txt");
+    // 4: vuoto
+    std::ifstream file("../test/vuoto.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
@@ -2037,6 +2038,8 @@ int main()
             freeReplyObject(reply);
         }
 
+    micro_sleep(500000); // 0.5 secondo di attesa
+
     } // while scorrimento linee file
 
     file.close(); // Chiude il file
@@ -2048,7 +2051,7 @@ int main()
 
     // Esecuzione test randomici:
 
-    #if (DEBUG < 0)
+    //#if (DEBUG < 0)
 
     std::string azioniCompratore[20] = {"EFFETTUA REGISTRAZIONE COMPRATORE", "EFFETTUA LOGIN COMPRATORE", "EFFETTUA LOGOUT COMPRATORE", "ELIMINA PROFILO COMPRATORE",
                                         "AGGIORNA NUMERO TELEFONO COMPRATORE", "AGGIORNA PASSWORD COMPRATORE", "AGGIORNA RESIDENZA", "AGGIUNGI CARTA PAGAMENTO",
@@ -4006,7 +4009,7 @@ int main()
 
     } // while ()
 
-     #endif
+    //#endif
 
     outputFile.close(); // Chiudi il file
 

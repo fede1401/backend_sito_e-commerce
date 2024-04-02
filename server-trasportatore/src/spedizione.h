@@ -76,7 +76,7 @@ public:
         {
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
-            messageLog = "Non esiste " + in_nome_utente_trasportatore + " , poichè non è stato registrato, non si può effettuare il logout .";
+            messageLog = "Non esiste " + in_nome_utente_trasportatore + " , poichè non è stato registrato, non può essere presa in carico la spedizione .";
             InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
            
             result = messageLog;
@@ -89,7 +89,7 @@ public:
             // Log dell'errore e uscita dalla funzione
             statoReq = statoRequisito::NotSuccess;
             messageLog = "Non esiste una sessionID per " + in_nome_utente_trasportatore + ", utente non loggato, non può essere presa in carico la spedizione.";
-            InsertToLogDB(db1, "ERROR", "Non esiste una sessionID, utente non loggato, non può effettuare il logout .", sessionID, nomeRequisito, statoReq);
+            InsertToLogDB(db1, "ERROR", messageLog, sessionID, nomeRequisito, statoReq);
            
             result = messageLog;
             return result;

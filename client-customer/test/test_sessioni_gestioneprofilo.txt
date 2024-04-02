@@ -188,6 +188,12 @@ utente1
 Fbefbifno2ifno2!.
 
 
+# Secondo login con successo
+EFFETTUA LOGIN COMPRATORE
+utente1
+Fbefbifno2ifno2!.
+
+
 # Login con password errata.
 EFFETTUA LOGIN COMPRATORE
 utente1

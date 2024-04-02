@@ -91,7 +91,7 @@ public:
             if (rows == 1) { sessionID = PQgetvalue(res, 0, PQfnumber(res, "session_id")); }
 
             // Log del warning e uscita dalla funzione
-            statoReq = statoRequisito::NotSuccess;
+            statoReq = statoRequisito::Wait;
             messageLog = "Utente " + in_nome_utente + " già connesso e con la sessionID : " + sessionID + " , stai cercando di effettuare un nuovo login.";
             InsertToLogDB(db1, "WARNING", messageLog, sessionID, nomeRequisito, statoReq);
 
@@ -145,6 +145,11 @@ public:
             sprintf(sqlcmd, "UPDATE Utente set session_id='%s' WHERE nome_utente = '%s'", in_sessionID.c_str(), in_nome_utente.c_str());
             res = db1.ExecSQLcmd(sqlcmd);
             PQclear(res);
+
+            // Log
+            statoReq = statoRequisito::Success;
+            messageLog = "Aggiornamento sessionID per nuovo login dell utente " + in_nome_utente;
+            InsertToLogDB(db1, "INFO", messageLog, in_sessionID, nomeRequisito, statoReq);
 
             // Animo l'oggetto Utente
             sprintf(sqlcmd, "SELECT * FROM Utente WHERE nome_utente = '%s'", in_nome_utente.c_str());

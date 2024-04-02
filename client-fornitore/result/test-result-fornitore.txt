@@ -101,132 +101,139 @@ Richiesta fornitore numero: 15
 EFFETTUA LOGIN FORNITORE( utente5, Fbefbifno2ifno2!. )
 
 Risposta server numero: 15
-Login utente trasportatore avvenuto con successo
+Login utente fornitore avvenuto con successo
 
 
 Richiesta fornitore numero: 16
-EFFETTUA LOGIN FORNITORE( utente5, Dfnknklnsdl!.2 )
+EFFETTUA LOGIN FORNITORE( utente5, Fbefbifno2ifno2!. )
 
 Risposta server numero: 16
-Errore: La passowrd non è corretta, riprovare.
+Login utente fornitore avvenuto con successo
 
 
 Richiesta fornitore numero: 17
-EFFETTUA LOGIN FORNITORE( utente7, Fbefbifno2ifno2!. )
+EFFETTUA LOGIN FORNITORE( utente5, Dfnknklnsdl!.2 )
 
 Risposta server numero: 17
-Login utente trasportatore avvenuto con successo
+Errore: La passowrd non è corretta, riprovare.
 
 
 Richiesta fornitore numero: 18
-EFFETTUA LOGIN FORNITORE( utente8, Fbefbifno2ifno2!. )
+EFFETTUA LOGIN FORNITORE( utente7, Fbefbifno2ifno2!. )
 
 Risposta server numero: 18
-Errore: L'utente non è stato trovato.
+Login utente fornitore avvenuto con successo
 
 
 Richiesta fornitore numero: 19
-AGGIORNA NUMERO TELEFONO FORNITORE( utente5, 131212212 )
+EFFETTUA LOGIN FORNITORE( utente8, Fbefbifno2ifno2!. )
 
 Risposta server numero: 19
-Aggiornamento numero di telefono : 131212212 per utente: utente5
+Errore: L'utente non è stato trovato.
 
 
 Richiesta fornitore numero: 20
-AGGIORNA NUMERO TELEFONO FORNITORE( utente6, 131212212 )
+AGGIORNA NUMERO TELEFONO FORNITORE( utente5, 131212212 )
 
 Risposta server numero: 20
-Non esiste una sessionID per utente6, utente non loggato, non può essere aggiornato il numero di telefono
+Aggiornamento numero di telefono : 131212212 per utente: utente5
 
 
 Richiesta fornitore numero: 21
-AGGIORNA NUMERO TELEFONO FORNITORE( utente8, 131212212 )
+AGGIORNA NUMERO TELEFONO FORNITORE( utente6, 131212212 )
 
 Risposta server numero: 21
-Non esiste utente8 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+Non esiste una sessionID per utente6, utente non loggato, non può essere aggiornato il numero di telefono
 
 
 Richiesta fornitore numero: 22
-AGGIORNA PASSWORD FORNITORE( utente5, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+AGGIORNA NUMERO TELEFONO FORNITORE( utente8, 131212212 )
 
 Risposta server numero: 22
-Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente5
+Non esiste utente8 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
 
 
 Richiesta fornitore numero: 23
-AGGIORNA PASSWORD FORNITORE( utente6, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+AGGIORNA PASSWORD FORNITORE( utente5, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
 
 Risposta server numero: 23
-Non esiste una sessionID per utente6, utente non loggato, non può essere aggiornata la password.
+Aggiornamento password (nuova password inserita: Adhfhhdhdhfhfh..9 ) per utente: utente5
 
 
 Richiesta fornitore numero: 24
-AGGIORNA PASSWORD FORNITORE( utente8, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
+AGGIORNA PASSWORD FORNITORE( utente6, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
 
 Risposta server numero: 24
-Non esiste utente8 , poichè non è stato registrato, non si può aggiornare la password .
+Non esiste una sessionID per utente6, utente non loggato, non può essere aggiornata la password.
 
 
 Richiesta fornitore numero: 25
-AGGIORNA NOME AZIENDAPRODUZIONE( utente5, Apple )
+AGGIORNA PASSWORD FORNITORE( utente8, Fbefbifno2ifno2!., Adhfhhdhdhfhfh..9 )
 
 Risposta server numero: 25
-Aggiornamento azienda produttrice per utente: utente5
+Non esiste utente8 , poichè non è stato registrato, non si può aggiornare la password .
 
 
 Richiesta fornitore numero: 26
-AGGIORNA NOME AZIENDAPRODUZIONE( utente6, Apple )
+AGGIORNA NOME AZIENDAPRODUZIONE( utente5, Apple )
 
 Risposta server numero: 26
-Non esiste una sessionID per utente6, utente non loggato, non può essere aggiornato il nome dell azienda produttrice.
+Aggiornamento azienda produttrice per utente: utente5
 
 
 Richiesta fornitore numero: 27
-AGGIORNA NOME AZIENDAPRODUZIONE( utente8, Apple )
+AGGIORNA NOME AZIENDAPRODUZIONE( utente6, Apple )
 
 Risposta server numero: 27
-Non esiste utente8 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+Non esiste una sessionID per utente6, utente non loggato, non può essere aggiornato il nome dell azienda produttrice.
 
 
 Richiesta fornitore numero: 28
-ELIMINA PROFILO FORNITORE( utente5 )
+AGGIORNA NOME AZIENDAPRODUZIONE( utente8, Apple )
 
 Risposta server numero: 28
-Eliminazione profilo utente utente5
+Non esiste utente8 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
 
 
 Richiesta fornitore numero: 29
-ELIMINA PROFILO FORNITORE( utente6 )
+ELIMINA PROFILO FORNITORE( utente5 )
 
 Risposta server numero: 29
-Non esiste una sessionID per utente6, utente non loggato, non si può eliminare il profilo .
+Eliminazione profilo utente utente5
 
 
 Richiesta fornitore numero: 30
-ELIMINA PROFILO FORNITORE( utente7 )
+ELIMINA PROFILO FORNITORE( utente6 )
 
 Risposta server numero: 30
-Eliminazione profilo utente utente7
+Non esiste una sessionID per utente6, utente non loggato, non si può eliminare il profilo .
 
 
 Richiesta fornitore numero: 31
-ELIMINA PROFILO FORNITORE( utente8 )
+ELIMINA PROFILO FORNITORE( utente7 )
 
 Risposta server numero: 31
-Non esiste utente8 , poichè non è stato registrato, non si può eliminare il profilo .
+Eliminazione profilo utente utente7
 
 
 Richiesta fornitore numero: 32
-EFFETTUA LOGIN FORNITORE( utente6, Fbefbifno2ifno2!. )
+ELIMINA PROFILO FORNITORE( utente8 )
 
 Risposta server numero: 32
-Login utente trasportatore avvenuto con successo
+Non esiste utente8 , poichè non è stato registrato, non si può eliminare il profilo .
 
 
 Richiesta fornitore numero: 33
-ELIMINA PROFILO FORNITORE( utente6 )
+EFFETTUA LOGIN FORNITORE( utente6, Fbefbifno2ifno2!. )
 
 Risposta server numero: 33
+Login utente fornitore avvenuto con successo
+
+
+Richiesta fornitore numero: 34
+ELIMINA PROFILO FORNITORE( utente6 )
+
+Risposta server numero: 34
 Eliminazione profilo utente utente6
 
 
@@ -303,5 +310,1734 @@ Richiesta fornitore numero: 12
 EFFETTUA LOGIN FORNITORE( utente5, Aspirapolvere.121. )
 
 Risposta server numero: 12
-Login utente trasportatore avvenuto con successo
+Login utente fornitore avvenuto con successo
+
+
+Richiesta fornitore numero: 1
+RIMUOVI PRODOTTO SITO( Utente3, 22 )
+
+Risposta server numero: 1
+Non esiste Utente3 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 2
+AGGIUNGI PRODOTTO SITO( Utente3, Prodotto3, Elettronica, 3, Prodotto eccellente., Azienda2, 3 )
+Risposta server numero: 2
+Non esiste Utente3 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 3
+AGGIORNA PASSWORD FORNITORE( Utente25, P.assword25, P.assword25 )
+
+Risposta server numero: 3
+Non esiste Utente25 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 4
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente18, Azienda1 )
+
+Risposta server numero: 4
+Non esiste Utente18 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 5
+AGGIUNGI PRODOTTO SITO( Utente9, Prodotto9, Abbigliamento, 9, Prodotto eccellente., Azienda3, 9 )
+Risposta server numero: 5
+Non esiste Utente9 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 6
+EFFETTUA LOGIN FORNITORE( Utente25, P.assword25 )
+
+Risposta server numero: 6
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 7
+RIMUOVI PRODOTTO SITO( Utente6, 26 )
+
+Risposta server numero: 7
+Non esiste Utente6 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 8
+EFFETTUA LOGIN FORNITORE( Utente17, P.assword17 )
+
+Risposta server numero: 8
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 9
+EFFETTUA LOGOUT FORNITORE( Utente13 )
+
+Risposta server numero: 9
+Non esiste Utente13 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 10
+EFFETTUA LOGIN FORNITORE( Utente23, P.assword23 )
+
+Risposta server numero: 10
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 11
+RIMUOVI PRODOTTO SITO( Utente25, 15 )
+
+Risposta server numero: 11
+Non esiste Utente25 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 12
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente14, 12345678913 )
+
+Risposta server numero: 12
+Non esiste Utente14 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 13
+AGGIORNA PASSWORD FORNITORE( Utente5, P.assword5, P.assword5 )
+
+Risposta server numero: 13
+Non esiste una sessionID per Utente5, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta fornitore numero: 14
+EFFETTUA LOGIN FORNITORE( Utente4, P.assword4 )
+
+Risposta server numero: 14
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 15
+EFFETTUA LOGOUT FORNITORE( Utente11 )
+
+Risposta server numero: 15
+Non esiste Utente11 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 16
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente7, 1234567896 )
+
+Risposta server numero: 16
+Non esiste Utente7 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 17
+EFFETTUA REGISTRAZIONE FORNITORE( Utente29, UtenteFornitore, Francesco, Esposito, 12345678928, Utente29@example.com, P.assword29, P.assword29, Azienda5 )
+
+Risposta server numero: 17
+Registrazione utente fornitore : Utente29 avvenuta con successo.
+
+
+Richiesta fornitore numero: 18
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente13, Azienda4 )
+
+Risposta server numero: 18
+Non esiste Utente13 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 19
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente11, Azienda3 )
+
+Risposta server numero: 19
+Non esiste Utente11 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 20
+ELIMINA PROFILO FORNITORE( Utente27 )
+
+Risposta server numero: 20
+Non esiste Utente27 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 21
+EFFETTUA REGISTRAZIONE FORNITORE( Utente16, UtenteFornitore, Mario, Rossi, 12345678915, Utente16@example.com, P.assword16, P.assword16, Azienda3 )
+
+Risposta server numero: 21
+Registrazione utente fornitore : Utente16 avvenuta con successo.
+
+
+Richiesta fornitore numero: 22
+RIMUOVI PRODOTTO SITO( Utente10, 15 )
+
+Risposta server numero: 22
+Non esiste Utente10 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 23
+ELIMINA PROFILO FORNITORE( Utente26 )
+
+Risposta server numero: 23
+Non esiste Utente26 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 24
+AGGIORNA PASSWORD FORNITORE( Utente18, P.assword18, P.assword18 )
+
+Risposta server numero: 24
+Non esiste Utente18 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 25
+RIMUOVI PRODOTTO SITO( Utente11, 25 )
+
+Risposta server numero: 25
+Non esiste Utente11 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 26
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente30, Azienda1 )
+
+Risposta server numero: 26
+Non esiste Utente30 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 27
+EFFETTUA REGISTRAZIONE FORNITORE( Utente13, UtenteFornitore, Paolo, De Luca, 12345678912, Utente13@example.com, P.assword13, P.assword13, Azienda1 )
+
+Risposta server numero: 27
+Registrazione utente fornitore : Utente13 avvenuta con successo.
+
+
+Richiesta fornitore numero: 28
+AGGIORNA PASSWORD FORNITORE( Utente24, P.assword24, P.assword24 )
+
+Risposta server numero: 28
+Non esiste Utente24 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 29
+EFFETTUA LOGOUT FORNITORE( Utente12 )
+
+Risposta server numero: 29
+Non esiste Utente12 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 30
+EFFETTUA LOGOUT FORNITORE( Utente16 )
+
+Risposta server numero: 30
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente16
+
+
+Richiesta fornitore numero: 31
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente14, 12345678913 )
+
+Risposta server numero: 31
+Non esiste Utente14 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 32
+EFFETTUA LOGOUT FORNITORE( Utente19 )
+
+Risposta server numero: 32
+Non esiste Utente19 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 33
+EFFETTUA LOGOUT FORNITORE( Utente4 )
+
+Risposta server numero: 33
+Non esiste Utente4 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 34
+ELIMINA PROFILO FORNITORE( Utente6 )
+
+Risposta server numero: 34
+Non esiste Utente6 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 35
+EFFETTUA LOGIN FORNITORE( Utente21, P.assword21 )
+
+Risposta server numero: 35
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 36
+EFFETTUA REGISTRAZIONE FORNITORE( Utente21, UtenteFornitore, Giovanni, Verdi, 12345678920, Utente21@example.com, P.assword21, P.assword21, Azienda4 )
+
+Risposta server numero: 36
+Registrazione utente fornitore : Utente21 avvenuta con successo.
+
+
+Richiesta fornitore numero: 37
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente30, 12345678929 )
+
+Risposta server numero: 37
+Non esiste Utente30 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 38
+AGGIUNGI PRODOTTO SITO( Utente8, Prodotto8, Abbigliamento, 8, Prodotto eccellente., Azienda5, 8 )
+Risposta server numero: 38
+Non esiste Utente8 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 39
+EFFETTUA LOGOUT FORNITORE( Utente22 )
+
+Risposta server numero: 39
+Non esiste Utente22 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 40
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente9, 1234567898 )
+
+Risposta server numero: 40
+Non esiste Utente9 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 41
+EFFETTUA LOGIN FORNITORE( Utente7, P.assword7 )
+
+Risposta server numero: 41
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 42
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente3, 1234567892 )
+
+Risposta server numero: 42
+Non esiste Utente3 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 43
+RIMUOVI PRODOTTO SITO( Utente5, 12 )
+
+Risposta server numero: 43
+Non esiste una sessionID per Utente5, utente non loggato, non può essere rimosso il prodotto dal sito
+
+
+Richiesta fornitore numero: 44
+EFFETTUA LOGOUT FORNITORE( Utente1 )
+
+Risposta server numero: 44
+Non esiste Utente1 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 45
+AGGIUNGI PRODOTTO SITO( Utente30, Prodotto30, Abbigliamento, 30, Prodotto eccellente., Azienda3, 30 )
+Risposta server numero: 45
+Non esiste Utente30 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 46
+EFFETTUA LOGOUT FORNITORE( Utente20 )
+
+Risposta server numero: 46
+Non esiste Utente20 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 47
+AGGIUNGI PRODOTTO SITO( Utente27, Prodotto27, Abbigliamento, 27, Prodotto eccellente., Azienda4, 27 )
+Risposta server numero: 47
+Non esiste Utente27 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 48
+EFFETTUA LOGIN FORNITORE( Utente5, P.assword5 )
+
+Risposta server numero: 48
+Utente Utente5 è di un altra categoria, non un utente fornitore, non può essere effettuato il login.
+
+
+Richiesta fornitore numero: 49
+ELIMINA PROFILO FORNITORE( Utente19 )
+
+Risposta server numero: 49
+Non esiste Utente19 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 50
+EFFETTUA LOGIN FORNITORE( Utente6, P.assword6 )
+
+Risposta server numero: 50
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 51
+ELIMINA PROFILO FORNITORE( Utente13 )
+
+Risposta server numero: 51
+Eliminazione profilo utente Utente13
+
+
+Richiesta fornitore numero: 52
+AGGIORNA PASSWORD FORNITORE( Utente3, P.assword3, P.assword3 )
+
+Risposta server numero: 52
+Non esiste Utente3 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 53
+RIMUOVI PRODOTTO SITO( Utente1, 24 )
+
+Risposta server numero: 53
+Non esiste Utente1 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 54
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente7, Azienda3 )
+
+Risposta server numero: 54
+Non esiste Utente7 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 55
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente4, 1234567893 )
+
+Risposta server numero: 55
+Aggiornamento numero di telefono : 1234567893 per utente: Utente4
+
+
+Richiesta fornitore numero: 56
+EFFETTUA REGISTRAZIONE FORNITORE( Utente25, UtenteFornitore, Luigi, Bianchi, 12345678924, Utente25@example.com, P.assword25, P.assword25, Azienda2 )
+
+Risposta server numero: 56
+Registrazione utente fornitore : Utente25 avvenuta con successo.
+
+
+Richiesta fornitore numero: 57
+EFFETTUA LOGIN FORNITORE( Utente19, P.assword19 )
+
+Risposta server numero: 57
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 58
+EFFETTUA LOGIN FORNITORE( Utente9, P.assword9 )
+
+Risposta server numero: 58
+Utente Utente9 è di un altra categoria, non un utente fornitore, non può essere effettuato il login.
+
+
+Richiesta fornitore numero: 59
+EFFETTUA LOGOUT FORNITORE( Utente14 )
+
+Risposta server numero: 59
+Non esiste Utente14 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 60
+ELIMINA PROFILO FORNITORE( Utente17 )
+
+Risposta server numero: 60
+Non esiste Utente17 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 61
+ELIMINA PROFILO FORNITORE( Utente4 )
+
+Risposta server numero: 61
+Eliminazione profilo utente Utente4
+
+
+Richiesta fornitore numero: 62
+EFFETTUA LOGOUT FORNITORE( Utente29 )
+
+Risposta server numero: 62
+Non esiste una sessionID per Utente29, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta fornitore numero: 63
+AGGIUNGI PRODOTTO SITO( Utente13, Prodotto13, Elettronica, 13, Prodotto eccellente., Azienda4, 13 )
+Risposta server numero: 63
+Non esiste Utente13 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 64
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente12, 12345678911 )
+
+Risposta server numero: 64
+Non esiste Utente12 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 65
+AGGIUNGI PRODOTTO SITO( Utente26, Prodotto26, Elettronica, 26, Prodotto eccellente., Azienda5, 26 )
+Risposta server numero: 65
+Non esiste Utente26 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 66
+EFFETTUA REGISTRAZIONE FORNITORE( Utente25, UtenteFornitore, Francesco, Esposito, 12345678924, Utente25@example.com, P.assword25, P.assword25, Azienda4 )
+
+Risposta server numero: 66
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 67
+AGGIORNA PASSWORD FORNITORE( Utente2, P.assword2, P.assword2 )
+
+Risposta server numero: 67
+Non esiste Utente2 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 68
+EFFETTUA LOGIN FORNITORE( Utente18, P.assword18 )
+
+Risposta server numero: 68
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 69
+EFFETTUA LOGIN FORNITORE( Utente2, P.assword2 )
+
+Risposta server numero: 69
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 70
+RIMUOVI PRODOTTO SITO( Utente21, 1 )
+
+Risposta server numero: 70
+Eliminato prodotto con codice 1 da Utente21
+
+
+Richiesta fornitore numero: 71
+ELIMINA PROFILO FORNITORE( Utente19 )
+
+Risposta server numero: 71
+Non esiste Utente19 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 72
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente27, 12345678926 )
+
+Risposta server numero: 72
+Non esiste Utente27 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 73
+EFFETTUA REGISTRAZIONE FORNITORE( Utente15, UtenteFornitore, Luigi, Bianchi, 12345678914, Utente15@example.com, P.assword15, P.assword15, Azienda4 )
+
+Risposta server numero: 73
+Registrazione utente fornitore : Utente15 avvenuta con successo.
+
+
+Richiesta fornitore numero: 74
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente23, 12345678922 )
+
+Risposta server numero: 74
+Non esiste Utente23 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 75
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente12, Azienda2 )
+
+Risposta server numero: 75
+Non esiste Utente12 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 76
+EFFETTUA LOGOUT FORNITORE( Utente16 )
+
+Risposta server numero: 76
+Non esiste una sessionID per Utente16, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta fornitore numero: 77
+AGGIORNA PASSWORD FORNITORE( Utente21, P.assword21, P.assword21 )
+
+Risposta server numero: 77
+Aggiornamento password (nuova password inserita: P.assword21 ) per utente: Utente21
+
+
+Richiesta fornitore numero: 78
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente22, 12345678921 )
+
+Risposta server numero: 78
+Non esiste Utente22 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 79
+AGGIORNA PASSWORD FORNITORE( Utente23, P.assword23, P.assword23 )
+
+Risposta server numero: 79
+Non esiste Utente23 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 80
+RIMUOVI PRODOTTO SITO( Utente22, 24 )
+
+Risposta server numero: 80
+Non esiste Utente22 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 81
+AGGIORNA PASSWORD FORNITORE( Utente28, P.assword28, P.assword28 )
+
+Risposta server numero: 81
+Non esiste Utente28 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 82
+AGGIUNGI PRODOTTO SITO( Utente19, Prodotto19, Abbigliamento, 19, Prodotto eccellente., Azienda1, 19 )
+Risposta server numero: 82
+Non esiste Utente19 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 83
+EFFETTUA LOGIN FORNITORE( Utente5, P.assword5 )
+
+Risposta server numero: 83
+Utente Utente5 è di un altra categoria, non un utente fornitore, non può essere effettuato il login.
+
+
+Richiesta fornitore numero: 84
+EFFETTUA REGISTRAZIONE FORNITORE( Utente22, UtenteFornitore, Paolo, De Luca, 12345678921, Utente22@example.com, P.assword22, P.assword22, Azienda5 )
+
+Risposta server numero: 84
+Registrazione utente fornitore : Utente22 avvenuta con successo.
+
+
+Richiesta fornitore numero: 85
+AGGIORNA PASSWORD FORNITORE( Utente2, P.assword2, P.assword2 )
+
+Risposta server numero: 85
+Non esiste Utente2 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 86
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente15, Azienda2 )
+
+Risposta server numero: 86
+Aggiornamento azienda produttrice per utente: Utente15
+
+
+Richiesta fornitore numero: 87
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente26, 12345678925 )
+
+Risposta server numero: 87
+Non esiste Utente26 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 88
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente13, Azienda4 )
+
+Risposta server numero: 88
+L utente Utente13 non è un utente fornitore, perciò non può essere aggiornato il nome dell azienda produttrice.
+
+
+Richiesta fornitore numero: 89
+EFFETTUA REGISTRAZIONE FORNITORE( Utente7, UtenteFornitore, Roberto, Gallo, 1234567896, Utente7@example.com, P.assword7, P.assword7, Azienda2 )
+
+Risposta server numero: 89
+Registrazione utente fornitore : Utente7 avvenuta con successo.
+
+
+Richiesta fornitore numero: 90
+EFFETTUA LOGIN FORNITORE( Utente26, P.assword26 )
+
+Risposta server numero: 90
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 91
+EFFETTUA LOGOUT FORNITORE( Utente23 )
+
+Risposta server numero: 91
+Non esiste Utente23 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 92
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente1, Azienda1 )
+
+Risposta server numero: 92
+Non esiste Utente1 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 93
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente23, Azienda2 )
+
+Risposta server numero: 93
+Non esiste Utente23 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 94
+EFFETTUA LOGIN FORNITORE( Utente30, P.assword30 )
+
+Risposta server numero: 94
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 95
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente24, Azienda1 )
+
+Risposta server numero: 95
+Non esiste Utente24 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 96
+AGGIORNA PASSWORD FORNITORE( Utente11, P.assword11, P.assword11 )
+
+Risposta server numero: 96
+Aggiornamento password (nuova password inserita: P.assword11 ) per utente: Utente11
+
+
+Richiesta fornitore numero: 97
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente24, 12345678923 )
+
+Risposta server numero: 97
+Non esiste Utente24 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 98
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente5, 1234567894 )
+
+Risposta server numero: 98
+Non esiste una sessionID per Utente5, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta fornitore numero: 99
+AGGIORNA PASSWORD FORNITORE( Utente8, P.assword8, P.assword8 )
+
+Risposta server numero: 99
+Aggiornamento password (nuova password inserita: P.assword8 ) per utente: Utente8
+
+
+Richiesta fornitore numero: 100
+EFFETTUA LOGIN FORNITORE( Utente30, P.assword30 )
+
+Risposta server numero: 100
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 101
+AGGIORNA PASSWORD FORNITORE( Utente25, P.assword25, P.assword25 )
+
+Risposta server numero: 101
+Aggiornamento password (nuova password inserita: P.assword25 ) per utente: Utente25
+
+
+Richiesta fornitore numero: 102
+EFFETTUA LOGIN FORNITORE( Utente23, P.assword23 )
+
+Risposta server numero: 102
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 103
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente23, Azienda3 )
+
+Risposta server numero: 103
+Non esiste Utente23 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 104
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente24, 12345678923 )
+
+Risposta server numero: 104
+Non esiste Utente24 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 105
+EFFETTUA LOGIN FORNITORE( Utente21, P.assword21 )
+
+Risposta server numero: 105
+Login utente fornitore avvenuto con successo
+
+
+Richiesta fornitore numero: 106
+AGGIORNA PASSWORD FORNITORE( Utente15, P.assword15, P.assword15 )
+
+Risposta server numero: 106
+Aggiornamento password (nuova password inserita: P.assword15 ) per utente: Utente15
+
+
+Richiesta fornitore numero: 107
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente17, Azienda3 )
+
+Risposta server numero: 107
+Non esiste Utente17 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 108
+AGGIORNA PASSWORD FORNITORE( Utente20, P.assword20, P.assword20 )
+
+Risposta server numero: 108
+Aggiornamento password (nuova password inserita: P.assword20 ) per utente: Utente20
+
+
+Richiesta fornitore numero: 109
+AGGIUNGI PRODOTTO SITO( Utente24, Prodotto24, Elettronica, 24, Prodotto eccellente., Azienda1, 24 )
+Risposta server numero: 109
+Non esiste Utente24 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 110
+EFFETTUA LOGIN FORNITORE( Utente22, P.assword22 )
+
+Risposta server numero: 110
+Login utente fornitore avvenuto con successo
+
+
+Richiesta fornitore numero: 111
+EFFETTUA REGISTRAZIONE FORNITORE( Utente29, UtenteFornitore, Laura, Conti, 12345678928, Utente29@example.com, P.assword29, P.assword29, Azienda3 )
+
+Risposta server numero: 111
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 112
+AGGIUNGI PRODOTTO SITO( Utente26, Prodotto26, Elettronica, 26, Prodotto eccellente., Azienda2, 26 )
+Risposta server numero: 112
+Non esiste Utente26 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 113
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente25, 12345678924 )
+
+Risposta server numero: 113
+Aggiornamento numero di telefono : 12345678924 per utente: Utente25
+
+
+Richiesta fornitore numero: 114
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente20, 12345678919 )
+
+Risposta server numero: 114
+Non esiste Utente20 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 115
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente30, Azienda4 )
+
+Risposta server numero: 115
+Non esiste Utente30 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 116
+AGGIUNGI PRODOTTO SITO( Utente20, Prodotto20, Elettronica, 20, Prodotto eccellente., Azienda5, 20 )
+Risposta server numero: 116
+Non esiste Utente20 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 117
+RIMUOVI PRODOTTO SITO( Utente23, 11 )
+
+Risposta server numero: 117
+Non esiste Utente23 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 118
+EFFETTUA REGISTRAZIONE FORNITORE( Utente17, UtenteFornitore, Elena, Romano, 12345678916, Utente17@example.com, P.assword17, P.assword17, Azienda4 )
+
+Risposta server numero: 118
+Registrazione utente fornitore : Utente17 avvenuta con successo.
+
+
+Richiesta fornitore numero: 119
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente13, 12345678912 )
+
+Risposta server numero: 119
+Aggiornamento numero di telefono : 12345678912 per utente: Utente13
+
+
+Richiesta fornitore numero: 120
+EFFETTUA REGISTRAZIONE FORNITORE( Utente29, UtenteFornitore, Giovanni, Verdi, 12345678928, Utente29@example.com, P.assword29, P.assword29, Azienda5 )
+
+Risposta server numero: 120
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 121
+AGGIORNA PASSWORD FORNITORE( Utente26, P.assword26, P.assword26 )
+
+Risposta server numero: 121
+Non esiste Utente26 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 122
+AGGIUNGI PRODOTTO SITO( Utente19, Prodotto19, Elettronica, 19, Prodotto eccellente., Azienda5, 19 )
+Risposta server numero: 122
+L utente Utente19 non è un utente fornitore, perciò non può essere aggiunto il prodotto nel sito.
+
+
+Richiesta fornitore numero: 123
+AGGIUNGI PRODOTTO SITO( Utente23, Prodotto23, Abbigliamento, 23, Prodotto eccellente., Azienda1, 23 )
+Risposta server numero: 123
+Non esiste Utente23 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 124
+EFFETTUA LOGOUT FORNITORE( Utente18 )
+
+Risposta server numero: 124
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente18
+
+
+Richiesta fornitore numero: 125
+RIMUOVI PRODOTTO SITO( Utente29, 24 )
+
+Risposta server numero: 125
+Non esiste una sessionID per Utente29, utente non loggato, non può essere rimosso il prodotto dal sito
+
+
+Richiesta fornitore numero: 126
+AGGIORNA PASSWORD FORNITORE( Utente21, P.assword21, P.assword21 )
+
+Risposta server numero: 126
+Aggiornamento password (nuova password inserita: P.assword21 ) per utente: Utente21
+
+
+Richiesta fornitore numero: 127
+EFFETTUA REGISTRAZIONE FORNITORE( Utente17, UtenteFornitore, Luigi, Bianchi, 12345678916, Utente17@example.com, P.assword17, P.assword17, Azienda5 )
+
+Risposta server numero: 127
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 128
+RIMUOVI PRODOTTO SITO( Utente22, 26 )
+
+Risposta server numero: 128
+Non esiste Utente22 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 129
+EFFETTUA REGISTRAZIONE FORNITORE( Utente16, UtenteFornitore, Laura, Conti, 12345678915, Utente16@example.com, P.assword16, P.assword16, Azienda4 )
+
+Risposta server numero: 129
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 130
+EFFETTUA LOGIN FORNITORE( Utente23, P.assword23 )
+
+Risposta server numero: 130
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 131
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente12, Azienda3 )
+
+Risposta server numero: 131
+Non esiste Utente12 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 132
+EFFETTUA REGISTRAZIONE FORNITORE( Utente15, UtenteFornitore, Luigi, Bianchi, 12345678914, Utente15@example.com, P.assword15, P.assword15, Azienda5 )
+
+Risposta server numero: 132
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 133
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente22, Azienda1 )
+
+Risposta server numero: 133
+Non esiste Utente22 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 134
+AGGIUNGI PRODOTTO SITO( Utente25, Prodotto25, Abbigliamento, 25, Prodotto eccellente., Azienda5, 25 )
+Risposta server numero: 134
+Prodotto con nome Prodotto25 inserito nel sito da parte di Utente25
+
+
+Richiesta fornitore numero: 135
+RIMUOVI PRODOTTO SITO( Utente5, 25 )
+
+Risposta server numero: 135
+Non esiste una sessionID per Utente5, utente non loggato, non può essere rimosso il prodotto dal sito
+
+
+Richiesta fornitore numero: 136
+EFFETTUA REGISTRAZIONE FORNITORE( Utente21, UtenteFornitore, Chiara, Russo, 12345678920, Utente21@example.com, P.assword21, P.assword21, Azienda1 )
+
+Risposta server numero: 136
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 137
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente8, 1234567897 )
+
+Risposta server numero: 137
+Non esiste Utente8 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 138
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente19, 12345678918 )
+
+Risposta server numero: 138
+Aggiornamento numero di telefono : 12345678918 per utente: Utente19
+
+
+Richiesta fornitore numero: 139
+EFFETTUA LOGOUT FORNITORE( Utente11 )
+
+Risposta server numero: 139
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente11
+
+
+Richiesta fornitore numero: 140
+EFFETTUA LOGOUT FORNITORE( Utente14 )
+
+Risposta server numero: 140
+Non esiste Utente14 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 141
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente2, 1234567891 )
+
+Risposta server numero: 141
+Aggiornamento numero di telefono : 1234567891 per utente: Utente2
+
+
+Richiesta fornitore numero: 142
+EFFETTUA LOGOUT FORNITORE( Utente22 )
+
+Risposta server numero: 142
+Non esiste Utente22 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 143
+EFFETTUA LOGIN FORNITORE( Utente11, P.assword11 )
+
+Risposta server numero: 143
+Utente Utente11 è di un altra categoria, non un utente fornitore, non può essere effettuato il login.
+
+
+Richiesta fornitore numero: 144
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente12, 12345678911 )
+
+Risposta server numero: 144
+Non esiste Utente12 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 145
+AGGIUNGI PRODOTTO SITO( Utente29, Prodotto29, Elettronica, 29, Prodotto eccellente., Azienda1, 29 )
+Risposta server numero: 145
+Non esiste una sessionID per Utente29, utente non loggato, non può essere aggiunto il prodotto al sito
+
+
+Richiesta fornitore numero: 146
+AGGIORNA PASSWORD FORNITORE( Utente24, P.assword24, P.assword24 )
+
+Risposta server numero: 146
+Non esiste Utente24 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 147
+RIMUOVI PRODOTTO SITO( Utente7, 27 )
+
+Risposta server numero: 147
+Il prodotto con codice 27 non esiste
+
+
+Richiesta fornitore numero: 148
+ELIMINA PROFILO FORNITORE( Utente15 )
+
+Risposta server numero: 148
+Non esiste Utente15 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 149
+AGGIUNGI PRODOTTO SITO( Utente22, Prodotto22, Abbigliamento, 22, Prodotto eccellente., Azienda1, 22 )
+Risposta server numero: 149
+Non esiste Utente22 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 150
+EFFETTUA LOGIN FORNITORE( Utente2, P.assword2 )
+
+Risposta server numero: 150
+Utente Utente2 è di un altra categoria, non un utente fornitore, non può essere effettuato il login.
+
+
+Richiesta fornitore numero: 151
+AGGIORNA PASSWORD FORNITORE( Utente19, P.assword19, P.assword19 )
+
+Risposta server numero: 151
+Aggiornamento password (nuova password inserita: P.assword19 ) per utente: Utente19
+
+
+Richiesta fornitore numero: 152
+EFFETTUA REGISTRAZIONE FORNITORE( Utente19, UtenteFornitore, Giovanni, Verdi, 12345678918, Utente19@example.com, P.assword19, P.assword19, Azienda3 )
+
+Risposta server numero: 152
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 153
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente27, Azienda4 )
+
+Risposta server numero: 153
+Non esiste Utente27 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 154
+AGGIUNGI PRODOTTO SITO( Utente18, Prodotto18, Elettronica, 18, Prodotto eccellente., Azienda5, 18 )
+Risposta server numero: 154
+Non esiste una sessionID per Utente18, utente non loggato, non può essere aggiunto il prodotto al sito
+
+
+Richiesta fornitore numero: 155
+ELIMINA PROFILO FORNITORE( Utente30 )
+
+Risposta server numero: 155
+Non esiste Utente30 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 156
+AGGIUNGI PRODOTTO SITO( Utente13, Prodotto13, Abbigliamento, 13, Prodotto eccellente., Azienda5, 13 )
+Risposta server numero: 156
+L utente Utente13 non è un utente fornitore, perciò non può essere aggiunto il prodotto nel sito.
+
+
+Richiesta fornitore numero: 157
+AGGIORNA PASSWORD FORNITORE( Utente28, P.assword28, P.assword28 )
+
+Risposta server numero: 157
+Non esiste Utente28 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 158
+EFFETTUA REGISTRAZIONE FORNITORE( Utente9, UtenteFornitore, Roberto, Gallo, 1234567898, Utente9@example.com, P.assword9, P.assword9, Azienda3 )
+
+Risposta server numero: 158
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 159
+EFFETTUA LOGOUT FORNITORE( Utente16 )
+
+Risposta server numero: 159
+Non esiste una sessionID per Utente16, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta fornitore numero: 160
+AGGIUNGI PRODOTTO SITO( Utente10, Prodotto10, Abbigliamento, 10, Prodotto eccellente., Azienda1, 10 )
+Risposta server numero: 160
+Non esiste Utente10 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 161
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente6, 1234567895 )
+
+Risposta server numero: 161
+Aggiornamento numero di telefono : 1234567895 per utente: Utente6
+
+
+Richiesta fornitore numero: 162
+EFFETTUA REGISTRAZIONE FORNITORE( Utente16, UtenteFornitore, Roberto, Gallo, 12345678915, Utente16@example.com, P.assword16, P.assword16, Azienda4 )
+
+Risposta server numero: 162
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 163
+AGGIUNGI PRODOTTO SITO( Utente7, Prodotto7, Abbigliamento, 7, Prodotto eccellente., Azienda3, 7 )
+Risposta server numero: 163
+Prodotto con nome Prodotto7 inserito nel sito da parte di Utente7
+
+
+Richiesta fornitore numero: 164
+AGGIUNGI PRODOTTO SITO( Utente10, Prodotto10, Elettronica, 10, Prodotto eccellente., Azienda1, 10 )
+Risposta server numero: 164
+Non esiste Utente10 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 165
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente25, 12345678924 )
+
+Risposta server numero: 165
+Non esiste una sessionID per Utente25, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta fornitore numero: 166
+RIMUOVI PRODOTTO SITO( Utente19, 28 )
+
+Risposta server numero: 166
+Non esiste Utente19 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 167
+EFFETTUA LOGOUT FORNITORE( Utente19 )
+
+Risposta server numero: 167
+Non esiste Utente19 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 168
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente26, Azienda2 )
+
+Risposta server numero: 168
+Non esiste Utente26 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 169
+EFFETTUA REGISTRAZIONE FORNITORE( Utente19, UtenteFornitore, Laura, Conti, 12345678918, Utente19@example.com, P.assword19, P.assword19, Azienda3 )
+
+Risposta server numero: 169
+Registrazione utente fornitore : Utente19 avvenuta con successo.
+
+
+Richiesta fornitore numero: 170
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente18, 12345678917 )
+
+Risposta server numero: 170
+Non esiste una sessionID per Utente18, utente non loggato, non può essere aggiornato il numero di telefono
+
+
+Richiesta fornitore numero: 171
+EFFETTUA REGISTRAZIONE FORNITORE( Utente4, UtenteFornitore, Mario, Rossi, 1234567893, Utente4@example.com, P.assword4, P.assword4, Azienda4 )
+
+Risposta server numero: 171
+Registrazione utente fornitore : Utente4 avvenuta con successo.
+
+
+Richiesta fornitore numero: 172
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente5, 1234567894 )
+
+Risposta server numero: 172
+Aggiornamento numero di telefono : 1234567894 per utente: Utente5
+
+
+Richiesta fornitore numero: 173
+RIMUOVI PRODOTTO SITO( Utente25, 13 )
+
+Risposta server numero: 173
+Non esiste una sessionID per Utente25, utente non loggato, non può essere rimosso il prodotto dal sito
+
+
+Richiesta fornitore numero: 174
+AGGIUNGI PRODOTTO SITO( Utente22, Prodotto22, Abbigliamento, 22, Prodotto eccellente., Azienda5, 22 )
+Risposta server numero: 174
+Non esiste Utente22 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 175
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente19, 12345678918 )
+
+Risposta server numero: 175
+Aggiornamento numero di telefono : 12345678918 per utente: Utente19
+
+
+Richiesta fornitore numero: 176
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente14, Azienda5 )
+
+Risposta server numero: 176
+L utente Utente14 non è un utente fornitore, perciò non può essere aggiornato il nome dell azienda produttrice.
+
+
+Richiesta fornitore numero: 177
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente17, Azienda4 )
+
+Risposta server numero: 177
+Non esiste Utente17 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 178
+RIMUOVI PRODOTTO SITO( Utente6, 4 )
+
+Risposta server numero: 178
+L utente Utente6 non è un utente fornitore, perciò non può essere rimosso il prodotto nel sito.
+
+
+Richiesta fornitore numero: 179
+EFFETTUA LOGOUT FORNITORE( Utente20 )
+
+Risposta server numero: 179
+Non esiste Utente20 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 180
+EFFETTUA LOGIN FORNITORE( Utente30, P.assword30 )
+
+Risposta server numero: 180
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 181
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente29, Azienda1 )
+
+Risposta server numero: 181
+Non esiste una sessionID per Utente29, utente non loggato, non può essere aggiornato il nome dell azienda produttrice.
+
+
+Richiesta fornitore numero: 182
+RIMUOVI PRODOTTO SITO( Utente18, 7 )
+
+Risposta server numero: 182
+Non esiste una sessionID per Utente18, utente non loggato, non può essere rimosso il prodotto dal sito
+
+
+Richiesta fornitore numero: 183
+EFFETTUA LOGOUT FORNITORE( Utente23 )
+
+Risposta server numero: 183
+Non esiste Utente23 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 184
+RIMUOVI PRODOTTO SITO( Utente8, 15 )
+
+Risposta server numero: 184
+L utente Utente8 non è un utente fornitore, perciò non può essere rimosso il prodotto nel sito.
+
+
+Richiesta fornitore numero: 185
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente2, Azienda5 )
+
+Risposta server numero: 185
+L utente Utente2 non è un utente fornitore, perciò non può essere aggiornato il nome dell azienda produttrice.
+
+
+Richiesta fornitore numero: 186
+EFFETTUA LOGIN FORNITORE( Utente8, P.assword8 )
+
+Risposta server numero: 186
+Utente Utente8 è di un altra categoria, non un utente fornitore, non può essere effettuato il login.
+
+
+Richiesta fornitore numero: 187
+EFFETTUA REGISTRAZIONE FORNITORE( Utente25, UtenteFornitore, Paolo, De Luca, 12345678924, Utente25@example.com, P.assword25, P.assword25, Azienda2 )
+
+Risposta server numero: 187
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 188
+RIMUOVI PRODOTTO SITO( Utente12, 21 )
+
+Risposta server numero: 188
+Non esiste Utente12 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 189
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente17, 12345678916 )
+
+Risposta server numero: 189
+Non esiste Utente17 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 190
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente27, 12345678926 )
+
+Risposta server numero: 190
+Non esiste Utente27 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 191
+AGGIORNA PASSWORD FORNITORE( Utente5, P.assword5, P.assword5 )
+
+Risposta server numero: 191
+Aggiornamento password (nuova password inserita: P.assword5 ) per utente: Utente5
+
+
+Richiesta fornitore numero: 192
+ELIMINA PROFILO FORNITORE( Utente24 )
+
+Risposta server numero: 192
+Non esiste Utente24 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 193
+AGGIORNA PASSWORD FORNITORE( Utente7, P.assword7, P.assword7 )
+
+Risposta server numero: 193
+Non esiste Utente7 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 194
+EFFETTUA LOGIN FORNITORE( Utente23, P.assword23 )
+
+Risposta server numero: 194
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 195
+EFFETTUA LOGIN FORNITORE( Utente10, P.assword10 )
+
+Risposta server numero: 195
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 196
+EFFETTUA LOGIN FORNITORE( Utente26, P.assword26 )
+
+Risposta server numero: 196
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 197
+ELIMINA PROFILO FORNITORE( Utente4 )
+
+Risposta server numero: 197
+Non esiste Utente4 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 198
+RIMUOVI PRODOTTO SITO( Utente20, 29 )
+
+Risposta server numero: 198
+Non esiste Utente20 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 199
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente1, 1234567890 )
+
+Risposta server numero: 199
+Non esiste Utente1 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 200
+EFFETTUA LOGOUT FORNITORE( Utente13 )
+
+Risposta server numero: 200
+Non esiste Utente13 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 201
+ELIMINA PROFILO FORNITORE( Utente8 )
+
+Risposta server numero: 201
+Eliminazione profilo utente Utente8
+
+
+Richiesta fornitore numero: 202
+EFFETTUA LOGIN FORNITORE( Utente23, P.assword23 )
+
+Risposta server numero: 202
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 203
+ELIMINA PROFILO FORNITORE( Utente30 )
+
+Risposta server numero: 203
+Non esiste Utente30 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 204
+EFFETTUA REGISTRAZIONE FORNITORE( Utente27, UtenteFornitore, Laura, Conti, 12345678926, Utente27@example.com, P.assword27, P.assword27, Azienda1 )
+
+Risposta server numero: 204
+Registrazione utente fornitore : Utente27 avvenuta con successo.
+
+
+Richiesta fornitore numero: 205
+AGGIORNA PASSWORD FORNITORE( Utente10, P.assword10, P.assword10 )
+
+Risposta server numero: 205
+Non esiste Utente10 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 206
+AGGIORNA PASSWORD FORNITORE( Utente15, P.assword15, P.assword15 )
+
+Risposta server numero: 206
+Aggiornamento password (nuova password inserita: P.assword15 ) per utente: Utente15
+
+
+Richiesta fornitore numero: 207
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente1, 1234567890 )
+
+Risposta server numero: 207
+Non esiste Utente1 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 208
+AGGIUNGI PRODOTTO SITO( Utente9, Prodotto9, Abbigliamento, 9, Prodotto eccellente., Azienda5, 9 )
+Risposta server numero: 208
+L utente Utente9 non è un utente fornitore, perciò non può essere aggiunto il prodotto nel sito.
+
+
+Richiesta fornitore numero: 209
+EFFETTUA LOGOUT FORNITORE( Utente23 )
+
+Risposta server numero: 209
+Non esiste Utente23 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 210
+AGGIUNGI PRODOTTO SITO( Utente9, Prodotto9, Abbigliamento, 9, Prodotto eccellente., Azienda3, 9 )
+Risposta server numero: 210
+L utente Utente9 non è un utente fornitore, perciò non può essere aggiunto il prodotto nel sito.
+
+
+Richiesta fornitore numero: 211
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente29, Azienda4 )
+
+Risposta server numero: 211
+Non esiste una sessionID per Utente29, utente non loggato, non può essere aggiornato il nome dell azienda produttrice.
+
+
+Richiesta fornitore numero: 212
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente27, Azienda5 )
+
+Risposta server numero: 212
+Aggiornamento azienda produttrice per utente: Utente27
+
+
+Richiesta fornitore numero: 213
+RIMUOVI PRODOTTO SITO( Utente1, 27 )
+
+Risposta server numero: 213
+Non esiste Utente1 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 214
+EFFETTUA REGISTRAZIONE FORNITORE( Utente4, UtenteFornitore, Paolo, De Luca, 1234567893, Utente4@example.com, P.assword4, P.assword4, Azienda5 )
+
+Risposta server numero: 214
+Registrazione utente fornitore : Utente4 avvenuta con successo.
+
+
+Richiesta fornitore numero: 215
+AGGIUNGI PRODOTTO SITO( Utente7, Prodotto7, Elettronica, 7, Prodotto eccellente., Azienda5, 7 )
+Risposta server numero: 215
+Non esiste Utente7 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 216
+EFFETTUA LOGOUT FORNITORE( Utente4 )
+
+Risposta server numero: 216
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente4
+
+
+Richiesta fornitore numero: 217
+ELIMINA PROFILO FORNITORE( Utente11 )
+
+Risposta server numero: 217
+Non esiste una sessionID per Utente11, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 218
+AGGIUNGI PRODOTTO SITO( Utente27, Prodotto27, Elettronica, 27, Prodotto eccellente., Azienda2, 27 )
+Risposta server numero: 218
+Prodotto con nome Prodotto27 inserito nel sito da parte di Utente27
+
+
+Richiesta fornitore numero: 219
+AGGIORNA PASSWORD FORNITORE( Utente11, P.assword11, P.assword11 )
+
+Risposta server numero: 219
+Non esiste una sessionID per Utente11, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta fornitore numero: 220
+EFFETTUA REGISTRAZIONE FORNITORE( Utente26, UtenteFornitore, Paolo, De Luca, 12345678925, Utente26@example.com, P.assword26, P.assword26, Azienda4 )
+
+Risposta server numero: 220
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 221
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente25, Azienda2 )
+
+Risposta server numero: 221
+Non esiste una sessionID per Utente25, utente non loggato, non può essere aggiornato il nome dell azienda produttrice.
+
+
+Richiesta fornitore numero: 222
+ELIMINA PROFILO FORNITORE( Utente25 )
+
+Risposta server numero: 222
+Non esiste una sessionID per Utente25, utente non loggato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 223
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente23, 12345678922 )
+
+Risposta server numero: 223
+Aggiornamento numero di telefono : 12345678922 per utente: Utente23
+
+
+Richiesta fornitore numero: 224
+AGGIORNA PASSWORD FORNITORE( Utente1, P.assword1, P.assword1 )
+
+Risposta server numero: 224
+Non esiste Utente1 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 225
+EFFETTUA LOGOUT FORNITORE( Utente11 )
+
+Risposta server numero: 225
+Non esiste una sessionID per Utente11, utente non loggato, non può essere effettuato il logout.
+
+
+Richiesta fornitore numero: 226
+EFFETTUA LOGIN FORNITORE( Utente23, P.assword23 )
+
+Risposta server numero: 226
+Utente Utente23 è di un altra categoria, non un utente fornitore, non può essere effettuato il login.
+
+
+Richiesta fornitore numero: 227
+EFFETTUA LOGOUT FORNITORE( Utente6 )
+
+Risposta server numero: 227
+Non esiste Utente6 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 228
+AGGIORNA PASSWORD FORNITORE( Utente17, P.assword17, P.assword17 )
+
+Risposta server numero: 228
+Non esiste Utente17 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 229
+AGGIORNA PASSWORD FORNITORE( Utente2, P.assword2, P.assword2 )
+
+Risposta server numero: 229
+Non esiste una sessionID per Utente2, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta fornitore numero: 230
+EFFETTUA LOGIN FORNITORE( Utente21, P.assword21 )
+
+Risposta server numero: 230
+Login utente fornitore avvenuto con successo
+
+
+Richiesta fornitore numero: 231
+ELIMINA PROFILO FORNITORE( Utente19 )
+
+Risposta server numero: 231
+Eliminazione profilo utente Utente19
+
+
+Richiesta fornitore numero: 232
+AGGIORNA PASSWORD FORNITORE( Utente7, P.assword7, P.assword7 )
+
+Risposta server numero: 232
+Non esiste Utente7 , poichè non è stato registrato, non si può aggiornare la password .
+
+
+Richiesta fornitore numero: 233
+EFFETTUA REGISTRAZIONE FORNITORE( Utente14, UtenteFornitore, Elena, Romano, 12345678913, Utente14@example.com, P.assword14, P.assword14, Azienda1 )
+
+Risposta server numero: 233
+Registrazione utente fornitore : Utente14 avvenuta con successo.
+
+
+Richiesta fornitore numero: 234
+ELIMINA PROFILO FORNITORE( Utente1 )
+
+Risposta server numero: 234
+Non esiste Utente1 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 235
+EFFETTUA LOGOUT FORNITORE( Utente9 )
+
+Risposta server numero: 235
+Aggiornamento sessionID causato dalla disconnessione di Utente Utente9
+
+
+Richiesta fornitore numero: 236
+EFFETTUA LOGOUT FORNITORE( Utente7 )
+
+Risposta server numero: 236
+Non esiste Utente7 , poichè non è stato registrato, non si può effettuare il logout .
+
+
+Richiesta fornitore numero: 237
+RIMUOVI PRODOTTO SITO( Utente20, 5 )
+
+Risposta server numero: 237
+Non esiste Utente20 , poichè non è stato registrato, non può essere rimosso il prodotto nel sito .
+
+
+Richiesta fornitore numero: 238
+ELIMINA PROFILO FORNITORE( Utente6 )
+
+Risposta server numero: 238
+Non esiste Utente6 , poichè non è stato registrato, non si può eliminare il profilo .
+
+
+Richiesta fornitore numero: 239
+AGGIUNGI PRODOTTO SITO( Utente8, Prodotto8, Elettronica, 8, Prodotto eccellente., Azienda4, 8 )
+Risposta server numero: 239
+Non esiste Utente8 , poichè non è stato registrato, non può essere aggiunto il prodotto nel sito .
+
+
+Richiesta fornitore numero: 240
+EFFETTUA REGISTRAZIONE FORNITORE( Utente16, UtenteFornitore, Roberto, Gallo, 12345678915, Utente16@example.com, P.assword16, P.assword16, Azienda3 )
+
+Risposta server numero: 240
+Il nome utente non è univoco, la registrazione non è andata a buon fine.
+
+
+Richiesta fornitore numero: 241
+AGGIORNA PASSWORD FORNITORE( Utente9, P.assword9, P.assword9 )
+
+Risposta server numero: 241
+Non esiste una sessionID per Utente9, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta fornitore numero: 242
+EFFETTUA LOGIN FORNITORE( Utente24, P.assword24 )
+
+Risposta server numero: 242
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 243
+EFFETTUA LOGIN FORNITORE( Utente28, P.assword28 )
+
+Risposta server numero: 243
+Errore: L'utente non è stato trovato.
+
+
+Richiesta fornitore numero: 244
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente8, 1234567897 )
+
+Risposta server numero: 244
+Non esiste Utente8 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 245
+AGGIORNA PASSWORD FORNITORE( Utente4, P.assword4, P.assword4 )
+
+Risposta server numero: 245
+Non esiste una sessionID per Utente4, utente non loggato, non può essere aggiornata la password.
+
+
+Richiesta fornitore numero: 246
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente10, Azienda4 )
+
+Risposta server numero: 246
+Non esiste Utente10 , poichè non è stato registrato, non può essere aggiornato il nome dell azienda produttrice .
+
+
+Richiesta fornitore numero: 247
+EFFETTUA REGISTRAZIONE FORNITORE( Utente10, UtenteFornitore, Laura, Conti, 1234567899, Utente10@example.com, P.assword10, P.assword10, Azienda1 )
+
+Risposta server numero: 247
+Registrazione utente fornitore : Utente10 avvenuta con successo.
+
+
+Richiesta fornitore numero: 248
+RIMUOVI PRODOTTO SITO( Utente23, 17 )
+
+Risposta server numero: 248
+L utente Utente23 non è un utente fornitore, perciò non può essere rimosso il prodotto nel sito.
+
+
+Richiesta fornitore numero: 249
+AGGIORNA NUMERO TELEFONO FORNITORE( Utente7, 1234567896 )
+
+Risposta server numero: 249
+Non esiste Utente7 , poichè non è stato registrato, non si può aggiornare il numero di telefono .
+
+
+Richiesta fornitore numero: 250
+AGGIUNGI PRODOTTO SITO( Utente10, Prodotto10, Elettronica, 10, Prodotto eccellente., Azienda1, 10 )
+Risposta server numero: 250
+Prodotto con nome Prodotto10 inserito nel sito da parte di Utente10
+
+
+Richiesta fornitore numero: 251
+AGGIORNA NOME AZIENDAPRODUZIONE( Utente23, Azienda5 )
+
+Risposta server numero: 251
+L utente Utente23 non è un utente fornitore, perciò non può essere aggiornato il nome dell azienda produttrice.
 

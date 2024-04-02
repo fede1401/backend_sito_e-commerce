@@ -150,6 +150,11 @@ EFFETTUA LOGIN FORNITORE
 utente5
 Fbefbifno2ifno2!.
 
+# Secondo login con successo
+EFFETTUA LOGIN FORNITORE
+utente5
+Fbefbifno2ifno2!.
+
 
 # Login con password errata.
 EFFETTUA LOGIN FORNITORE

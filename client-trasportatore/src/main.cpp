@@ -100,7 +100,8 @@ int main()
     // Apre il file corrispondente al test da effettuare in modalità di lettura
     // 1: test_sessioni_gestioneprofilo
     // 2: gestione_spedizioni
-    std::ifstream file("../test/gestione_spedizioni.txt");
+    // 3: vuoto
+    std::ifstream file("../test/vuoto.txt");
     if (!file.is_open())
     {
         std::cerr << "Impossibile aprire il file!" << std::endl;
@@ -975,6 +976,8 @@ int main()
             freeReplyObject(reply);
         }
 
+    micro_sleep(500000); // 0.5 second0 di attesa
+
     } // while scorrimento linee file
 
     file.close(); // Chiude il file
@@ -985,7 +988,7 @@ int main()
 
     // Esecuzione dei test randomici.
 
-    #if (DEBUG < 0)
+    // #if (DEBUG < 0)
 
     std::string azioneTrasportatori[9] = {"EFFETTUA REGISTRAZIONE TRASPORTATORE", "EFFETTUA LOGIN TRASPORTATORE", "AGGIORNA NUMERO TELEFONO TRASPORTATORE", "AGGIORNA PASSWORD TRASPORTATORE",
                                           "AGGIORNA NOME DITTASPEDIZIONE", "PRENDI IN CARICO SPEDIZIONE", "EFFETTUA LOGOUT TRASPORTATORE", "ELIMINA PROFILO TRASPORTATORE", "AVVISA SPEDIZIONE EFFETTUATA"};
@@ -1850,7 +1853,7 @@ int main()
 
     } // while ()
 
-    #endif
+    // #endif
 
     outputFile.close(); // Chiudi il file
 

@@ -147,6 +147,12 @@ EFFETTUA LOGOUT TRASPORTATORE
 utente12
 
 
+
+EFFETTUA LOGIN TRASPORTATORE
+utente9
+Fbefbifno2ifno2!.
+
+# Secondo login con successo
 EFFETTUA LOGIN TRASPORTATORE
 utente9
 Fbefbifno2ifno2!.
