@@ -41,11 +41,12 @@ Durante l'esecuzione del programma, le comunicazioni tra client e server verrann
 È possibile controllare i risultati delle operazioni in diversi modi: 
 
 1. Ci connettiamo al database tramite terminale con il comando: ```psql -U sito_ecommerce -h localhost -d backend_sito_ecommerce1```. Dove :
-  a. -U sito_ecommerce: specifica il nome utente (sito_ecommerce) con cui connettersi al database.
 
-  b. -h localhost: specifica l'host (localhost) su cui si trova il database. In questo caso, il database è presumibilmente in esecuzione sulla stessa macchina locale.
+    a. -U sito_ecommerce: specifica il nome utente (sito_ecommerce) con cui connettersi al database.
+
+    b. -h localhost: specifica l'host (localhost) su cui si trova il database. In questo caso, il database è presumibilmente in esecuzione sulla stessa macchina locale.
   
-  c. -d backend_sito_ecommerce1: specifica il nome del database (backend_sito_ecommerce1) a cui connettersi.
+    c. -d backend_sito_ecommerce1: specifica il nome del database (backend_sito_ecommerce1) a cui connettersi.
 
 3. Controlliamo le richieste e le risposte del server nelle cartelle result dei vari client e server.
 
