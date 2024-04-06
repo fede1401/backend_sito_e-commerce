@@ -1,130 +1,37 @@
-# backend_sito_e-commerce
-Backend sito e-commerce in c++ with postgreSQL and Redis
+# Backend sito e-commerce.
+Il progetto si concentra sulla realizzazione di un backend per un sito e-commerce, progettato per gestire tre tipologie di utenti: Compratori, Fornitori e Trasportatori. Per garantire un'efficace gestione delle varie categorie di utenti, sono stati implementati tre tipi di server, ciascuno dedicato a una specifica categoria.
 
-Connessione al database tramite terminale con il comando:
-```psql -U sito_ecommerce -h localhost -d backend_sito_ecommerce```
+La comunicazione tra i vari processi avviene attraverso un middleware che sfrutta il database/framework NoSQL Redis, mentre i dati elaborati dal sito e-commerce sono archiviati nel database PostgreSQL.
 
-Per controllare le righe delle tabelle dopo aver effettuato la connessione , nel terminale utilizzare il comando:
-```SELECT * FROM nometabella```
+Il sistema prevede che i diversi tipi di utenti possano inviare richieste ai server di categoria tramite streams Redis dedicate, utilizzando un'interfaccia web. I server, a loro volta, elaborano le richieste e inviano le risposte agli utenti tramite le appropriate streams Redis.
 
-Per eseguire il programma, dal terminale posizionarsi nella cartella src, ed eseguire il comando : ```make```.
-Una volta eseguito, se non ci sono errori, spostiamoci nella cartella bin ed eseguiamo il comando: ```./main```.
+Per eseguire il programma è necessario trovarsi in un ambiente Unix, come Linux o macOS, che offre una vasta gamma di strumenti e utilità da riga di comando, fondamentali per lo sviluppo e l'esecuzione del software.
 
+È inoltre richiesta l'installazione dei database NoSQL Redis e PostgreSQL. Una volta installati, è possibile procedere con l'esecuzione del programma.
 
-## Informazioni su c++:
-Per eseguire la stampa con variabili :
-``` 
-int stato_utente = 1;
-std::cout << "Lo stato dell'utente è: " << stato_utente << std::endl;   
-```
+Per l'installazione di Redis , in base all'ambiente in cui ci troviamo
+.
+.
+.
+.
+.
 
+Una volta installati i due framework possiamo procedere con l'esecuzione del programma.
 
+Poiché le cartelle client si riferiscono alle categoria di utenti che inviano richieste al server, se vogliamo eseguire i test comandati, all'interno dei file main.cpp dei client, modifichiamo i file di test da eseguire.
+Inoltre per decidere se avviare anche i test randomici assicuriamo di commentare l'if debug della parte sotto.
 
-## Interazione con database:
-Innanzitutto connettersi al database:
-```Con2DB db1("localhost", "5432", "sito_ecommerce", "47002", "backend_sito_ecommerce");```
+Per avviare il programma, è necessario aprire sei terminali e posizionarsi nelle cartelle bin dei server e dei client.
 
-Per effettuare una query di campo intero della tabella:
-```
-int stato_utente; 
-sprintf(sqlcmd, "SELECT stato FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());
-res = db1.ExecSQLtuples(sqlcmd);
-rows = PQntuples(res);
-if (rows == 1) { stato_utente = atoi(PQgetvalue(res, 0, PQfnumber(res, "stato"))); }
-PQclear(res); 
-```
+Prima di avviare i server, è necessario avviare il server Redis utilizzando il comando: ``` redis-server ```  
 
-Per effettuare una query di campo stringa della tabella:
-`
-std::string password_utente;
-```
-char *password_u;
-sprintf(sqlcmd, "SELECT password FROM UtenteCompratore WHERE nome_utente = '%s'", input_nome_utente.c_str());   // SELECT password FROM UtenteCompratore WHERE nome_utente = 'fede14';`
-PGresult *res = db1.ExecSQLtuples(sqlcmd);
-rows = PQntuples(res);
-if (rows == 1) {
-    `password_u = PQgetvalue(res, 0, PQfnumber(res, "password"));
-    `password_utente.assign(password_u);
-    }
-PQclear(res); 
-```
+A questo punto avviamo inizialmente i server con il comando: 
+Successivamente, è possibile avviare i server e i client eseguendo il comando ``` ./main ``` . (prima avviare i server che restano in ascolto delle richieste dei client)
 
-PQgetvalues prende in input il risultato della query, l'indice di riga della query e il campo ricercato.
+Durante l'esecuzione del programma, le comunicazioni tra client e server verranno visualizzate nei terminali. 
 
+È possibile controllare i risultati delle operazioni in diversi modi: 
 
-
-Per effettuare un UPDATE:
-```
-sprintf(sqlcmd, "UPDATE UtenteCompratore set stato = 0 WHERE nome_utente = '%s'", input_nome_utente.c_str());
-res = db1.ExecSQLcmd(sqlcmd);
-PQclear(res); 
-```
-
-Dopo di che controllare che il tutto sia avvenuto correttamente con una SELECT.
-
-
-Per effettuare una INSERT:
-```
-sprintf(sqlcmd, "INSERT INTO UtenteCompratore (idUtComp, nome_utente, nome, cognome, indirizzo_mail, numero_di_telefono, password, data_compleanno, via_di_residenza, numero_civico, CAP, citta_di_residenza, saldo, stato ) VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', %f, %d)", nome_utente.c_str(), nome.c_str(), cognome.c_str(), email.c_str(), numero_telefono.c_str(), password.c_str(), formatted_date.c_str(), via_residenza.c_str(), numero_civico, CAP.c_str(), città_residenza.c_str(), saldo, stato);
-res = db1.ExecSQLcmd(sqlcmd);
-PQclear(res); 
-```
-
-        
-Per effettuare una qualsiasi operazione postgreSQL con l'utilizzo di variabili all'interno utilizzare il campo %s, ad esempio:
-``` sprintf(sqlcmd, "SELECT stato FROM %s WHERE nome_utente = '%s'", categoria.c_str(), input_nome_utente.c_str()); ```
-
-
-Per stampare su terminale i risultati delle query che prendono tutte le colonne utilizzare questo codice di esempio:
-```
-sprintf(sqlcmd, "SELECT * FROM UtenteCompratore");
-    res = db1.ExecSQLtuples(sqlcmd);
-    rows = PQntuples(res);
-    int numCols = PQnfields(res);
-
-    std::cout << "Rows: " << rows << std::endl;
-    for (int i = 0; i < rows; ++i) {
-        std::cout << "Row " << i << ": ";
-        for (int j = 0; j < numCols; ++j) {
-            std::cout << PQgetvalue(res, i, j) << "\t";
-        }
-        std::cout << std::endl;
-    }
-    PQclear(res); 
-```
-
-
-
-Per eliminare in PostgreSQL :
-1. Eliminare una riga in base alla chiave primaria o in base a una condizione:
-```
-DELETE FROM table_name WHERE id = '1';
-
-DELETE FROM table_name WHERE nome_colonna = 'valore';
-```
-
-2. Eliminare tutte le righe di una tabella:
-``` TRUNCATE table_name CASCADE;```
-
-3. Elimnare una tabella:
-``` DROP TABLE table_name CASCADE; ```
-
-4. Eliminare un tipo enumerativo:
-``` DROP TYPE nome_del_tipo_enum; ```
-
-
-
-
-Per selezionare i tipi enumerativi in postgreSQL:
-``` SELECT enumlabel FROM pg_enum WHERE enumtypid = 'nome_del_tipo_enum'::regtype;  ```
-
-
-Per assegnare i privilegi per un tipo o tabella nel database postgreSQL:
-```  
-ALTER TABLE Spedizione OWNER TO :username ;
-ALTER TYPE statoOrdine OWNER TO :username;
-```
-
-
-Per eseguire il main dobbiamo prima avviare il server redis in un terminale con il comando:
-``` redis-server ```  
+1. Ci connettiamo al database tramite terminale con il comando: ```psql -U sito_ecommerce -h localhost -d backend_sito_ecommerce1```.
+2. Controlliamo le richieste e le risposte del server nelle cartelle result dei vari client e server.
+3. Monitorando direttamente i terminali in cui vengono eseguiti client e server.
