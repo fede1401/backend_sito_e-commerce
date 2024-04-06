@@ -24,8 +24,7 @@ Una volta installati i due framework possiamo procedere con l'esecuzione del pro
 
 
 ## Configurazione pre-esecuzione del programma
-Poiché le cartelle client si riferiscono alle categoria di utenti che inviano richieste al server, se vogliamo eseguire i test comandati, all'interno dei file main.cpp dei client, modifichiamo i file di test da eseguire.
-Inoltre per decidere se avviare anche i test randomici assicuriamo di commentare l'if debug della parte sotto.
+Considerando che le cartelle dei client sono associate alle categorie di utenti che inviano richieste al server, se desideriamo eseguire test specifici, è necessario modificare i file main.cpp dei client per selezionare i test da eseguire. Inoltre, per decidere se avviare anche test casuali, è importante commentare l'if debug nella sezione corrispondente.
 
 Per avviare il programma, è necessario aprire sei terminali e posizionarsi nelle cartelle bin dei server e dei client.
 
@@ -33,7 +32,6 @@ Prima di avviare i server, è necessario avviare il server Redis utilizzando il 
 
 
 ## Esecuzione del programma.
-A questo punto avviamo inizialmente i server con il comando: 
 Successivamente, è possibile avviare i server e i client eseguendo il comando ``` ./main ``` . (prima avviare i server che restano in ascolto delle richieste dei client)
 
 Durante l'esecuzione del programma, le comunicazioni tra client e server verranno visualizzate nei terminali. 
@@ -43,10 +41,12 @@ Durante l'esecuzione del programma, le comunicazioni tra client e server verrann
 È possibile controllare i risultati delle operazioni in diversi modi: 
 
 1. Ci connettiamo al database tramite terminale con il comando: ```psql -U sito_ecommerce -h localhost -d backend_sito_ecommerce1```. Dove :
-  -U sito_ecommerce: specifica il nome utente (sito_ecommerce) con cui connettersi al database.
-  -h localhost: specifica l'host (localhost) su cui si trova il database. In questo caso, il database è presumibilmente in esecuzione sulla stessa macchina locale.
-  -d backend_sito_ecommerce1: specifica il nome del database (backend_sito_ecommerce1) a cui connettersi.
+  a. -U sito_ecommerce: specifica il nome utente (sito_ecommerce) con cui connettersi al database.
+  b. -h localhost: specifica l'host (localhost) su cui si trova il database. In questo caso, il database è presumibilmente in esecuzione sulla stessa macchina locale.
+  c. -d backend_sito_ecommerce1: specifica il nome del database (backend_sito_ecommerce1) a cui connettersi.
+
 2. Controlliamo le richieste e le risposte del server nelle cartelle result dei vari client e server.
+
 3. Monitorando direttamente i terminali in cui vengono eseguiti client e server.
 
 
