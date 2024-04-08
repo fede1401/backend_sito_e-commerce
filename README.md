@@ -50,7 +50,19 @@ Su Linux è possibile eseguendo il comando:
 sudo find / -name "postgresql" 2>/dev/null
 ```
 
-La corretta esecuzione dei Makefile, file di compilazione essenziali per un progetto software, richiede che il pacchetto PostgreSQL sia localizzato nel percorso "usr/include/postgresql". 
+### libpq.
+libpq è una libreria utilizzata per la comunicazione con il server PostgreSQL. Essa fornisce una serie di funzioni e API che consentono agli sviluppatori di scrivere applicazioni client in diversi linguaggi di programmazione (come C, C++, Python, ecc.) per stabilire una connessione, eseguire query e gestire i risultati delle operazioni sul database
+
+Su Linux, è possibile utilizzare il comando:
+```
+sudo apt-get install libpq-dev
+```
+Dopo l'installazione, verifichiamo la presenza della libreria e la posizione.
+Su Linux è possibile eseguendo il comando:
+```
+sudo find / -name "postgresql" 2>/dev/null
+```
+La corretta esecuzione dei Makefile, file di compilazione essenziali per un progetto software, richiede che il pacchetto libpq sia localizzato nel percorso "usr/include/postgresql/". 
 
 
 Una volta completate le installazioni dei due framework, siamo pronti per eseguire il programma.
