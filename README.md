@@ -60,7 +60,7 @@ sudo apt-get install libpq-dev
 Dopo l'installazione, verifichiamo la presenza della libreria e la posizione.
 Su Linux è possibile eseguendo il comando:
 ```
-sudo find / -name "postgresql" 2>/dev/null
+sudo find / -name "libpq" 2>/dev/null
 ```
 La corretta esecuzione dei Makefile, file di compilazione essenziali per un progetto software, richiede che il pacchetto libpq sia localizzato nel percorso "usr/include/postgresql/". 
 
