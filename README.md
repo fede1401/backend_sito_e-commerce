@@ -30,6 +30,8 @@ Per avviare il programma, è necessario aprire sei terminali e posizionarsi nell
 
 Prima di avviare i server, è necessario avviare il server Redis utilizzando il comando: ``` redis-server ```  
 
+Prima di avviare il programma, posizionarsi nella directory "db-scripts" ed eseguire lo script "create.sh" per la creazione del database.
+
 
 ## Esecuzione del programma.
 Successivamente, è possibile avviare i server e i client eseguendo il comando ``` ./main ``` . (prima avviare i server che restano in ascolto delle richieste dei client)
