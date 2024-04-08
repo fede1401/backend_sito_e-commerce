@@ -11,38 +11,50 @@ Per eseguire il programma è necessario trovarsi in un ambiente Unix, come Linux
 
 
 ## Installazione Redis e PostgreSQL.
-È inoltre richiesta l'installazione dei database NoSQL Redis e PostgreSQL. Una volta installati, è possibile procedere con l'esecuzione del programma.
+Per il corretto funzionamento del programma, è necessario procedere con l'installazione dei database NoSQL Redis e PostgreSQL.
 
-Per l'installazione di Redis , ci rechiamo al link https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/ e in base all'ambiente in cui ci troviamo installiamo l'open source Redis. (evitiamo l'installazione tramite Snapcraft).
-
-A questo punto (in questo caso su Linux) verifichiamo che la libreria è stata installata e controlliamo anche dove si trova con il comando 
+### Redis.
+Per l'installazione di Redis, è consigliato seguire le istruzioni fornite nel sito ufficiale (https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/), evitando l'utilizzo di Snapcraft. Dopo l'installazione, verifichiamo la presenza della libreria e la posizione.
+Su Linux è possibile eseguendo il comando:
 ```
 sudo find / -name "redis" 2>/dev/null
 ```
-Grazie a questa installazione possiamo avviare il server Redis.
+Una volta completata l'installazione, possiamo avviamo in seguito il server Redis.
 
 
-Ora procediamo con l'installazione di hiredis.
+### Hiredis.
 Hiredis semplifica lo sviluppo di applicazioni che richiedono l'interazione con un server Redis, fornendo un'interfaccia semplice, leggera e performante per la comunicazione con Redis da parte di applicazioni scritte in C o in linguaggi compatibili con C.
 
-Anche in questo caso ci rechiamo al link https://github.com/markmo/HiRedis.jl/blob/master/README.md e installiamo hiredis nella maniera corretta.
-Si può verificare se l'installazione è andata a buon fine con lo stesso comando precedente:
+Seguiamo le istruzioni di installazione fornite qui (https://github.com/markmo/HiRedis.jl/blob/master/README.md). Ad esempio per Debian / Ubuntu è sufficiente eseguire nel terminale il comando:
+```
+sudo apt-get install libhiredis-dev
+```
+
+Dopo l'installazione, verifichiamo la presenza della libreria e la posizione.
+Su Linux è possibile eseguendo il comando:
 ```
 sudo find / -name "hiredis" 2>/dev/null
 ```
 
-Ora si procede con l'installazione di PostgreSQL.
-Ci rechiamo al link ufficiale per il download : https://www.postgresql.org/download/ e installiamo PostgreSQL seguendo le guide.
-In Linux possiamo utilizzare il comando:
+### PostgreSQL.
+Per installare PostgreSQL, seguiamo le indicazioni sul sito ufficiale per il download (https://www.postgresql.org/download/). 
+
+Su Linux, è possibile utilizzare il comando:
 ```
 sudo apt-get install postgresql
 ```
-Si può verificare se l'installazione è andata a buon fine con lo stesso comando precedente:
+
+Dopo l'installazione, verifichiamo la presenza della libreria e la posizione.
+Su Linux è possibile eseguendo il comando:
 ```
 sudo find / -name "postgresql" 2>/dev/null
 ```
 
-Una volta installati i due framework possiamo procedere con l'esecuzione del programma.
+La corretta esecuzione dei Makefile, file di compilazione essenziali per un progetto software, richiede che il pacchetto PostgreSQL sia localizzato nel percorso "usr/include/postgresql". 
+
+
+Una volta completate le installazioni dei due framework, siamo pronti per eseguire il programma.
+
 
 
 ## Configurazione pre-esecuzione del programma
