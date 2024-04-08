@@ -28,7 +28,7 @@ Considerando che le cartelle dei client sono associate alle categorie di utenti 
 
 Per avviare il programma, è necessario aprire sei terminali e posizionarsi nelle cartelle bin dei server e dei client.
 
-Prima di avviare i server, è necessario avviare il server Redis utilizzando il comando: ``` redis-server ```  
+Prima di avviare i server, è necessario avviare il server Redis utilizzando il comando: ``` redis-server ```  . Questo è necessario per avviare il server Redis sul tuo sistema, consentendo alle applicazioni client di interagire con il database Redis.
 
 Prima di avviare il programma, posizionarsi nella directory "db-scripts" ed eseguire lo script "create.sh" per la creazione del database.
 
