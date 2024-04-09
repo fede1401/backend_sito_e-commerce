@@ -54,12 +54,7 @@ I pacchetti installati dovrebbero includere: libhiredis-dev e libhiredis0.14.
 
 
 ### PostgreSQL.
-Per installare PostgreSQL, seguiamo le indicazioni sul sito ufficiale per il download (https://www.postgresql.org/download/). 
-
-Su Linux, è possibile utilizzare il comando:
-```
-sudo apt-get install postgresql
-```
+Per installare PostgreSQL, seguiamo le indicazioni sul sito ufficiale per il download (https://www.postgresql.org/download/). (utilizzare versione -16)
 
 Dopo l'installazione, verifichiamo la presenza della libreria e la posizione.
 Su Linux è possibile eseguendo il comando:
@@ -71,6 +66,8 @@ Successivamente, per verificare tutti i pacchetti installati che contengono la p
 ```
 dpkg -l | grep postgresql
 ```
+I pacchetti installati dovrebbero includere: postgresql, postgresql-16, postgresql-client-16, postgresql-client-common, postgresql-common.
+
 
 ### libpq.
 libpq è una libreria utilizzata per la comunicazione con il server PostgreSQL. Essa fornisce una serie di funzioni e API che consentono agli sviluppatori di scrivere applicazioni client in diversi linguaggi di programmazione (come C, C++, Python, ecc.) per stabilire una connessione, eseguire query e gestire i risultati delle operazioni sul database
