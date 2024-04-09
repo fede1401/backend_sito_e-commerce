@@ -35,6 +35,9 @@ Su Linux è possibile eseguendo il comando:
 ```
 sudo find / -name "hiredis" 2>/dev/null
 ```
+La corretta esecuzione dei Makefile, file di compilazione essenziali per un progetto software, richiede che il pacchetto hiredis sia localizzato nel percorso "usr/include/hiredis".
+All'interno del percorso ci sarà il file "hiredis.h" , necessario per la comunicazione di Redis con il linguaggio C++.
+
 
 ### PostgreSQL.
 Per installare PostgreSQL, seguiamo le indicazioni sul sito ufficiale per il download (https://www.postgresql.org/download/). 
@@ -62,7 +65,7 @@ Su Linux è possibile eseguendo il comando:
 ```
 sudo find / -name "libpq" 2>/dev/null
 ```
-La corretta esecuzione dei Makefile, file di compilazione essenziali per un progetto software, richiede che il pacchetto libpq sia localizzato nel percorso "usr/include/postgresql/". 
+La corretta esecuzione dei Makefile, file di compilazione essenziali per un progetto software, richiede che il pacchetto libpq sia localizzato nel percorso "usr/include/postgresql/libpq". 
 
 
 Una volta completate le installazioni dei due framework, siamo pronti per eseguire il programma.
