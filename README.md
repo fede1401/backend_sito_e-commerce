@@ -14,11 +14,19 @@ Per eseguire il programma è necessario trovarsi in un ambiente Unix, come Linux
 Per il corretto funzionamento del programma, è necessario procedere con l'installazione dei database NoSQL Redis e PostgreSQL.
 
 ### Redis.
-Per l'installazione di Redis, è consigliato seguire le istruzioni fornite nel sito ufficiale (https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/), evitando l'utilizzo di Snapcraft. Dopo l'installazione, verifichiamo la presenza della libreria e la posizione.
-Su Linux è possibile eseguendo il comando:
+Per l'installazione di Redis, è consigliato seguire le istruzioni fornite nel sito ufficiale (https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/), evitando l'utilizzo di Snapcraft.  Dopo aver completato l'installazione, è importante verificare la presenza della libreria e la sua posizione nel sistema.
+
+Per fare ciò su Linux, è possibile utilizzare il seguente comando:
 ```
 sudo find / -name "redis" 2>/dev/null
 ```
+
+Successivamente, per verificare tutti i pacchetti installati che contengono la parola "redis" nel loro nome, si può utilizzare il comando:
+```
+dpkg -l | grep redis
+```
+I pacchetti installati dovrebbero includere: redis, redis-server e redis-tools.
+
 Una volta completata l'installazione, possiamo avviamo in seguito il server Redis.
 
 
@@ -38,6 +46,12 @@ sudo find / -name "hiredis" 2>/dev/null
 La corretta esecuzione dei Makefile, file di compilazione essenziali per un progetto software, richiede che il pacchetto hiredis sia localizzato nel percorso "usr/include/hiredis".
 All'interno del percorso ci sarà il file "hiredis.h" , necessario per la comunicazione di Redis con il linguaggio C++.
 
+Successivamente, per verificare tutti i pacchetti installati che contengono la parola "hiredis" nel loro nome, si può utilizzare il comando:
+```
+dpkg -l | grep hiredis
+```
+I pacchetti installati dovrebbero includere: libhiredis-dev e libhiredis0.14.
+
 
 ### PostgreSQL.
 Per installare PostgreSQL, seguiamo le indicazioni sul sito ufficiale per il download (https://www.postgresql.org/download/). 
@@ -51,6 +65,11 @@ Dopo l'installazione, verifichiamo la presenza della libreria e la posizione.
 Su Linux è possibile eseguendo il comando:
 ```
 sudo find / -name "postgresql" 2>/dev/null
+```
+
+Successivamente, per verificare tutti i pacchetti installati che contengono la parola "postgresql" nel loro nome, si può utilizzare il comando:
+```
+dpkg -l | grep postgresql
 ```
 
 ### libpq.
@@ -67,9 +86,17 @@ sudo find / -name "libpq" 2>/dev/null
 ```
 La corretta esecuzione dei Makefile, file di compilazione essenziali per un progetto software, richiede che il pacchetto libpq sia localizzato nel percorso "usr/include/postgresql/libpq". 
 
+Successivamente, per verificare tutti i pacchetti installati che contengono la parola "libpq" nel loro nome, si può utilizzare il comando:
+```
+dpkg -l | grep libpq
+```
+I pacchetti installati dovrebbero includere: libpq-dev e libpq5.
+
+
+Molto importante controllare che sia presente il file libpq-fe.h all'interno del percorso:
+"/usr/include/postgresql/libpq-fe.h"
 
 Una volta completate le installazioni dei due framework, siamo pronti per eseguire il programma.
-
 
 
 ## Configurazione pre-esecuzione del programma
